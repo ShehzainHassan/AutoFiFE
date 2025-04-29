@@ -19,10 +19,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={dmSans.className}>
-        <p>Hello</p>
-        {children}
-      </body>
+      <body className={dmSans.className}>{children}</body>
     </html>
   );
 }
