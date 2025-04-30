@@ -34,6 +34,7 @@
 }
 .searchButtonContainer {
   display: flex;
+  align-items: center;
   gap: 10px;
   border-radius: 60px;
   border: 1px solid var(--color-blue500);

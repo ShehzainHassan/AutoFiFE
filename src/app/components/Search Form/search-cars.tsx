@@ -27,7 +27,9 @@ export default function SearchCars() {
         </div>
         <div className={classes.searchButtonContainer}>
           <Image src="/images/search.png" alt="search" width={15} height={15} />
-          <button className={classes.searchButton}>Search Cars</button>
+          <button className={`${classes.searchButton} ${headings.navElement}`}>
+            Search Cars
+          </button>
         </div>
       </div>
     </div>
