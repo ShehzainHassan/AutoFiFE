@@ -4,6 +4,18 @@
   font-size: 70px;
   line-height: 70px;
 }
+.sectionTitle {
+  font-family: DM Sans, sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 40px;
+}
+.mediumTitle {
+  font-family: DM Sans, sans-serif;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 30px;
+}
 .navElement {
   font-family: DM Sans, sans-serif;
   font-weight: 500;
@@ -23,6 +35,21 @@
   font-size: 16px;
   line-height: 29.6px;
 }
+
+.brandText {
+  font-family: DM Sans, sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21.6px;
+}
+
+.footerTitle {
+  font-family: DM Sans, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+}
+
 .shortText {
   font-family: DM Sans, sans-serif;
   font-weight: 400;
@@ -34,4 +61,10 @@
   font-weight: 400;
   font-size: 15px;
   line-height: 28px;
+}
+.tinyText {
+  font-family: DM Sans, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 12px;
 }

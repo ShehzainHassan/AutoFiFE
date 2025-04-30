@@ -2,17 +2,13 @@
   display: flex;
   flex-direction: column;
   gap: 161.25px;
-  background-image: url("/images/hero.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 945px;
 }
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   gap: 65px;
 }
 .white {
@@ -28,6 +24,7 @@
 .modelsIconContainer {
   display: flex;
   gap: 10px;
+  margin-bottom: 135px;
 }
 .textContainer {
   display: flex;

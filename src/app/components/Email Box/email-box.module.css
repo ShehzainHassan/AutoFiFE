@@ -1,0 +1,22 @@
+.inputContainer {
+  display: flex;
+  gap: 250px;
+  padding: 10px;
+  background-color: var(--color-white100_opaque_13);
+  border-radius: 60px;
+}
+.input {
+  background: none;
+  outline: none;
+  border: none;
+  padding-left: 30px;
+  color: var(--color-white100);
+}
+.btn {
+  padding: 10px 30px;
+  border-radius: 60px;
+  transition: background-color 0.2s ease;
+  background-color: var(--color-blue500);
+  color: var(--color-white100);
+  border: none;
+}

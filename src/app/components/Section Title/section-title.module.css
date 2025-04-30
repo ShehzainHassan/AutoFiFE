@@ -1,0 +1,19 @@
+.headingsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 80px;
+  border-top-right-radius: 80px;
+  background-color: var(--color-white300);
+  padding: 80px;
+}
+
+.subHeadingContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.subHeading:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
