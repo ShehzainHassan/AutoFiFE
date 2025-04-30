@@ -15,41 +15,29 @@ export default function Navbar() {
       />
       <div className={classes.navList}>
         <div className={classes.navContainer}>
-          <h3 className={`${headings.navElement} ${classes.navElement}`}>
-            Home
-          </h3>
+          <h3 className={`${headings.navElement} ${classes.white}`}>Home</h3>
           <Image src="/images/expand.png" alt="expand" width={8} height={4} />
         </div>
         <div className={classes.navContainer}>
-          <h3 className={`${headings.navElement} ${classes.navElement}`}>
+          <h3 className={`${headings.navElement} ${classes.white}`}>
             Listings
           </h3>
           <Image src="/images/expand.png" alt="expand" width={8} height={4} />
         </div>
         <div className={classes.navContainer}>
-          <h3 className={`${headings.navElement} ${classes.navElement}`}>
-            Blog
-          </h3>
+          <h3 className={`${headings.navElement} ${classes.white}`}>Blog</h3>
           <Image src="/images/expand.png" alt="expand" width={8} height={4} />
         </div>
         <div className={classes.navContainer}>
-          <h3 className={`${headings.navElement} ${classes.navElement}`}>
-            Pages
-          </h3>
+          <h3 className={`${headings.navElement} ${classes.white}`}>Pages</h3>
           <Image src="/images/expand.png" alt="expand" width={8} height={4} />
         </div>
-        <h3 className={`${headings.navElement} ${classes.navElement}`}>
-          About
-        </h3>
-        <h3 className={`${headings.navElement} ${classes.navElement}`}>
-          Contact
-        </h3>
+        <h3 className={`${headings.navElement} ${classes.white}`}>About</h3>
+        <h3 className={`${headings.navElement} ${classes.white}`}>Contact</h3>
 
         <div className={classes.navContainer}>
           <Image src="/images/person.png" alt="person" width={14} height={15} />
-          <h3 className={`${headings.navElement} ${classes.navElement}`}>
-            Sign In
-          </h3>
+          <h3 className={`${headings.navElement} ${classes.white}`}>Sign In</h3>
         </div>
         <button className={`${headings.navElement} ${classes.navBtn}`}>
           Submit Listing

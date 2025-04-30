@@ -5,13 +5,13 @@
   justify-content: space-between;
   padding: 28px 60px;
 }
-.logo {
-  z-index: 2;
-}
 .navContainer {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+.logo {
+  cursor: pointer;
 }
 .navList {
   display: flex;
@@ -30,8 +30,9 @@
 
 .navBtn:hover {
   background-color: var(--color-white200);
+  border: 1px solid var(--color-white200);
 }
 
-.navElement {
+.white {
   color: var(--color-white100);
 }

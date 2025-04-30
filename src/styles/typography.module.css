@@ -1,5 +1,37 @@
+.title {
+  font-family: DM Sans, sans-serif;
+  font-weight: 700;
+  font-size: 70px;
+  line-height: 70px;
+}
 .navElement {
   font-family: DM Sans, sans-serif;
   font-weight: 500;
   font-size: 15px;
+  line-height: 27.75px;
+}
+.modelText {
+  font-family: DM Sans, sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.tabText {
+  font-family: DM Sans, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 29.6px;
+}
+.shortText {
+  font-family: DM Sans, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+}
+.criteriaText {
+  font-family: DM Sans, sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 28px;
 }
