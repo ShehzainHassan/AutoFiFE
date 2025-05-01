@@ -1,9 +1,9 @@
-import HorizontalTabs from "../Horizontal Tabs/tabs";
-import SectionTitle from "../Section Title/section-title";
-import classes from "./shop.module.css";
-import vehicleClasses from "../Explore All Vehicles/explore-vehicles.module.css";
 import headings from "@/styles/typography.module.css";
 import footerClasses from "../Footer/footer.module.css";
+import HorizontalTabs from "../Horizontal Tabs/tabs";
+import SectionTitle from "../Section Title/section-title";
+import Wrapper from "../Wrapper/wrapper";
+import classes from "./shop.module.css";
 export default function Shop() {
   const tabs = [
     "New Cars For Sale",
@@ -14,7 +14,7 @@ export default function Shop() {
   return (
     <div className={classes.container}>
       <SectionTitle title="Shop BoxCar Your Way" buttonText="View More" />
-      <div className={vehicleClasses.tabsContainer}>
+      <Wrapper>
         <HorizontalTabs
           tabs={tabs}
           tabColor="var(--color-black100)"
@@ -155,7 +155,7 @@ export default function Shop() {
             </p>
           </div>
         </div>
-      </div>
+      </Wrapper>
     </div>
   );
 }

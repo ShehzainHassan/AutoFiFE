@@ -1,5 +1,6 @@
 import HorizontalTabs from "../Horizontal Tabs/tabs";
 import SectionTitle from "../Section Title/section-title";
+import Wrapper from "../Wrapper/wrapper";
 import classes from "./explore-vehicles.module.css";
 export default function Vehicles() {
   const tabs = ["In Stock", "New Cars", "Used Cars"];
@@ -10,7 +11,7 @@ export default function Vehicles() {
         buttonText="View All"
         backgroundColor="var(--color-white100)"
       />
-      <div className={classes.tabsContainer}>
+      <Wrapper>
         <HorizontalTabs
           tabs={tabs}
           tabColor="var(--color-black100)"
@@ -18,7 +19,7 @@ export default function Vehicles() {
           selectedTabBorderColor="var(--color-blue500)"
           borderColor="var(--color-gray100)"
         />
-      </div>
+      </Wrapper>
     </div>
   );
 }
