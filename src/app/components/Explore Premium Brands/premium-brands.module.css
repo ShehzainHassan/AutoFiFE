@@ -4,8 +4,9 @@
 }
 
 .cardContainer {
-  display: grid;
+  display: flex;
+  justify-content: space-between;
   gap: 30px;
-  grid-template-columns: repeat(6, 1fr);
-  padding: 15px 265px 115px 265px;
+  padding: 15px 265px 115px;
+  background-color: var(--color-white300);
 }

@@ -39,7 +39,7 @@
   border-radius: 60px;
   border: 1px solid var(--color-blue500);
   background-color: var(--color-blue500);
-  padding: 20px;
+  padding: 10px 40px;
   transition: background-color 0.2s ease;
   cursor: pointer;
 }

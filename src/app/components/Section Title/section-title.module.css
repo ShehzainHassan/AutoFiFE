@@ -2,12 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 115px 260px 15px;
+}
+.rounded {
   border-top-left-radius: 80px;
   border-top-right-radius: 80px;
-  background-color: var(--color-white300);
-  padding: 80px;
 }
-
 .subHeadingContainer {
   display: flex;
   gap: 10px;
