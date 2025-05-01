@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+.image {
+  border-radius: 16px;
+}
+.textContainer {
+  display: flex;
+  gap: 16px;
+}
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.description {
+  width: 100%;
+  max-width: 450px;
+}
+.tag {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 5px 15px;
+  border-radius: 30px;
+  background-color: var(--color-white100);
+}

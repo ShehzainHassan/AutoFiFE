@@ -1,0 +1,21 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-radius: 16px;
+  padding: 80px;
+  width: 100%;
+  max-width: 685px;
+  position: relative;
+}
+.title {
+  max-width: 234px;
+}
+.description {
+  max-width: 355px;
+}
+.image {
+  position: absolute;
+  right: 55px;
+  bottom: 45px;
+}

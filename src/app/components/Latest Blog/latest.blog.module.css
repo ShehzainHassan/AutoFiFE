@@ -1,0 +1,15 @@
+.cardContainer {
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+}
+.blogCards {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 75px;
+}
+.blog {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}

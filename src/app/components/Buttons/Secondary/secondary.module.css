@@ -1,0 +1,15 @@
+.btnContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 19px 26px 26px 26px;
+  border-radius: 12px;
+  color: var(--color-white100);
+  max-width: 160px;
+}
+.btn {
+  border: none;
+  outline: none;
+  background: none;
+  color: var(--color-white100);
+}
