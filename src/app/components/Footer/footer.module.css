@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   background-color: var(--color-black100);
-  padding: 65px 265px;
+  padding: 65px 265px 0;
 }
 .subContainer {
   display: flex;
@@ -74,4 +74,28 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+.footerBottom {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--color-white100_opaque_11);
+  padding: 34px 260px;
+  margin-left: -260px;
+  margin-right: -260px;
+}
+.termsPrivacy {
+  display: flex;
+  gap: 14px;
+}
+.circle {
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background-color: var(--color-white100);
+  color: var(--color-white100);
+}
+.privacy {
+  display: flex;
+  align-items: center;
+  gap: 11px;
 }

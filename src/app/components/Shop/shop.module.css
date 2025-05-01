@@ -1,6 +1,6 @@
 .list {
   display: flex;
   justify-content: unset;
-  gap: 200px;
+  gap: 180px;
   padding-top: 35px;
 }

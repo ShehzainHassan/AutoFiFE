@@ -169,6 +169,18 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      <div className={`${classes.white} ${classes.footerBottom}`}>
+        <div>
+          <p>© 2025 BoxCar, All rights reserved</p>
+        </div>
+        <div className={classes.termsPrivacy}>
+          <p>Terms & Conditions</p>
+          <div className={classes.privacy}>
+            <div className={classes.circle} />
+            <p>Privacy Notice</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
