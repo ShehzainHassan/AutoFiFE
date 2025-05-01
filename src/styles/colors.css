@@ -5,13 +5,15 @@
   --color-white100_opaque_13: rgba(255, 255, 255, 0.13);
   --color-white100_opaque_18: rgba(255, 255, 255, 0.18);
   --color-white200: #e3e3e3;
-  --color-white300: #f9fbfb;
+  --color-white300: #f9fbfc;
 
   --color-gray100: #e9e9e9;
 
   --color-black100: #050b20;
 
   --color-pink100: #ffe9f3;
+
+  --color-yellow500: #e1c03f;
 
   --color-blue100: #e9f2ff;
   --color-blue500: #405ff2;

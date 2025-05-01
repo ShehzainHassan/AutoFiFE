@@ -40,7 +40,6 @@ export default function LatestBlog() {
           />
         </div>
       </Wrapper>
-      x{" "}
     </div>
   );
 }

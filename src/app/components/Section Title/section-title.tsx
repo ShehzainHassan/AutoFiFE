@@ -7,6 +7,7 @@ type SectionTitleProps = {
   rounded?: boolean;
   backgroundColor?: string;
   showButton?: boolean;
+  ratingsText?: string;
 };
 export default function SectionTitle({
   title,
@@ -14,6 +15,7 @@ export default function SectionTitle({
   rounded = false,
   backgroundColor = "var(--color-white100)",
   showButton = true,
+  ratingsText,
 }: SectionTitleProps) {
   return (
     <div
@@ -28,6 +30,9 @@ export default function SectionTitle({
 
           <Image src="/images/arrow.svg" alt="arrow" width={14} height={14} />
         </div>
+      )}
+      {ratingsText && (
+        <h1 className={`${headings.modelText}`}>{ratingsText}</h1>
       )}
     </div>
   );
