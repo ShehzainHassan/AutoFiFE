@@ -6,11 +6,18 @@
 .blogCards {
   display: flex;
   gap: 30px;
+  margin-top: 30px;
   margin-bottom: 75px;
+  background-color: var(--color-white100);
 }
 .blog {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  padding-bottom: 130px;
+  background-color: var(--color-black100);
+}
+.round {
+  border-bottom-left-radius: 80px;
+  border-bottom-right-radius: 80px;
+  height: 60px;
+  background-color: var(--color-white100);
 }

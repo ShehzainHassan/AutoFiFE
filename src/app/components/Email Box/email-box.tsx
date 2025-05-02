@@ -1,3 +1,4 @@
+import ButtonPrimary from "../Buttons/Primary/primary";
 import classes from "./email-box.module.css";
 import headings from "@/styles/typography.module.css";
 
@@ -8,9 +9,14 @@ export default function EmailBox() {
         className={`${classes.input} ${headings.criteriaText}`}
         type="text"
         placeholder="Your email address"></input>
-      <button className={`${classes.btn} ${headings.modelText}`}>
-        Sign Up
-      </button>
+      <ButtonPrimary
+        backgroundColor="var(--color-blue500)"
+        textColor="var(--color-white100)"
+        btnText="Sign up"
+        padding="12px 30px"
+        borderRadius="60px"
+        hoverColor="var(--color-blue600)"
+      />
     </div>
   );
 }

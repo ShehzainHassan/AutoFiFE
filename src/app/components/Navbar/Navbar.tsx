@@ -3,6 +3,7 @@ import Image from "next/image";
 import classes from "./navbar.module.css";
 import headings from "@/styles/typography.module.css";
 import useTranslation from "@/i18n";
+import ButtonPrimary from "../Buttons/Primary/primary";
 
 export default function Navbar() {
   const { t } = useTranslation();
@@ -53,9 +54,7 @@ export default function Navbar() {
             {t("navbar.signIn")}
           </h3>
         </div>
-        <button className={`${headings.navElement} ${classes.navBtn}`}>
-          {t("navbar.submitBtn")}
-        </button>
+        <ButtonPrimary btnText={t("navbar.submitBtn")} />
       </div>
     </div>
   );

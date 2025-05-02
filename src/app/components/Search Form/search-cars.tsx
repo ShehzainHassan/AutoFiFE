@@ -1,6 +1,6 @@
-import Image from "next/image";
-import classes from "./search-cars.module.css";
 import headings from "@/styles/typography.module.css";
+import ButtonPrimary from "../Buttons/Primary/primary";
+import classes from "./search-cars.module.css";
 
 export default function SearchCars() {
   return (
@@ -25,12 +25,15 @@ export default function SearchCars() {
           <p className={headings.criteriaText}>All Prices</p>
           <p className={classes.border} />
         </div>
-        <div className={classes.searchButtonContainer}>
-          <Image src="/images/search.png" alt="search" width={15} height={15} />
-          <button className={`${classes.searchButton} ${headings.navElement}`}>
-            Search Cars
-          </button>
-        </div>
+        <ButtonPrimary
+          imgSrc="/images/search.png"
+          backgroundColor="var(--color-blue500)"
+          btnText="Search Cars"
+          textColor="var(--color-white100)"
+          borderRadius="60px"
+          padding="15px 40px"
+          hoverColor="var(--color-blue600)"
+        />
       </div>
     </div>
   );

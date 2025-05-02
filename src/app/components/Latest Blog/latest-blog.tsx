@@ -7,7 +7,7 @@ export default function LatestBlog() {
   return (
     <div className={classes.blog}>
       <SectionTitle title="Latest Blog Posts" buttonText="View All" />
-      <Wrapper>
+      <Wrapper backgroundColor="var(--color-white100)">
         <div className={classes.blogCards}>
           <BlogCard
             imgSrc="/images/BMW-Card.png"
@@ -25,7 +25,7 @@ export default function LatestBlog() {
           />
         </div>
       </Wrapper>
-      <Wrapper>
+      <Wrapper backgroundColor="var(--color-white100)">
         <div className={classes.cardContainer}>
           <CarCard
             title="Are You Looking For a Car"
@@ -40,6 +40,7 @@ export default function LatestBlog() {
           />
         </div>
       </Wrapper>
+      <div className={classes.round}></div>
     </div>
   );
 }
