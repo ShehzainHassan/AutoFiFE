@@ -1,0 +1,54 @@
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  padding: 125px 135px;
+  background-color: var(--color-purple100);
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+.container {
+  display: flex;
+}
+.tickContainer {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: var(--color-white100);
+  display: flex;
+  align-items: center;
+  padding: 2.5px;
+  justify-content: center;
+}
+.tick {
+  height: 12px;
+}
+.contentContainer {
+  display: flex;
+  gap: 10px;
+  width: 600px;
+}
+.benefits {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 25px;
+  gap: 14px;
+}
+.playButton {
+  width: 90px;
+  height: 90px;
+  border-radius: 45px;
+  background-color: var(--color-white100);
+  position: absolute;
+  top: 302px;
+  left: 357px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}

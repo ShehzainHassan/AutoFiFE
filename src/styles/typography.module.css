@@ -10,6 +10,18 @@
   font-size: 40px;
   line-height: 40px;
 }
+.spacedTitle {
+  font-family: DM Sans, sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 56px;
+}
+.numberText {
+  font-family: DM Sans, sans-serif;
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 53.2px;
+}
 .cardTitle {
   font-family: DM Sans, sans-serif;
   font-weight: 700;
@@ -87,6 +99,12 @@
   font-weight: 400;
   font-size: 15px;
   line-height: 28px;
+}
+.mediumSpaced {
+  font-family: DM Sans, sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 37.5px;
 }
 .carDescription {
   font-family: DM Sans, sans-serif;

@@ -1,0 +1,14 @@
+.statsContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+.statContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.border {
+  margin: 55px -371px 0;
+  border: 1px solid var(--color-gray200);
+}
