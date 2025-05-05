@@ -8,17 +8,20 @@ type ButtonSecondaryProps = {
   btnText: string;
   buttonColor?: string;
   hoverColor?: string;
+  onClick?: () => void;
 };
 export default function ButtonSecondary({
   btnText,
   buttonColor = "var(--color-blue500)",
   hoverColor = "var(--color-blue600)",
+  onClick,
 }: ButtonSecondaryProps) {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <div
       className={classes.btnContainer}
       style={{ backgroundColor: isHovered ? hoverColor : buttonColor }}
+      onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
       <button className={`${headings.modelText} ${classes.btn}`}>

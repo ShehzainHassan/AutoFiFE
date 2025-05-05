@@ -39,13 +39,10 @@ export default function CarCard({
           height={14}
         />
       </div>
-      <Image
-        src={imgSrc}
-        alt="car-name"
-        className={classes.carImg}
-        width={328}
-        height={218}
-      />
+      <div className={classes.imgWrapper}>
+        <Image src={imgSrc} alt="car-name" className={classes.carImg} fill />
+      </div>
+
       <div className={classes.carDetails}>
         <div className={classes.carInfo}>
           <h2 className={headings.brandText}>{carDetails}</h2>

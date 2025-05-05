@@ -9,9 +9,6 @@
 }
 .carCards {
   display: flex;
-  gap: 30px;
-}
-.navigate {
-  display: flex;
-  gap: 25px;
+  align-items: center;
+  margin-right: -265px;
 }
