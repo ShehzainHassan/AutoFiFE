@@ -3,7 +3,7 @@ import classes from "./statistics.module.css";
 import Wrapper from "../Wrapper/wrapper";
 export default function Statistics() {
   return (
-    <Wrapper padding="55px 371px">
+    <Wrapper padding="55px 371px 0px">
       <div className={classes.statsContainer}>
         <div className={classes.statContainer}>
           <h1 className={headings.numberText}>836M</h1>

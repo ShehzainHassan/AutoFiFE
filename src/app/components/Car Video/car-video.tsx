@@ -7,7 +7,7 @@ import Wrapper from "../Wrapper/wrapper";
 import classes from "./car-video.module.css";
 export default function CarVideo() {
   return (
-    <Wrapper padding="120px 110px 60px">
+    <Wrapper padding="120px 110px 0px">
       <div className={classes.container}>
         <div className={classes.imageWrapper}>
           <Image src="/images/thumbnail.jpg" alt="thumbnail" fill />

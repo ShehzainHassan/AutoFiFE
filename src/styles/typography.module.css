@@ -112,9 +112,18 @@
   font-size: 14px;
   line-height: 14px;
 }
+.priceCut {
+  font-family: DM Sans, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+}
 .tinyText {
   font-family: DM Sans, sans-serif;
   font-weight: 400;
   font-size: 12px;
   line-height: 12px;
+}
+.white {
+  color: var(--color-white100);
 }

@@ -8,6 +8,7 @@ type SectionTitleProps = {
   backgroundColor?: string;
   showButton?: boolean;
   ratingsText?: string;
+  color?: string;
 };
 export default function SectionTitle({
   title,
@@ -16,13 +17,14 @@ export default function SectionTitle({
   backgroundColor = "var(--color-white100)",
   showButton = true,
   ratingsText,
+  color = "var(--color-black100)",
 }: SectionTitleProps) {
   return (
     <div
       className={`${classes.headingsContainer} ${
         rounded ? classes.rounded : ""
       }`}
-      style={{ backgroundColor }}>
+      style={{ backgroundColor, color }}>
       <h1 className={headings.sectionTitle}>{title}</h1>
       {showButton && (
         <div className={`${classes.subHeadingContainer} ${classes.subHeading}`}>

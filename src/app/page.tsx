@@ -4,6 +4,7 @@ import PremiumBrands from "./components/Explore Premium Brands/premium-brands";
 import Footer from "./components/Footer/footer";
 import Hero from "./components/Hero/hero";
 import LatestBlog from "./components/Latest Blog/latest-blog";
+import PopularMakes from "./components/Popular Makes/popular-makes";
 import Shop from "./components/Shop/shop";
 import Statistics from "./components/Statistics/statistics";
 import Customers from "./components/What our customers say/customers";
@@ -18,6 +19,7 @@ export default function Home() {
       <CarVideo />
       <Statistics />
       <WhyChooseUs />
+      <PopularMakes />
       <Shop />
       <Customers />
       <LatestBlog />
