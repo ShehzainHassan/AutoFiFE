@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  padding: 13px 24px;
+  background-color: var(--color-white100);
+  border-radius: 30px;
+  border: 1px solid var(--color-gray100);
+  cursor: pointer;
+}
+.prev {
+  transform: rotate(180deg);
+}

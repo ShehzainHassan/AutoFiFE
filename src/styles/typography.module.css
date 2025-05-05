@@ -16,6 +16,12 @@
   font-size: 30px;
   line-height: 45px;
 }
+.priceText {
+  font-family: DM Sans, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+}
 .mediumTitle {
   font-family: DM Sans, sans-serif;
   font-weight: 500;
@@ -81,6 +87,12 @@
   font-weight: 400;
   font-size: 15px;
   line-height: 28px;
+}
+.carDescription {
+  font-family: DM Sans, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
 }
 .tinyText {
   font-family: DM Sans, sans-serif;

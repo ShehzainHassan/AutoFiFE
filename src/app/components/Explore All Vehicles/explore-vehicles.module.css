@@ -2,3 +2,16 @@
   display: flex;
   flex-direction: column;
 }
+.space {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+.carCards {
+  display: flex;
+  gap: 30px;
+}
+.navigate {
+  display: flex;
+  gap: 25px;
+}

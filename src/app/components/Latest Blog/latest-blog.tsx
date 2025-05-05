@@ -1,5 +1,5 @@
 import BlogCard from "../Blog Card/blog-card";
-import CarCard from "../Car Card/car-card";
+import BuySellCard from "../Buy Sell Car/car-card";
 import SectionTitle from "../Section Title/section-title";
 import Wrapper from "../Wrapper/wrapper";
 import classes from "./latest.blog.module.css";
@@ -27,11 +27,11 @@ export default function LatestBlog() {
       </Wrapper>
       <Wrapper backgroundColor="var(--color-white100)">
         <div className={classes.cardContainer}>
-          <CarCard
+          <BuySellCard
             title="Are You Looking For a Car"
             description="We are committed to providing our customers with exceptional service."
           />
-          <CarCard
+          <BuySellCard
             title="Do You Want to Sell a Car"
             description="We are committed to providing our customers with exceptional service."
             backgroundColor="var(--color-pink100)"

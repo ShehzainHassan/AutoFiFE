@@ -42,13 +42,6 @@
   background-color: var(--color-yellow500);
   border-radius: 28px;
 }
-.btn {
-  padding: 13px 24px;
-  background-color: var(--color-white100);
-  border-radius: 30px;
-  border: 1px solid var(--color-gray100);
-  cursor: pointer;
-}
 .wrapper {
   padding: 0 145px;
 }

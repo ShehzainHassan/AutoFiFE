@@ -2,6 +2,7 @@ import Image from "next/image";
 import SectionTitle from "../Section Title/section-title";
 import classes from "./customers.module.css";
 import headings from "@/styles/typography.module.css";
+import ButtonNavigate from "../Buttons/Navigate/navigate";
 
 export default function Customers() {
   return (
@@ -14,9 +15,7 @@ export default function Customers() {
       />
       <div className={classes.wrapper}>
         <div className={classes.reviewContainer}>
-          <div className={classes.btn}>
-            <Image src="/images/prev.png" alt="prev" width={7} height={12} />
-          </div>
+          <ButtonNavigate type="prev" />
           <div className={classes.subContainer}>
             <Image
               src="/images/customer.png"
@@ -49,9 +48,7 @@ export default function Customers() {
               </p>
             </div>
           </div>
-          <div className={classes.btn}>
-            <Image src="/images/next.png" alt="next" width={12} height={12} />
-          </div>
+          <ButtonNavigate type="next" />
         </div>
       </div>
     </div>
