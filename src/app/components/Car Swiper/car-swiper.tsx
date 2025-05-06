@@ -33,7 +33,7 @@ export default function CarSwiper() {
       ))}
       {loading && (
         <SwiperSlide>
-          <div className="loadingSpinnerWrapper">
+          <div className={`loadingSpinnerWrapper ${classes.loading}`}>
             <ClipLoader size={50} color="#000" />
           </div>
         </SwiperSlide>

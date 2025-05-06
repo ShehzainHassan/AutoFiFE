@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
+import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ButtonNavigate from "../Buttons/Navigate/navigate";
 import CarCard from "../Car Card/car-card";
 import classes from "./popular-makes-swiper.module.css";
-import type { Swiper as SwiperType } from "swiper";
 
 export default function CarSwiper() {
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);

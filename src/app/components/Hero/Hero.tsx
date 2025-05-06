@@ -6,8 +6,12 @@ import Navbar from "../Navbar/navbar";
 import SearchCars from "../Search Form/search-cars";
 import classes from "./hero.module.css";
 import useTranslation from "@/i18n";
+import { useState } from "react";
 export default function Hero() {
   const { t } = useTranslation();
+  const tabs = ["All", "New", "Used"];
+  const [selectedTab, setSelectedTab] = useState(tabs[0]);
+
   return (
     <div className={classes.hero}>
       <Navbar />
@@ -21,7 +25,9 @@ export default function Hero() {
           </p>
           <div className={classes.searchContainer}>
             <HorizontalTabs
-              tabs={["All", "New", "Used"]}
+              tabs={tabs}
+              selectedTab={selectedTab}
+              onTabChange={(tab) => setSelectedTab(tab)}
               borderColor="transparent"
             />
             <SearchCars />

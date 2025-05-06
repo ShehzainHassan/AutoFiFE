@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
-import classes from "./tabs.module.css";
 import headings from "@/styles/typography.module.css";
+import classes from "./tabs.module.css";
 
 type TabProps = {
   tabs: string[];
+  selectedTab: string;
+  onTabChange: (tab: string) => void;
   tabColor?: string;
   selectedTabColor?: string;
   selectedTabBorderColor?: string;
@@ -13,26 +14,26 @@ type TabProps = {
 
 export default function HorizontalTabs({
   tabs,
+  selectedTab,
+  onTabChange,
   tabColor = "var(--color-white100)",
   selectedTabColor = "var(--color-white100)",
   selectedTabBorderColor = "var(--color-white100)",
   borderColor = "var(--color-white100)",
 }: TabProps) {
-  const [activeTab, setActiveTab] = useState(0);
-
   return (
     <div
       className={classes.tabContainer}
       style={{ borderBottom: `1px solid ${borderColor}` }}>
-      {tabs.map((tab, index) => (
+      {tabs.map((tab) => (
         <button
           key={tab}
-          onClick={() => setActiveTab(index)}
+          onClick={() => onTabChange(tab)}
           className={`${classes.tab} ${headings.tabText}`}
           style={{
-            color: activeTab === index ? selectedTabColor : tabColor,
+            color: selectedTab === tab ? selectedTabColor : tabColor,
             borderBottom:
-              activeTab === index
+              selectedTab === tab
                 ? `2px solid ${selectedTabBorderColor}`
                 : "none",
           }}>

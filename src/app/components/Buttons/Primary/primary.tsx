@@ -10,6 +10,7 @@ type ButtonPrimaryProps = {
   textColor?: string;
   padding?: string;
   hoverColor?: string;
+  border?: string;
 };
 export default function ButtonPrimary({
   imgSrc,
@@ -19,6 +20,7 @@ export default function ButtonPrimary({
   textColor = "var(--color-black100)",
   padding = "10px 25px",
   hoverColor = "var(--color-white200)",
+  border = "none",
 }: ButtonPrimaryProps) {
   const [isHovered, setIsHovered] = useState(false);
   return (
@@ -28,6 +30,7 @@ export default function ButtonPrimary({
         backgroundColor: isHovered ? hoverColor : backgroundColor,
         borderRadius,
         padding,
+        border,
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>

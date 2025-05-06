@@ -6,3 +6,11 @@
 .swiperWrapper {
   padding: 25px 20px;
 }
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  width: 50.6087px;
+}
