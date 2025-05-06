@@ -9,14 +9,20 @@
 
   --color-gray100: #e9e9e9;
   --color-gray200: #e1e1e1;
+  --color-gray300: #e4e4e5;
+  --color-gray400: #c3c3c3;
+  --color-gray600: #666666;
 
   --color-black100: #050b20;
+  --color-black200: #0c0c11;
+  --color-black300: #020610;
 
   --color-pink100: #ffe9f3;
 
   --color-yellow500: #e1c03f;
 
   --color-blue100: #e9f2ff;
+  --color-blue400: #0763d3;
   --color-blue500: #405ff2;
   --color-blue600: #293a91;
 

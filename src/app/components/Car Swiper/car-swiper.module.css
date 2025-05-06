@@ -2,3 +2,7 @@
   display: flex;
   gap: 25px;
 }
+
+.swiperWrapper {
+  padding: 25px 20px;
+}

@@ -6,71 +6,38 @@ import ButtonNavigate from "../Buttons/Navigate/navigate";
 import CarCard from "../Car Card/car-card";
 import classes from "./car-swiper.module.css";
 import type { Swiper as SwiperType } from "swiper";
+import { useVehicle } from "@/contexts/vehicleContext";
+import { ClipLoader } from "react-spinners";
 export default function CarSwiper() {
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
+  const { vehicleList, fetchMoreVehicles, loading } = useVehicle();
   return (
-    <Swiper spaceBetween={20} slidesPerView={4.5} onSwiper={setSwiperInstance}>
-      <SwiperSlide>
-        <CarCard
-          imgSrc="/images/ford_2021.png"
-          carDetails="Ford Transit - 2021"
-          carDescription="4.0 D5 PowerPulse Momentum 5dr AW… Geartronic Estate"
-          miles="2500 Miles"
-          fuelType="Diesel"
-          gearType="Manual"
-          price="$22,000"
-          tag="Great Price"
-          tagColor="var(--color-green600)"
-        />
-      </SwiperSlide>
-      <SwiperSlide>
-        <CarCard
-          imgSrc="/images/glc_2023.png"
-          carDetails="New GLC - 2023"
-          carDescription="4.0 D5 PowerPulse Momentum 5dr AW… Geartronic Estate"
-          miles="50 Miles"
-          fuelType="Petrol"
-          gearType="Automatic"
-          price="$95,000"
-          tag="Low Mileage"
-          tagColor="var(--color-blue500)"
-        />
-      </SwiperSlide>
-      <SwiperSlide>
-        <CarCard
-          imgSrc="/images/audi_a6_3.5.png"
-          carDetails="Audi A6 3.5 - New"
-          carDescription="3.5 D5 PowerPulse Momentum 5dr AW… Geartronic Estate"
-          miles="100 Miles"
-          fuelType="Petrol"
-          gearType="Automatic"
-          price="$58,000"
-        />
-      </SwiperSlide>
-      <SwiperSlide>
-        <CarCard
-          imgSrc="/images/atlis_2023.png"
-          carDetails="Corolla Atlis - 2023"
-          carDescription="3.5 D5 PowerPulse Momentum 5dr AW… Geartronic Estate"
-          miles="15000 Miles"
-          fuelType="Petrol"
-          gearType="CVT"
-          price="$45,000"
-        />
-      </SwiperSlide>
-      <SwiperSlide>
-        <CarCard
-          imgSrc="/images/ford_explorer_2023.png"
-          carDetails="Ford Explorer - 2023"
-          carDescription="3.5 D5 PowerPulse Momentum 5dr AW… Geartronic Estate"
-          miles="10 Miles"
-          fuelType="Diesel"
-          gearType="Manual"
-          price="$35,000"
-          tag="Great Price"
-          tagColor="var(--color-green600)"
-        />
-      </SwiperSlide>
+    <Swiper
+      className={classes.swiperWrapper}
+      onReachEnd={() => fetchMoreVehicles()}
+      spaceBetween={20}
+      slidesPerView={4.6}
+      onSwiper={setSwiperInstance}>
+      {vehicleList.map((vehicle) => (
+        <SwiperSlide key={vehicle.id}>
+          <CarCard
+            imgSrc="/images/ford_2021.png"
+            carDetails={`${vehicle.make} ${vehicle.model} - ${vehicle.year}`}
+            carDescription="Car Description"
+            miles={`${vehicle.mileage} Miles`}
+            fuelType={vehicle.fuelType}
+            gearType={vehicle.transmission}
+            price={`$${vehicle.price}`}
+          />
+        </SwiperSlide>
+      ))}
+      {loading && (
+        <SwiperSlide>
+          <div className="loadingSpinnerWrapper">
+            <ClipLoader size={50} color="#000" />
+          </div>
+        </SwiperSlide>
+      )}
       <div className={classes.navigate}>
         <ButtonNavigate
           onClick={() => swiperInstance?.slidePrev()}

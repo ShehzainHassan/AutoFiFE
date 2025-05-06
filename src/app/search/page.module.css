@@ -1,0 +1,16 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-gray300);
+  border-radius: 20px;
+  width: 300px;
+  padding: 25px 25px 0;
+}
+.btn {
+  padding-top: 28px;
+}
+.expandable {
+  margin: 0 -25px;
+  border: 1px solid var(--color-gray300);
+  padding: 17px 24px;
+}

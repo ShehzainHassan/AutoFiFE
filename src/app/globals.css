@@ -7,3 +7,14 @@ body {
   background-color: var(--color-white100);
   color: var(--color-black100);
 }
+.css-1u9des2-indicatorSeparator {
+  display: none;
+}
+.css-tj5bde-Svg {
+  width: 18px;
+  height: 18px;
+  color: var(--color-black300);
+}
+.css-13cymwt-control {
+  border-color: var(--color-gray400) !important;
+}

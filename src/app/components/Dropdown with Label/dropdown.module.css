@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 17.5px;
+}
+.black {
+  color: var(--color-black200);
+}

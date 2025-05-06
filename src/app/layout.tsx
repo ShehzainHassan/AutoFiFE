@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import { VehicleProvider } from "@/contexts/vehicleContext";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -19,7 +20,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={dmSans.className}>{children}</body>
+      <VehicleProvider>
+        <body className={dmSans.className}>{children}</body>
+      </VehicleProvider>
     </html>
   );
 }
