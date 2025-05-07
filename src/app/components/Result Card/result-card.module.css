@@ -68,3 +68,20 @@
   margin-right: -12px;
   background-color: var(--color-gray300);
 }
+.imgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-white100);
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  position: absolute;
+  z-index: 1;
+  top: 12px;
+  right: 12px;
+  padding: 10px;
+}
+.carImg {
+  position: relative;
+}

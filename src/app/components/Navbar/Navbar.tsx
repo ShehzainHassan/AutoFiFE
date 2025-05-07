@@ -4,11 +4,15 @@ import classes from "./navbar.module.css";
 import headings from "@/styles/typography.module.css";
 import useTranslation from "@/i18n";
 import ButtonPrimary from "../Buttons/Primary/primary";
-
-export default function Navbar() {
+type NavbarProps = {
+  backgroundColor?: string;
+};
+export default function Navbar({
+  backgroundColor = "transparent",
+}: NavbarProps) {
   const { t } = useTranslation();
   return (
-    <div className={classes.navbar}>
+    <div className={classes.navbar} style={{ backgroundColor }}>
       <Image
         src="/images/logo.png"
         className={classes.logo}

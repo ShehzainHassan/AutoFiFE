@@ -34,6 +34,12 @@
   font-size: 20px;
   line-height: 30px;
 }
+.resultTitle {
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 19.06px;
+  line-height: 32px;
+}
 .mediumTitle {
   font-family: DM Sans, sans-serif;
   font-weight: 500;

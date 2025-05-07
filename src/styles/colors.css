@@ -11,6 +11,7 @@
   --color-gray200: #e1e1e1;
   --color-gray300: #e4e4e5;
   --color-gray400: #c3c3c3;
+  --color-gray500: #c3cdd5;
   --color-gray600: #666666;
 
   --color-black100: #050b20;
@@ -27,6 +28,7 @@
   --color-blue600: #293a91;
 
   --color-green600: #3d923a;
+  --color-green700: #005128;
 
   --color-purple100: #eef1fb;
 }

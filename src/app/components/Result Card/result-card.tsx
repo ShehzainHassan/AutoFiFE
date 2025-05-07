@@ -6,12 +6,23 @@ import ButtonPrimary from "../Buttons/Primary/primary";
 export default function ResultCard() {
   return (
     <div className={classes.container}>
-      <Image
-        src="/images/Bentley-Arnage4.4.png"
-        alt="car-img"
-        width={360}
-        height={200}
-      />
+      <div className={classes.carImg}>
+        <Image
+          src="/images/Bentley-Arnage4.4.png"
+          alt="car-img"
+          width={360}
+          height={200}
+        />
+        <div className={classes.imgContainer}>
+          <Image
+            src="/images/love.png"
+            alt="heart-icon"
+            width={25}
+            height={21.33}
+          />
+        </div>
+      </div>
+
       <div className={classes.carDetails}>
         <div className={classes.cardTop}>
           <p>New arrival</p>
