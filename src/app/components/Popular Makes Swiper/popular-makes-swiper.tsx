@@ -6,54 +6,44 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import ButtonNavigate from "../Buttons/Navigate/navigate";
 import CarCard from "../Car Card/car-card";
 import classes from "./popular-makes-swiper.module.css";
+import { useVehicleByMake } from "@/contexts/vehicleByMakeContext";
+import { ClipLoader } from "react-spinners";
 
 export default function CarSwiper() {
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
+  const { vehicleList, loading, fetchMoreVehicles } = useVehicleByMake();
   return (
-    <Swiper spaceBetween={0} slidesPerView={2.1} onSwiper={setSwiperInstance}>
-      <SwiperSlide>
-        <CarCard
-          imgSrc="/images/ford_2021.png"
-          carDetails="Ford Transit - 2021"
-          carDescription="4.0 D5 PowerPulse Momentum 5dr AW… Geartronic Estate"
-          miles="2500 Miles"
-          fuelType="Diesel"
-          gearType="Manual"
-          price="$22,000"
-          cardType="horizontal"
-          showPreviousPrice={true}
-          tag="Sale"
-          tagColor="var(--color-blue500)"
-        />
-      </SwiperSlide>
-      <SwiperSlide>
-        <CarCard
-          imgSrc="/images/glc_2023.png"
-          carDetails="New GLC - 2023"
-          carDescription="4.0 D5 PowerPulse Momentum 5dr AW… Geartronic Estate"
-          miles="50 Miles"
-          fuelType="Petrol"
-          gearType="Automatic"
-          price="$95,000"
-          cardType="horizontal"
-          tag="Sale"
-          tagColor="var(--color-blue500)"
-        />
-      </SwiperSlide>
-      <SwiperSlide>
-        <CarCard
-          imgSrc="/images/glc_2023.png"
-          carDetails="New GLC - 2023"
-          carDescription="4.0 D5 PowerPulse Momentum 5dr AW… Geartronic Estate"
-          miles="50 Miles"
-          fuelType="Petrol"
-          gearType="Automatic"
-          price="$95,000"
-          cardType="horizontal"
-          tag="Sale"
-          tagColor="var(--color-blue500)"
-        />
-      </SwiperSlide>
+    <Swiper
+      spaceBetween={0}
+      slidesPerView={2.1}
+      onReachEnd={() => fetchMoreVehicles()}
+      onSwiper={setSwiperInstance}>
+      {vehicleList.map((vehicle) => (
+        <SwiperSlide key={vehicle.id}>
+          <CarCard
+            imgSrc="/images/ford_2021.png"
+            carDetails={`${vehicle.make} ${vehicle.model} - ${vehicle.year}`}
+            carDescription="Car Description"
+            miles={`${vehicle.mileage} Miles`}
+            fuelType={vehicle.fuelType}
+            gearType={vehicle.transmission}
+            price={`$${vehicle.price}`}
+            cardType="horizontal"
+            tag="Sale"
+            tagColor="var(--color-blue500)"
+          />
+        </SwiperSlide>
+      ))}
+      {loading && (
+        <SwiperSlide className={classes.loading}>
+          <div className={`loadingSpinnerWrapper `}>
+            <ClipLoader size={50} color="var(--color-white100)" />
+          </div>
+        </SwiperSlide>
+      )}
+      {vehicleList.length === 0 && !loading && (
+        <div className={classes.noVehicles}>No vehicles found</div>
+      )}
 
       <div className={classes.navigate}>
         <ButtonNavigate

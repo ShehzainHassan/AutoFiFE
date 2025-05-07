@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { VehicleProvider } from "@/contexts/vehicleContext";
+import { VehicleByMakeProvider } from "@/contexts/vehicleByMakeContext";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -21,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <VehicleProvider>
-        <body className={dmSans.className}>{children}</body>
+        <VehicleByMakeProvider>
+          <body className={dmSans.className}>{children}</body>
+        </VehicleByMakeProvider>
       </VehicleProvider>
     </html>
   );

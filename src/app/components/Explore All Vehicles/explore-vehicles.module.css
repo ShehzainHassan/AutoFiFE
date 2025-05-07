@@ -7,8 +7,3 @@
   flex-direction: column;
   gap: 50px;
 }
-.carCards {
-  display: flex;
-  align-items: center;
-  margin-right: -265px;
-}

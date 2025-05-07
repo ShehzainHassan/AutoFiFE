@@ -16,7 +16,7 @@ export default function Vehicles() {
           buttonText="View All"
           backgroundColor="var(--color-white100)"
         />
-        <Wrapper>
+        <Wrapper padding="0 0 115px 265px">
           <div className={classes.space}>
             <HorizontalTabs
               tabs={tabs}
@@ -29,10 +29,8 @@ export default function Vehicles() {
               selectedTabBorderColor="var(--color-blue500)"
               borderColor="var(--color-gray100)"
             />
-            <div className={classes.carCards}>
-              <CarSwiper />
-            </div>
           </div>
+          <CarSwiper />
         </Wrapper>
       </div>
     </>

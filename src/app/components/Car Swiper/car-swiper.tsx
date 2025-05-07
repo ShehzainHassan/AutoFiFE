@@ -10,13 +10,13 @@ import { useVehicle } from "@/contexts/vehicleContext";
 import { ClipLoader } from "react-spinners";
 export default function CarSwiper() {
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
-  const { vehicleList, fetchMoreVehicles, loading } = useVehicle();
+  const { vehicleList, fetchMoreVehicles, loading, hasMore } = useVehicle();
   return (
     <Swiper
-      className={classes.swiperWrapper}
       onReachEnd={() => fetchMoreVehicles()}
       spaceBetween={20}
       slidesPerView={4.6}
+      className={classes.swiperContainer}
       onSwiper={setSwiperInstance}>
       {vehicleList.map((vehicle) => (
         <SwiperSlide key={vehicle.id}>
@@ -28,13 +28,15 @@ export default function CarSwiper() {
             fuelType={vehicle.fuelType}
             gearType={vehicle.transmission}
             price={`$${vehicle.price}`}
+            tag="Great Price"
+            tagColor="var(--color-green600)"
           />
         </SwiperSlide>
       ))}
       {loading && (
         <SwiperSlide>
-          <div className={`loadingSpinnerWrapper ${classes.loading}`}>
-            <ClipLoader size={50} color="#000" />
+          <div className={`loadingSpinnerWrapper`}>
+            <ClipLoader size={50} color="var(--color-black100)" />
           </div>
         </SwiperSlide>
       )}
@@ -46,6 +48,7 @@ export default function CarSwiper() {
         <ButtonNavigate
           onClick={() => swiperInstance?.slideNext()}
           type="next"
+          opacity={hasMore ? 1 : 0.5}
         />
       </div>
     </Swiper>

@@ -2,6 +2,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 body {
   background-color: var(--color-white100);
@@ -17,4 +18,9 @@ body {
 }
 .css-13cymwt-control {
   border-color: var(--color-gray400) !important;
+}
+.loadingSpinnerWrapper {
+  margin: 0px -20px;
+  height: 220px;
+  margin-top: 105px;
 }

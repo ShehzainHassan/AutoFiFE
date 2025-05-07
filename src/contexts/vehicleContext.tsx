@@ -9,6 +9,7 @@ type VehicleContextType = {
   vehicleList: Vehicle[];
   fetchMoreVehicles: () => void;
   loading: boolean;
+  hasMore: boolean;
 };
 
 const VehicleContext = createContext<VehicleContextType | undefined>(undefined);
@@ -17,16 +18,21 @@ export const VehicleProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [vehicleList, setVehicleList] = useState<Vehicle[]>([]);
   const [offset, setOffset] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(true);
-
+  const [loading, setLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
   const fetchVehicles = async (newOffset = 0) => {
+    if (!hasMore) return;
     setLoading(true);
     try {
       const response = await axios.get<Vehicle[]>(
         `http://localhost:5011/Vehicle?pageView=${PAGE_SIZE}&offset=${newOffset}`
       );
       const newVehicles = response.data;
-      if (Array.isArray(newVehicles) && newVehicles.length > 0) {
+      if (Array.isArray(newVehicles)) {
+        if (newVehicles.length < PAGE_SIZE) {
+          setHasMore(false);
+        }
+
         setVehicleList((prev) => {
           const existingIds = new Set(prev.map((v: Vehicle) => v.id));
           const filtered = newVehicles.filter(
@@ -34,7 +40,8 @@ export const VehicleProvider: React.FC<{ children: React.ReactNode }> = ({
           );
           return [...prev, ...filtered];
         });
-        setOffset((prev) => prev + 20);
+
+        setOffset((prev) => prev + PAGE_SIZE);
       }
     } catch (err) {
       console.error("Error fetching vehicles ", err);
@@ -54,6 +61,7 @@ export const VehicleProvider: React.FC<{ children: React.ReactNode }> = ({
         vehicleList,
         fetchMoreVehicles,
         loading,
+        hasMore,
       }}>
       {children}
     </VehicleContext.Provider>
