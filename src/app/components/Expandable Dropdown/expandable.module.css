@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 17px 24px;
+  cursor: pointer;
 }
 .icon {
   width: 20px;

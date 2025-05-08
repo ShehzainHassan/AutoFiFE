@@ -1,0 +1,8 @@
+.expand {
+  width: 8px;
+  height: 5px;
+  border: 5px 4px 0px 4px;
+  background: linear-gradient(to top, #050b20 0%, #000000 100%);
+  clip-path: polygon(0 0%, 100% 0%, 50% 100%);
+  margin-left: 80px;
+}

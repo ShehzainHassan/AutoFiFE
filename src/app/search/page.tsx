@@ -13,6 +13,7 @@ import headings from "@/styles/typography.module.css";
 import Image from "next/image";
 import FAQs from "../components/FAQs/faqs";
 import InputWithLabel from "../components/Input With Label/input";
+import SortBy from "../components/Sort By/sort-by";
 
 export default function Search() {
   const tabs = ["Car", "Body style", "Price"];
@@ -110,18 +111,29 @@ export default function Search() {
                   className={classes.location}
                 />
               </div>
-              <div className={classes.sortBy}>
-                <p>Sort by: </p>
-                <select className={classes.select}>
-                  <option value="best deals">Best deals first</option>
-                </select>
-              </div>
+              <SortBy />
             </div>
             <div className={classes.resultCards}>
-              <ResultCard />
-              <ResultCard />
-              <ResultCard />
-              <ResultCard />
+              <ResultCard
+                carImg="/images/Bentley-Arnage4.4.png"
+                miles={102850}
+                price="$11,995"
+              />
+              <ResultCard
+                carImg="/images/Bentley-Arnage4.4.png"
+                miles={102850}
+                price="$11,995"
+              />
+              <ResultCard
+                carImg="/images/Bentley-Arnage4.4.png"
+                miles={102850}
+                price="$11,995"
+              />
+              <ResultCard
+                carImg="/images/Bentley-Arnage4.4.png"
+                miles={102850}
+                price="$11,995"
+              />
             </div>
           </div>
         </div>

@@ -1,30 +1,27 @@
-import headings from "@/styles/typography.module.css";
+import { makeOptions, modelOptions, priceOptions } from "../../../../constants";
 import ButtonPrimary from "../Buttons/Primary/primary";
+import DropdownWithoutLabel from "../Dropdown without Label/dropdown";
 import classes from "./search-cars.module.css";
 
 export default function SearchCars() {
   return (
     <div className={classes.container}>
       <div className={classes.criteriaContainer}>
-        <div className={classes.textContainer}>
-          <p className={headings.criteriaText}>Any Makes</p>
-          <p className={classes.border} />
-        </div>
+        <DropdownWithoutLabel options={makeOptions} placeholder="Select make" />
         <div className={classes.verticalBorder} />
       </div>
       <div className={classes.criteriaContainer}>
-        <div className={classes.textContainer}>
-          <p className={headings.criteriaText}>Any Models</p>
-          <p className={classes.border} />
-        </div>
+        <DropdownWithoutLabel
+          options={modelOptions}
+          placeholder="Select model"
+        />
         <div className={classes.verticalBorder} />
       </div>
       <div className={classes.priceBtnContainer}>
-        <div className={classes.priceContainer}>
-          <p className={headings.criteriaText}>Prices:</p>
-          <p className={headings.criteriaText}>All Prices</p>
-          <p className={classes.border} />
-        </div>
+        <DropdownWithoutLabel
+          options={priceOptions}
+          placeholder="Select price"
+        />
         <ButtonPrimary
           imgSrc="/images/search.png"
           backgroundColor="var(--color-blue500)"

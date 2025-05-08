@@ -1,0 +1,9 @@
+.sortBy {
+  display: flex;
+  align-items: center;
+}
+.select {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}

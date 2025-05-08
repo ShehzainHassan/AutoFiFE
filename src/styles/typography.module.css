@@ -1,3 +1,4 @@
+/**************          DM Sans Font          *****************/
 .title {
   font-family: DM Sans, sans-serif;
   font-weight: 700;
@@ -34,56 +35,12 @@
   font-size: 20px;
   line-height: 30px;
 }
-.resultTitle {
-  font-family: Roboto, sans-serif;
-  font-weight: 700;
-  font-size: 19.06px;
-  line-height: 32px;
-}
+
 .mediumTitle {
   font-family: DM Sans, sans-serif;
   font-weight: 500;
   font-size: 30px;
   line-height: 30px;
-}
-.navElement {
-  font-family: DM Sans, sans-serif;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 27.75px;
-}
-.modelText {
-  font-family: DM Sans, sans-serif;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 18px;
-}
-.filterText {
-  font-family: Inter, sans-serif;
-  font-weight: 500;
-  font-size: 15.5px;
-  line-height: 20px;
-}
-
-.tabText {
-  font-family: DM Sans, sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 29.6px;
-}
-
-.brandText {
-  font-family: DM Sans, sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21.6px;
-}
-
-.footerTitle {
-  font-family: DM Sans, sans-serif;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
 }
 
 .review {
@@ -100,42 +57,137 @@
   line-height: 30px;
 }
 
+.footerTitle {
+  font-family: DM Sans, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.brandText {
+  font-family: DM Sans, sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21.6px;
+}
+
+.tabText {
+  font-family: DM Sans, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 29.6px;
+}
+.navElement {
+  font-family: DM Sans, sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 27.75px;
+}
+.modelText {
+  font-family: DM Sans, sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+}
+
 .shortText {
   font-family: DM Sans, sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 16px;
 }
-.criteriaText {
-  font-family: DM Sans, sans-serif;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 28px;
-}
+
 .mediumSpaced {
   font-family: DM Sans, sans-serif;
   font-weight: 400;
   font-size: 15px;
   line-height: 37.5px;
 }
-.carDescription {
+
+.criteriaText {
   font-family: DM Sans, sans-serif;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 14px;
+  font-size: 15px;
+  line-height: 28px;
 }
+
 .priceCut {
   font-family: DM Sans, sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
 }
+
+.carDescription {
+  font-family: DM Sans, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+}
+
 .tinyText {
   font-family: DM Sans, sans-serif;
   font-weight: 400;
   font-size: 12px;
   line-height: 12px;
 }
-.white {
-  color: var(--color-white100);
+
+/**************          Inter Font          *****************/
+
+.carTitle {
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  font-size: 15.75px;
+  line-height: 24px;
+}
+
+.filterText {
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  font-size: 15.5px;
+  line-height: 20px;
+}
+
+.mileage {
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.smallText {
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 11.81px;
+  line-height: 16px;
+}
+
+/**************          Roboto Font          *****************/
+
+.resultTitle {
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 19.06px;
+  line-height: 32px;
+}
+
+.resultCardPrice {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 21.56px;
+  line-height: 27px;
+}
+
+.noRatings {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 13.45px;
+  line-height: 21px;
+}
+
+.contact {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 12.91px;
+  line-height: 18px;
 }
