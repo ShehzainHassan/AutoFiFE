@@ -8,6 +8,10 @@
   border-bottom-right-radius: 12px;
   border: 1px solid var(--color-gray300);
 }
+.car {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
 .carDetails {
   display: flex;
   flex-direction: column;

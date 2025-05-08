@@ -11,6 +11,7 @@ type ButtonPrimaryProps = {
   padding?: string;
   hoverColor?: string;
   border?: string;
+  onClick?: () => void;
 };
 export default function ButtonPrimary({
   imgSrc,
@@ -21,6 +22,7 @@ export default function ButtonPrimary({
   padding = "10px 25px",
   hoverColor = "var(--color-white200)",
   border = "none",
+  onClick,
 }: ButtonPrimaryProps) {
   const [isHovered, setIsHovered] = useState(false);
   return (
@@ -32,6 +34,7 @@ export default function ButtonPrimary({
         padding,
         border,
       }}
+      onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
       {imgSrc && <Image src={imgSrc} alt="icon" width={15} height={15} />}

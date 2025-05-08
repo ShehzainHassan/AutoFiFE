@@ -18,7 +18,13 @@ export default function ResultCard({
   return (
     <div className={classes.container}>
       <div className={classes.carImg}>
-        <Image src={carImg} alt="car-img" width={360} height={200} />
+        <Image
+          src={carImg}
+          alt="car-img"
+          width={360}
+          height={200}
+          className={classes.car}
+        />
         <div className={classes.imgContainer}>
           <Image
             src="/images/love.png"

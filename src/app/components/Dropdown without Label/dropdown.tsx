@@ -1,19 +1,21 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useState } from "react";
-import classes from "./dropdown.module.css";
 import { components, DropdownIndicatorProps, GroupBase } from "react-select";
+import classes from "./dropdown.module.css";
 const Select = dynamic(() => import("react-select"), { ssr: false });
 const TypedSelect = Select as unknown as React.ComponentType<
   import("react-select").Props<Options, false, GroupBase<Options>>
 >;
 
 type Options = {
+  label: string;
   value: string;
 };
 
 type DropwdownProps = {
   options: Options[];
+  value: string;
+  onChange: (option: string) => void;
   placeholder?: string;
 };
 
@@ -28,17 +30,17 @@ const CustomDropdownIndicator = (
 };
 export default function DropdownWithoutLabel({
   options,
+  value,
+  onChange,
   placeholder = "Select...",
 }: DropwdownProps) {
-  const [selected, setSelected] = useState<Options | null>(options[0] || null);
-
   return (
     <div className={classes.container}>
       <TypedSelect
         options={options}
         placeholder={placeholder}
-        value={selected}
-        onChange={(option) => setSelected(option as Options)}
+        value={options.find((option) => option.value === value)}
+        onChange={(option) => onChange(option?.value || "")}
         isSearchable={false}
         styles={{
           control: (base) => ({
@@ -46,6 +48,7 @@ export default function DropdownWithoutLabel({
             border: "none",
             boxShadow: "none",
             cursor: "pointer",
+            width: "200px",
           }),
           menu: (base) => ({
             ...base,

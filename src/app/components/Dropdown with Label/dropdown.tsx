@@ -1,10 +1,13 @@
 "use client";
 import headings from "@/styles/typography.module.css";
-import classes from "./dropdown.module.css";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { GroupBase } from "react-select";
+import classes from "./dropdown.module.css";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
+const TypedSelect = Select as unknown as React.ComponentType<
+  import("react-select").Props<Options, false, GroupBase<Options>>
+>;
 
 type Options = {
   label: string;
@@ -13,7 +16,9 @@ type Options = {
 
 type DropwdownProps = {
   label: string;
+  value: string;
   options: Options[];
+  onChange: (option: string) => void;
   placeholder?: string;
 };
 
@@ -21,19 +26,19 @@ export default function DropdownWithLabel({
   label,
   options,
   placeholder = "Select...",
+  value,
+  onChange,
 }: DropwdownProps) {
-  const [selected, setSelected] = useState<Options | null>(null);
-
   return (
     <div className={classes.container}>
       <div className={`${headings.carDescription} ${classes.black}`}>
         {label}
       </div>
-      <Select
+      <TypedSelect
         options={options}
         placeholder={placeholder}
-        value={selected}
-        onChange={(option) => setSelected(option as Options)}
+        value={options.find((option) => option.value === value)}
+        onChange={(option) => onChange(option?.value || "")}
       />
     </div>
   );

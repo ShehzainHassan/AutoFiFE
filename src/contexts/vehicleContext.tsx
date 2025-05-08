@@ -10,6 +10,12 @@ type VehicleContextType = {
   fetchMoreVehicles: () => void;
   loading: boolean;
   hasMore: boolean;
+  make: string;
+  setMake: (make: string) => void;
+  model: string;
+  setModel: (make: string) => void;
+  price: string;
+  setPrice: (make: string) => void;
 };
 
 const VehicleContext = createContext<VehicleContextType | undefined>(undefined);
@@ -20,6 +26,10 @@ export const VehicleProvider: React.FC<{ children: React.ReactNode }> = ({
   const [offset, setOffset] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [make, setMake] = useState<string>("Any Makes");
+  const [model, setModel] = useState<string>("Any Models");
+  const [price, setPrice] = useState<string>("All Prices");
+
   const fetchVehicles = async (newOffset = 0) => {
     if (!hasMore) return;
     setLoading(true);
@@ -62,6 +72,12 @@ export const VehicleProvider: React.FC<{ children: React.ReactNode }> = ({
         fetchMoreVehicles,
         loading,
         hasMore,
+        make,
+        setMake,
+        model,
+        setModel,
+        price,
+        setPrice,
       }}>
       {children}
     </VehicleContext.Provider>

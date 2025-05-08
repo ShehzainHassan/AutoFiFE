@@ -1,9 +1,23 @@
 import classes from "./input.module.css";
-export default function InputWithLabel() {
+type InputWithLabelProps = {
+  label: string;
+  value?: number | string;
+  onChange?: () => void;
+};
+export default function InputWithLabel({
+  label,
+  value = 0,
+  onChange,
+}: InputWithLabelProps) {
   return (
     <div className={classes.container}>
-      <p>Postcode</p>
-      <input type="number" className={classes.input}></input>
+      <p>{label}</p>
+      <input
+        type="number"
+        defaultValue={value}
+        onChange={onChange}
+        className={classes.input}
+      />
     </div>
   );
 }

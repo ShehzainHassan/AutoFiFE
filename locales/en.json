@@ -11,13 +11,6 @@
     },
     "hero": {
         "title": "Find Your Perfect Car",
-        "subHeading": "Find cars for sale and for rent near you",
-        "carModels": {
-            "suv": "SUV",
-            "sedan": "Sedan",
-            "hatchback": "Hatchback",
-            "coupe": "Coupe",
-            "hybrid": "Hybrid"
-        }
+        "subHeading": "Find cars for sale and for rent near you"
     }
 }

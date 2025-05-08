@@ -4,6 +4,7 @@ import classes from "./navbar.module.css";
 import headings from "@/styles/typography.module.css";
 import useTranslation from "@/i18n";
 import ButtonPrimary from "../Buttons/Primary/primary";
+import { useRouter } from "next/navigation";
 type NavbarProps = {
   backgroundColor?: string;
 };
@@ -11,6 +12,7 @@ export default function Navbar({
   backgroundColor = "transparent",
 }: NavbarProps) {
   const { t } = useTranslation();
+  const router = useRouter();
   return (
     <div className={classes.navbar} style={{ backgroundColor }}>
       <Image
@@ -19,6 +21,7 @@ export default function Navbar({
         alt="logo"
         width={108}
         height={26}
+        onClick={() => router.push("/")}
       />
       <div className={classes.navList}>
         <div className={classes.navContainer}>

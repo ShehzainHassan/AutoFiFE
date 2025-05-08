@@ -1,30 +1,40 @@
 "use client";
-import { useState } from "react";
-import ButtonPrimary from "../components/Buttons/Primary/primary";
-import DropdownWithLabel from "../components/Dropdown with Label/dropdown";
-import Expandable from "../components/Expandable Dropdown/expandable";
-import HorizontalTabs from "../components/Horizontal Tabs/tabs";
-import classes from "./page.module.css";
-import ResultCard from "../components/Result Card/result-card";
-import Navbar from "../components/Navbar/navbar";
-import Wrapper from "../components/Wrapper/wrapper";
-import Footer from "../components/Footer/footer";
+import { useVehicle } from "@/contexts/vehicleContext";
 import headings from "@/styles/typography.module.css";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { makeOptions, modelOptions } from "../../../constants";
+import ButtonPrimary from "../components/Buttons/Primary/primary";
+import DropdownWithLabel from "../components/Dropdown with Label/dropdown";
 import FAQs from "../components/FAQs/faqs";
+import Filters from "../components/Filters/Filters";
+import Footer from "../components/Footer/footer";
+import HorizontalTabs from "../components/Horizontal Tabs/tabs";
 import InputWithLabel from "../components/Input With Label/input";
+import Navbar from "../components/Navbar/navbar";
+import ResultCard from "../components/Result Card/result-card";
 import SortBy from "../components/Sort By/sort-by";
+import Wrapper from "../components/Wrapper/wrapper";
+import classes from "./page.module.css";
 
 export default function Search() {
   const tabs = ["Car", "Body style", "Price"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
-  const makeOptions = [
-    { label: "Bentley", value: "bentley" },
-    { label: "Ford", value: "ford" },
-    { label: "Audi", value: "audi" },
-  ];
   const carInfoTabs = ["FAQs", "Reviews", "Variants", "Pricing"];
   const [selectedInfoTab, setSelectedInfoTab] = useState(carInfoTabs[0]);
+  const { make, model, setMake, setModel } = useVehicle();
+  const searchParams = useSearchParams();
+  const defaultModel = searchParams.get("model");
+  const router = useRouter();
+  const handleSearch = () => {
+    router.push(`/search?make=${make}&model=${model}&price=All Prices`);
+  };
+  useEffect(() => {
+    if (defaultModel) {
+      setModel(defaultModel);
+    }
+  }, [defaultModel, setModel]);
   return (
     <>
       <Navbar backgroundColor="var(--color-gray600)" />
@@ -43,15 +53,19 @@ export default function Search() {
               />
               <DropdownWithLabel
                 label="Make"
+                value={make}
+                onChange={setMake}
                 placeholder="Make"
                 options={makeOptions}
               />
               <DropdownWithLabel
                 label="Model"
+                value={model}
+                onChange={setModel}
                 placeholder="Model"
-                options={makeOptions}
+                options={modelOptions}
               />
-              <InputWithLabel />
+              <InputWithLabel label="Postcode" />
 
               <div className={classes.btn}>
                 <ButtonPrimary
@@ -60,26 +74,11 @@ export default function Search() {
                   textColor="var(--color-white100)"
                   padding="12.5px 98px"
                   hoverColor="var(--color-blue600)"
+                  onClick={handleSearch}
                 />
               </div>
             </div>
-            <div className={classes.expandable}>
-              <Expandable title="Years" />
-              <Expandable title="Location and delivery" />
-              <Expandable title="Price" />
-              <Expandable title="Mileage" />
-              <Expandable title="Gearbox" />
-              <Expandable title="Engine size" />
-              <Expandable title="CO2" />
-              <Expandable title="Insurance group" />
-              <Expandable title="Variant" />
-              <Expandable title="Days on market" />
-              <Expandable title="Exterior color" />
-              <Expandable title="Features" />
-              <Expandable title="ULEZ compliance" />
-              <Expandable title="Fuel economy" />
-              <Expandable title="Price drops" roundedSides={true} />
-            </div>
+            <Filters />
           </div>
           <div className={classes.resultContainer}>
             <div className={classes.resultHeader}>
