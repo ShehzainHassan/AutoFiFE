@@ -1,10 +1,11 @@
 import { useVehicle } from "@/contexts/vehicleContext";
-import { makeOptions, modelOptions, priceOptions } from "../../../../constants";
+import { useVehicleResult } from "@/contexts/vehicleResultsContext";
+import { getModelOptions } from "@/utilities/utilities";
+import { useRouter } from "next/navigation";
+import { makeOptions, priceOptions } from "../../../../constants";
 import ButtonPrimary from "../Buttons/Primary/primary";
 import DropdownWithoutLabel from "../Dropdown without Label/dropdown";
 import classes from "./search-cars.module.css";
-import { useRouter } from "next/navigation";
-import { useVehicleResult } from "@/contexts/vehicleResultsContext";
 
 export default function SearchCars() {
   const {
@@ -29,15 +30,20 @@ export default function SearchCars() {
         <DropdownWithoutLabel
           value={makeGlobal}
           options={makeOptions}
-          onChange={setMakeGlobal}
+          onChange={(value) => {
+            setMakeGlobal(value);
+            setModel("Any Models");
+          }}
           placeholder="Select make"
         />
+
         <div className={classes.verticalBorder} />
       </div>
       <div className={classes.criteriaContainer}>
         <DropdownWithoutLabel
+          key={model}
           value={model}
-          options={modelOptions}
+          options={getModelOptions(makeGlobal)}
           onChange={setModel}
           placeholder="Select model"
         />

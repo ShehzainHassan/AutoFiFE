@@ -29,19 +29,14 @@ export const VehicleResultProvider: React.FC<{ children: React.ReactNode }> = ({
   const [hasMore, setHasMore] = useState<boolean>(true);
   const { makeGlobal } = useVehicle();
   const fetchVehiclesByMake = async (newOffset: number = 0) => {
-    console.log("Fetching vehicles by make");
-    console.log("offset = ", newOffset);
-
     if (newOffset === 0 && vehicleCache[makeGlobal]) {
       setVehicleList(vehicleCache[makeGlobal]);
       return;
     }
     if (!hasMore) {
-      console.log("No more vehicles to fetch");
       return;
     }
     if (makeGlobal === "Any Makes") {
-      console.log("Fetching all vehicles");
       setVehicleList(allVehicleList);
       return;
     }
@@ -72,7 +67,6 @@ export const VehicleResultProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
   const fetchVehicles = () => {
-    console.log(makeGlobal);
     setVehicleList([]);
     setOffset(0);
     fetchVehiclesByMake(0);

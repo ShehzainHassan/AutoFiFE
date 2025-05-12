@@ -3,16 +3,12 @@ import headings from "@/styles/typography.module.css";
 import dynamic from "next/dynamic";
 import { GroupBase } from "react-select";
 import classes from "./dropdown.module.css";
+import { Options } from "@/interfaces/dropdown-options";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 const TypedSelect = Select as unknown as React.ComponentType<
   import("react-select").Props<Options, false, GroupBase<Options>>
 >;
-
-type Options = {
-  label: string;
-  value: string;
-};
 
 type DropwdownProps = {
   label: string;

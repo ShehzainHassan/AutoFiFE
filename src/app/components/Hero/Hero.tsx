@@ -1,14 +1,14 @@
 "use client";
+import useTranslation from "@/i18n";
 import headings from "@/styles/typography.module.css";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { featuredModels } from "../../../../constants";
 import FeaturedIcon from "../Featured Icons/featured";
 import HorizontalTabs from "../Horizontal Tabs/tabs";
 import Navbar from "../Navbar/navbar";
 import SearchCars from "../Search Form/search-cars";
 import classes from "./hero.module.css";
-import useTranslation from "@/i18n";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { modelOptions } from "../../../../constants";
 export default function Hero() {
   const { t } = useTranslation();
   const router = useRouter();
@@ -17,7 +17,6 @@ export default function Hero() {
   const handleCarModelClick = (model: string) => {
     router.push(`/search?make=Any Makes&model=${model}&price=All Prices`);
   };
-
   return (
     <div className={classes.hero}>
       <Navbar />
@@ -44,28 +43,28 @@ export default function Hero() {
           <div className={classes.modelsIconContainer}>
             <FeaturedIcon
               imgSrc="/images/SUV.png"
-              model={modelOptions[1].value}
-              onClick={() => handleCarModelClick(modelOptions[1].value)}
+              model={featuredModels[1].value}
+              onClick={() => handleCarModelClick(featuredModels[1].value)}
             />
             <FeaturedIcon
               imgSrc="/images/Sedan.png"
-              model={modelOptions[2].value}
-              onClick={() => handleCarModelClick(modelOptions[2].value)}
+              model={featuredModels[2].value}
+              onClick={() => handleCarModelClick(featuredModels[2].value)}
             />
             <FeaturedIcon
               imgSrc="/images/Hatchback.png"
-              model={modelOptions[3].value}
-              onClick={() => handleCarModelClick(modelOptions[3].value)}
+              model={featuredModels[3].value}
+              onClick={() => handleCarModelClick(featuredModels[3].value)}
             />
             <FeaturedIcon
               imgSrc="/images/Coupe.png"
-              model={modelOptions[4].value}
-              onClick={() => handleCarModelClick(modelOptions[4].value)}
+              model={featuredModels[4].value}
+              onClick={() => handleCarModelClick(featuredModels[4].value)}
             />
             <FeaturedIcon
               imgSrc="/images/Hybrid.png"
-              model={modelOptions[5].value}
-              onClick={() => handleCarModelClick(modelOptions[5].value)}
+              model={featuredModels[5].value}
+              onClick={() => handleCarModelClick(featuredModels[5].value)}
             />
           </div>
         </div>

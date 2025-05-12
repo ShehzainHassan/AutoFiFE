@@ -2,10 +2,12 @@
 import { useVehicle } from "@/contexts/vehicleContext";
 import { useVehicleResult } from "@/contexts/vehicleResultsContext";
 import headings from "@/styles/typography.module.css";
+import { getModelOptions } from "@/utilities/utilities";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { makeOptions, modelOptions } from "../../../constants";
+import { makeOptions } from "../../../constants";
 import ButtonPrimary from "../components/Buttons/Primary/primary";
 import DropdownWithLabel from "../components/Dropdown with Label/dropdown";
 import FAQs from "../components/FAQs/faqs";
@@ -19,7 +21,6 @@ import ResultCard from "../components/Result Card/result-card";
 import SortBy from "../components/Sort By/sort-by";
 import Wrapper from "../components/Wrapper/wrapper";
 import classes from "./page.module.css";
-import { useRouter } from "next/navigation";
 
 export default function Search() {
   const tabs = ["Car", "Body style", "Price"];
@@ -36,6 +37,7 @@ export default function Search() {
       `/search?make=${makeGlobal}&model=${model}&price=${priceRange}`
     );
   };
+
   return (
     <>
       <Navbar backgroundColor="var(--color-gray600)" />
@@ -55,16 +57,20 @@ export default function Search() {
               <DropdownWithLabel
                 label="Make"
                 value={makeGlobal}
-                onChange={setMakeGlobal}
+                onChange={(value) => {
+                  setMakeGlobal(value);
+                  setModel("Any Models");
+                }}
                 placeholder="Make"
                 options={makeOptions}
               />
               <DropdownWithLabel
                 label="Model"
+                key={model}
                 value={model}
                 onChange={setModel}
                 placeholder="Model"
-                options={modelOptions}
+                options={getModelOptions(makeGlobal)}
               />
               <InputWithLabel label="Postcode" />
 
