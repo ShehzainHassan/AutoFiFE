@@ -4,18 +4,17 @@ export const makeOptions = [
   { label: "Audi", value: "Audi" },
   { label: "BMW", value: "BMW" },
   { label: "Ford", value: "Ford" },
-  { label: "Mercedes Benz", value: "Mercedes Benz" },
-  { label: "Peugeot", value: "Peugeot" },
+  { label: "Mercedes-Benz", value: "Mercedes-Benz" },
   { label: "Volkswagen", value: "Volkswagen" },
 ];
 
 export const modelOptions = [
   { label: "Any Models", value: "Any Models" },
-  { label: "SUV", value: "SUV" },
-  { label: "Sedan", value: "Sedan" },
-  { label: "Hatchback", value: "Hatchback" },
-  { label: "Coupe", value: "Coupe" },
-  { label: "Hybrid", value: "Hybrid" },
+  { label: "Sonata", value: "Sonata" },
+  { label: "Civic", value: "Civic" },
+  { label: "Sentra", value: "Sentra" },
+  { label: "Corolla", value: "Corolla" },
+  { label: "Malibu", value: "Malibu" },
 ];
 
 export const priceOptions = [

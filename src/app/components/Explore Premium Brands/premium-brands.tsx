@@ -7,8 +7,8 @@ export default function PremiumBrands() {
       <SectionTitle
         title="Explore Our Premium Brands"
         buttonText="Show All Brands"
-        rounded={true}
         backgroundColor="var(--color-white300)"
+        padding="115px 180px 15px"
       />
 
       <div className={classes.cardContainer}>
@@ -16,7 +16,7 @@ export default function PremiumBrands() {
         <BrandCard imgSrc="/images/bmw.png" brand="BMW" />
         <BrandCard imgSrc="/images/ford.png" brand="Ford" />
         <BrandCard imgSrc="/images/mercedes-benz.png" brand="Mercedes Benz" />
-        <BrandCard imgSrc="/images/peugeot.png" brand="Peugeot" />
+        <BrandCard imgSrc="/images/nissan.png" brand="Nissan" />
         <BrandCard imgSrc="/images/volkswagen.png" brand="Volkswagen" />
       </div>
     </div>

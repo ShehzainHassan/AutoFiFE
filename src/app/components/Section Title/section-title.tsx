@@ -4,27 +4,25 @@ import headings from "@/styles/typography.module.css";
 type SectionTitleProps = {
   title: string;
   buttonText?: string;
-  rounded?: boolean;
   backgroundColor?: string;
   showButton?: boolean;
   ratingsText?: string;
   color?: string;
+  padding?: string;
 };
 export default function SectionTitle({
   title,
   buttonText,
-  rounded = false,
   backgroundColor = "var(--color-white100)",
   showButton = true,
   ratingsText,
   color = "var(--color-black100)",
+  padding = "115px 260px 15px",
 }: SectionTitleProps) {
   return (
     <div
-      className={`${classes.headingsContainer} ${
-        rounded ? classes.rounded : ""
-      }`}
-      style={{ backgroundColor, color }}>
+      className={`${classes.headingsContainer}`}
+      style={{ backgroundColor, color, padding }}>
       <h1 className={headings.sectionTitle}>{title}</h1>
       {showButton && (
         <div className={`${classes.subHeadingContainer} ${classes.subHeading}`}>

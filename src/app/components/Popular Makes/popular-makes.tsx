@@ -5,11 +5,11 @@ import CarSwiper from "../Popular Makes Swiper/popular-makes-swiper";
 import SectionTitle from "../Section Title/section-title";
 import Wrapper from "../Wrapper/wrapper";
 import classes from "./popular-makes.module.css";
-import { useVehicleByMake } from "@/contexts/vehicleByMakeContext";
+import { usePopularMakes } from "@/contexts/popularMakesContext";
 export default function PopularMakes() {
   const tabs = ["Audi", "Ford", "Mercedes-Benz"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
-  const { setMake } = useVehicleByMake();
+  const { setMake_Popular } = usePopularMakes();
   return (
     <div className={classes.container}>
       <SectionTitle
@@ -24,7 +24,7 @@ export default function PopularMakes() {
           selectedTab={selectedTab}
           onTabChange={(tab) => {
             setSelectedTab(tab);
-            setMake(tab);
+            setMake_Popular(tab);
           }}
         />
         <CarSwiper />

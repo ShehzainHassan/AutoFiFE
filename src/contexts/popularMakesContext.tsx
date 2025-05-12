@@ -1,16 +1,15 @@
 "use client";
-
 import { Vehicle } from "@/interfaces/vehicle";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { PAGE_SIZE } from "../../constants";
 
-type VehicleByMakeContextType = {
+type PopularMakesContextType = {
   vehicleList: Vehicle[];
   fetchMoreVehicles: () => void;
   loading: boolean;
-  make: string;
-  setMake: (make: string) => void;
+  make_Popular: string;
+  setMake_Popular: (make: string) => void;
 };
 
 type VehicleDetails = {
@@ -19,17 +18,17 @@ type VehicleDetails = {
   hasMore: boolean;
 };
 
-const VehicleByMakeContext = createContext<
-  VehicleByMakeContextType | undefined
->(undefined);
+const PopularMakesContext = createContext<PopularMakesContextType | undefined>(
+  undefined
+);
 
-export const VehicleByMakeProvider: React.FC<{ children: React.ReactNode }> = ({
+export const PopularMakesProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [vehiclesByMakeList, setVehicleByMakeList] = useState<
     Record<string, VehicleDetails>
   >({});
-  const [make, setMake] = useState<string>("Audi");
+  const [make_Popular, setMake_Popular] = useState<string>("Audi");
   const [loading, setLoading] = useState<boolean>(false);
   const [currentList, setCurrentList] = useState<Vehicle[]>([]);
 
@@ -71,46 +70,46 @@ export const VehicleByMakeProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   useEffect(() => {
-    const cached = vehiclesByMakeList[make];
+    const cached = vehiclesByMakeList[make_Popular];
     if (cached) {
       setCurrentList(cached.vehicles);
     } else {
       setCurrentList([]);
-      fetchVehicles(make, 0);
+      fetchVehicles(make_Popular, 0);
     }
-  }, [make, vehiclesByMakeList]);
+  }, [make_Popular, vehiclesByMakeList]);
 
   const fetchMoreVehicles = () => {
-    const cache = vehiclesByMakeList[make];
-    if (cache && cache.hasMore && !loading) {
-      fetchVehicles(make, cache.offset);
+    const vehicles = vehiclesByMakeList[make_Popular];
+    if (vehicles && vehicles.hasMore && !loading) {
+      fetchVehicles(make_Popular, vehicles.offset);
     }
   };
 
   useEffect(() => {
-    if (vehiclesByMakeList[make]) {
-      setCurrentList(vehiclesByMakeList[make].vehicles);
+    if (vehiclesByMakeList[make_Popular]) {
+      setCurrentList(vehiclesByMakeList[make_Popular].vehicles);
     }
-  }, [vehiclesByMakeList, make]);
+  }, [vehiclesByMakeList, make_Popular]);
 
   return (
-    <VehicleByMakeContext.Provider
+    <PopularMakesContext.Provider
       value={{
         vehicleList: currentList,
         fetchMoreVehicles,
         loading,
-        make,
-        setMake,
+        make_Popular,
+        setMake_Popular,
       }}>
       {children}
-    </VehicleByMakeContext.Provider>
+    </PopularMakesContext.Provider>
   );
 };
-export function useVehicleByMake() {
-  const context = useContext(VehicleByMakeContext);
+export function usePopularMakes() {
+  const context = useContext(PopularMakesContext);
   if (!context) {
     throw new Error(
-      "useVehicleByMake must be used within a VehicleByMakeProvider"
+      "usePopularMakes must be used within a PopularMakesProvider"
     );
   }
   return context;

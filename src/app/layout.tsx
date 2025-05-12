@@ -1,8 +1,9 @@
-import { Metadata } from "next";
-import { DM_Sans, Roboto, Inter } from "next/font/google";
-import "./globals.css";
+import { PopularMakesProvider } from "@/contexts/popularMakesContext";
 import { VehicleProvider } from "@/contexts/vehicleContext";
-import { VehicleByMakeProvider } from "@/contexts/vehicleByMakeContext";
+import { Metadata } from "next";
+import { DM_Sans, Inter, Roboto } from "next/font/google";
+import "./globals.css";
+import { VehicleResultProvider } from "@/contexts/vehicleResultsContext";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -36,12 +37,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <VehicleProvider>
-        <VehicleByMakeProvider>
-          <body
-            className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
-            {children}
-          </body>
-        </VehicleByMakeProvider>
+        <PopularMakesProvider>
+          <VehicleResultProvider>
+            <body
+              className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
+              {children}
+            </body>
+          </VehicleResultProvider>
+        </PopularMakesProvider>
       </VehicleProvider>
     </html>
   );

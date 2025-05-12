@@ -4,20 +4,32 @@ import ButtonPrimary from "../Buttons/Primary/primary";
 import DropdownWithoutLabel from "../Dropdown without Label/dropdown";
 import classes from "./search-cars.module.css";
 import { useRouter } from "next/navigation";
+import { useVehicleResult } from "@/contexts/vehicleResultsContext";
 
 export default function SearchCars() {
-  const { make, model, price, setMake, setModel, setPrice } = useVehicle();
+  const {
+    makeGlobal,
+    model,
+    priceRange,
+    setMakeGlobal,
+    setModel,
+    setPriceRange,
+  } = useVehicle();
+  const { fetchVehicles } = useVehicleResult();
   const router = useRouter();
   const handleSearchClick = () => {
-    router.push(`/search?make=${make}&model=${model}&price=${price}`);
+    fetchVehicles();
+    router.push(
+      `/search?make=${makeGlobal}&model=${model}&price=${priceRange}`
+    );
   };
   return (
     <div className={classes.container}>
       <div className={classes.criteriaContainer}>
         <DropdownWithoutLabel
-          value={make}
+          value={makeGlobal}
           options={makeOptions}
-          onChange={setMake}
+          onChange={setMakeGlobal}
           placeholder="Select make"
         />
         <div className={classes.verticalBorder} />
@@ -33,8 +45,8 @@ export default function SearchCars() {
       </div>
       <div className={classes.priceBtnContainer}>
         <DropdownWithoutLabel
-          value={price}
-          onChange={setPrice}
+          value={priceRange}
+          onChange={setPriceRange}
           options={priceOptions}
           placeholder="Select price"
         />

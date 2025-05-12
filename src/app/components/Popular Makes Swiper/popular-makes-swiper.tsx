@@ -6,12 +6,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import ButtonNavigate from "../Buttons/Navigate/navigate";
 import CarCard from "../Car Card/car-card";
 import classes from "./popular-makes-swiper.module.css";
-import { useVehicleByMake } from "@/contexts/vehicleByMakeContext";
 import { ClipLoader } from "react-spinners";
+import { usePopularMakes } from "@/contexts/popularMakesContext";
 
 export default function CarSwiper() {
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
-  const { vehicleList, loading, fetchMoreVehicles } = useVehicleByMake();
+  const { vehicleList, loading, fetchMoreVehicles } = usePopularMakes();
   return (
     <Swiper
       spaceBetween={0}

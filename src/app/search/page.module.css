@@ -69,3 +69,15 @@
 .location {
   margin-left: 5px;
 }
+.subContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  align-items: center;
+  justify-content: space-between;
+}
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

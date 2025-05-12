@@ -10,12 +10,16 @@ type VehicleContextType = {
   fetchMoreVehicles: () => void;
   loading: boolean;
   hasMore: boolean;
-  make: string;
-  setMake: (make: string) => void;
+  makeGlobal: string;
+  setMakeGlobal: (make: string) => void;
   model: string;
   setModel: (make: string) => void;
-  price: string;
-  setPrice: (make: string) => void;
+  priceRange: string;
+  setPriceRange: (price: string) => void;
+  startPrice: number;
+  setStartPrice: (price: number) => void;
+  endPrice: number;
+  setEndPrice: (price: number) => void;
 };
 
 const VehicleContext = createContext<VehicleContextType | undefined>(undefined);
@@ -26,9 +30,11 @@ export const VehicleProvider: React.FC<{ children: React.ReactNode }> = ({
   const [offset, setOffset] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [make, setMake] = useState<string>("Any Makes");
+  const [makeGlobal, setMakeGlobal] = useState<string>("Any Makes");
   const [model, setModel] = useState<string>("Any Models");
-  const [price, setPrice] = useState<string>("All Prices");
+  const [priceRange, setPriceRange] = useState<string>("All Prices");
+  const [startPrice, setStartPrice] = useState<number>(0);
+  const [endPrice, setEndPrice] = useState<number>(0);
 
   const fetchVehicles = async (newOffset = 0) => {
     if (!hasMore) return;
@@ -72,12 +78,16 @@ export const VehicleProvider: React.FC<{ children: React.ReactNode }> = ({
         fetchMoreVehicles,
         loading,
         hasMore,
-        make,
-        setMake,
+        makeGlobal,
+        setMakeGlobal,
         model,
         setModel,
-        price,
-        setPrice,
+        priceRange,
+        setPriceRange,
+        startPrice,
+        setStartPrice,
+        endPrice,
+        setEndPrice,
       }}>
       {children}
     </VehicleContext.Provider>

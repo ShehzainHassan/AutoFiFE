@@ -8,12 +8,14 @@ type ResultCardProps = {
   carImg: string;
   miles: number;
   price: string;
+  carTitle: string;
 };
 export default function ResultCard({
   specialText,
   carImg,
   miles,
   price,
+  carTitle,
 }: ResultCardProps) {
   return (
     <div className={classes.container}>
@@ -38,7 +40,7 @@ export default function ResultCard({
       <div className={classes.carDetails}>
         <div className={classes.cardTop}>
           {specialText && <p className={headings.smallText}>{specialText}</p>}
-          <h1 className={headings.carTitle}>1998 Bentley Arnage 4.4</h1>
+          <h1 className={headings.carTitle}>{carTitle}</h1>
         </div>
         <div className={classes.distancePrice}>
           <p className={headings.mileage}>{miles.toLocaleString()} mi</p>

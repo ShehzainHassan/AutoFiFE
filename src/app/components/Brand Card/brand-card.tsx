@@ -1,5 +1,6 @@
-import Image from "next/image";
+"use client";
 import headings from "@/styles/typography.module.css";
+import Image from "next/image";
 import classes from "./brand-card.module.css";
 type BrandCardProps = {
   imgSrc: string;

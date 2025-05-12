@@ -13,7 +13,9 @@ export default function CarSwiper() {
   const { vehicleList, fetchMoreVehicles, loading, hasMore } = useVehicle();
   return (
     <Swiper
-      onReachEnd={() => fetchMoreVehicles()}
+      onReachEnd={() => {
+        if (vehicleList.length !== 0) fetchMoreVehicles();
+      }}
       spaceBetween={20}
       slidesPerView={4.6}
       className={classes.swiperContainer}

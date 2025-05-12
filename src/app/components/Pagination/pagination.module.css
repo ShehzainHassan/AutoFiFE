@@ -1,0 +1,15 @@
+.pagination {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  background-color: var(--color-gray550);
+  cursor: pointer;
+}
