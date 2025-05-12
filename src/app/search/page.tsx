@@ -4,7 +4,7 @@ import { useVehicleResult } from "@/contexts/vehicleResultsContext";
 import headings from "@/styles/typography.module.css";
 import { getModelOptions } from "@/utilities/utilities";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { makeOptions } from "../../../constants";
@@ -29,15 +29,30 @@ export default function Search() {
   const [selectedInfoTab, setSelectedInfoTab] = useState(carInfoTabs[0]);
   const { makeGlobal, setMakeGlobal, model, setModel, priceRange } =
     useVehicle();
-  const { vehicleList, fetchVehicles, loading } = useVehicleResult();
+  const { vehicleList, fetchVehiclesByMake, fetchVehiclesByModel, loading } =
+    useVehicleResult();
   const router = useRouter();
   const handleSearchClick = () => {
-    fetchVehicles();
+    if (model !== "Any Models" && priceRange === "All Prices") {
+      fetchVehiclesByModel(model, 0);
+    } else if (
+      makeGlobal !== "Any Makes" &&
+      model === "Any Models" &&
+      priceRange === "All Prices"
+    ) {
+      fetchVehiclesByMake(makeGlobal, 0);
+    } else {
+      fetchVehiclesByMake("Any Makes", 0);
+    }
     router.push(
       `/search?make=${makeGlobal}&model=${model}&price=${priceRange}`
     );
   };
-
+  const searchParam = useSearchParams();
+  const modelSearchParam = searchParam.get("model") || "Any Models";
+  console.log(modelSearchParam);
+  console.log(model);
+  console.log(modelSearchParam || model);
   return (
     <>
       <Navbar backgroundColor="var(--color-gray600)" />
@@ -67,7 +82,7 @@ export default function Search() {
               <DropdownWithLabel
                 label="Model"
                 key={model}
-                value={model}
+                value={model || modelSearchParam}
                 onChange={setModel}
                 placeholder="Model"
                 options={getModelOptions(makeGlobal)}

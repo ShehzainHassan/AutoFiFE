@@ -1,8 +1,8 @@
 "use client";
 
 import { Vehicle } from "@/interfaces/vehicle";
-import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react";
 import { PAGE_SIZE } from "../../constants";
 
 type VehicleContextType = {

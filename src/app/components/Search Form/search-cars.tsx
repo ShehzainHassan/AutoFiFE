@@ -16,14 +16,25 @@ export default function SearchCars() {
     setModel,
     setPriceRange,
   } = useVehicle();
-  const { fetchVehicles } = useVehicleResult();
+  const { fetchVehiclesByMake, fetchVehiclesByModel } = useVehicleResult();
   const router = useRouter();
   const handleSearchClick = () => {
-    fetchVehicles();
+    if (model !== "Any Models" && priceRange === "All Prices") {
+      fetchVehiclesByModel(model, 0);
+    } else if (
+      makeGlobal !== "Any Makes" &&
+      model === "Any Models" &&
+      priceRange === "All Prices"
+    ) {
+      fetchVehiclesByMake(makeGlobal, 0);
+    } else {
+      fetchVehiclesByMake("Any Makes", 0);
+    }
     router.push(
       `/search?make=${makeGlobal}&model=${model}&price=${priceRange}`
     );
   };
+
   return (
     <div className={classes.container}>
       <div className={classes.criteriaContainer}>
@@ -32,7 +43,6 @@ export default function SearchCars() {
           options={makeOptions}
           onChange={(value) => {
             setMakeGlobal(value);
-            setModel("Any Models");
           }}
           placeholder="Select make"
         />

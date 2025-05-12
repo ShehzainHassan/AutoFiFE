@@ -1,4 +1,5 @@
 "use client";
+import { useVehicleResult } from "@/contexts/vehicleResultsContext";
 import useTranslation from "@/i18n";
 import headings from "@/styles/typography.module.css";
 import { useRouter } from "next/navigation";
@@ -9,14 +10,22 @@ import HorizontalTabs from "../Horizontal Tabs/tabs";
 import Navbar from "../Navbar/navbar";
 import SearchCars from "../Search Form/search-cars";
 import classes from "./hero.module.css";
+import { useVehicle } from "@/contexts/vehicleContext";
 export default function Hero() {
   const { t } = useTranslation();
   const router = useRouter();
   const tabs = ["All", "New", "Used"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
+  const { setMakeGlobal, setModel } = useVehicle();
+  const { fetchVehiclesByModel } = useVehicleResult();
   const handleCarModelClick = (model: string) => {
+    const selectedMake = "Any Makes";
+    setModel(model);
+    setMakeGlobal(selectedMake);
+    fetchVehiclesByModel(model, 0);
     router.push(`/search?make=Any Makes&model=${model}&price=All Prices`);
   };
+
   return (
     <div className={classes.hero}>
       <Navbar />

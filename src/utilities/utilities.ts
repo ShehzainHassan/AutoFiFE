@@ -10,7 +10,15 @@ export function getModelOptions(make: string): Options[] {
   const models = modelOptions[make] || [];
 
   return [
-    { label: "Any Models", value: "" },
+    { label: "Any Models", value: "Any Models" },
     ...models.map((model) => ({ label: model, value: model })),
   ];
+}
+export function getMakeByModel(modelName: string): string | undefined {
+  for (const make in modelOptions) {
+    if (modelOptions[make].includes(modelName)) {
+      return make;
+    }
+  }
+  return undefined;
 }
