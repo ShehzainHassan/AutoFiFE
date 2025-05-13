@@ -2,10 +2,10 @@ import { useVehicle } from "@/contexts/vehicleContext";
 import { useVehicleResult } from "@/contexts/vehicleResultsContext";
 import { getModelOptions } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
-import { makeOptions, priceOptions } from "../../../../constants";
 import ButtonPrimary from "../Buttons/Primary";
 import DropdownWithoutLabel from "../dropdown-without-label";
 import classes from "./search-form.module.css";
+import { MAKE_OPTIONS, PRICE_OPTIONS } from "@/constants";
 
 export default function SearchCars() {
   const {
@@ -40,7 +40,7 @@ export default function SearchCars() {
       <div className={classes.criteriaContainer}>
         <DropdownWithoutLabel
           value={makeGlobal}
-          options={makeOptions}
+          options={MAKE_OPTIONS}
           onChange={(value) => {
             setMakeGlobal(value);
             setModel("Any Models");
@@ -64,7 +64,7 @@ export default function SearchCars() {
         <DropdownWithoutLabel
           value={priceRange}
           onChange={setPriceRange}
-          options={priceOptions}
+          options={PRICE_OPTIONS}
           placeholder="Select price"
         />
         <ButtonPrimary

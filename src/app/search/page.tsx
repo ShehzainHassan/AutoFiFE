@@ -7,11 +7,9 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { makeOptions } from "../../../constants";
 import ButtonPrimary from "../components/Buttons/Primary";
 import DropdownWithLabel from "../components/dropdown-with-label";
 import FAQs from "../components/faqs";
-import Filters from "../components/Filters";
 import Footer from "../components/footer";
 import HorizontalTabs from "../components/horizontal-tabs";
 import InputWithLabel from "../components/input-with-label";
@@ -21,6 +19,8 @@ import ResultCard from "../components/result-card";
 import SortBy from "../components/sort-by";
 import Wrapper from "../components/wrapper";
 import classes from "./page.module.css";
+import { MAKE_OPTIONS } from "@/constants";
+import Filters from "../components/filters";
 
 export default function Search() {
   const tabs = ["Car", "Body style", "Price"];
@@ -83,7 +83,7 @@ export default function Search() {
                   setModel("Any Models");
                 }}
                 placeholder="Make"
-                options={makeOptions}
+                options={MAKE_OPTIONS}
               />
               <DropdownWithLabel
                 label="Model"

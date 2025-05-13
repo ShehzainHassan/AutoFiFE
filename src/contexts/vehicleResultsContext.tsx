@@ -2,9 +2,9 @@
 import { Vehicle } from "@/interfaces/vehicle";
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
-import { PAGE_SIZE } from "../../constants";
 import { useVehicle } from "./vehicleContext";
 import { getMakeByModel } from "@/utilities/utilities";
+import { PAGE_SIZE } from "@/constants";
 
 type VehicleResultContextType = {
   vehicleList: Vehicle[];

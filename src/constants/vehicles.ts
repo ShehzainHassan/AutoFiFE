@@ -1,5 +1,3 @@
-export const PAGE_SIZE = 25;
-export const CURRENCY = "$";
 export const PREMIUM_BRANDS = [
   { imgSrc: "/images/audi.png", brand: "Audi" },
   { imgSrc: "/images/bmw.png", brand: "BMW" },
@@ -8,7 +6,8 @@ export const PREMIUM_BRANDS = [
   { imgSrc: "/images/nissan.png", brand: "Nissan" },
   { imgSrc: "/images/volkswagen.png", brand: "Volkswagen" },
 ];
-export const makeOptions = [
+
+export const MAKE_OPTIONS = [
   { label: "Any Makes", value: "Any Makes" },
   { label: "Acura", value: "Acura" },
   { label: "Alfa Romeo", value: "Alfa Romeo" },
@@ -58,14 +57,15 @@ export const makeOptions = [
   { label: "Volvo", value: "Volvo" },
 ];
 
-export const featuredModels = [
+export const FEATURED_MODELS = [
   { id: 1, value: "Sonata", imgSrc: "/images/SUV.png" },
   { id: 2, value: "Civic", imgSrc: "/images/SUV.png" },
   { id: 3, value: "Sentra", imgSrc: "/images/SUV.png" },
   { id: 4, value: "Corolla", imgSrc: "/images/SUV.png" },
   { id: 5, value: "Malibu", imgSrc: "/images/SUV.png" },
 ];
-export const modelOptions: { [key: string]: string[] } = {
+
+export const MODEL_OPTIONS: { [key: string]: string[] } = {
   Acura: ["RDX", "TLX"],
   "Alfa Romeo": ["Giulia"],
   "Aston Martin": ["DB11"],
@@ -129,9 +129,3 @@ export const modelOptions: { [key: string]: string[] } = {
   Volkswagen: ["Atlas", "Golf", "Golf R", "ID.4", "Jetta", "Polo", "Tiguan"],
   Volvo: ["XC90"],
 };
-export const priceOptions = [
-  { label: "All Prices", value: "All Prices" },
-  { label: "<$5,000", value: "<$5,000" },
-  { label: "$5,000 - $10,000", value: "$5,000 - $10,000" },
-  { label: ">$10,000", value: ">$10,000" },
-];

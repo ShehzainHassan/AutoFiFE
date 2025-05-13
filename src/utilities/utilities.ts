@@ -1,5 +1,5 @@
+import { MODEL_OPTIONS } from "@/constants";
 import { Options } from "@/interfaces/dropdown-options";
-import { modelOptions } from "../../constants";
 
 export function getModelOptions(make: string): Options[] {
   const isAnyMake = !make || make === "Any Makes";
@@ -7,7 +7,7 @@ export function getModelOptions(make: string): Options[] {
     return [{ label: "Any Models", value: "Any Models" }];
   }
 
-  const models = modelOptions[make] || [];
+  const models = MODEL_OPTIONS[make] || [];
 
   return [
     { label: "Any Models", value: "Any Models" },
@@ -15,8 +15,8 @@ export function getModelOptions(make: string): Options[] {
   ];
 }
 export function getMakeByModel(modelName: string): string | undefined {
-  for (const make in modelOptions) {
-    if (modelOptions[make].includes(modelName)) {
+  for (const make in MODEL_OPTIONS) {
+    if (MODEL_OPTIONS[make].includes(modelName)) {
       return make;
     }
   }

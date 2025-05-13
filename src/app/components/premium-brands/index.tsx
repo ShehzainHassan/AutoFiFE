@@ -3,10 +3,10 @@ import { useVehicle } from "@/contexts/vehicleContext";
 import { useVehicleResult } from "@/contexts/vehicleResultsContext";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
-import { PREMIUM_BRANDS } from "../../../../constants";
 import BrandCard from "../brand-card";
 import SectionTitle from "../section-title";
 import classes from "./premium-brands.module.css";
+import { PREMIUM_BRANDS } from "@/constants";
 export default function PremiumBrands() {
   const router = useRouter();
   const { setMakeGlobal, setModel, loading, priceRange } = useVehicle();

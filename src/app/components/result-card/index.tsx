@@ -2,7 +2,7 @@ import Image from "next/image";
 import classes from "./result-card.module.css";
 import headings from "@/styles/typography.module.css";
 import ButtonPrimary from "../Buttons/Primary";
-import { CURRENCY } from "../../../../constants";
+import { CURRENCY } from "@/constants";
 
 type ResultCardProps = {
   specialText?: string;

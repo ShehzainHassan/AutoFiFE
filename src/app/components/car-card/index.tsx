@@ -1,7 +1,7 @@
 import Image from "next/image";
 import classes from "./car-card.module.css";
 import headings from "@/styles/typography.module.css";
-import { CURRENCY } from "../../../../constants";
+import { CURRENCY } from "@/constants";
 
 type CarCardProps = {
   imgSrc: string;

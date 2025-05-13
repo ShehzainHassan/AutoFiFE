@@ -1,8 +1,8 @@
 "use client";
+import { PAGE_SIZE } from "@/constants";
 import { Vehicle } from "@/interfaces/vehicle";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import { PAGE_SIZE } from "../../constants";
 
 type PopularMakesContextType = {
   vehicleList: Vehicle[];

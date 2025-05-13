@@ -4,13 +4,13 @@ import useTranslation from "@/i18n";
 import headings from "@/styles/typography.module.css";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { featuredModels } from "../../../../constants";
 import FeaturedIcon from "../featured-icons";
 import HorizontalTabs from "../horizontal-tabs";
 import Navbar from "../navbar";
 import SearchCars from "../search-form";
 import classes from "./hero.module.css";
 import { useVehicle } from "@/contexts/vehicleContext";
+import { FEATURED_MODELS } from "@/constants";
 export default function Hero() {
   const { t } = useTranslation();
   const router = useRouter();
@@ -50,7 +50,7 @@ export default function Hero() {
         <div className={classes.textContainer}>
           <p className={classes.browse}>Or Browse Featured Model</p>
           <div className={classes.modelsIconContainer}>
-            {featuredModels.map((model) => (
+            {FEATURED_MODELS.map((model) => (
               <FeaturedIcon
                 key={model.id}
                 imgSrc={model.imgSrc}
