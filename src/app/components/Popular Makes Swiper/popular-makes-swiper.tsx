@@ -27,7 +27,7 @@ export default function CarSwiper() {
             miles={`${vehicle.mileage} Miles`}
             fuelType={vehicle.fuelType}
             gearType={vehicle.transmission}
-            price={`$${vehicle.price}`}
+            price={vehicle.price}
             cardType="horizontal"
             tag="Sale"
             tagColor="var(--color-blue500)"

@@ -2,12 +2,13 @@ import Image from "next/image";
 import classes from "./result-card.module.css";
 import headings from "@/styles/typography.module.css";
 import ButtonPrimary from "../Buttons/Primary/primary";
+import { CURRENCY } from "../../../../constants";
 
 type ResultCardProps = {
   specialText?: string;
   carImg: string;
   miles: number;
-  price: string;
+  price: number;
   carTitle: string;
 };
 export default function ResultCard({
@@ -44,7 +45,10 @@ export default function ResultCard({
         </div>
         <div className={classes.distancePrice}>
           <p className={headings.mileage}>{miles.toLocaleString()} mi</p>
-          <p className={headings.resultCardPrice}>{price}</p>
+          <p className={headings.resultCardPrice}>
+            {CURRENCY}
+            {price.toLocaleString()}
+          </p>
         </div>
         <div className={classes.cardMiddle}>
           <div className={classes.partner}>

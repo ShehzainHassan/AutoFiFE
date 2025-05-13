@@ -3,12 +3,12 @@ import classes from "./featured.module.css";
 import headings from "@/styles/typography.module.css";
 
 type FeaturedIconProps = {
-  imgSrc: string;
+  imgSrc?: string;
   model: string;
   onClick?: () => void;
 };
 export default function FeaturedIcon({
-  imgSrc,
+  imgSrc = "/images/SUV.png",
   model,
   onClick,
 }: FeaturedIconProps) {

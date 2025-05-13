@@ -29,7 +29,7 @@ export default function CarSwiper() {
             miles={`${vehicle.mileage} Miles`}
             fuelType={vehicle.fuelType}
             gearType={vehicle.transmission}
-            price={`$${vehicle.price}`}
+            price={vehicle.price}
             tag="Great Price"
             tagColor="var(--color-green600)"
           />

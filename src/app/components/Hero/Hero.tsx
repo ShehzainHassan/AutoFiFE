@@ -50,31 +50,14 @@ export default function Hero() {
         <div className={classes.textContainer}>
           <p className={classes.browse}>Or Browse Featured Model</p>
           <div className={classes.modelsIconContainer}>
-            <FeaturedIcon
-              imgSrc="/images/SUV.png"
-              model={featuredModels[1].value}
-              onClick={() => handleCarModelClick(featuredModels[1].value)}
-            />
-            <FeaturedIcon
-              imgSrc="/images/Sedan.png"
-              model={featuredModels[2].value}
-              onClick={() => handleCarModelClick(featuredModels[2].value)}
-            />
-            <FeaturedIcon
-              imgSrc="/images/Hatchback.png"
-              model={featuredModels[3].value}
-              onClick={() => handleCarModelClick(featuredModels[3].value)}
-            />
-            <FeaturedIcon
-              imgSrc="/images/Coupe.png"
-              model={featuredModels[4].value}
-              onClick={() => handleCarModelClick(featuredModels[4].value)}
-            />
-            <FeaturedIcon
-              imgSrc="/images/Hybrid.png"
-              model={featuredModels[5].value}
-              onClick={() => handleCarModelClick(featuredModels[5].value)}
-            />
+            {featuredModels.map((model) => (
+              <FeaturedIcon
+                key={model.id}
+                imgSrc={model.imgSrc}
+                model={model.value}
+                onClick={() => handleCarModelClick(model.value)}
+              />
+            ))}
           </div>
         </div>
       </div>

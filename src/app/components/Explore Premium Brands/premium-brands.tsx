@@ -1,13 +1,15 @@
 "use client";
+import { useVehicle } from "@/contexts/vehicleContext";
+import { useVehicleResult } from "@/contexts/vehicleResultsContext";
 import { useRouter } from "next/navigation";
+import { ClipLoader } from "react-spinners";
+import { PREMIUM_BRANDS } from "../../../../constants";
 import BrandCard from "../Brand Card/brand-card";
 import SectionTitle from "../Section Title/section-title";
 import classes from "./premium-brands.module.css";
-import { useVehicle } from "@/contexts/vehicleContext";
-import { useVehicleResult } from "@/contexts/vehicleResultsContext";
 export default function PremiumBrands() {
   const router = useRouter();
-  const { setMakeGlobal, setModel, priceRange } = useVehicle();
+  const { setMakeGlobal, setModel, loading, priceRange } = useVehicle();
   const { fetchVehiclesByMake } = useVehicleResult();
   function handleBrandClick(make: string) {
     const selectedModel = "Any Models";
@@ -29,36 +31,19 @@ export default function PremiumBrands() {
       />
 
       <div className={classes.cardContainer}>
-        <BrandCard
-          imgSrc="/images/audi.png"
-          brand="Audi"
-          onClick={() => handleBrandClick("Audi")}
-        />
-        <BrandCard
-          imgSrc="/images/bmw.png"
-          brand="BMW"
-          onClick={() => handleBrandClick("BMW")}
-        />
-        <BrandCard
-          imgSrc="/images/ford.png"
-          brand="Ford"
-          onClick={() => handleBrandClick("Ford")}
-        />
-        <BrandCard
-          imgSrc="/images/mercedes-benz.png"
-          brand="Mercedes Benz"
-          onClick={() => handleBrandClick("Mercedes-Benz")}
-        />
-        <BrandCard
-          imgSrc="/images/nissan.png"
-          brand="Nissan"
-          onClick={() => handleBrandClick("Nissan")}
-        />
-        <BrandCard
-          imgSrc="/images/volkswagen.png"
-          brand="Volkswagen"
-          onClick={() => handleBrandClick("Volkswagen")}
-        />
+        {PREMIUM_BRANDS.map((brand) => (
+          <BrandCard
+            key={brand.brand}
+            brand={brand.brand}
+            imgSrc={brand.imgSrc}
+            onClick={() => handleBrandClick(brand.brand)}
+          />
+        ))}
+        {loading && (
+          <div className={`loadingSpinnerWrapper`}>
+            <ClipLoader size={50} color="var(--color-black100)" />
+          </div>
+        )}
       </div>
     </div>
   );

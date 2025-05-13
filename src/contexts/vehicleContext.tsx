@@ -11,6 +11,7 @@ type VehicleContextType = {
   loading: boolean;
   hasMore: boolean;
   makeGlobal: string;
+  fetchAllBrands: () => void;
   setMakeGlobal: (make: string) => void;
   model: string;
   setModel: (make: string) => void;
@@ -65,6 +66,20 @@ export const VehicleProvider: React.FC<{ children: React.ReactNode }> = ({
       setLoading(false);
     }
   };
+  const fetchAllBrands = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        "http://localhost:5011/Vehicle/get-makes"
+      );
+
+      return response.data;
+    } catch (err) {
+      console.error("Error fetching premiums brands", err);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     fetchVehicles(0);
   }, []);
@@ -75,6 +90,7 @@ export const VehicleProvider: React.FC<{ children: React.ReactNode }> = ({
     <VehicleContext.Provider
       value={{
         vehicleList,
+        fetchAllBrands,
         fetchMoreVehicles,
         loading,
         hasMore,

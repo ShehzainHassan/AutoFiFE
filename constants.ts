@@ -1,4 +1,13 @@
 export const PAGE_SIZE = 25;
+export const CURRENCY = "$";
+export const PREMIUM_BRANDS = [
+  { imgSrc: "/images/audi.png", brand: "Audi" },
+  { imgSrc: "/images/bmw.png", brand: "BMW" },
+  { imgSrc: "/images/ford.png", brand: "Ford" },
+  { imgSrc: "/images/mercedes-benz.png", brand: "Mercedes-Benz" },
+  { imgSrc: "/images/nissan.png", brand: "Nissan" },
+  { imgSrc: "/images/volkswagen.png", brand: "Volkswagen" },
+];
 export const makeOptions = [
   { label: "Any Makes", value: "Any Makes" },
   { label: "Acura", value: "Acura" },
@@ -50,12 +59,11 @@ export const makeOptions = [
 ];
 
 export const featuredModels = [
-  { label: "Any Models", value: "Any Models" },
-  { label: "Sonata", value: "Sonata" },
-  { label: "Civic", value: "Civic" },
-  { label: "Sentra", value: "Sentra" },
-  { label: "Corolla", value: "Corolla" },
-  { label: "Malibu", value: "Malibu" },
+  { id: 1, value: "Sonata", imgSrc: "/images/SUV.png" },
+  { id: 2, value: "Civic", imgSrc: "/images/SUV.png" },
+  { id: 3, value: "Sentra", imgSrc: "/images/SUV.png" },
+  { id: 4, value: "Corolla", imgSrc: "/images/SUV.png" },
+  { id: 5, value: "Malibu", imgSrc: "/images/SUV.png" },
 ];
 export const modelOptions: { [key: string]: string[] } = {
   Acura: ["RDX", "TLX"],

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import classes from "./car-card.module.css";
 import headings from "@/styles/typography.module.css";
+import { CURRENCY } from "../../../../constants";
 
 type CarCardProps = {
   imgSrc: string;
@@ -9,7 +10,7 @@ type CarCardProps = {
   miles: string;
   fuelType: string;
   gearType: string;
-  price: string;
+  price: number;
   tag?: string;
   tagColor?: string;
   cardType?: "vertical" | "horizontal";
@@ -164,10 +165,14 @@ export default function CarCard({
           {cardType === "vertical" && <div className={classes.border} />}
         </div>
         {showPreviousPrice && (
-          <h2 className={`${headings.priceCut} ${classes.textCut}`}>{price}</h2>
+          <h2 className={`${headings.priceCut} ${classes.textCut}`}>
+            {`${CURRENCY}${price.toLocaleString()}`}
+          </h2>
         )}
         <div className={classes.priceContainer}>
-          <h2 className={headings.priceText}>{price}</h2>
+          <h2 className={headings.priceText}>
+            {`${CURRENCY}${price.toLocaleString()}`}
+          </h2>
           <div className={classes.btnContainer}>
             <button className={classes.btn}>View Details</button>
             <Image

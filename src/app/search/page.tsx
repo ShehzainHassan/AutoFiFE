@@ -2,10 +2,10 @@
 import { useVehicle } from "@/contexts/vehicleContext";
 import { useVehicleResult } from "@/contexts/vehicleResultsContext";
 import headings from "@/styles/typography.module.css";
-import { getModelOptions } from "@/utilities/utilities";
+import { getMakeByModel, getModelOptions } from "@/utilities/utilities";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { makeOptions } from "../../../constants";
 import ButtonPrimary from "../components/Buttons/Primary/primary";
@@ -48,11 +48,17 @@ export default function Search() {
       `/search?make=${makeGlobal}&model=${model}&price=${priceRange}`
     );
   };
-  const searchParam = useSearchParams();
-  const modelSearchParam = searchParam.get("model") || "Any Models";
-  console.log(modelSearchParam);
-  console.log(model);
-  console.log(modelSearchParam || model);
+  const searchParams = useSearchParams();
+  const urlModel = searchParams.get("model");
+  useEffect(() => {
+    if (urlModel) {
+      const selectedMake = getMakeByModel(urlModel);
+      if (selectedMake) {
+        setMakeGlobal(selectedMake);
+      }
+      setModel(urlModel);
+    }
+  }, [urlModel]);
   return (
     <>
       <Navbar backgroundColor="var(--color-gray600)" />
@@ -82,7 +88,7 @@ export default function Search() {
               <DropdownWithLabel
                 label="Model"
                 key={model}
-                value={model || modelSearchParam}
+                value={model}
                 onChange={setModel}
                 placeholder="Model"
                 options={getModelOptions(makeGlobal)}
@@ -141,7 +147,7 @@ export default function Search() {
                     <ResultCard
                       carImg="/images/Bentley-Arnage4.4.png"
                       miles={vehicle.mileage}
-                      price={`$${vehicle.price}`}
+                      price={vehicle.price}
                       carTitle={`${vehicle.make} ${vehicle.model} ${vehicle.year}`}
                     />
                   </div>

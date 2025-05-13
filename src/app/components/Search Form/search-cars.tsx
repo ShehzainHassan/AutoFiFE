@@ -43,6 +43,7 @@ export default function SearchCars() {
           options={makeOptions}
           onChange={(value) => {
             setMakeGlobal(value);
+            setModel("Any Models");
           }}
           placeholder="Select make"
         />
@@ -52,7 +53,7 @@ export default function SearchCars() {
       <div className={classes.criteriaContainer}>
         <DropdownWithoutLabel
           key={model}
-          value={model}
+          value={model ?? "Any Models"}
           options={getModelOptions(makeGlobal)}
           onChange={setModel}
           placeholder="Select model"
