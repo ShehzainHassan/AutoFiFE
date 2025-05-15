@@ -1,5 +1,5 @@
 import { MAKE_OPTIONS, PRICE_OPTIONS } from "@/constants";
-import { getModelOptions } from "@/utilities/utilities";
+import { getModelOptions, getPriceRange } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
 import ButtonPrimary from "../Buttons/Primary";
 import DropdownWithoutLabel from "../dropdown-without-label";
@@ -7,9 +7,21 @@ import classes from "./search-form.module.css";
 import { useSearch } from "@/contexts/carSearchContext";
 
 export default function SearchForm() {
-  const { make, model, price, setMake, setModel, setPrice } = useSearch();
+  const {
+    make,
+    model,
+    price,
+    setMake,
+    setModel,
+    setPrice,
+    setStartPrice,
+    setEndPrice,
+  } = useSearch();
   const router = useRouter();
   const handleSearchClick = () => {
+    const { startPrice, endPrice } = getPriceRange(price);
+    setStartPrice(startPrice);
+    setEndPrice(endPrice);
     router.push(`/search?make=${make}&model=${model}&price=${price}`);
   };
 

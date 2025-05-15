@@ -4,7 +4,7 @@ import { useSearch } from "@/contexts/carSearchContext";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
 import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
-import { getModelOptions, getPriceRange } from "@/utilities/utilities";
+import { getModelOptions } from "@/utilities/utilities";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -31,8 +31,8 @@ export default function Search() {
   const carInfoTabs = ["FAQs", "Reviews", "Variants", "Pricing"];
   const [selectedInfoTab, setSelectedInfoTab] = useState(carInfoTabs[0]);
 
-  const { make, model, price, setMake, setModel } = useSearch();
-  const { startPrice, endPrice } = getPriceRange(price);
+  const { make, model, price, startPrice, endPrice, setMake, setModel } =
+    useSearch();
   const router = useRouter();
   const handleSearchClick = () => {
     setSearchParams({
@@ -42,7 +42,7 @@ export default function Search() {
       startPrice: startPrice,
       endPrice: endPrice,
     });
-    router.push(`/search?make=${make}&model=${model}`);
+    router.push(`/search?make=${make}&model=${model}&price=${price}`);
   };
   const [searchParams, setSearchParams] = useState({
     pageSize: PAGE_SIZE,

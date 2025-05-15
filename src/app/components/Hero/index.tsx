@@ -17,11 +17,13 @@ export default function Hero() {
   const router = useRouter();
   const tabs = ["All", "New", "Used"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
-  const { setMake, setModel } = useSearch();
+  const { setMake, setModel, setStartPrice, setEndPrice } = useSearch();
   const handleCarModelClick = (model: string) => {
     const make = getMakeByModel(model);
     setMake(make);
     setModel(model);
+    setStartPrice(null);
+    setEndPrice(null);
     router.push(`/search?make=${make}&model=${model}`);
   };
 

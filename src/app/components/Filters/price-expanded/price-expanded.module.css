@@ -1,5 +1,17 @@
-.price {
+.priceSlider {
+  display: flex;
+  flex-direction: column;
   padding: 0px 24px 17px;
   border-left: 1px solid var(--color-gray300);
   border-right: 1px solid var(--color-gray300);
+  gap: 30px;
+}
+.clearBtn {
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--color-blue500);
+  font-weight: bold;
+  width: 35px;
 }
