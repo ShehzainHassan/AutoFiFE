@@ -10,7 +10,7 @@ export default function SearchForm() {
   const { make, model, price, setMake, setModel, setPrice } = useSearch();
   const router = useRouter();
   const handleSearchClick = () => {
-    router.push(`/search?make=${make}&model=${model}`);
+    router.push(`/search?make=${make}&model=${model}&price=${price}`);
   };
 
   return (

@@ -4,7 +4,7 @@ import { useSearch } from "@/contexts/carSearchContext";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
 import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
-import { getModelOptions } from "@/utilities/utilities";
+import { getModelOptions, getPriceRange } from "@/utilities/utilities";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -31,14 +31,16 @@ export default function Search() {
   const carInfoTabs = ["FAQs", "Reviews", "Variants", "Pricing"];
   const [selectedInfoTab, setSelectedInfoTab] = useState(carInfoTabs[0]);
 
-  const { make, model, setMake, setModel } = useSearch();
-
+  const { make, model, price, setMake, setModel } = useSearch();
+  const { startPrice, endPrice } = getPriceRange(price);
   const router = useRouter();
   const handleSearchClick = () => {
     setSearchParams({
       ...searchParams,
       make: make,
       model: model,
+      startPrice: startPrice,
+      endPrice: endPrice,
     });
     router.push(`/search?make=${make}&model=${model}`);
   };
@@ -47,8 +49,8 @@ export default function Search() {
     offset: 0,
     make: make,
     model: model,
-    startPrice: null,
-    endPrice: null,
+    startPrice: startPrice,
+    endPrice: endPrice,
   });
   const {
     data: vehicleList,
@@ -56,6 +58,7 @@ export default function Search() {
     error,
     isError,
   } = useSearchVehicles(searchParams);
+
   if (isLoading) return <LoadingSpinner color="var(--color-black100)" />;
   if (!vehicleList || vehicleList.totalCount === 0)
     return <EmptyState message="No vehicles found" />;

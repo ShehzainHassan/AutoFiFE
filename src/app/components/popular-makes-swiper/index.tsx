@@ -15,7 +15,10 @@ export default function PopularMakesSwiper({ make }: CarSwiperProps) {
     useVehiclesByMake(make);
 
   if (isLoading) return <LoadingSpinner />;
-  if (!data) return <EmptyState message="No vehicles found" />;
+  if (!data)
+    return (
+      <EmptyState message="No vehicles found" color="var(--color-white100)" />
+    );
   if (isError) return <ErrorMessage message={error.message} />;
 
   const allVehicles = data.pages.flatMap((page) => page.vehicles) || [];

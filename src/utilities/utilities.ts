@@ -22,3 +22,23 @@ export function getMakeByModel(modelName: string): string {
   }
   return "Any_Makes";
 }
+
+type PriceRange = {
+  startPrice: number | null;
+  endPrice: number | null;
+};
+
+export function getPriceRange(priceValue: string): PriceRange {
+  switch (priceValue) {
+    case "All_Prices":
+      return { startPrice: null, endPrice: null };
+    case "<$5,000":
+      return { startPrice: 0, endPrice: 5000 };
+    case "$5,000 - $25,000":
+      return { startPrice: 5000, endPrice: 25000 };
+    case ">$25,000":
+      return { startPrice: 25000, endPrice: null };
+    default:
+      return { startPrice: null, endPrice: null };
+  }
+}
