@@ -1,49 +1,27 @@
-import { useVehicle } from "@/contexts/vehicleContext";
-import { useVehicleResult } from "@/contexts/vehicleResultsContext";
+import { MAKE_OPTIONS, PRICE_OPTIONS } from "@/constants";
 import { getModelOptions } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
 import ButtonPrimary from "../Buttons/Primary";
 import DropdownWithoutLabel from "../dropdown-without-label";
 import classes from "./search-form.module.css";
-import { MAKE_OPTIONS, PRICE_OPTIONS } from "@/constants";
+import { useSearch } from "@/contexts/carSearchContext";
 
-export default function SearchCars() {
-  const {
-    makeGlobal,
-    model,
-    priceRange,
-    setMakeGlobal,
-    setModel,
-    setPriceRange,
-  } = useVehicle();
-  const { fetchVehiclesByMake, fetchVehiclesByModel } = useVehicleResult();
+export default function SearchForm() {
+  const { make, model, price, setMake, setModel, setPrice } = useSearch();
   const router = useRouter();
   const handleSearchClick = () => {
-    if (model !== "Any Models" && priceRange === "All Prices") {
-      fetchVehiclesByModel(model, 0);
-    } else if (
-      makeGlobal !== "Any Makes" &&
-      model === "Any Models" &&
-      priceRange === "All Prices"
-    ) {
-      fetchVehiclesByMake(makeGlobal, 0);
-    } else {
-      fetchVehiclesByMake("Any Makes", 0);
-    }
-    router.push(
-      `/search?make=${makeGlobal}&model=${model}&price=${priceRange}`
-    );
+    router.push(`/search?make=${make}&model=${model}`);
   };
 
   return (
     <div className={classes.container}>
       <div className={classes.criteriaContainer}>
         <DropdownWithoutLabel
-          value={makeGlobal}
+          value={make}
           options={MAKE_OPTIONS}
           onChange={(value) => {
-            setMakeGlobal(value);
-            setModel("Any Models");
+            setMake(value);
+            setModel("Any_Models");
           }}
           placeholder="Select make"
         />
@@ -53,8 +31,8 @@ export default function SearchCars() {
       <div className={classes.criteriaContainer}>
         <DropdownWithoutLabel
           key={model}
-          value={model ?? "Any Models"}
-          options={getModelOptions(makeGlobal)}
+          value={model ?? "Any_Models"}
+          options={getModelOptions(make)}
           onChange={setModel}
           placeholder="Select model"
         />
@@ -62,8 +40,8 @@ export default function SearchCars() {
       </div>
       <div className={classes.priceBtnContainer}>
         <DropdownWithoutLabel
-          value={priceRange}
-          onChange={setPriceRange}
+          value={price}
+          onChange={setPrice}
           options={PRICE_OPTIONS}
           placeholder="Select price"
         />

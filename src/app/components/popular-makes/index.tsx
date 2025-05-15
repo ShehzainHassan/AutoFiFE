@@ -1,15 +1,15 @@
 "use client";
 import { useState } from "react";
 import HorizontalTabs from "../horizontal-tabs";
-import CarSwiper from "../popular-makes-swiper";
+import PopularMakesSwiper from "../popular-makes-swiper";
 import SectionTitle from "../section-title";
 import Wrapper from "../wrapper";
 import classes from "./popular-makes.module.css";
-import { usePopularMakes } from "@/contexts/popularMakesContext";
+import { ThemeProvider } from "@/theme/themeContext";
+import { WHITE_THEME } from "@/constants";
 export default function PopularMakes() {
   const tabs = ["Audi", "Ford", "Mercedes-Benz"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
-  const { setMake_Popular } = usePopularMakes();
   return (
     <div className={classes.container}>
       <SectionTitle
@@ -19,15 +19,17 @@ export default function PopularMakes() {
         color="var(--color-white100)"
       />
       <Wrapper padding="0 0 115px 265px">
-        <HorizontalTabs
-          tabs={tabs}
-          selectedTab={selectedTab}
-          onTabChange={(tab) => {
-            setSelectedTab(tab);
-            setMake_Popular(tab);
-          }}
-        />
-        <CarSwiper />
+        <ThemeProvider value={WHITE_THEME}>
+          <HorizontalTabs
+            tabs={tabs}
+            selectedTab={selectedTab}
+            onTabChange={(tab) => {
+              setSelectedTab(tab);
+            }}
+          />
+        </ThemeProvider>
+
+        <PopularMakesSwiper make={selectedTab} />
       </Wrapper>
     </div>
   );

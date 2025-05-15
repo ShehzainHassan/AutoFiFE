@@ -1,9 +1,9 @@
 import headings from "@/styles/typography.module.css";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PriceExpanded from "../Filters/price-expanded";
 import classes from "./expandable.module.css";
 import { useState } from "react";
+import PriceExpanded from "../filters/price-expanded";
 type ExpandableProps = {
   title: string;
   roundedSides?: boolean;

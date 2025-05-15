@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import CarSwiper from "../car-swiper";
+import AllVehiclesSwiper from "../all-vehicle-swiper";
 import HorizontalTabs from "../horizontal-tabs";
 import SectionTitle from "../section-title";
 import Wrapper from "../wrapper";
@@ -24,13 +24,9 @@ export default function Vehicles() {
               onTabChange={(tab) => {
                 setSelectedTab(tab);
               }}
-              tabColor="var(--color-black100)"
-              selectedTabColor="var(--color-black100)"
-              selectedTabBorderColor="var(--color-blue500)"
-              borderColor="var(--color-gray100)"
             />
           </div>
-          <CarSwiper />
+          <AllVehiclesSwiper />
         </Wrapper>
       </div>
     </>

@@ -1,24 +1,17 @@
 "use client";
-import { useVehicle } from "@/contexts/vehicleContext";
-import { useVehicleResult } from "@/contexts/vehicleResultsContext";
+import { PREMIUM_BRANDS } from "@/constants";
 import { useRouter } from "next/navigation";
-import { ClipLoader } from "react-spinners";
 import BrandCard from "../brand-card";
 import SectionTitle from "../section-title";
 import classes from "./premium-brands.module.css";
-import { PREMIUM_BRANDS } from "@/constants";
+import { useSearch } from "@/contexts/carSearchContext";
 export default function PremiumBrands() {
   const router = useRouter();
-  const { setMakeGlobal, setModel, loading, priceRange } = useVehicle();
-  const { fetchVehiclesByMake } = useVehicleResult();
+  const { setMake, setModel } = useSearch();
   function handleBrandClick(make: string) {
-    const selectedModel = "Any Models";
-    setMakeGlobal(make);
-    setModel(selectedModel);
-    fetchVehiclesByMake(make, 0);
-    router.push(
-      `/search?make=${make}&model=${selectedModel}&price=${priceRange}`
-    );
+    setMake(make);
+    setModel("Any_Models");
+    router.push(`/search?make=${make}`);
   }
 
   return (
@@ -39,11 +32,6 @@ export default function PremiumBrands() {
             onClick={() => handleBrandClick(brand.brand)}
           />
         ))}
-        {loading && (
-          <div className={`loadingSpinnerWrapper`}>
-            <ClipLoader size={50} color="var(--color-black100)" />
-          </div>
-        )}
       </div>
     </div>
   );

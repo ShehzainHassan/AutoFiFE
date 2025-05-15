@@ -1,9 +1,9 @@
-import { PopularMakesProvider } from "@/contexts/popularMakesContext";
-import { VehicleProvider } from "@/contexts/vehicleContext";
+import ReactQueryProvider from "@/providers/react-query-provider";
+import { ThemeProvider } from "@/theme/themeContext";
 import { Metadata } from "next";
 import { DM_Sans, Inter, Roboto } from "next/font/google";
 import "./globals.css";
-import { VehicleResultProvider } from "@/contexts/vehicleResultsContext";
+import { CarSearchProvider } from "@/contexts/carSearchContext";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -36,16 +36,16 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <VehicleProvider>
-        <PopularMakesProvider>
-          <VehicleResultProvider>
+      <CarSearchProvider>
+        <ThemeProvider>
+          <ReactQueryProvider>
             <body
               className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
               {children}
             </body>
-          </VehicleResultProvider>
-        </PopularMakesProvider>
-      </VehicleProvider>
+          </ReactQueryProvider>
+        </ThemeProvider>
+      </CarSearchProvider>
     </html>
   );
 }

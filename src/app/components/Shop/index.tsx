@@ -23,10 +23,6 @@ export default function Shop() {
           tabs={tabs}
           selectedTab={selectedTab}
           onTabChange={(tab) => setSelectedTab(tab)}
-          tabColor="var(--color-black100)"
-          selectedTabColor="var(--color-black100)"
-          selectedTabBorderColor="var(--color-blue500)"
-          borderColor="var(--color-gray100)"
         />
 
         <div className={`${footerClasses.list} ${classes.list}`}>

@@ -1,64 +1,65 @@
 "use client";
-import { useVehicle } from "@/contexts/vehicleContext";
-import { useVehicleResult } from "@/contexts/vehicleResultsContext";
+import { GRAY_BLUE_THEME, MAKE_OPTIONS, PAGE_SIZE } from "@/constants";
+import { useSearch } from "@/contexts/carSearchContext";
+import useSearchVehicles from "@/hooks/useSearchVehicles";
 import headings from "@/styles/typography.module.css";
-import { getMakeByModel, getModelOptions } from "@/utilities/utilities";
+import { ThemeProvider } from "@/theme/themeContext";
+import { getModelOptions } from "@/utilities/utilities";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ClipLoader } from "react-spinners";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import ButtonPrimary from "../components/Buttons/Primary";
 import DropdownWithLabel from "../components/dropdown-with-label";
+import EmptyState from "../components/empty-state";
+import ErrorMessage from "../components/error-message";
 import FAQs from "../components/faqs";
+import Filters from "../components/filters";
 import Footer from "../components/footer";
 import HorizontalTabs from "../components/horizontal-tabs";
 import InputWithLabel from "../components/input-with-label";
+import LoadingSpinner from "../components/loading-spinner";
 import Navbar from "../components/navbar";
 import Pagination from "../components/pagination";
 import ResultCard from "../components/result-card";
 import SortBy from "../components/sort-by";
 import Wrapper from "../components/wrapper";
 import classes from "./page.module.css";
-import { MAKE_OPTIONS } from "@/constants";
-import Filters from "../components/filters";
 
 export default function Search() {
   const tabs = ["Car", "Body style", "Price"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
   const carInfoTabs = ["FAQs", "Reviews", "Variants", "Pricing"];
   const [selectedInfoTab, setSelectedInfoTab] = useState(carInfoTabs[0]);
-  const { makeGlobal, setMakeGlobal, model, setModel, priceRange } =
-    useVehicle();
-  const { vehicleList, fetchVehiclesByMake, fetchVehiclesByModel, loading } =
-    useVehicleResult();
+
+  const { make, model, setMake, setModel } = useSearch();
+
   const router = useRouter();
   const handleSearchClick = () => {
-    if (model !== "Any Models" && priceRange === "All Prices") {
-      fetchVehiclesByModel(model, 0);
-    } else if (
-      makeGlobal !== "Any Makes" &&
-      model === "Any Models" &&
-      priceRange === "All Prices"
-    ) {
-      fetchVehiclesByMake(makeGlobal, 0);
-    } else {
-      fetchVehiclesByMake("Any Makes", 0);
-    }
-    router.push(
-      `/search?make=${makeGlobal}&model=${model}&price=${priceRange}`
-    );
+    setSearchParams({
+      ...searchParams,
+      make: make,
+      model: model,
+    });
+    router.push(`/search?make=${make}&model=${model}`);
   };
-  const searchParams = useSearchParams();
-  const urlModel = searchParams.get("model");
-  useEffect(() => {
-    if (urlModel) {
-      const selectedMake = getMakeByModel(urlModel);
-      if (selectedMake) {
-        setMakeGlobal(selectedMake);
-      }
-      setModel(urlModel);
-    }
-  }, [urlModel]);
+  const [searchParams, setSearchParams] = useState({
+    pageSize: PAGE_SIZE,
+    offset: 0,
+    make: make,
+    model: model,
+    startPrice: null,
+    endPrice: null,
+  });
+  const {
+    data: vehicleList,
+    isLoading,
+    error,
+    isError,
+  } = useSearchVehicles(searchParams);
+  if (isLoading) return <LoadingSpinner color="var(--color-black100)" />;
+  if (!vehicleList || vehicleList.totalCount === 0)
+    return <EmptyState message="No vehicles found" />;
+  if (isError) return <ErrorMessage message={error.message} />;
   return (
     <>
       <Navbar backgroundColor="var(--color-gray600)" />
@@ -66,21 +67,19 @@ export default function Search() {
         <div className={classes.container}>
           <div className={classes.filterContainer}>
             <div className={classes.filters}>
-              <HorizontalTabs
-                tabs={tabs}
-                selectedTab={selectedTab}
-                onTabChange={(tab) => setSelectedTab(tab)}
-                tabColor="var(--color-gray600)"
-                selectedTabColor="var(--color-blue400)"
-                selectedTabBorderColor="var(--color-blue400)"
-                borderColor="var(--color-gray400)"
-              />
+              <ThemeProvider value={GRAY_BLUE_THEME}>
+                <HorizontalTabs
+                  tabs={tabs}
+                  selectedTab={selectedTab}
+                  onTabChange={(tab) => setSelectedTab(tab)}
+                />
+              </ThemeProvider>
               <DropdownWithLabel
                 label="Make"
-                value={makeGlobal}
+                value={make}
                 onChange={(value) => {
-                  setMakeGlobal(value);
-                  setModel("Any Models");
+                  setMake(value);
+                  setModel("Any_Models");
                 }}
                 placeholder="Make"
                 options={MAKE_OPTIONS}
@@ -88,10 +87,10 @@ export default function Search() {
               <DropdownWithLabel
                 label="Model"
                 key={model}
+                options={getModelOptions(make)}
                 value={model}
                 onChange={setModel}
                 placeholder="Model"
-                options={getModelOptions(makeGlobal)}
               />
               <InputWithLabel label="Postcode" />
 
@@ -142,7 +141,7 @@ export default function Search() {
                 <SortBy />
               </div>
               <div className={classes.resultCards}>
-                {vehicleList.map((vehicle) => (
+                {vehicleList?.vehicles.map((vehicle) => (
                   <div key={vehicle.id}>
                     <ResultCard
                       carImg="/images/Bentley-Arnage4.4.png"
@@ -153,11 +152,6 @@ export default function Search() {
                   </div>
                 ))}
               </div>
-              {loading && (
-                <div className={`loadingSpinnerWrapper ${classes.loading}`}>
-                  <ClipLoader size={50} color="var(--color-black100)" />
-                </div>
-              )}
             </div>
             <Pagination />
           </div>

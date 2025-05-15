@@ -1,5 +1,5 @@
 "use client";
-import { useVehicleResult } from "@/contexts/vehicleResultsContext";
+import { FEATURED_MODELS, WHITE_THEME } from "@/constants";
 import useTranslation from "@/i18n";
 import headings from "@/styles/typography.module.css";
 import { useRouter } from "next/navigation";
@@ -7,23 +7,22 @@ import { useState } from "react";
 import FeaturedIcon from "../featured-icons";
 import HorizontalTabs from "../horizontal-tabs";
 import Navbar from "../navbar";
-import SearchCars from "../search-form";
+import SearchForm from "../search-form";
 import classes from "./hero.module.css";
-import { useVehicle } from "@/contexts/vehicleContext";
-import { FEATURED_MODELS } from "@/constants";
+import { ThemeProvider } from "@/theme/themeContext";
+import { useSearch } from "@/contexts/carSearchContext";
+import { getMakeByModel } from "@/utilities/utilities";
 export default function Hero() {
   const { t } = useTranslation();
   const router = useRouter();
   const tabs = ["All", "New", "Used"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
-  const { setMakeGlobal, setModel } = useVehicle();
-  const { fetchVehiclesByModel } = useVehicleResult();
+  const { setMake, setModel } = useSearch();
   const handleCarModelClick = (model: string) => {
-    const selectedMake = "Any Makes";
+    const make = getMakeByModel(model);
+    setMake(make);
     setModel(model);
-    setMakeGlobal(selectedMake);
-    fetchVehiclesByModel(model, 0);
-    router.push(`/search?make=Any Makes&model=${model}&price=All Prices`);
+    router.push(`/search?make=${make}&model=${model}`);
   };
 
   return (
@@ -38,13 +37,15 @@ export default function Hero() {
             {t("hero.title")}
           </p>
           <div className={classes.searchContainer}>
-            <HorizontalTabs
-              tabs={tabs}
-              selectedTab={selectedTab}
-              onTabChange={(tab) => setSelectedTab(tab)}
-              borderColor="transparent"
-            />
-            <SearchCars />
+            <ThemeProvider value={WHITE_THEME}>
+              <HorizontalTabs
+                tabs={tabs}
+                selectedTab={selectedTab}
+                onTabChange={(tab) => setSelectedTab(tab)}
+                borderColor="transparent"
+              />
+            </ThemeProvider>
+            <SearchForm />
           </div>
         </div>
         <div className={classes.textContainer}>

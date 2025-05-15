@@ -1,28 +1,31 @@
-"use client";
+import { VehicleListResult } from "@/interfaces/vehicle";
 import { useState } from "react";
-import "swiper/css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import ButtonNavigate from "../Buttons/Navigate";
-import CarCard from "../car-card";
-import classes from "./car-swiper.module.css";
 import type { Swiper as SwiperType } from "swiper";
-import { useVehicle } from "@/contexts/vehicleContext";
-import { ClipLoader } from "react-spinners";
-export default function CarSwiper() {
+import { Swiper, SwiperSlide } from "swiper/react";
+import ButtonNavigate from "../../buttons/Navigate";
+import VerticalCard from "../../car-card/vertical-card";
+import classes from "./vertical-carousel.module.css";
+
+interface VehicleCarouselProps {
+  vehicleListResult: VehicleListResult;
+  onReachEnd: () => void;
+}
+
+export default function VerticalCarousel({
+  vehicleListResult,
+  onReachEnd,
+}: VehicleCarouselProps) {
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
-  const { vehicleList, fetchMoreVehicles, loading, hasMore } = useVehicle();
   return (
     <Swiper
-      onReachEnd={() => {
-        if (vehicleList.length !== 0) fetchMoreVehicles();
-      }}
-      spaceBetween={20}
+      spaceBetween={30}
       slidesPerView={4.6}
-      className={classes.swiperContainer}
-      onSwiper={setSwiperInstance}>
-      {vehicleList.map((vehicle) => (
+      onReachEnd={onReachEnd}
+      onSwiper={setSwiperInstance}
+      className={classes.swiperContainer}>
+      {vehicleListResult.vehicles.map((vehicle) => (
         <SwiperSlide key={vehicle.id}>
-          <CarCard
+          <VerticalCard
             imgSrc="/images/ford_2021.png"
             carDetails={`${vehicle.make} ${vehicle.model} - ${vehicle.year}`}
             carDescription="Car Description"
@@ -35,22 +38,21 @@ export default function CarSwiper() {
           />
         </SwiperSlide>
       ))}
-      {loading && (
-        <SwiperSlide>
-          <div className={`loadingSpinnerWrapper`}>
-            <ClipLoader size={50} color="var(--color-black100)" />
-          </div>
-        </SwiperSlide>
-      )}
+
       <div className={classes.navigate}>
         <ButtonNavigate
           onClick={() => swiperInstance?.slidePrev()}
+          backgroundColor="var(--color-white100)"
           type="prev"
+          width={12}
+          height={12}
         />
         <ButtonNavigate
           onClick={() => swiperInstance?.slideNext()}
+          backgroundColor="var(--color-white100)"
           type="next"
-          opacity={hasMore ? 1 : 0.5}
+          width={12}
+          height={12}
         />
       </div>
     </Swiper>

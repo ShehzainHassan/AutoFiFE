@@ -1,0 +1,7 @@
+.Text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white100);
+  min-height: 250px;
+}

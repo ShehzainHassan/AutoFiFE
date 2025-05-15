@@ -1,7 +1,3 @@
 .container {
   background-color: var(--color-black100);
 }
-.buttons {
-  display: flex;
-  gap: 25px;
-}

@@ -10,3 +10,8 @@ export interface Vehicle {
   fuelType: string;
   transmission: string;
 }
+
+export interface VehicleListResult {
+  totalCount: number;
+  vehicles: Vehicle[];
+}

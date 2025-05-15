@@ -1,6 +1,7 @@
 "use client";
 import headings from "@/styles/typography.module.css";
 import classes from "./horizontal-tabs.module.css";
+import { useTheme } from "@/theme/themeContext";
 
 type TabProps = {
   tabs: string[];
@@ -16,26 +17,35 @@ export default function HorizontalTabs({
   tabs,
   selectedTab,
   onTabChange,
-  tabColor = "var(--color-white100)",
-  selectedTabColor = "var(--color-white100)",
-  selectedTabBorderColor = "var(--color-white100)",
-  borderColor = "var(--color-white100)",
+  tabColor,
+  selectedTabColor,
+  selectedTabBorderColor,
+  borderColor,
 }: TabProps) {
+  const { horizontalTabs } = useTheme();
+  const finalTabColor = tabColor || horizontalTabs.tabColor;
+  const finalSelectedTabColor =
+    selectedTabColor || horizontalTabs.selectedTabColor;
+  const finalSelectedTabBorderColor =
+    selectedTabBorderColor || horizontalTabs.selectedTabBorderColor;
+  const finalBorderColor = borderColor || horizontalTabs.borderColor;
+
   return (
     <div
       className={classes.tabContainer}
-      style={{ borderBottom: `1px solid ${borderColor}` }}>
+      style={{ borderBottom: `1px solid ${finalBorderColor}` }}>
       {tabs.map((tab) => (
         <button
           key={tab}
           onClick={() => onTabChange(tab)}
           className={`${classes.tab} ${headings.tabText}`}
           style={{
-            color: selectedTab === tab ? selectedTabColor : tabColor,
+            color: selectedTab === tab ? finalSelectedTabColor : finalTabColor,
             borderBottom:
               selectedTab === tab
-                ? `2px solid ${selectedTabBorderColor}`
+                ? `2px solid ${finalSelectedTabBorderColor}`
                 : "none",
+            background: "transparent",
           }}>
           {tab}
         </button>

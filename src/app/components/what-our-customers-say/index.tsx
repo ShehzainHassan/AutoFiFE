@@ -2,7 +2,7 @@ import Image from "next/image";
 import SectionTitle from "../section-title";
 import classes from "./what-our-customers-say.module.css";
 import headings from "@/styles/typography.module.css";
-import ButtonNavigate from "../Buttons/Navigate";
+import ButtonNavigate from "../buttons/Navigate";
 
 export default function Customers() {
   return (
