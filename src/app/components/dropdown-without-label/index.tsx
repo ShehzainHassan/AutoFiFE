@@ -41,7 +41,6 @@ export default function DropdownWithoutLabel({
         placeholder={placeholder}
         value={options.find((option) => option.value === value)}
         onChange={(option) => onChange(option?.value || "")}
-        isSearchable={false}
         styles={{
           control: (base) => ({
             ...base,
