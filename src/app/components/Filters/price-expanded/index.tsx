@@ -20,18 +20,18 @@ export default function PriceExpanded() {
     let priceText = "All_Prices";
     if (startPrice === null && endPrice === 0) {
       setDisplayText("$0");
-      priceText = "$0";
+      priceText = "0-0";
     } else if (startPrice === null && endPrice !== null) {
       setDisplayText(`Less than $${endPrice.toLocaleString()}`);
-      priceText = `<$${endPrice.toLocaleString()}`;
+      priceText = `<${endPrice}`;
     } else if (startPrice !== null && endPrice === null) {
       setDisplayText(`Greater than $${startPrice.toLocaleString()}`);
-      priceText = `>$${startPrice.toLocaleString()}`;
+      priceText = `>${startPrice}`;
     } else if (startPrice !== null && endPrice !== null) {
       setDisplayText(
         `$${startPrice.toLocaleString()} - $${endPrice.toLocaleString()}`
       );
-      priceText = `$${startPrice.toLocaleString()}-$${endPrice.toLocaleString()}`;
+      priceText = `${startPrice}-${endPrice}`;
     }
 
     setPrice(priceText);

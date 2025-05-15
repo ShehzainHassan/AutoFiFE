@@ -1,5 +1,7 @@
 "use client";
 
+import { getPriceRange } from "@/utilities/utilities";
+import { useSearchParams } from "next/navigation";
 import { createContext, useContext, useState } from "react";
 
 type CarSearchContextType = {
@@ -21,11 +23,18 @@ const CarSearchContext = createContext<CarSearchContextType | undefined>(
 export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [make, setMake] = useState("Any_Makes");
-  const [model, setModel] = useState("Any_Models");
-  const [price, setPrice] = useState("All_Prices");
-  const [startPrice, setStartPrice] = useState<number | null>(null);
-  const [endPrice, setEndPrice] = useState<number | null>(null);
+  const searchParams = useSearchParams();
+  const makeParam = searchParams.get("make") || "Any_Makes";
+  const modelParam = searchParams.get("model") || "Any_Models";
+  const priceParam = searchParams.get("price") || "All_Prices";
+  const { startPrice: priceStart, endPrice: priceEnd } =
+    getPriceRange(priceParam);
+  console.log(priceStart, priceEnd);
+  const [make, setMake] = useState(makeParam);
+  const [model, setModel] = useState(modelParam);
+  const [price, setPrice] = useState(priceParam);
+  const [startPrice, setStartPrice] = useState<number | null>(priceStart);
+  const [endPrice, setEndPrice] = useState<number | null>(priceEnd);
   return (
     <CarSearchContext.Provider
       value={{

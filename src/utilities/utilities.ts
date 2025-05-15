@@ -1,4 +1,4 @@
-import { CURRENCY, MAX_PRICE, MIN_PRICE, MODEL_OPTIONS } from "@/constants";
+import { MODEL_OPTIONS } from "@/constants";
 import { Options } from "@/interfaces/dropdown-options";
 
 export function getModelOptions(make: string): Options[] {
@@ -29,16 +29,21 @@ type PriceRange = {
 };
 
 export function getPriceRange(priceValue: string): PriceRange {
-  switch (priceValue) {
-    case "All_Prices":
-      return { startPrice: null, endPrice: null };
-    case `<${CURRENCY}${MIN_PRICE.toLocaleString()}`:
-      return { startPrice: 0, endPrice: MIN_PRICE };
-    case "$5,000-$50,000":
-      return { startPrice: 5000, endPrice: 50000 };
-    case `>${CURRENCY}${MAX_PRICE.toLocaleString()}`:
-      return { startPrice: MAX_PRICE, endPrice: null };
-    default:
-      return { startPrice: null, endPrice: null };
+  if (!priceValue || priceValue === "All_Prices") {
+    return { startPrice: null, endPrice: null };
   }
+  if (priceValue.startsWith(">")) {
+    const amount = parseInt(priceValue.slice(1));
+    return { startPrice: isNaN(amount) ? null : amount, endPrice: null };
+  }
+  if (priceValue.startsWith("<")) {
+    const amount = parseInt(priceValue.slice(1));
+    return { startPrice: null, endPrice: isNaN(amount) ? null : amount };
+  }
+
+  const [start, end] = priceValue.split("-").map(Number);
+  return {
+    startPrice: isNaN(start) ? null : start,
+    endPrice: isNaN(end) ? null : end,
+  };
 }

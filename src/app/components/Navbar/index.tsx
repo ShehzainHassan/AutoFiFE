@@ -5,6 +5,7 @@ import headings from "@/styles/typography.module.css";
 import useTranslation from "@/i18n";
 import ButtonPrimary from "../Buttons/Primary";
 import { useRouter } from "next/navigation";
+import { useSearch } from "@/contexts/carSearchContext";
 type NavbarProps = {
   backgroundColor?: string;
 };
@@ -13,6 +14,13 @@ export default function Navbar({
 }: NavbarProps) {
   const { t } = useTranslation();
   const router = useRouter();
+  const { setPrice, setStartPrice, setEndPrice } = useSearch();
+  const redirectToHome = () => {
+    router.push("/");
+    setPrice("All_Prices");
+    setStartPrice(null);
+    setEndPrice(null);
+  };
   return (
     <div className={classes.navbar} style={{ backgroundColor }}>
       <Image
@@ -21,7 +29,7 @@ export default function Navbar({
         alt="logo"
         width={108}
         height={26}
-        onClick={() => router.push("/")}
+        onClick={redirectToHome}
       />
       <div className={classes.navList}>
         <div className={classes.navContainer}>
