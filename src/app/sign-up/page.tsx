@@ -9,13 +9,14 @@ import { useState } from "react";
 
 const MainImage = () => {
   return (
-    <Image
-      src="/images/hero.jpg"
-      alt="hero"
-      width={0}
-      height={0}
-      style={{ width: "100%", height: "100%" }}
-    />
+    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      <Image
+        src="/images/background.png"
+        alt="hero"
+        fill
+        style={{ objectFit: "cover" }}
+      />
+    </div>
   );
 };
 const TopSection = () => {
