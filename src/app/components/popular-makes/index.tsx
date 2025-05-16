@@ -6,7 +6,7 @@ import SectionTitle from "../section-title";
 import Wrapper from "../wrapper";
 import classes from "./popular-makes.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
-import { WHITE_THEME } from "@/constants";
+import { WHITE_THEME } from "@/styles/tab-styles";
 export default function PopularMakes() {
   const tabs = ["Audi", "Ford", "Mercedes-Benz"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);

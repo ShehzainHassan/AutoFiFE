@@ -1,28 +1,36 @@
 import headings from "@/styles/typography.module.css";
-import ButtonSecondary from "../Buttons/Secondary";
 import classes from "./buy-sell-car.module.css";
 import Image from "next/image";
+import ButtonSecondary from "../buttons/Secondary";
 type CarCardProps = {
   title: string;
   description: string;
-  backgroundColor?: string;
   imgSrc?: string;
-  buttonColor?: string;
+  type?: "Buy" | "Sell";
 };
 export default function BuySellCard({
   title,
   description,
-  backgroundColor = "var(--color-blue100)",
   imgSrc = "/images/buy.png",
-  buttonColor = "var(--color-blue500)",
+  type,
 }: CarCardProps) {
   return (
-    <div className={classes.card} style={{ backgroundColor }}>
+    <div
+      className={classes.card}
+      style={{
+        backgroundColor:
+          type === "Buy" ? "var(--color-blue100)" : "var(--color-pink100)",
+      }}>
       <h1 className={`${headings.cardTitle} ${classes.title}`}>{title}</h1>
       <p className={`${headings.criteriaText} ${classes.description}`}>
         {description}
       </p>
-      <ButtonSecondary btnText="Get Started" buttonColor={buttonColor} />
+      <ButtonSecondary
+        btnText="Get Started"
+        buttonColor={
+          type === "Buy" ? "var(--color-blue500)" : "var(--color-black100)"
+        }
+      />
       <Image
         src={imgSrc}
         className={classes.image}

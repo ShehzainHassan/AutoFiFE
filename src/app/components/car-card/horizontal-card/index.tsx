@@ -2,6 +2,8 @@ import Image from "next/image";
 import classes from "./horizontal-card.module.css";
 import headings from "@/styles/typography.module.css";
 import { CURRENCY } from "@/constants";
+import { TagLabel } from "../../tag-label";
+import BookmarkIcon from "../../bookmark-icon";
 
 type Props = {
   imgSrc: string;
@@ -13,6 +15,7 @@ type Props = {
   price: number;
   tag?: string;
   tagColor?: string;
+  btnText?: string;
   showPreviousPrice?: boolean;
 };
 
@@ -25,7 +28,8 @@ export default function HorizontalCarCard({
   gearType,
   price,
   tag,
-  tagColor,
+  tagColor = "var(--color-blue500)",
+  btnText = "View Details",
   showPreviousPrice = false,
 }: Props) {
   return (
@@ -39,19 +43,8 @@ export default function HorizontalCarCard({
           height={0}
           style={{ height: "100%" }}
         />
-        {tag && (
-          <div className={classes.tag} style={{ backgroundColor: tagColor }}>
-            {tag}
-          </div>
-        )}
-        <div className={classes.bookmark}>
-          <Image
-            src="/images/bookmark.png"
-            alt="bookmark"
-            width={14}
-            height={14}
-          />
-        </div>
+        {tag && <TagLabel text={tag} color={tagColor} />}
+        <BookmarkIcon />
       </div>
       <div className={classes.horizontalCarDetails}>
         <div className={classes.carInfo}>
@@ -102,7 +95,7 @@ export default function HorizontalCarCard({
               headings.priceText
             }>{`${CURRENCY}${price.toLocaleString()}`}</h2>
           <div className={classes.btnContainer}>
-            <button className={classes.btn}>View Details</button>
+            <button className={classes.btn}>{btnText}</button>
             <Image
               src="/images/arrow-blue.png"
               alt="arrow"

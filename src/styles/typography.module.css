@@ -1,3 +1,17 @@
+/**************          Zen Kaku Gothic Antique Font          *****************/
+
+.authHeading {
+  font-family: DM Sans, sans-serif;
+  font-weight: 900;
+  font-size: 25px;
+  line-height: 44px;
+}
+.authDescription {
+  font-family: DM Sans, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 28px;
+}
 /**************          DM Sans Font          *****************/
 .title {
   font-family: DM Sans, sans-serif;

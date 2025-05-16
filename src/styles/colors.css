@@ -13,11 +13,14 @@
   --color-gray400: #c3c3c3;
   --color-gray500: #c3cdd5;
   --color-gray550: #e4e4e5;
+  --color-gray575: #757575;
   --color-gray600: #666666;
+  --color-gray700: #424242;
 
   --color-black100: #050b20;
   --color-black200: #0c0c11;
   --color-black300: #020610;
+  --color-black400: #212121;
 
   --color-pink100: #ffe9f3;
 
@@ -32,6 +35,7 @@
   --color-green700: #005128;
 
   --color-purple100: #eef1fb;
+  --color-purple600: #24243e;
 
   --color-red500: #ef4444;
 }

@@ -14,11 +14,13 @@ export default function BlogCard({
   sharedBy = "Admin",
   date = "November 22, 2023",
   description,
-  tag = "Sound",
+  tag,
 }: BlogCardProps) {
   return (
     <div className={classes.container}>
-      <div className={`${classes.tag} ${headings.modelText}`}>{tag}</div>
+      {tag && (
+        <div className={`${classes.tag} ${headings.modelText}`}>{tag}</div>
+      )}
       <Image
         src={imgSrc}
         className={classes.image}
@@ -26,7 +28,7 @@ export default function BlogCard({
         width={447}
         height={298}
       />
-      <div className={classes.descriptionContainer}>
+      <article className={classes.descriptionContainer}>
         <div className={classes.textContainer}>
           <p className={headings.criteriaText}>{sharedBy}</p>
           <p className={headings.criteriaText}>{date}</p>
@@ -35,7 +37,7 @@ export default function BlogCard({
         <p className={`${headings.cardDescription} ${classes.description}`}>
           {description}
         </p>
-      </div>
+      </article>
     </div>
   );
 }

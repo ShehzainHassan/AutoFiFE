@@ -1,11 +1,14 @@
 import { MAKE_OPTIONS, PRICE_OPTIONS } from "@/constants";
+import { BLUE_THEME } from "@/constants/button-primary-themes";
+import { useSearch } from "@/contexts/carSearchContext";
+import { customSelectStyles } from "@/styles/custom-select";
+import { ThemeProvider } from "@/theme/themeContext";
 import { getModelOptions, getPriceRange } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
-import ButtonPrimary from "../Buttons/Primary";
-import DropdownWithoutLabel from "../dropdown-without-label";
+import ButtonPrimary from "../buttons/Primary";
+import Dropdown from "../dropdown";
+import CustomDropdownIndicator from "../dropdown-indicator";
 import classes from "./search-form.module.css";
-import { useSearch } from "@/contexts/carSearchContext";
-
 export default function SearchForm() {
   const {
     make,
@@ -25,49 +28,77 @@ export default function SearchForm() {
     router.push(`/search?make=${make}&model=${model}&price=${price}`);
   };
 
-  return (
-    <div className={classes.container}>
+  const MakeDropdown = () => {
+    return (
       <div className={classes.criteriaContainer}>
-        <DropdownWithoutLabel
+        <Dropdown
           value={make}
-          options={MAKE_OPTIONS}
           onChange={(value) => {
             setMake(value);
             setModel("Any_Models");
           }}
-          placeholder="Select make"
-        />
+          placeholder="Select make">
+          <Dropdown.Select
+            options={MAKE_OPTIONS}
+            styles={customSelectStyles}
+            components={{ DropdownIndicator: CustomDropdownIndicator }}
+          />
+        </Dropdown>
 
         <div className={classes.verticalBorder} />
       </div>
+    );
+  };
+  const ModelDropdown = () => {
+    return (
       <div className={classes.criteriaContainer}>
-        <DropdownWithoutLabel
+        <Dropdown
           key={model}
           value={model ?? "Any_Models"}
-          options={getModelOptions(make)}
           onChange={setModel}
-          placeholder="Select model"
-        />
+          placeholder="Select model">
+          <Dropdown.Select
+            options={getModelOptions(make)}
+            styles={customSelectStyles}
+            components={{ DropdownIndicator: CustomDropdownIndicator }}
+          />
+        </Dropdown>
+
         <div className={classes.verticalBorder} />
       </div>
+    );
+  };
+  const PriceDropdown = () => {
+    return (
       <div className={classes.priceBtnContainer}>
-        <DropdownWithoutLabel
-          value={price}
-          onChange={setPrice}
-          options={PRICE_OPTIONS}
-          placeholder="Select price"
-        />
+        <Dropdown value={price} onChange={setPrice} placeholder="Select price">
+          <Dropdown.Select
+            options={PRICE_OPTIONS}
+            styles={customSelectStyles}
+            components={{ DropdownIndicator: CustomDropdownIndicator }}
+          />
+        </Dropdown>
+      </div>
+    );
+  };
+  const SearchButton = () => {
+    return (
+      <ThemeProvider value={BLUE_THEME}>
         <ButtonPrimary
           imgSrc="/images/search.png"
-          backgroundColor="var(--color-blue500)"
           btnText="Search Cars"
-          textColor="var(--color-white100)"
-          borderRadius="60px"
           padding="15px 40px"
-          hoverColor="var(--color-blue600)"
           onClick={handleSearchClick}
         />
-      </div>
+      </ThemeProvider>
+    );
+  };
+  return (
+    <div className={classes.container}>
+      <MakeDropdown />
+      <ModelDropdown />
+      <PriceDropdown />
+      <SearchButton />
     </div>
   );
 }

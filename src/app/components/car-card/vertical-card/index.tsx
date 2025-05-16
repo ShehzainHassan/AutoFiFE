@@ -2,6 +2,8 @@ import Image from "next/image";
 import classes from "./vertical-card.module.css";
 import headings from "@/styles/typography.module.css";
 import { CURRENCY } from "@/constants";
+import { TagLabel } from "../../tag-label";
+import BookmarkIcon from "../../bookmark-icon";
 
 type CarCardProps = {
   imgSrc: string;
@@ -24,24 +26,13 @@ export default function VerticalCard({
   gearType,
   price,
   tag,
-  tagColor,
+  tagColor = "var(--color-blue500)",
   showPreviousPrice = false,
 }: CarCardProps) {
   return (
     <div className={classes.container}>
-      {tag && (
-        <div className={classes.tag} style={{ backgroundColor: tagColor }}>
-          {tag}
-        </div>
-      )}
-      <div className={classes.bookmark}>
-        <Image
-          src="/images/bookmark.png"
-          alt="bookmark"
-          width={14}
-          height={14}
-        />
-      </div>
+      {tag && <TagLabel text={tag} color={tagColor} />}
+      <BookmarkIcon />
       <div className={classes.imgWrapper}>
         <Image src={imgSrc} alt="car-name" className={classes.carImg} fill />
       </div>

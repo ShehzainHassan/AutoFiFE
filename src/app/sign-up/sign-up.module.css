@@ -1,0 +1,65 @@
+.container {
+  display: grid;
+  grid-template-columns: 3.17fr 8.83fr;
+  height: 100vh;
+  color: var(--color-gray700);
+}
+.buttonsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36px 39px 36px 97px;
+}
+.buttonLeft {
+  display: flex;
+  cursor: pointer;
+}
+.buttonRight {
+  display: flex;
+  gap: 5px;
+}
+.icon {
+  width: 24px;
+  height: 24px;
+}
+.loginBtn {
+  border: none;
+  outline: none;
+  background: none;
+  font-weight: 700;
+  text-decoration: underline;
+  color: var(--color-gray700);
+  cursor: pointer;
+}
+.signUpContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.subContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 0 auto;
+}
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.button {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 24px;
+  color: var(--color-white100);
+  background-color: var(--color-purple600);
+  cursor: pointer;
+}
+.help {
+  display: flex;
+  justify-content: flex-end;
+  padding: 45px 70px;
+  cursor: pointer;
+  gap: 10px;
+  align-items: center;
+}

@@ -1,0 +1,11 @@
+.tag {
+  padding: 5px 15px;
+  border-radius: 30px;
+  max-width: 105px;
+  color: var(--color-white100);
+  position: absolute;
+  top: 23px;
+  left: 20px;
+  z-index: 1;
+  box-sizing: content-box;
+}

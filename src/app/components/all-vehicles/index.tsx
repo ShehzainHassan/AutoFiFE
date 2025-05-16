@@ -5,9 +5,9 @@ import HorizontalTabs from "../horizontal-tabs";
 import SectionTitle from "../section-title";
 import Wrapper from "../wrapper";
 import classes from "./all-vehicles.module.css";
-export default function Vehicles() {
-  const tabs = ["In Stock", "New Cars", "Used Cars"];
-  const [selectedTab, setSelectedTab] = useState(tabs[0]);
+export default function ExploreVehicles() {
+  const TABS = ["In Stock", "New Cars", "Used Cars"];
+  const [selectedTab, setSelectedTab] = useState(TABS[0]);
   return (
     <>
       <div className={classes.container}>
@@ -19,7 +19,7 @@ export default function Vehicles() {
         <Wrapper padding="0 0 115px 265px">
           <div className={classes.space}>
             <HorizontalTabs
-              tabs={tabs}
+              tabs={TABS}
               selectedTab={selectedTab}
               onTabChange={(tab) => {
                 setSelectedTab(tab);

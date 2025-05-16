@@ -8,30 +8,7 @@
   position: relative;
   margin-bottom: 20px;
 }
-.tag {
-  padding: 5px 15px;
-  border-radius: 30px;
-  max-width: 105px;
-  color: var(--color-white100);
-  position: absolute;
-  top: 23px;
-  left: 20px;
-  z-index: 1;
-  box-sizing: content-box;
-}
-.bookmark {
-  width: 36px;
-  height: 36px;
-  border-radius: 18px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--color-white100);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-}
+
 .container:hover {
   transform: scale(1.1);
 }

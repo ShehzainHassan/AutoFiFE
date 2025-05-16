@@ -16,13 +16,17 @@ export default function Item({
   imgWidth = 60,
   imgHeight = 60,
 }: ItemProps) {
+  const renderText = (title: string, description: string) => (
+    <div className={classes.textContainer}>
+      <h2 className={headings.footerTitle}>{title}</h2>
+      <p className={headings.criteriaText}>{description}</p>
+    </div>
+  );
+
   return (
     <div className={classes.item}>
       <Image src={imgSrc} alt="Icon" width={imgWidth} height={imgHeight} />
-      <div className={classes.textContainer}>
-        <h2 className={headings.footerTitle}>{title}</h2>
-        <p className={headings.criteriaText}>{description}</p>
-      </div>
+      {renderText(title, description)}
     </div>
   );
 }

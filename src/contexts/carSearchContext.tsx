@@ -29,7 +29,6 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
   const priceParam = searchParams.get("price") || "All_Prices";
   const { startPrice: priceStart, endPrice: priceEnd } =
     getPriceRange(priceParam);
-  console.log(priceStart, priceEnd);
   const [make, setMake] = useState(makeParam);
   const [model, setModel] = useState(modelParam);
   const [price, setPrice] = useState(priceParam);

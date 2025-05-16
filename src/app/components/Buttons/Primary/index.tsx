@@ -2,6 +2,7 @@
 import Image from "next/image";
 import classes from "./primary.module.css";
 import { useState } from "react";
+import { useTheme } from "@/theme/themeContext";
 type ButtonPrimaryProps = {
   imgSrc?: string;
   btnText: string;
@@ -16,29 +17,36 @@ type ButtonPrimaryProps = {
 export default function ButtonPrimary({
   imgSrc,
   btnText,
-  backgroundColor = "var(--color-white100)",
-  borderRadius = "46px",
-  textColor = "var(--color-black100)",
-  padding = "10px 25px",
-  hoverColor = "var(--color-white200)",
-  border = "none",
+  backgroundColor,
+  borderRadius,
+  textColor,
+  padding,
+  hoverColor,
+  border,
   onClick,
 }: ButtonPrimaryProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const theme = useTheme();
+  const themeValues = theme.buttonPrimary;
+
   return (
     <div
       className={classes.btnContainer}
       style={{
-        backgroundColor: isHovered ? hoverColor : backgroundColor,
-        borderRadius,
-        padding,
-        border,
+        backgroundColor: isHovered
+          ? hoverColor || themeValues?.hoverColor
+          : backgroundColor || themeValues?.backgroundColor,
+        borderRadius: borderRadius || themeValues?.borderRadius,
+        padding: padding || themeValues?.padding,
+        border: border || themeValues?.border,
       }}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
       {imgSrc && <Image src={imgSrc} alt="icon" width={15} height={15} />}
-      <button className={classes.btn} style={{ color: textColor }}>
+      <button
+        className={classes.btn}
+        style={{ color: textColor || themeValues?.textColor }}>
         {btnText}
       </button>
     </div>

@@ -1,5 +1,5 @@
 "use client";
-import { FEATURED_MODELS, WHITE_THEME } from "@/constants";
+import { FEATURED_MODELS } from "@/constants";
 import useTranslation from "@/i18n";
 import headings from "@/styles/typography.module.css";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,7 @@ import classes from "./hero.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
 import { useSearch } from "@/contexts/carSearchContext";
 import { getMakeByModel } from "@/utilities/utilities";
+import { WHITE_THEME } from "@/styles/tab-styles";
 export default function Hero() {
   const { t } = useTranslation();
   const router = useRouter();

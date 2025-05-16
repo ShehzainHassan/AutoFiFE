@@ -1,16 +1,124 @@
 {
     "navbar": {
-        "home": "Home",
-        "listings": "Listings",
-        "blog": "Blog",
-        "pages": "Pages",
-        "about": "About",
-        "contact": "Contact",
-        "signIn": "Sign In",
+        "navItems": {
+            "home": "Home",
+            "listings": "Listings",
+            "blog": "Blog",
+            "pages": "Pages",
+            "about": "About",
+            "contact": "Contact",
+            "signIn": "Sign In"
+        },
         "submitBtn": "Submit Listing"
     },
     "hero": {
         "title": "Find Your Perfect Car",
         "subHeading": "Find cars for sale and for rent near you"
-    }
+    },
+    "latest_blog": {
+        "blog": [
+            {
+                "id": 1,
+                "imgSrc": "/images/BMW-Card.png",
+                "description": "2024 BMW ALPINA XB7 with exclusive details, extraordinary",
+                "tag": "Sound"
+            },
+            {
+                "id": 2,
+                "imgSrc": "/images/BMW-Card.png",
+                "description": "2024 BMW ALPINA XB7 with exclusive details, extraordinary",
+                "tag": "Accessories"
+            },
+            {
+                "id": 3,
+                "imgSrc": "/images/BMW-Card.png",
+                "description": "2024 BMW ALPINA XB7 with exclusive details, extraordinary",
+                "tag": "Exterior"
+            }
+        ],
+        "car_cards": [
+            {
+                "id": 1,
+                "type": "Buy",
+                "title": "Are You Looking For a Car",
+                "description": "We are committed to providing our customers with exceptional service.",
+                "btnText": "Get Started"
+            },
+            {
+                "id": 2,
+                "type": "Sell",
+                "title": "Do You Want to Sell a Car",
+                "description": "We are committed to providing our customers with exceptional service.",
+                "btnText": "Get Started"
+            }
+        ]
+    },
+    "shop": {
+        "column_1": [
+            "Ford Cars",
+            "Honda Cars",
+            "Hyundai Cars",
+            "Infiniti Cars",
+            "Jaguar Cars",
+            "Jeep Cars"
+        ],
+        "column_2": [
+            "Chrysler Cars",
+            "Citroen Cars",
+            "Cupra Cars",
+            "Dacia Cars",
+            "DS Cars",
+            "Fiat Cars"
+        ],
+        "column_3": [
+            "Land Rover Cars",
+            "Lexus Cars",
+            "Mercedes-Benz Cars",
+            "Mazda Cars",
+            "MG Cars",
+            "Kia Cars"
+        ],
+        "column_4": [
+            "Abarth Cars",
+            "Romeo Cars",
+            "Audi Cars",
+            "Bentley Cars",
+            "BMW Cars",
+            "Chevrolet Cars"
+        ],
+        "column_5": [
+            "Mini Cars",
+            "Mitsubishi Cars",
+            "Nissan Cars",
+            "Peugeot Cars",
+            "Porsche Cars",
+            "Renault Cars"
+        ]
+    },
+    "statistics": [
+        {
+            "cars_for_sale": {
+                "label": "CARS FOR SALE",
+                "value": "836M"
+            }
+        },
+        {
+            "dealer_reviews": {
+                "label": "DEALER REVIEWS",
+                "value": "738M"
+            }
+        },
+        {
+            "visitors_per_day": {
+                "label": "VISITORS PER DAY",
+                "value": "100M"
+            }
+        },
+        {
+            "verified_dealers": {
+                "label": "VERIFIED DEALERS",
+                "value": "238M"
+            }
+        }
+    ]
 }

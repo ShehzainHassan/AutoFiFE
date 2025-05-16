@@ -1,6 +1,8 @@
-import ButtonPrimary from "../Buttons/Primary";
+import { ThemeProvider } from "@/theme/themeContext";
+import ButtonPrimary from "../buttons/Primary";
 import classes from "./email-box.module.css";
 import headings from "@/styles/typography.module.css";
+import { BLUE_THEME } from "@/constants/button-primary-themes";
 
 export default function EmailBox() {
   return (
@@ -9,14 +11,9 @@ export default function EmailBox() {
         className={`${classes.input} ${headings.criteriaText}`}
         type="text"
         placeholder="Your email address"></input>
-      <ButtonPrimary
-        backgroundColor="var(--color-blue500)"
-        textColor="var(--color-white100)"
-        btnText="Sign up"
-        padding="12px 30px"
-        borderRadius="60px"
-        hoverColor="var(--color-blue600)"
-      />
+      <ThemeProvider value={BLUE_THEME}>
+        <ButtonPrimary btnText="Sign up" />
+      </ThemeProvider>
     </div>
   );
 }

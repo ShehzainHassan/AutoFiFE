@@ -1,43 +1,48 @@
+import useTranslation from "@/i18n";
 import BlogCard from "../blog-card";
 import BuySellCard from "../buy-sell-car";
 import SectionTitle from "../section-title";
 import Wrapper from "../wrapper";
 import classes from "./latest.blog.module.css";
+import EmptyState from "../empty-state";
 export default function LatestBlog() {
+  const { t } = useTranslation();
+  const blogs = t("latest_blog.blog");
+  const cards = t("latest_blog.car_cards");
   return (
     <div className={classes.blog}>
       <SectionTitle title="Latest Blog Posts" buttonText="View All" />
       <Wrapper backgroundColor="var(--color-white100)">
         <div className={classes.blogCards}>
-          <BlogCard
-            imgSrc="/images/BMW-Card.png"
-            description="2024 BMW ALPINA XB7 with exclusive details, extraordinary"
-          />
-          <BlogCard
-            imgSrc="/images/BMW-X6-Card.png"
-            description="BMW X6 M50i is designed to exceed your sportiest"
-            tag="Accessories"
-          />
-          <BlogCard
-            imgSrc="/images/BMW-X5-Card.png"
-            description="BMW X5 Gold 2024 Sport Review: Light on Sport"
-            tag="Exterior"
-          />
+          {Array.isArray(blogs) && blogs.length > 0 ? (
+            blogs.map((blog) => (
+              <BlogCard
+                key={blog.id}
+                imgSrc={blog.imgSrc}
+                description={blog.description}
+                tag={blog.tag}
+              />
+            ))
+          ) : (
+            <>
+              <EmptyState message="No blogs found" />
+            </>
+          )}
         </div>
       </Wrapper>
       <Wrapper backgroundColor="var(--color-white100)">
         <div className={classes.cardContainer}>
-          <BuySellCard
-            title="Are You Looking For a Car"
-            description="We are committed to providing our customers with exceptional service."
-          />
-          <BuySellCard
-            title="Do You Want to Sell a Car"
-            description="We are committed to providing our customers with exceptional service."
-            backgroundColor="var(--color-pink100)"
-            buttonColor="var(--color-black100)"
-            imgSrc="/images/sell.png"
-          />
+          {Array.isArray(cards) &&
+            blogs.length > 0 &&
+            cards.map((card) => (
+              <BuySellCard
+                key={card.id}
+                imgSrc={card.imgSrc}
+                title={card.title}
+                type={card.type}
+                description={card.description}
+              />
+            ))}
         </div>
       </Wrapper>
       <div className={classes.round}></div>

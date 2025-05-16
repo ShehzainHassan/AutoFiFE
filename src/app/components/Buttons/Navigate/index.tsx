@@ -20,12 +20,7 @@ export default function ButtonNavigate({
   whiteButton = false,
   opacity = 1,
 }: ButtonNavigateProps) {
-  const imageSrc =
-    whiteButton && type === "prev"
-      ? "/images/next-white.png"
-      : whiteButton && type === "next"
-      ? "/images/next-white.png"
-      : "/images/next.png";
+  const imageSrc = whiteButton ? "/images/next-white.png" : "/images/next.png";
 
   const imageClassName = type === "prev" ? classes.prev : "";
 

@@ -1,0 +1,15 @@
+.inputContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 400px;
+  border: 1px solid var(--color-gray575);
+  padding: 20px 24px;
+}
+.input {
+  border: none;
+  outline: none;
+  background: none;
+  width: 100%;
+  color: var(--color-gray700);
+}
