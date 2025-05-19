@@ -29,11 +29,6 @@
   display: flex;
   justify-content: space-between;
 }
-.resultCards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
 .bold {
   font-weight: bold;
 }

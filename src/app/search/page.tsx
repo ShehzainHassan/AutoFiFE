@@ -1,7 +1,8 @@
 "use client";
+import { MAKE_OPTIONS } from "@/constants";
 import { BLUE_THEME, WHITE_THEME } from "@/constants/button-primary-themes";
 import { useSearch } from "@/contexts/carSearchContext";
-import useSearchVehicles from "@/hooks/useSearchVehicles";
+import { GRAY_BLUE_THEME } from "@/styles/tab-styles";
 import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
 import { getModelOptions } from "@/utilities/utilities";
@@ -10,22 +11,17 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ButtonPrimary from "../components/buttons/Primary";
 import Dropdown from "../components/dropdown";
-import EmptyState from "../components/empty-state";
-import ErrorMessage from "../components/error-message";
 import FAQs from "../components/faqs";
 import Filters from "../components/filters";
 import Footer from "../components/footer";
 import HorizontalTabs from "../components/horizontal-tabs";
 import Input from "../components/input";
-import LoadingSpinner from "../components/loading-spinner";
+import LoadResults from "../components/load-results";
 import Navbar from "../components/navbar";
 import Pagination from "../components/pagination";
-import ResultCard from "../components/result-card";
 import SortBy from "../components/sort-by";
 import Wrapper from "../components/wrapper";
 import classes from "./page.module.css";
-import { GRAY_BLUE_THEME } from "@/styles/tab-styles";
-import { MAKE_OPTIONS } from "@/constants";
 
 export default function Search() {
   const tabs = ["Car", "Body style", "Price"];
@@ -57,17 +53,6 @@ export default function Search() {
     router.push(`/search?make=${make}&model=${model}&price=${price}`);
   };
 
-  const {
-    data: vehicleList,
-    isLoading,
-    error,
-    isError,
-  } = useSearchVehicles(searchParams);
-
-  if (isLoading) return <LoadingSpinner color="var(--color-black100)" />;
-  if (!vehicleList || vehicleList.totalCount === 0)
-    return <EmptyState message="No vehicles found" />;
-  if (isError) return <ErrorMessage message={error.message} />;
   const ShowTabs = () => {
     return (
       <ThemeProvider value={GRAY_BLUE_THEME}>
@@ -192,18 +177,7 @@ export default function Search() {
                 <SortBy />
               </div>
 
-              <div className={classes.resultCards}>
-                {vehicleList?.vehicles.map((vehicle) => (
-                  <div key={vehicle.id}>
-                    <ResultCard
-                      carImg="/images/Bentley-Arnage4.4.png"
-                      miles={vehicle.mileage}
-                      price={vehicle.price}
-                      carTitle={`${vehicle.make} ${vehicle.model} ${vehicle.year}`}
-                    />
-                  </div>
-                ))}
-              </div>
+              <LoadResults />
             </div>
             <Pagination />
           </div>
