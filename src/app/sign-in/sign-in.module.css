@@ -4,8 +4,7 @@
   height: 100vh;
   color: var(--color-gray700);
 }
-
-.signUpContainer {
+.signInContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -16,6 +15,7 @@
   gap: 40px;
   margin: 0 auto;
 }
+
 .fields {
   display: flex;
   flex-direction: column;

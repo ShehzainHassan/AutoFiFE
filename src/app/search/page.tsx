@@ -189,6 +189,7 @@ export default function Search() {
                 </div>
                 <SortBy />
               </div>
+
               <div className={classes.resultCards}>
                 {vehicleList?.vehicles.map((vehicle) => (
                   <div key={vehicle.id}>

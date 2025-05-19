@@ -1,0 +1,12 @@
+.button {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 24px;
+  color: var(--color-white100);
+  background-color: var(--color-purple600);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.button:hover {
+  background-color: var(--color-black100);
+}

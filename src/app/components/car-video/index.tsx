@@ -39,7 +39,7 @@ export default function CarVideo() {
     );
   };
   return (
-    <Wrapper padding="120px 110px 0px">
+    <Wrapper padding="0px 110px 0px 120px">
       <div className={classes.container}>
         <div className={classes.imageWrapper}>
           <Image src="/images/thumbnail.jpg" alt="thumbnail" fill />

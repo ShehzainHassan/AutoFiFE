@@ -1,0 +1,8 @@
+.help {
+  display: flex;
+  justify-content: flex-end;
+  padding: 45px 70px;
+  cursor: pointer;
+  gap: 10px;
+  align-items: center;
+}

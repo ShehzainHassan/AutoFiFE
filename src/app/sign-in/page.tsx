@@ -1,43 +1,32 @@
 "use client";
 import { useState } from "react";
-import AuthButton from "../components/auth-button";
 import AuthHeader from "../components/auth-header";
 import AuthImage from "../components/auth-image";
 import AuthInputField from "../components/auth-input";
 import TopSection from "../components/auth-top-section";
+import classes from "./sign-in.module.css";
 import NeedHelp from "../components/need-help";
-import classes from "./sign-up.module.css";
+import AuthButton from "../components/auth-button";
 import { useRouter } from "next/navigation";
-
-export default function SignUp() {
-  const [name, setName] = useState("");
+export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const redirectToLogin = () => {
-    router.push("sign-in");
+  const redirectToSignUp = () => {
+    router.push("/sign-up");
   };
   return (
     <div className={classes.container}>
       <AuthImage />
-      <div className={classes.signUpContainer}>
+      <div className={classes.signInContainer}>
         <TopSection
-          textRight="Already a Member?"
-          btnText="LOG IN NOW"
-          onClick={redirectToLogin}
+          textRight="Not a member yet?"
+          btnText="JOIN NOW"
+          onClick={redirectToSignUp}
         />
         <div className={classes.subContainer}>
-          <AuthHeader
-            title="Become an exclusive member"
-            subTitle="Sign Up and Join the partnership"
-          />
+          <AuthHeader title="Welcome Back" subTitle="Login to continue" />
           <div className={classes.fields}>
-            <AuthInputField
-              iconImg="/images/icon-user.png"
-              value={name}
-              placeholder="Johnson Doe"
-              onChange={(e) => setName(e.target.value)}
-            />
             <AuthInputField
               iconImg="/images/message.png"
               value={email}
@@ -47,11 +36,11 @@ export default function SignUp() {
             <AuthInputField
               iconImg="/images/password.png"
               value={password}
-              placeholder="Password"
               type="password"
+              placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <AuthButton btnText="Become a Member" />
+            <AuthButton btnText="Proceed to my Account" />
           </div>
         </div>
         <NeedHelp />
