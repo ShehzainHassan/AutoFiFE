@@ -14,17 +14,27 @@ export default function SearchForm() {
     make,
     model,
     price,
+    searchParams,
     setMake,
     setModel,
     setPrice,
     setStartPrice,
     setEndPrice,
+    setSearchParams,
   } = useSearch();
   const router = useRouter();
+
   const handleSearchClick = () => {
     const { startPrice, endPrice } = getPriceRange(price);
     setStartPrice(startPrice);
     setEndPrice(endPrice);
+    setSearchParams({
+      ...searchParams,
+      make,
+      model,
+      startPrice,
+      endPrice,
+    });
     router.push(`/search?make=${make}&model=${model}&price=${price}`);
   };
 

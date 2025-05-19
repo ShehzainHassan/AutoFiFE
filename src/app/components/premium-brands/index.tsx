@@ -7,12 +7,24 @@ import classes from "./premium-brands.module.css";
 import { useSearch } from "@/contexts/carSearchContext";
 export default function PremiumBrands() {
   const router = useRouter();
-  const { setMake, setModel, setStartPrice, setEndPrice } = useSearch();
+  const {
+    searchParams,
+    setMake,
+    setModel,
+    setStartPrice,
+    setEndPrice,
+    setSearchParams,
+  } = useSearch();
   function handleBrandClick(make: string) {
     setMake(make);
     setModel("Any_Models");
     setStartPrice(null);
     setEndPrice(null);
+    setSearchParams({
+      ...searchParams,
+      make,
+      model: null,
+    });
     router.push(`/search?make=${make}`);
   }
 

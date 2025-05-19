@@ -25,7 +25,7 @@ import SortBy from "../components/sort-by";
 import Wrapper from "../components/wrapper";
 import classes from "./page.module.css";
 import { GRAY_BLUE_THEME } from "@/styles/tab-styles";
-import { MAKE_OPTIONS, PAGE_SIZE } from "@/constants";
+import { MAKE_OPTIONS } from "@/constants";
 
 export default function Search() {
   const tabs = ["Car", "Body style", "Price"];
@@ -34,8 +34,17 @@ export default function Search() {
   const [selectedInfoTab, setSelectedInfoTab] = useState(carInfoTabs[0]);
   const [postCode, setPostCode] = useState<number>(0);
 
-  const { make, model, price, startPrice, endPrice, setMake, setModel } =
-    useSearch();
+  const {
+    make,
+    model,
+    price,
+    startPrice,
+    endPrice,
+    searchParams,
+    setMake,
+    setModel,
+    setSearchParams,
+  } = useSearch();
   const router = useRouter();
   const handleSearchClick = () => {
     setSearchParams({
@@ -47,14 +56,7 @@ export default function Search() {
     });
     router.push(`/search?make=${make}&model=${model}&price=${price}`);
   };
-  const [searchParams, setSearchParams] = useState({
-    pageSize: PAGE_SIZE,
-    offset: 0,
-    make: make,
-    model: model,
-    startPrice: startPrice,
-    endPrice: endPrice,
-  });
+
   const {
     data: vehicleList,
     isLoading,

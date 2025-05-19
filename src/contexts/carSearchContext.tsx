@@ -1,5 +1,7 @@
 "use client";
 
+import { PAGE_SIZE } from "@/constants";
+import { SearchParams } from "@/interfaces/search-params";
 import { getPriceRange } from "@/utilities/utilities";
 import { useSearchParams } from "next/navigation";
 import { createContext, useContext, useState } from "react";
@@ -10,11 +12,13 @@ type CarSearchContextType = {
   price: string;
   startPrice: number | null;
   endPrice: number | null;
+  searchParams: SearchParams;
   setMake: (value: string) => void;
   setModel: (value: string) => void;
   setPrice: (value: string) => void;
   setStartPrice: (value: number | null) => void;
   setEndPrice: (value: number | null) => void;
+  setSearchParams: (value: SearchParams) => void;
 };
 
 const CarSearchContext = createContext<CarSearchContextType | undefined>(
@@ -23,10 +27,10 @@ const CarSearchContext = createContext<CarSearchContextType | undefined>(
 export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const searchParams = useSearchParams();
-  const makeParam = searchParams.get("make") || "Any_Makes";
-  const modelParam = searchParams.get("model") || "Any_Models";
-  const priceParam = searchParams.get("price") || "All_Prices";
+  const queryParams = useSearchParams();
+  const makeParam = queryParams.get("make") || "Any_Makes";
+  const modelParam = queryParams.get("model") || "Any_Models";
+  const priceParam = queryParams.get("price") || "All_Prices";
   const { startPrice: priceStart, endPrice: priceEnd } =
     getPriceRange(priceParam);
   const [make, setMake] = useState(makeParam);
@@ -34,6 +38,14 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
   const [price, setPrice] = useState(priceParam);
   const [startPrice, setStartPrice] = useState<number | null>(priceStart);
   const [endPrice, setEndPrice] = useState<number | null>(priceEnd);
+  const [searchParams, setSearchParams] = useState<SearchParams>({
+    pageSize: PAGE_SIZE,
+    offset: 0,
+    make,
+    model,
+    startPrice,
+    endPrice,
+  });
   return (
     <CarSearchContext.Provider
       value={{
@@ -42,11 +54,13 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
         price,
         startPrice,
         endPrice,
+        searchParams,
         setMake,
         setModel,
         setPrice,
         setStartPrice,
         setEndPrice,
+        setSearchParams,
       }}>
       {children}
     </CarSearchContext.Provider>
