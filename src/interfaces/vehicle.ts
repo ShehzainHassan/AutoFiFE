@@ -13,5 +13,7 @@ export interface Vehicle {
 
 export interface VehicleListResult {
   totalCount: number;
+  gearboxCounts: Record<string, number>;
+  colorCounts: Record<string, number>;
   vehicles: Vehicle[];
 }

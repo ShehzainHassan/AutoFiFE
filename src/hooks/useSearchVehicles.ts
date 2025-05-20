@@ -1,16 +1,7 @@
 import vehicleAPI from "@/api/vehicleAPI";
+import { SearchParams } from "@/interfaces/search-params";
 import { useQuery } from "@tanstack/react-query";
 
-interface SearchParams {
-  pageSize: number;
-  offset: number;
-  make?: string | null;
-  model?: string | null;
-  startPrice?: number | null;
-  endPrice?: number | null;
-  mileage?: number | null;
-  sortOrder?: string | null;
-}
 const useSearchVehicles = (params: SearchParams) => {
   return useQuery({
     queryKey: ["searchVehicles", params],
@@ -23,6 +14,8 @@ const useSearchVehicles = (params: SearchParams) => {
         params.startPrice,
         params.endPrice,
         params.mileage,
+        params.startYear,
+        params.endYear,
         params.sortOrder
       ),
     enabled: !!params.pageSize,

@@ -47,3 +47,11 @@ export function getPriceRange(priceValue: string): PriceRange {
     endPrice: isNaN(end) ? null : end,
   };
 }
+
+export function generateYearOptions(startYear: number, endYear: number) {
+  const years = [];
+  for (let year = startYear; year <= endYear; year++) {
+    years.push({ label: year.toString(), value: year });
+  }
+  return years;
+}

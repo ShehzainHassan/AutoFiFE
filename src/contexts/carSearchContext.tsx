@@ -1,6 +1,7 @@
 "use client";
 
 import { PAGE_SIZE } from "@/constants";
+import { MAX_YEAR, MIN_YEAR } from "@/constants/years";
 import { SearchParams } from "@/interfaces/search-params";
 import { getPriceRange } from "@/utilities/utilities";
 import { useSearchParams } from "next/navigation";
@@ -14,6 +15,11 @@ type CarSearchContextType = {
   endPrice: number | null;
   mileage: number | null;
   sortOrder: string | null;
+  startYear: number;
+  endYear: number;
+  expandedSections: Set<string>;
+  selectedGearboxes: string[];
+  selectedColors: string[];
   searchParams: SearchParams;
   setMake: (value: string) => void;
   setModel: (value: string) => void;
@@ -23,6 +29,11 @@ type CarSearchContextType = {
   setMileage: (value: number | null) => void;
   setSearchParams: (value: SearchParams) => void;
   setSortOrder: (value: string) => void;
+  setStartYear: (value: number) => void;
+  setEndYear: (value: number) => void;
+  setExpandedSections: (value: Set<string>) => void;
+  setSelectedGearboxes: (value: string[]) => void;
+  setSelectedColors: (value: string[]) => void;
 };
 
 const CarSearchContext = createContext<CarSearchContextType | undefined>(
@@ -35,6 +46,8 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
   const makeParam = queryParams.get("make") || "Any_Makes";
   const modelParam = queryParams.get("model") || "Any_Models";
   const priceParam = queryParams.get("price") || "All_Prices";
+  const startYearParam = Number(queryParams.get("startYear")) || MIN_YEAR;
+  const endYearParam = Number(queryParams.get("endYear")) || MAX_YEAR;
   const { startPrice: priceStart, endPrice: priceEnd } =
     getPriceRange(priceParam);
   const [make, setMake] = useState(makeParam);
@@ -44,6 +57,13 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
   const [endPrice, setEndPrice] = useState<number | null>(priceEnd);
   const [mileage, setMileage] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<string | null>(null);
+  const [startYear, setStartYear] = useState<number>(startYearParam);
+  const [endYear, setEndYear] = useState<number>(endYearParam);
+  const [selectedGearboxes, setSelectedGearboxes] = useState<string[]>([]);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+    new Set()
+  );
   const [searchParams, setSearchParams] = useState<SearchParams>({
     pageSize: PAGE_SIZE,
     offset: 0,
@@ -52,6 +72,8 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
     startPrice,
     endPrice,
     mileage,
+    startYear,
+    endYear,
     sortOrder,
   });
   return (
@@ -64,6 +86,11 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
         endPrice,
         mileage,
         sortOrder,
+        startYear,
+        endYear,
+        expandedSections,
+        selectedGearboxes,
+        selectedColors,
         searchParams,
         setMake,
         setModel,
@@ -73,6 +100,11 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
         setMileage,
         setSortOrder,
         setSearchParams,
+        setStartYear,
+        setEndYear,
+        setExpandedSections,
+        setSelectedGearboxes,
+        setSelectedColors,
       }}>
       {children}
     </CarSearchContext.Provider>

@@ -37,6 +37,8 @@ export default function Search() {
     startPrice,
     endPrice,
     mileage,
+    startYear,
+    endYear,
     searchParams,
     setMake,
     setModel,
@@ -46,18 +48,21 @@ export default function Search() {
   const handleSearchClick = () => {
     setSearchParams({
       ...searchParams,
-      make: make,
-      model: model,
-      startPrice: startPrice,
-      endPrice: endPrice,
+      make,
+      model,
+      startPrice,
+      endPrice,
       mileage,
+      startYear,
+      endYear,
     });
     let mileageText = "Any";
     if (mileage) {
       mileageText = `<=${mileage}`;
     }
+
     router.push(
-      `/search?make=${make}&model=${model}&price=${price}&mileage=${mileageText}`
+      `/search?make=${make}&model=${model}&price=${price}&mileage=${mileageText}&startYear=${startYear}&endYear=${endYear}`
     );
   };
 

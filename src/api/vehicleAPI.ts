@@ -29,6 +29,8 @@ const vehicleAPI = {
     startPrice?: number | null,
     endPrice?: number | null,
     mileage?: number | null,
+    startYear?: number | null,
+    endYear?: number | null,
     sortOrder?: string | null
   ) => {
     const response = await axios.get<VehicleListResult>(
@@ -42,6 +44,8 @@ const vehicleAPI = {
           startPrice,
           endPrice,
           mileage,
+          startYear,
+          endYear,
           sortOrder,
         },
       }

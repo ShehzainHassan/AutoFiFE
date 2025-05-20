@@ -6,5 +6,7 @@ export interface SearchParams {
   startPrice: number | null;
   endPrice: number | null;
   mileage: number | null;
+  startYear: number;
+  endYear: number;
   sortOrder: string | null;
 }

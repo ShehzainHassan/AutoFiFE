@@ -7,7 +7,7 @@ export default function Filters() {
       <Expandable title="Price" />
       <Expandable title="Mileage" />
       <Expandable title="Gearbox" />
-      <Expandable title="Exterior color" roundedSides={true} />
+      <Expandable title="Exterior color" />
     </div>
   );
 }

@@ -1,10 +1,13 @@
+import { useSearch } from "@/contexts/carSearchContext";
 import headings from "@/styles/typography.module.css";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import classes from "./expandable.module.css";
-import { useState } from "react";
-import PriceExpanded from "../filters/price-expanded";
+import ColorsExpanded from "../filters/colors-expanded";
+import GearboxExpanded from "../filters/gearbox-expanded";
 import MileageExpanded from "../filters/mileage-expanded";
+import PriceExpanded from "../filters/price-expanded";
+import YearsExpanded from "../filters/years-expanded";
+import classes from "./expandable.module.css";
 type ExpandableProps = {
   title: string;
   roundedSides?: boolean;
@@ -13,12 +16,23 @@ export default function Expandable({
   title,
   roundedSides = false,
 }: ExpandableProps) {
-  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const { expandedSections, setExpandedSections } = useSearch();
+  const isClicked = expandedSections.has(title);
+
+  const toggleExpanded = () => {
+    const newSet = new Set(expandedSections);
+    if (newSet.has(title)) {
+      newSet.delete(title);
+    } else {
+      newSet.add(title);
+    }
+    setExpandedSections(newSet);
+  };
   return (
     <div className={classes.mainContainer}>
       <div
         className={classes.container}
-        onClick={() => setIsClicked(!isClicked)}
+        onClick={toggleExpanded}
         style={
           roundedSides
             ? {
@@ -41,6 +55,9 @@ export default function Expandable({
       </div>
       {isClicked && title === "Price" && <PriceExpanded />}
       {isClicked && title === "Mileage" && <MileageExpanded />}
+      {isClicked && title === "Years" && <YearsExpanded />}
+      {isClicked && title === "Gearbox" && <GearboxExpanded />}
+      {isClicked && title === "Exterior color" && <ColorsExpanded />}
     </div>
   );
 }

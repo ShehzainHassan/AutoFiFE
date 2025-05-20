@@ -1,4 +1,9 @@
-import { MAX_MILEAGE, MIN_MILEAGE } from "@/constants";
+import {
+  MAX_MILEAGE,
+  MILEAGE_SLIDER_STEP,
+  MIN_MILEAGE,
+  SLIDER_STEP,
+} from "@/constants";
 import { useSearch } from "@/contexts/carSearchContext";
 import { Box, Slider, Typography } from "@mui/material";
 import classes from "../price-expanded/price-expanded.module.css";
@@ -46,7 +51,7 @@ export default function MileageSlider() {
           onChangeCommitted={handleChangeCommitted}
           min={MIN_MILEAGE}
           max={MAX_MILEAGE}
-          step={1000}
+          step={MILEAGE_SLIDER_STEP}
           valueLabelDisplay="off"
         />
         <button onClick={handleClear} className={classes.clearBtn}>

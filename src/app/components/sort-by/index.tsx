@@ -27,6 +27,13 @@ export default function SortBy() {
       case "name descending":
         sortOrder = "name_desc";
         break;
+      case "year ascending":
+        sortOrder = "year_asc";
+        break;
+      case "year descending":
+        sortOrder = "year_desc";
+        break;
+
       default:
         sortOrder = null;
     }
@@ -47,6 +54,8 @@ export default function SortBy() {
         <option value="mileage highest">Mileage (High to Low)</option>
         <option value="name ascending">Name (A to Z)</option>
         <option value="name descending">Name (Z to A)</option>
+        <option value="year ascending">Year (Old to High)</option>
+        <option value="year descending">Year (New to Low)</option>
       </select>
     </div>
   );
