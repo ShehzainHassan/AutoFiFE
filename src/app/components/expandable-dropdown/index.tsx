@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classes from "./expandable.module.css";
 import { useState } from "react";
 import PriceExpanded from "../filters/price-expanded";
+import MileageExpanded from "../filters/mileage-expanded";
 type ExpandableProps = {
   title: string;
   roundedSides?: boolean;
@@ -39,6 +40,7 @@ export default function Expandable({
         </div>
       </div>
       {isClicked && title === "Price" && <PriceExpanded />}
+      {isClicked && title === "Mileage" && <MileageExpanded />}
     </div>
   );
 }

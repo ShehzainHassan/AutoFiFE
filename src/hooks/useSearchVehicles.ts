@@ -8,6 +8,8 @@ interface SearchParams {
   model?: string | null;
   startPrice?: number | null;
   endPrice?: number | null;
+  mileage?: number | null;
+  sortOrder?: string | null;
 }
 const useSearchVehicles = (params: SearchParams) => {
   return useQuery({
@@ -19,7 +21,9 @@ const useSearchVehicles = (params: SearchParams) => {
         params.make,
         params.model,
         params.startPrice,
-        params.endPrice
+        params.endPrice,
+        params.mileage,
+        params.sortOrder
       ),
     enabled: !!params.pageSize,
   });

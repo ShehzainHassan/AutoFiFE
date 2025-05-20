@@ -36,6 +36,7 @@ export default function Search() {
     price,
     startPrice,
     endPrice,
+    mileage,
     searchParams,
     setMake,
     setModel,
@@ -49,8 +50,15 @@ export default function Search() {
       model: model,
       startPrice: startPrice,
       endPrice: endPrice,
+      mileage,
     });
-    router.push(`/search?make=${make}&model=${model}&price=${price}`);
+    let mileageText = "Any";
+    if (mileage) {
+      mileageText = `<=${mileage}`;
+    }
+    router.push(
+      `/search?make=${make}&model=${model}&price=${price}&mileage=${mileageText}`
+    );
   };
 
   const ShowTabs = () => {

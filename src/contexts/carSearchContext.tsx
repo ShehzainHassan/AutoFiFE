@@ -12,13 +12,17 @@ type CarSearchContextType = {
   price: string;
   startPrice: number | null;
   endPrice: number | null;
+  mileage: number | null;
+  sortOrder: string | null;
   searchParams: SearchParams;
   setMake: (value: string) => void;
   setModel: (value: string) => void;
   setPrice: (value: string) => void;
   setStartPrice: (value: number | null) => void;
   setEndPrice: (value: number | null) => void;
+  setMileage: (value: number | null) => void;
   setSearchParams: (value: SearchParams) => void;
+  setSortOrder: (value: string) => void;
 };
 
 const CarSearchContext = createContext<CarSearchContextType | undefined>(
@@ -38,6 +42,8 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
   const [price, setPrice] = useState(priceParam);
   const [startPrice, setStartPrice] = useState<number | null>(priceStart);
   const [endPrice, setEndPrice] = useState<number | null>(priceEnd);
+  const [mileage, setMileage] = useState<number | null>(null);
+  const [sortOrder, setSortOrder] = useState<string | null>(null);
   const [searchParams, setSearchParams] = useState<SearchParams>({
     pageSize: PAGE_SIZE,
     offset: 0,
@@ -45,6 +51,8 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
     model,
     startPrice,
     endPrice,
+    mileage,
+    sortOrder,
   });
   return (
     <CarSearchContext.Provider
@@ -54,12 +62,16 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
         price,
         startPrice,
         endPrice,
+        mileage,
+        sortOrder,
         searchParams,
         setMake,
         setModel,
         setPrice,
         setStartPrice,
         setEndPrice,
+        setMileage,
+        setSortOrder,
         setSearchParams,
       }}>
       {children}

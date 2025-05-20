@@ -14,12 +14,13 @@ export default function Navbar({
 }: NavbarProps) {
   const { t } = useTranslation();
   const router = useRouter();
-  const { setPrice, setStartPrice, setEndPrice } = useSearch();
+  const { setPrice, setStartPrice, setEndPrice, setMileage } = useSearch();
   const redirectToHome = () => {
     router.push("/");
     setPrice("All_Prices");
     setStartPrice(null);
     setEndPrice(null);
+    setMileage(null);
   };
   const navbarItems = t("navbar.navItems");
   return (

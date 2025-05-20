@@ -6,7 +6,6 @@ import useTranslation from "@/i18n";
 export default function Statistics() {
   const { t } = useTranslation();
   const statistics = t("statistics");
-  console.log(statistics);
   return (
     <Wrapper padding="55px 371px 0px">
       <div className={classes.statsContainer}>

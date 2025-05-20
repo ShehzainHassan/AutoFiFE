@@ -27,7 +27,9 @@ const vehicleAPI = {
     make?: string | null,
     model?: string | null,
     startPrice?: number | null,
-    endPrice?: number | null
+    endPrice?: number | null,
+    mileage?: number | null,
+    sortOrder?: string | null
   ) => {
     const response = await axios.get<VehicleListResult>(
       `${API_BASE_URL}/Vehicle/search-vehicles`,
@@ -39,6 +41,8 @@ const vehicleAPI = {
           model,
           startPrice,
           endPrice,
+          mileage,
+          sortOrder,
         },
       }
     );
