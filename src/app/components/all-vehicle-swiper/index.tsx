@@ -5,9 +5,14 @@ import EmptyState from "../empty-state";
 import ErrorMessage from "../error-message";
 import LoadingSpinner from "../loading-spinner";
 import VerticalCarousel from "../vehicle-carousel/vertical-carousel";
-export default function AllVehiclesSwiper() {
+interface AllVehicleSwiperProps {
+  vehicleStatus: string | null;
+}
+export default function AllVehiclesSwiper({
+  vehicleStatus,
+}: AllVehicleSwiperProps) {
   const { data, isLoading, isError, error, fetchNextPage, hasNextPage } =
-    useAllVehicles();
+    useAllVehicles(vehicleStatus);
 
   if (isLoading) return <LoadingSpinner color="var(--color-black100)" />;
   if (!data) return <EmptyState message="No vehicles found" />;
@@ -19,6 +24,8 @@ export default function AllVehiclesSwiper() {
       vehicleListResult={{
         vehicles: allVehicles,
         totalCount: data.pages[0].totalCount || 0,
+        gearboxCounts: data.pages[0].gearboxCounts || [],
+        colorCounts: data.pages[0].colorCounts || [],
       }}
       onReachEnd={() => {
         if (hasNextPage) {

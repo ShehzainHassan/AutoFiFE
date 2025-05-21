@@ -3,11 +3,15 @@ import axios from "axios";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const vehicleAPI = {
-  getAllVehicles: async (offset: number, pageSize: number) => {
+  getAllVehicles: async (
+    status: string | null,
+    offset: number,
+    pageSize: number
+  ) => {
     const response = await axios.get<VehicleListResult>(
       `${API_BASE_URL}/Vehicle`,
       {
-        params: { pageView: pageSize, offset },
+        params: { pageView: pageSize, offset, status },
       }
     );
     return response.data;

@@ -28,6 +28,8 @@ export default function PopularMakesSwiper({ make }: CarSwiperProps) {
       vehicleListResult={{
         vehicles: allVehicles,
         totalCount: data.pages[0]?.totalCount || 0,
+        gearboxCounts: data.pages[0]?.gearboxCounts || [],
+        colorCounts: data.pages[0]?.colorCounts || [],
       }}
       onReachEnd={() => {
         if (hasNextPage) fetchNextPage();

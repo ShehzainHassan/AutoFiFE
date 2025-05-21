@@ -7,7 +7,8 @@ import Wrapper from "../wrapper";
 import classes from "./all-vehicles.module.css";
 export default function ExploreVehicles() {
   const TABS = ["In Stock", "New Cars", "Used Cars"];
-  const [selectedTab, setSelectedTab] = useState(TABS[0]);
+  const [selectedTab, setSelectedTab] = useState<string>(TABS[0]);
+  console.log(selectedTab === TABS[0]);
   return (
     <>
       <div className={classes.container}>
@@ -26,7 +27,15 @@ export default function ExploreVehicles() {
               }}
             />
           </div>
-          <AllVehiclesSwiper />
+          <AllVehiclesSwiper
+            vehicleStatus={
+              selectedTab === TABS[0]
+                ? null
+                : selectedTab === TABS[1]
+                ? "NEW"
+                : "USED"
+            }
+          />
         </Wrapper>
       </div>
     </>
