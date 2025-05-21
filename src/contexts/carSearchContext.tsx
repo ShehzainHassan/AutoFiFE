@@ -59,11 +59,12 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
   const [sortOrder, setSortOrder] = useState<string | null>(null);
   const [startYear, setStartYear] = useState<number>(startYearParam);
   const [endYear, setEndYear] = useState<number>(endYearParam);
-  const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
     new Set()
   );
   const gearboxParam = queryParams.get("gearbox") ?? "Any";
+  const colorsParam = queryParams.get("colors") ?? "Any";
+
   const [selectedGearboxes, setSelectedGearboxes] = useState<string[]>(() => {
     if (gearboxParam && gearboxParam !== "Any") {
       return gearboxParam
@@ -74,6 +75,16 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
 
     return [];
   });
+  const [selectedColors, setSelectedColors] = useState<string[]>(() => {
+    if (colorsParam && colorsParam !== "Any") {
+      return colorsParam
+        .split(",")
+        .map((g) => g.trim())
+        .filter(Boolean);
+    }
+    return [];
+  });
+
   const [searchParams, setSearchParams] = useState<SearchParams>({
     pageSize: PAGE_SIZE,
     offset: 0,
@@ -86,6 +97,7 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
     endYear,
     sortOrder,
     gearbox: convertArrayToString(selectedGearboxes),
+    selectedColor: convertArrayToString(selectedColors),
   });
   return (
     <CarSearchContext.Provider

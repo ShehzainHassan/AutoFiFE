@@ -40,6 +40,7 @@ export default function Search() {
     startYear,
     endYear,
     selectedGearboxes,
+    selectedColors,
     searchParams,
     setMake,
     setModel,
@@ -57,6 +58,7 @@ export default function Search() {
       startYear,
       endYear,
       gearbox: convertArrayToString(selectedGearboxes),
+      selectedColor: convertArrayToString(selectedColors),
     });
     let mileageText = "Any";
     if (mileage) {
@@ -66,8 +68,12 @@ export default function Search() {
     if (selectedGearboxes.length > 0 && selectedGearboxes.length !== 3) {
       gearboxText = selectedGearboxes.join(",");
     }
+    let colorsText = "Any";
+    if (selectedColors.length > 0 && selectedColors.length !== 16) {
+      colorsText = selectedColors.join(",");
+    }
     router.push(
-      `/search?make=${make}&model=${model}&price=${price}&mileage=${mileageText}&startYear=${startYear}&endYear=${endYear}&gearbox=${gearboxText}`
+      `/search?make=${make}&model=${model}&price=${price}&mileage=${mileageText}&startYear=${startYear}&endYear=${endYear}&gearbox=${gearboxText}&colors=${colorsText}`
     );
   };
 

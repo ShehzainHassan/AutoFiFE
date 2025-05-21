@@ -12,10 +12,7 @@ type ExpandableProps = {
   title: string;
   roundedSides?: boolean;
 };
-export default function Expandable({
-  title,
-  roundedSides = false,
-}: ExpandableProps) {
+export default function Expandable({ title }: ExpandableProps) {
   const { expandedSections, setExpandedSections } = useSearch();
   const isClicked = expandedSections.has(title);
 
@@ -30,21 +27,7 @@ export default function Expandable({
   };
   return (
     <div className={classes.mainContainer}>
-      <div
-        className={classes.container}
-        onClick={toggleExpanded}
-        style={
-          roundedSides
-            ? {
-                border: "1px solid var(--color-gray300)",
-                borderBottomLeftRadius: "20px",
-                borderBottomRightRadius: "20px",
-              }
-            : {
-                border: "1px solid var(--color-gray300)",
-                borderBottom: "none",
-              }
-        }>
+      <div className={classes.container} onClick={toggleExpanded}>
         <p className={headings.filterText}>{title}</p>
         <div className={classes.icon}>
           <FontAwesomeIcon

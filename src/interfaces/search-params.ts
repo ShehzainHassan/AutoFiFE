@@ -10,4 +10,5 @@ export interface SearchParams {
   endYear: number;
   sortOrder: string | null;
   gearbox: string;
+  selectedColor: string;
 }

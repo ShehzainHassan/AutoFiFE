@@ -17,7 +17,8 @@ const useSearchVehicles = (params: SearchParams) => {
         params.startYear,
         params.endYear,
         params.sortOrder,
-        params.gearbox
+        params.gearbox,
+        params.selectedColor
       ),
     enabled: !!params.pageSize,
   });

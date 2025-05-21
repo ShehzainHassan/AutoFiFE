@@ -1,0 +1,16 @@
+.colorContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.colorExpandedContainer {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-bottom: 1px solid var(--color-gray300);
+}
+.circleColor {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gray500);
+}

@@ -1,10 +1,16 @@
 import { useSearch } from "@/contexts/carSearchContext";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
-import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import {
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Typography,
+} from "@mui/material";
 import EmptyState from "../../empty-state";
 import ErrorMessage from "../../error-message";
 import LoadingSpinner from "../../loading-spinner";
 import classes from "../gearbox-expanded/gearbox-expanded.module.css";
+import colorClasses from "./colors-expanded.module.css";
 export default function ColorsExpanded() {
   const { searchParams, selectedColors, setSelectedColors } = useSearch();
   const {
@@ -25,23 +31,57 @@ export default function ColorsExpanded() {
       setSelectedColors(selectedColors.filter((g) => g !== gearbox));
     }
   };
-
   return (
-    <div className={classes.gearboxContainer}>
+    <div
+      className={`${classes.gearboxContainer} ${colorClasses.colorExpandedContainer} `}>
       <FormGroup>
-        {Object.entries(vehicleList.colorCounts).map(([colors, count]) => (
-          <FormControlLabel
-            key={colors}
-            control={
-              <Checkbox
-                value={colors}
-                checked={selectedColors.includes(colors)}
-                onChange={(e) => handleCheckboxChange(colors, e.target.checked)}
-              />
-            }
-            label={`${colors} (${count.toLocaleString()})`}
-          />
-        ))}
+        {Object.entries(vehicleList.colorCounts).map(([color, count]) => {
+          const isDisabled = count === 0;
+
+          return (
+            <FormControlLabel
+              key={color}
+              control={
+                <Checkbox
+                  value={color}
+                  checked={selectedColors.includes(color)}
+                  onChange={(e) =>
+                    handleCheckboxChange(color, e.target.checked)
+                  }
+                  disabled={isDisabled}
+                  sx={{
+                    color: isDisabled ? "var(--color-gray500)" : "inherit",
+                    "&.Mui-disabled": {
+                      color: "var(--color-gray500)",
+                    },
+                    "& .MuiSvgIcon-root": {
+                      fill: isDisabled
+                        ? "var(--color-gray500)"
+                        : "currentColor",
+                    },
+                  }}
+                />
+              }
+              label={
+                <div className={colorClasses.colorContainer}>
+                  <div
+                    className={colorClasses.circleColor}
+                    style={{ backgroundColor: color }}
+                  />
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: isDisabled ? "var(--color-gray500)" : "inherit",
+                    }}>
+                    {isDisabled
+                      ? color
+                      : `${color} (${count.toLocaleString()})`}
+                  </Typography>
+                </div>
+              }
+            />
+          );
+        })}
       </FormGroup>
     </div>
   );
