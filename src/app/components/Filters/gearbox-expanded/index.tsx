@@ -26,6 +26,7 @@ export default function GearboxExpanded() {
       setSelectedGearboxes(selectedGearboxes.filter((g) => g !== gearbox));
     }
   };
+
   return (
     <div className={classes.gearboxContainer}>
       <FormGroup>

@@ -5,7 +5,7 @@ import { useSearch } from "@/contexts/carSearchContext";
 import { GRAY_BLUE_THEME } from "@/styles/tab-styles";
 import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
-import { getModelOptions } from "@/utilities/utilities";
+import { convertArrayToString, getModelOptions } from "@/utilities/utilities";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -39,6 +39,7 @@ export default function Search() {
     mileage,
     startYear,
     endYear,
+    selectedGearboxes,
     searchParams,
     setMake,
     setModel,
@@ -55,14 +56,18 @@ export default function Search() {
       mileage,
       startYear,
       endYear,
+      gearbox: convertArrayToString(selectedGearboxes),
     });
     let mileageText = "Any";
     if (mileage) {
       mileageText = `<=${mileage}`;
     }
-
+    let gearboxText = "Any";
+    if (selectedGearboxes.length > 0 && selectedGearboxes.length !== 3) {
+      gearboxText = selectedGearboxes.join(",");
+    }
     router.push(
-      `/search?make=${make}&model=${model}&price=${price}&mileage=${mileageText}&startYear=${startYear}&endYear=${endYear}`
+      `/search?make=${make}&model=${model}&price=${price}&mileage=${mileageText}&startYear=${startYear}&endYear=${endYear}&gearbox=${gearboxText}`
     );
   };
 

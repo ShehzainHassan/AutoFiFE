@@ -27,7 +27,6 @@ type PriceRange = {
   startPrice: number | null;
   endPrice: number | null;
 };
-
 export function getPriceRange(priceValue: string): PriceRange {
   if (!priceValue || priceValue === "All_Prices") {
     return { startPrice: null, endPrice: null };
@@ -54,4 +53,8 @@ export function generateYearOptions(startYear: number, endYear: number) {
     years.push({ label: year.toString(), value: year });
   }
   return years;
+}
+
+export function convertArrayToString(arr: string[]): string {
+  return arr.join(",");
 }

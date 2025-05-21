@@ -16,7 +16,8 @@ const useSearchVehicles = (params: SearchParams) => {
         params.mileage,
         params.startYear,
         params.endYear,
-        params.sortOrder
+        params.sortOrder,
+        params.gearbox
       ),
     enabled: !!params.pageSize,
   });

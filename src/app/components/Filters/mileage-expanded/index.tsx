@@ -1,13 +1,12 @@
 import {
   MAX_MILEAGE,
   MILEAGE_SLIDER_STEP,
-  MIN_MILEAGE,
-  SLIDER_STEP,
+  MIN_MILEAGE
 } from "@/constants";
 import { useSearch } from "@/contexts/carSearchContext";
 import { Box, Slider, Typography } from "@mui/material";
-import classes from "../price-expanded/price-expanded.module.css";
 import { useState } from "react";
+import classes from "../price-expanded/price-expanded.module.css";
 
 export default function MileageSlider() {
   const { mileage, setMileage } = useSearch();

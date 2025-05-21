@@ -9,4 +9,5 @@ export interface SearchParams {
   startYear: number;
   endYear: number;
   sortOrder: string | null;
+  gearbox: string;
 }

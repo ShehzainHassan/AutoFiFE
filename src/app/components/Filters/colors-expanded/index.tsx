@@ -25,7 +25,7 @@ export default function ColorsExpanded() {
       setSelectedColors(selectedColors.filter((g) => g !== gearbox));
     }
   };
-  console.log(selectedColors);
+
   return (
     <div className={classes.gearboxContainer}>
       <FormGroup>

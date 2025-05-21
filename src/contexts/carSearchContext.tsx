@@ -3,7 +3,7 @@
 import { PAGE_SIZE } from "@/constants";
 import { MAX_YEAR, MIN_YEAR } from "@/constants/years";
 import { SearchParams } from "@/interfaces/search-params";
-import { getPriceRange } from "@/utilities/utilities";
+import { convertArrayToString, getPriceRange } from "@/utilities/utilities";
 import { useSearchParams } from "next/navigation";
 import { createContext, useContext, useState } from "react";
 
@@ -59,11 +59,21 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
   const [sortOrder, setSortOrder] = useState<string | null>(null);
   const [startYear, setStartYear] = useState<number>(startYearParam);
   const [endYear, setEndYear] = useState<number>(endYearParam);
-  const [selectedGearboxes, setSelectedGearboxes] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
     new Set()
   );
+  const gearboxParam = queryParams.get("gearbox") ?? "Any";
+  const [selectedGearboxes, setSelectedGearboxes] = useState<string[]>(() => {
+    if (gearboxParam && gearboxParam !== "Any") {
+      return gearboxParam
+        .split(",")
+        .map((g) => g.trim())
+        .filter(Boolean);
+    }
+
+    return [];
+  });
   const [searchParams, setSearchParams] = useState<SearchParams>({
     pageSize: PAGE_SIZE,
     offset: 0,
@@ -75,6 +85,7 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
     startYear,
     endYear,
     sortOrder,
+    gearbox: convertArrayToString(selectedGearboxes),
   });
   return (
     <CarSearchContext.Provider
