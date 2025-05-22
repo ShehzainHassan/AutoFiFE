@@ -5,7 +5,11 @@ import { useSearch } from "@/contexts/carSearchContext";
 import { GRAY_BLUE_THEME } from "@/styles/tab-styles";
 import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
-import { convertArrayToString, getModelOptions } from "@/utilities/utilities";
+import {
+  convertArrayToString,
+  getModelOptions,
+  getResultTitle,
+} from "@/utilities/utilities";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -22,6 +26,8 @@ import Pagination from "../components/pagination";
 import SortBy from "../components/sort-by";
 import Wrapper from "../components/wrapper";
 import classes from "./page.module.css";
+import useSearchVehicles from "@/hooks/useSearchVehicles";
+import EmptyState from "../components/empty-state";
 
 export default function Search() {
   const tabs = ["Car", "Body style", "Price"];
@@ -45,8 +51,11 @@ export default function Search() {
     setMake,
     setModel,
     setSearchParams,
+    setExpandedSections,
   } = useSearch();
   const router = useRouter();
+  const [resultText, setResultText] = useState(getResultTitle(make, model));
+
   const handleSearchClick = () => {
     setSearchParams({
       ...searchParams,
@@ -60,6 +69,8 @@ export default function Search() {
       gearbox: convertArrayToString(selectedGearboxes),
       selectedColor: convertArrayToString(selectedColors),
     });
+    setExpandedSections(new Set());
+    setResultText(getResultTitle(make, model));
     let mileageText = "Any";
     if (mileage) {
       mileageText = `<=${mileage}`;
@@ -143,9 +154,8 @@ export default function Search() {
   const ResultHeader = () => {
     return (
       <div className={classes.resultHeader}>
-        <h1 className={headings.resultTitle}>
-          Used Bentley Arnage for sale nationwide
-        </h1>
+        <h1 className={headings.resultTitle}>{resultText}</h1>
+
         <div className={classes.resultHeaderText}>
           <p className={classes.text}>
             See our <span className={classes.bold}>3,517</span> reviews on{" "}
@@ -175,6 +185,23 @@ export default function Search() {
       </Wrapper>
     );
   };
+  const NoOfLoadResultText = () => {
+    const { data, isLoading } = useSearchVehicles(searchParams);
+    if (isLoading) return <p>Loading...</p>;
+    if (!data) return <EmptyState message="0 results" />;
+    return (
+      <div className={classes.results}>
+        <p className={classes.noOfResults}>{data?.totalCount} results</p>
+        <Image
+          src="/images/location.png"
+          alt="location"
+          width={12}
+          height={12}
+          className={classes.location}
+        />
+      </div>
+    );
+  };
   return (
     <>
       <Navbar backgroundColor="var(--color-gray600)" />
@@ -188,16 +215,7 @@ export default function Search() {
             <div className={classes.resultContainer}>
               <ResultHeader />
               <div className={classes.resultHeaderBottom}>
-                <div className={classes.results}>
-                  <p className={classes.noOfResults}>17 results</p>
-                  <Image
-                    src="/images/location.png"
-                    alt="location"
-                    width={12}
-                    height={12}
-                    className={classes.location}
-                  />
-                </div>
+                <NoOfLoadResultText />
                 <SortBy />
               </div>
 

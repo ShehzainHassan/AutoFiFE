@@ -37,12 +37,11 @@ export default function SearchForm() {
     });
     router.push(`/search?make=${make}&model=${model}&price=${price}`);
   };
-
   const MakeDropdown = () => {
     return (
       <div className={classes.criteriaContainer}>
         <Dropdown
-          value={make}
+          value={make ?? "Any_Makes"}
           onChange={(value) => {
             setMake(value);
             setModel("Any_Models");
@@ -68,7 +67,7 @@ export default function SearchForm() {
           onChange={setModel}
           placeholder="Select model">
           <Dropdown.Select
-            options={getModelOptions(make)}
+            options={getModelOptions(make ?? "Any_Makes")}
             styles={customSelectStyles}
             components={{ DropdownIndicator: CustomDropdownIndicator }}
           />

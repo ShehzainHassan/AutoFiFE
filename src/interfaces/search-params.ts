@@ -1,7 +1,7 @@
 export interface SearchParams {
   pageSize: number;
   offset: number;
-  make: string;
+  make: string | null;
   model: string | null;
   startPrice: number | null;
   endPrice: number | null;

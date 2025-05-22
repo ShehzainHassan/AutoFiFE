@@ -8,7 +8,6 @@ import classes from "./all-vehicles.module.css";
 export default function ExploreVehicles() {
   const TABS = ["In Stock", "New Cars", "Used Cars"];
   const [selectedTab, setSelectedTab] = useState<string>(TABS[0]);
-  console.log(selectedTab === TABS[0]);
   return (
     <>
       <div className={classes.container}>

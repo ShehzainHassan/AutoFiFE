@@ -1,68 +1,78 @@
-import { useEffect, useState } from "react";
-import classes from "./price-expanded.module.css";
-import RangeSlider from "react-range-slider-input";
-import "react-range-slider-input/dist/style.css";
 import { useSearch } from "@/contexts/carSearchContext";
 import { MAX_PRICE, MIN_PRICE } from "@/constants";
+import { Box, Slider, Typography } from "@mui/material";
+import { useState } from "react";
+import classes from "./price-expanded.module.css";
 
 export default function PriceExpanded() {
   const { startPrice, endPrice, setPrice, setStartPrice, setEndPrice } =
     useSearch();
-
-  const [range, setRange] = useState<[number, number]>([
+  const [localRange, setLocalRange] = useState<[number, number]>([
     startPrice ?? MIN_PRICE,
     endPrice ?? MAX_PRICE,
   ]);
-  const [displayText, setDisplayText] = useState("All Prices");
-  useEffect(() => {
-    setRange([startPrice ?? MIN_PRICE, endPrice ?? MAX_PRICE]);
 
-    let priceText = "All_Prices";
-    if (startPrice === null && endPrice === 0) {
-      setDisplayText("$0");
-      priceText = "0-0";
-    } else if (startPrice === null && endPrice !== null) {
-      setDisplayText(`Less than $${endPrice.toLocaleString()}`);
-      priceText = `<${endPrice}`;
-    } else if (startPrice !== null && endPrice === null) {
-      setDisplayText(`Greater than $${startPrice.toLocaleString()}`);
-      priceText = `>${startPrice}`;
-    } else if (startPrice !== null && endPrice !== null) {
-      setDisplayText(
-        `$${startPrice.toLocaleString()} - $${endPrice.toLocaleString()}`
-      );
-      priceText = `${startPrice}-${endPrice}`;
+  const getDisplayText = () => {
+    const [min, max] = localRange;
+    if (min === 0 && max === 0) return "$0";
+    if (min === MIN_PRICE && max === MAX_PRICE) return "All Prices";
+    if (min === MIN_PRICE) return `Less than $${max.toLocaleString()}`;
+    if (max === MAX_PRICE) return `Greater than $${min.toLocaleString()}`;
+    return `$${min.toLocaleString()} - $${max.toLocaleString()}`;
+  };
+
+  const handleChange = (
+    _: React.SyntheticEvent | Event,
+    value: number | number[]
+  ) => {
+    if (Array.isArray(value)) {
+      setLocalRange(value as [number, number]);
     }
+  };
 
-    setPrice(priceText);
-  }, [displayText, startPrice, endPrice, setPrice]);
+  const handleChangeCommitted = (
+    _: React.SyntheticEvent | Event,
+    value: number | number[]
+  ) => {
+    if (Array.isArray(value)) {
+      const [min, max] = value;
+      setStartPrice(min === MIN_PRICE ? null : min);
+      setEndPrice(max === MAX_PRICE ? null : max);
 
-  const handleInput = (value: [number, number]) => {
-    setRange(value);
-    setStartPrice(value[0] === MIN_PRICE ? null : value[0]);
-    setEndPrice(value[1] === MAX_PRICE ? null : value[1]);
+      let priceText = "All_Prices";
+      if (min === 0 && max === 0) priceText = "0";
+      else if (min === MIN_PRICE && max !== MAX_PRICE) priceText = `<${max}`;
+      else if (min !== MIN_PRICE && max === MAX_PRICE) priceText = `>${min}`;
+      else if (min !== MIN_PRICE && max !== MAX_PRICE)
+        priceText = `${min}-${max}`;
+      setPrice(priceText);
+    }
   };
 
   const handleClear = () => {
-    setRange([MIN_PRICE, MAX_PRICE]);
+    setLocalRange([MIN_PRICE, MAX_PRICE]);
     setStartPrice(null);
     setEndPrice(null);
-    setDisplayText("All Prices");
+    setPrice("All_Prices");
   };
 
   return (
     <div className={classes.priceSlider}>
-      <p>{displayText}</p>
-      <RangeSlider
-        min={MIN_PRICE}
-        max={MAX_PRICE}
-        step={1000}
-        value={range}
-        onInput={handleInput}
-      />
-      <button onClick={handleClear} className={classes.clearBtn}>
-        Clear
-      </button>
+      <Box>
+        <Typography>{getDisplayText()}</Typography>
+        <Slider
+          value={localRange}
+          onChange={handleChange}
+          onChangeCommitted={handleChangeCommitted}
+          min={MIN_PRICE}
+          max={MAX_PRICE}
+          step={1000}
+          valueLabelDisplay="off"
+        />
+        <button onClick={handleClear} className={classes.clearBtn}>
+          Clear
+        </button>
+      </Box>
     </div>
   );
 }

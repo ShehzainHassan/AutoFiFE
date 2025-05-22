@@ -23,12 +23,12 @@ export default function HorizontalTabs({
   borderColor,
 }: TabProps) {
   const { horizontalTabs } = useTheme();
-  const finalTabColor = tabColor || horizontalTabs.tabColor;
+  const finalTabColor = tabColor || horizontalTabs?.tabColor;
   const finalSelectedTabColor =
-    selectedTabColor || horizontalTabs.selectedTabColor;
+    selectedTabColor || horizontalTabs?.selectedTabColor;
   const finalSelectedTabBorderColor =
-    selectedTabBorderColor || horizontalTabs.selectedTabBorderColor;
-  const finalBorderColor = borderColor || horizontalTabs.borderColor;
+    selectedTabBorderColor || horizontalTabs?.selectedTabBorderColor;
+  const finalBorderColor = borderColor || horizontalTabs?.borderColor;
 
   return (
     <div

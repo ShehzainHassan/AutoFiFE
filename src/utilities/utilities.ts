@@ -58,3 +58,16 @@ export function generateYearOptions(startYear: number, endYear: number) {
 export function convertArrayToString(arr: string[]): string {
   return arr.join(",");
 }
+
+export function getResultTitle(make: string, model: string): string {
+  const isAnyMake = make === "Any_Makes";
+  const isAnyModel = model === "Any_Models";
+
+  if (isAnyMake && isAnyModel) {
+    return "Browse BoxCars vehicles for sale nationwide";
+  } else if (!isAnyMake && isAnyModel) {
+    return `Browse ${make} vehicles for sale nationwide`;
+  } else {
+    return `Used ${make} ${model} for sale nationwide`;
+  }
+}

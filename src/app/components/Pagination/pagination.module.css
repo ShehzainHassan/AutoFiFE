@@ -13,3 +13,7 @@
   background-color: var(--color-gray550);
   cursor: pointer;
 }
+.buttonDisabled {
+  opacity: 0.5;
+  cursor: default;
+}
