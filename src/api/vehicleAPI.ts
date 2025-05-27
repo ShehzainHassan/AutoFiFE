@@ -1,4 +1,8 @@
-import { VehicleListResult } from "@/interfaces/vehicle";
+import {
+  Vehicle,
+  VehicleFeatures,
+  VehicleListResult,
+} from "@/interfaces/vehicle";
 import axios from "axios";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -21,6 +25,19 @@ const vehicleAPI = {
       `${API_BASE_URL}/Vehicle/by-make`,
       {
         params: { pageView: pageSize, offset, make },
+      }
+    );
+    return response.data;
+  },
+  getById: async (id: number) => {
+    const response = await axios.get<Vehicle>(`${API_BASE_URL}/Vehicle/${id}`);
+    return response.data;
+  },
+  getCarFeatures: async (make: string, model: string) => {
+    const response = await axios.get<VehicleFeatures>(
+      `${API_BASE_URL}/Vehicle/features`,
+      {
+        params: { make, model },
       }
     );
     return response.data;

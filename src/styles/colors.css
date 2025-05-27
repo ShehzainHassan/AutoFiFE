@@ -12,16 +12,20 @@
   --color-gray300: #e4e4e5;
   --color-gray400: #c3c3c3;
   --color-gray500: #c3cdd5;
+  --color-gray525: #d8d8de;
   --color-gray550: #e4e4e5;
   --color-gray570: #9e9e9e;
   --color-gray575: #757575;
   --color-gray600: #666666;
+  --color-gray650: #5e6976;
   --color-gray700: #424242;
 
   --color-black100: #050b20;
   --color-black200: #0c0c11;
   --color-black300: #020610;
   --color-black400: #212121;
+  --color-black500: #0d1722;
+  --color-black1000: #000000;
 
   --color-pink100: #ffe9f3;
 

@@ -26,6 +26,7 @@ export default function VerticalCarousel({
       {vehicleListResult.vehicles.map((vehicle) => (
         <SwiperSlide key={vehicle.id}>
           <VerticalCard
+            id={vehicle.id}
             imgSrc="/images/ford_2021.png"
             carDetails={`${vehicle.make} ${vehicle.model} - ${vehicle.year}`}
             carDescription="Car Description"

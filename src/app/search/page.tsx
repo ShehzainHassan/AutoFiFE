@@ -2,7 +2,7 @@
 import { MAKE_OPTIONS } from "@/constants";
 import { BLUE_THEME, WHITE_THEME } from "@/constants/button-primary-themes";
 import { useSearch } from "@/contexts/carSearchContext";
-import { GRAY_BLUE_THEME } from "@/styles/tab-styles";
+import useSearchVehicles from "@/hooks/useSearchVehicles";
 import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
 import {
@@ -15,26 +15,24 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ButtonPrimary from "../components/buttons/Primary";
 import Dropdown from "../components/dropdown";
+import EmptyState from "../components/empty-state";
 import FAQs from "../components/faqs";
 import Filters from "../components/filters";
 import Footer from "../components/footer";
 import HorizontalTabs from "../components/horizontal-tabs";
-import Input from "../components/input";
 import LoadResults from "../components/load-results";
 import Navbar from "../components/navbar";
 import Pagination from "../components/pagination";
 import SortBy from "../components/sort-by";
 import Wrapper from "../components/wrapper";
 import classes from "./page.module.css";
-import useSearchVehicles from "@/hooks/useSearchVehicles";
-import EmptyState from "../components/empty-state";
 
 export default function Search() {
-  const tabs = ["Car", "Body style", "Price"];
-  const [selectedTab, setSelectedTab] = useState(tabs[0]);
+  // const tabs = ["Car", "Body style", "Price"];
+  // const [selectedTab, setSelectedTab] = useState(tabs[0]);
   const carInfoTabs = ["FAQs", "Reviews", "Variants", "Pricing"];
   const [selectedInfoTab, setSelectedInfoTab] = useState(carInfoTabs[0]);
-  const [postCode, setPostCode] = useState<number>(0);
+  // const [postCode, setPostCode] = useState<number>(0);
 
   const {
     make,
@@ -88,17 +86,17 @@ export default function Search() {
     );
   };
 
-  const ShowTabs = () => {
-    return (
-      <ThemeProvider value={GRAY_BLUE_THEME}>
-        <HorizontalTabs
-          tabs={tabs}
-          selectedTab={selectedTab}
-          onTabChange={(tab) => setSelectedTab(tab)}
-        />
-      </ThemeProvider>
-    );
-  };
+  // const ShowTabs = () => {
+  //   return (
+  //     <ThemeProvider value={GRAY_BLUE_THEME}>
+  //       <HorizontalTabs
+  //         tabs={tabs}
+  //         selectedTab={selectedTab}
+  //         onTabChange={(tab) => setSelectedTab(tab)}
+  //       />
+  //     </ThemeProvider>
+  //   );
+  // };
   const MakeDropdown = () => {
     return (
       <Dropdown
@@ -121,16 +119,16 @@ export default function Search() {
       </Dropdown>
     );
   };
-  const InputPostcode = () => {
-    return (
-      <Input
-        value={postCode}
-        onChange={(e) => setPostCode(Number(e.target.value))}>
-        <Input.Label>Postcode</Input.Label>
-        <Input.Field />
-      </Input>
-    );
-  };
+  // const InputPostcode = () => {
+  //   return (
+  //     <Input
+  //       value={postCode}
+  //       onChange={(e) => setPostCode(Number(e.target.value))}>
+  //       <Input.Label>Postcode</Input.Label>
+  //       <Input.Field />
+  //     </Input>
+  //   );
+  // };
   const SearchButton = () => {
     return (
       <div className={classes.btn}>
@@ -143,10 +141,10 @@ export default function Search() {
   const CarSection = () => {
     return (
       <div className={classes.filters}>
-        <ShowTabs />
+        {/* <ShowTabs /> */}
         <MakeDropdown />
         <ModelDropdown />
-        <InputPostcode />
+        {/* <InputPostcode /> */}
         <SearchButton />
       </div>
     );

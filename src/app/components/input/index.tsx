@@ -4,24 +4,36 @@ import { createContext, useContext, ReactNode, ChangeEvent } from "react";
 import classes from "./input.module.css";
 
 type InputContextType = {
-  value: number;
+  type?: "text" | "number";
+  placeholder?: string;
+  value: string | number | undefined;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  width?: string;
 };
 
 const InputContext = createContext<InputContextType | null>(null);
 
 export function Input({
-  value = 0,
+  type = "text",
+  placeholder = "",
+  value,
   onChange,
   children,
+  width,
 }: {
-  value?: number;
+  type?: "text" | "number";
+  placeholder?: string;
+  width?: string;
+  value?: string | number | undefined;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   children: ReactNode;
 }) {
   return (
-    <InputContext.Provider value={{ value, onChange }}>
-      <div className={classes.container}>{children}</div>
+    <InputContext.Provider
+      value={{ type, placeholder, width, value, onChange }}>
+      <div className={classes.container} style={{ width }}>
+        {children}
+      </div>
     </InputContext.Provider>
   );
 }
@@ -34,11 +46,12 @@ function Field() {
   const context = useContext(InputContext);
   if (!context) throw new Error("Input.Field must be used inside <Input>");
 
-  const { value, onChange } = context;
+  const { type, placeholder, value, onChange } = context;
 
   return (
     <input
-      type="number"
+      type={type}
+      placeholder={placeholder}
       value={value}
       onChange={onChange}
       className={classes.input}

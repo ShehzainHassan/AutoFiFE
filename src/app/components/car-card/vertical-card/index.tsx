@@ -4,8 +4,10 @@ import headings from "@/styles/typography.module.css";
 import { CURRENCY } from "@/constants";
 import { TagLabel } from "../../tag-label";
 import BookmarkIcon from "../../bookmark-icon";
+import { useRouter } from "next/navigation";
 
 type CarCardProps = {
+  id: number;
   imgSrc: string;
   carDetails: string;
   carDescription: string;
@@ -18,6 +20,7 @@ type CarCardProps = {
   showPreviousPrice?: boolean;
 };
 export default function VerticalCard({
+  id,
   imgSrc,
   carDetails,
   carDescription,
@@ -29,8 +32,12 @@ export default function VerticalCard({
   tagColor = "var(--color-blue500)",
   showPreviousPrice = false,
 }: CarCardProps) {
+  const router = useRouter();
+  const redirectToCarDetails = () => {
+    router.push(`/cars/${id}`);
+  };
   return (
-    <div className={classes.container}>
+    <div className={classes.container} onClick={redirectToCarDetails}>
       {tag && <TagLabel text={tag} color={tagColor} />}
       <BookmarkIcon />
       <div className={classes.imgWrapper}>

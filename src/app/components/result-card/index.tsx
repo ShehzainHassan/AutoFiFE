@@ -6,8 +6,10 @@ import { CURRENCY } from "@/constants";
 import ButtonPrimary from "../buttons/Primary";
 import { ThemeProvider } from "@/theme/themeContext";
 import { WHITE_THEME } from "@/constants/button-primary-themes";
+import { useRouter } from "next/navigation";
 
 type ResultCardProps = {
+  id: number;
   specialText?: string;
   carImg: string;
   miles: number;
@@ -16,16 +18,22 @@ type ResultCardProps = {
 };
 
 export default function ResultCard({
+  id,
   specialText,
   carImg,
   miles,
   price,
   carTitle,
 }: ResultCardProps) {
+  const router = useRouter();
+  const redirectToCarsPage = () => {
+    router.push(`/cars/${id}`);
+  };
   return (
-    <div className={classes.container}>
+    <div className={classes.container} onClick={redirectToCarsPage}>
       <CarImage src={carImg} />
       <CarDetails
+        id={id}
         specialText={specialText}
         carTitle={carTitle}
         miles={miles}

@@ -25,6 +25,7 @@ export default function HorizontalCarousel({
       {vehicleListResult.vehicles.map((vehicle) => (
         <SwiperSlide key={vehicle.id}>
           <HorizontalCard
+            id={vehicle.id}
             imgSrc="/images/ford_2021.png"
             carDetails={`${vehicle.make} ${vehicle.model} - ${vehicle.year}`}
             carDescription="Car Description"

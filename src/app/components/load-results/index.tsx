@@ -25,6 +25,7 @@ export default function LoadResults() {
       {vehicleList?.vehicles.map((vehicle) => (
         <div key={vehicle.id}>
           <ResultCard
+            id={vehicle.id}
             carImg="/images/Bentley-Arnage4.4.png"
             miles={vehicle.mileage}
             price={vehicle.price}

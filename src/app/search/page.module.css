@@ -13,7 +13,7 @@
 .filterContainer {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  min-width: 300px;
 }
 .container {
   display: flex;
@@ -28,6 +28,7 @@
 .resultHeader {
   display: flex;
   justify-content: space-between;
+  min-width: 1200px;
 }
 .bold {
   font-weight: bold;

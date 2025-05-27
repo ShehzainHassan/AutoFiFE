@@ -12,6 +12,7 @@ type ButtonPrimaryProps = {
   padding?: string;
   hoverColor?: string;
   border?: string;
+  className?: string;
   onClick?: () => void;
 };
 export default function ButtonPrimary({
@@ -23,6 +24,7 @@ export default function ButtonPrimary({
   padding,
   hoverColor,
   border,
+  className,
   onClick,
 }: ButtonPrimaryProps) {
   const [isHovered, setIsHovered] = useState(false);
@@ -31,7 +33,7 @@ export default function ButtonPrimary({
 
   return (
     <div
-      className={classes.btnContainer}
+      className={`${classes.btnContainer} ${className}`}
       style={{
         backgroundColor: isHovered
           ? hoverColor || themeValues?.hoverColor

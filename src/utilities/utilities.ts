@@ -71,3 +71,9 @@ export function getResultTitle(make: string, model: string): string {
     return `Used ${make} ${model} for sale nationwide`;
   }
 }
+export function formatLabel(word: string): string {
+  return word
+    .split(" ")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}

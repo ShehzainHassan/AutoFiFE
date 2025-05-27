@@ -191,6 +191,13 @@
   line-height: 32px;
 }
 
+.carPageTitle {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 27.13px;
+  line-height: 32px;
+}
+
 .resultCardPrice {
   font-family: Roboto, sans-serif;
   font-weight: 600;

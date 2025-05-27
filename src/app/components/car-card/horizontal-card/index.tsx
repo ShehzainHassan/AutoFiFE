@@ -4,8 +4,10 @@ import headings from "@/styles/typography.module.css";
 import { CURRENCY } from "@/constants";
 import { TagLabel } from "../../tag-label";
 import BookmarkIcon from "../../bookmark-icon";
+import { useRouter } from "next/navigation";
 
 type Props = {
+  id: number;
   imgSrc: string;
   carDetails: string;
   carDescription: string;
@@ -20,6 +22,7 @@ type Props = {
 };
 
 export default function HorizontalCarCard({
+  id,
   imgSrc,
   carDetails,
   carDescription,
@@ -32,8 +35,12 @@ export default function HorizontalCarCard({
   btnText = "View Details",
   showPreviousPrice = false,
 }: Props) {
+  const router = useRouter();
+  const redirectToCarDetails = () => {
+    router.push(`/cars/${id}`);
+  };
   return (
-    <div className={classes.horizontalContainer}>
+    <div className={classes.horizontalContainer} onClick={redirectToCarDetails}>
       <div className={classes.horizontalImgWrapper}>
         <Image
           src={imgSrc}
