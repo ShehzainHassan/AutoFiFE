@@ -9,6 +9,7 @@ type ButtonNavigateProps = {
   backgroundColor?: string;
   whiteButton?: boolean;
   opacity?: number;
+  className?: string;
 };
 
 export default function ButtonNavigate({
@@ -19,6 +20,7 @@ export default function ButtonNavigate({
   backgroundColor = "var(--color-white100)",
   whiteButton = false,
   opacity = 1,
+  className,
 }: ButtonNavigateProps) {
   const imageSrc = whiteButton ? "/images/next-white.png" : "/images/next.png";
 
@@ -26,7 +28,7 @@ export default function ButtonNavigate({
 
   return (
     <div
-      className={classes.container}
+      className={`${classes.container} ${className}`}
       onClick={onClick}
       style={{ backgroundColor, opacity }}>
       <Image

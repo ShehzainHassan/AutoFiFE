@@ -1,8 +1,7 @@
 "use client";
-import ButtonNavigate from "@/app/components/buttons/Navigate";
 import ButtonPrimary from "@/app/components/buttons/Primary";
 import CarFeature from "@/app/components/car-feature";
-import CarImages from "@/app/components/car-images";
+import CarImageGallery from "@/app/components/car-image-gallery";
 import Form from "@/app/components/contact-info-form";
 import EmptyState from "@/app/components/empty-state";
 import Footer from "@/app/components/footer";
@@ -323,24 +322,7 @@ export default function CarDetails() {
       <Wrapper padding="24px 240px">
         <div className={classes.container}>
           <div>
-            <div className={classes.imgContainer}>
-              <Image
-                src="/images/glc_2023.png"
-                alt="car-img"
-                width={740}
-                height={340}
-              />
-              <div className={classes.allImages}>
-                <ButtonNavigate type="prev" />
-                <CarImages />
-                <CarImages />
-                <CarImages />
-                <CarImages />
-                <CarImages />
-                <CarImages />
-                <ButtonNavigate type="next" />
-              </div>
-            </div>
+            <CarImageGallery />
             <Features />
             <CarFinance />
             <Overview />

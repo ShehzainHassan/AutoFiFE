@@ -1,0 +1,27 @@
+.imgContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 230px;
+}
+.allImagesContainer {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+.imageCount {
+  position: absolute;
+  top: -60px;
+  right: 10px;
+  background-color: var(--color-black200);
+  color: var(--color-white100);
+  padding: 8px 19.67px;
+  border-radius: 2px;
+}
+.carImages {
+  display: flex;
+  gap: 9px;
+}
+.navigate {
+  border-radius: 0px !important;
+  padding: 15.1px 12px 16.9px 12px;
+}

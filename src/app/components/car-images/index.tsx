@@ -1,14 +1,19 @@
 import Image from "next/image";
 import classes from "./car-images.module.css";
-export default function CarImages() {
+type CarImageProps = {
+  imgSrc: string;
+  selected?: boolean;
+};
+
+export default function CarImages({ imgSrc, selected }: CarImageProps) {
   return (
-    <div className={classes.container}>
+    <div className={`${classes.container} ${selected ? classes.selected : ""}`}>
       <Image
-        src="/images/ford_2021.png"
-        alt="image"
+        src={imgSrc}
+        alt="car-image"
         fill
         style={{
-          objectFit: "contain",
+          objectFit: "cover",
         }}
       />
     </div>
