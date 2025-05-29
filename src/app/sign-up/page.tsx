@@ -8,14 +8,95 @@ import TopSection from "../components/auth-top-section";
 import NeedHelp from "../components/need-help";
 import classes from "./sign-up.module.css";
 import { useRouter } from "next/navigation";
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+} from "@/utilities/utilities";
+import useSaveUser from "@/hooks/useSaveUser";
+import LoadingSpinner from "../components/loading-spinner";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
   const router = useRouter();
   const redirectToLogin = () => {
     router.push("sign-in");
+  };
+  let err = "";
+  const validateUserName = (value: string) => {
+    err = validateName(value, "Name");
+    setErrors((prev) => ({ ...prev, name: err }));
+  };
+  const validateEmailAddress = (value: string) => {
+    err = validateEmail(value);
+    setErrors((prev) => ({ ...prev, email: err }));
+  };
+  const validateUserPassword = (value: string) => {
+    err = validatePassword(value);
+    setErrors((prev) => ({ ...prev, password: err }));
+  };
+  const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setName(value);
+    validateUserName(value);
+  };
+  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    validateEmailAddress(value);
+  };
+  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPassword(value);
+    validateUserPassword(value);
+  };
+  const validateFields = () => {
+    let isValid = true;
+    const newErrors: { name?: string; email?: string; password?: string } = {};
+
+    if (!name.trim()) {
+      newErrors.name = "Name is required!";
+      isValid = false;
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required!";
+      isValid = false;
+    }
+
+    if (!password.trim()) {
+      newErrors.password = "Password is required!";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (!isValid) return false;
+
+    return true;
+  };
+  const { mutate: saveUser, isPending } = useSaveUser();
+  const handleSignUp = () => {
+    const formData = {
+      name,
+      email,
+      password,
+    };
+    if (validateFields()) {
+      saveUser(formData, {
+        onSuccess: () => {
+          setTimeout(() => {
+            router.push("/");
+          }, 1500);
+        },
+      });
+    }
   };
   return (
     <div className={classes.container}>
@@ -32,26 +113,44 @@ export default function SignUp() {
             subTitle="Sign Up and Join the partnership"
           />
           <div className={classes.fields}>
-            <AuthInputField
-              iconImg="/images/icon-user.png"
-              value={name}
-              placeholder="Johnson Doe"
-              onChange={(e) => setName(e.target.value)}
-            />
-            <AuthInputField
-              iconImg="/images/message.png"
-              value={email}
-              placeholder="example@email.com"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <AuthInputField
-              iconImg="/images/password.png"
-              value={password}
-              placeholder="Password"
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <AuthButton btnText="Become a Member" />
+            <div className={classes.inputContainer}>
+              <AuthInputField
+                iconImg="/images/icon-user.png"
+                value={name}
+                placeholder="Johnson Doe"
+                onChange={handleName}
+                className={errors.name ? classes.redBorder : undefined}
+              />
+              {errors.name && <p className={classes.error}>{errors.name}</p>}
+            </div>
+
+            <div className={classes.inputContainer}>
+              <AuthInputField
+                iconImg="/images/message.png"
+                value={email}
+                placeholder="example@email.com"
+                onChange={handleEmail}
+                className={errors.email ? classes.redBorder : undefined}
+              />
+              {errors.email && <p className={classes.error}>{errors.email}</p>}
+            </div>
+
+            <div className={classes.inputContainer}>
+              <AuthInputField
+                iconImg="/images/password.png"
+                value={password}
+                placeholder="Password"
+                type="password"
+                onChange={handlePassword}
+                className={errors.password ? classes.redBorder : undefined}
+              />
+              {errors.password && (
+                <p className={classes.error}>{errors.password}</p>
+              )}
+            </div>
+            <AuthButton btnText="Become a Member" onClick={handleSignUp} />
+            {isPending && <LoadingSpinner color="var(--color-black100)" />}
+            <ToastContainer />
           </div>
         </div>
         <NeedHelp />

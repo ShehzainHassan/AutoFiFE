@@ -7,6 +7,7 @@ type AuthInputFieldProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   type?: string;
+  className?: string;
 };
 
 export default function AuthInputField({
@@ -15,6 +16,7 @@ export default function AuthInputField({
   onChange,
   placeholder = "",
   type = "text",
+  className,
 }: AuthInputFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -23,7 +25,7 @@ export default function AuthInputField({
 
   const toggleShowPassword = () => setShowPassword((prev) => !prev);
   return (
-    <div className={classes.inputContainer}>
+    <div className={`${classes.inputContainer} ${className}`}>
       <Image
         src={iconImg}
         alt="icon"

@@ -21,3 +21,15 @@
   flex-direction: column;
   gap: 18px;
 }
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+.error {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-red500);
+}
+.redBorder {
+  border: 2px solid var(--color-red500) !important;
+}

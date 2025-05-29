@@ -44,7 +44,12 @@ export default function Navbar({
           ].includes(t(`navbar.navItems.${key}`));
 
           return (
-            <div key={key} className={classes.navContainer}>
+            <div
+              key={key}
+              className={classes.navContainer}
+              onClick={() => {
+                if (key === "signIn") router.push("/sign-in");
+              }}>
               <h3 className={`${headings.navElement} ${classes.white}`}>
                 {label}
               </h3>

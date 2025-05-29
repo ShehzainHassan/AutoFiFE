@@ -137,3 +137,33 @@ export function validatePhoneNumber(value: string): string {
 
   return "";
 }
+
+export function validatePassword(value: string): string {
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return "Please enter a password";
+  }
+
+  if (trimmed.length < 8) {
+    return "Password must be at least 8 characters long";
+  }
+
+  if (!/[A-Z]/.test(trimmed)) {
+    return "Password must include at least one uppercase letter";
+  }
+
+  if (!/[a-z]/.test(trimmed)) {
+    return "Password must include at least one lowercase letter";
+  }
+
+  if (!/[0-9]/.test(trimmed)) {
+    return "Password must include at least one number";
+  }
+
+  if (!/[!@#$%^&*(),.?":{}|<>_\-+=\\[\]\/~`]/.test(trimmed)) {
+    return "Password must include at least one special character";
+  }
+
+  return "";
+}
