@@ -168,15 +168,17 @@
   color: var(--color-black1000);
 }
 .options {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--color-gray525);
-  padding: 21px 17px;
-  border-radius: 8px;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  border: 1px solid var(--color-gray525) !important;
+  padding: 21px 17px !important;
+  border-radius: 8px !important;
 }
 .addComment {
   display: inline-flex;
+  justify-content: flex-start !important;
   margin: 32px 0 21px;
   color: var(--color-black500) !important;
   padding: 13px 3px !important;
@@ -196,4 +198,44 @@
 }
 .marginTop {
   margin-top: 21.5px;
+}
+.commentBox {
+  margin-top: 10px;
+}
+.commentBoxContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cancelCommentBtn {
+  border: 1px solid !important;
+}
+.submitBtn {
+  padding: 12px 17px;
+  background-color: var(--color-blue400);
+  color: var(--color-white100);
+  border: none;
+  outline: none;
+  border-radius: 60px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    background-color: var(--color-blue600);
+  }
+}
+.loading {
+  display: flex !important;
+  margin: 0px !important;
+  height: 60px !important;
+}
+.error {
+  border: 2px solid var(--color-red500);
 }

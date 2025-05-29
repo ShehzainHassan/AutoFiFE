@@ -20,3 +20,23 @@ export const customSelectStyles: StylesConfig<Options, false> = {
     padding: 0,
   }),
 };
+
+export const contactDropdownStyle: StylesConfig<Options, false> = {
+  control: (base) => ({
+    ...base,
+    border: "none",
+    boxShadow: "none",
+    cursor: "pointer",
+    width: "250px",
+  }),
+  menu: (base) => ({
+    ...base,
+    marginTop: 0,
+    border: "1px solid var(--color-gray525)",
+    boxShadow: "none",
+  }),
+  menuList: (base) => ({
+    ...base,
+    padding: 0,
+  }),
+};

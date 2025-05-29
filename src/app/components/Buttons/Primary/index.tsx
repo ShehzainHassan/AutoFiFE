@@ -13,7 +13,9 @@ type ButtonPrimaryProps = {
   hoverColor?: string;
   border?: string;
   className?: string;
+  isDisabled?: boolean;
   onClick?: () => void;
+  type?: "button" | "submit" | "reset" | undefined;
 };
 export default function ButtonPrimary({
   imgSrc,
@@ -25,7 +27,9 @@ export default function ButtonPrimary({
   hoverColor,
   border,
   className,
+  isDisabled,
   onClick,
+  type = "button",
 }: ButtonPrimaryProps) {
   const [isHovered, setIsHovered] = useState(false);
   const theme = useTheme();
@@ -41,12 +45,16 @@ export default function ButtonPrimary({
         borderRadius: borderRadius || themeValues?.borderRadius,
         padding: padding || themeValues?.padding,
         border: border || themeValues?.border,
+        opacity: isDisabled ? 0.6 : 1,
+        pointerEvents: isDisabled ? "none" : "auto",
+        cursor: isDisabled ? "not-allowed" : "pointer",
       }}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
       {imgSrc && <Image src={imgSrc} alt="icon" width={15} height={15} />}
       <button
+        type={type}
         className={classes.btn}
         style={{ color: textColor || themeValues?.textColor }}>
         {btnText}

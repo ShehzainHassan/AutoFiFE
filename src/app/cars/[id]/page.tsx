@@ -1,16 +1,21 @@
 "use client";
+import ButtonNavigate from "@/app/components/buttons/Navigate";
 import ButtonPrimary from "@/app/components/buttons/Primary";
 import CarFeature from "@/app/components/car-feature";
 import CarImages from "@/app/components/car-images";
 import Dropdown from "@/app/components/dropdown";
+import EmptyState from "@/app/components/empty-state";
 import Footer from "@/app/components/footer";
 import Input from "@/app/components/input";
+import LoadingSpinner from "@/app/components/loading-spinner";
 import Navbar from "@/app/components/navbar";
 import RatingStars from "@/app/components/rating-stars";
 import Wrapper from "@/app/components/wrapper";
+import { CURRENCY } from "@/constants";
+import useSubmitInfo from "@/hooks/useSubmitInfo";
 import useVehiclesById from "@/hooks/useVehicleById";
 import useVehicleFeatures from "@/hooks/useVehicleFeatures";
-import { customSelectStyles } from "@/styles/custom-select";
+import { contactDropdownStyle } from "@/styles/custom-select";
 import headings from "@/styles/typography.module.css";
 import { formatLabel } from "@/utilities/utilities";
 import {
@@ -18,16 +23,13 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Checkbox, FormControl, FormControlLabel } from "@mui/material";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import classes from "./page.module.css";
-import { Checkbox, FormControlLabel } from "@mui/material";
-import { ThemeProvider } from "@/theme/themeContext";
-import { BLUE_THEME } from "@/constants/button-primary-themes";
-import EmptyState from "@/app/components/empty-state";
-import { CURRENCY } from "@/constants";
-import LoadingSpinner from "@/app/components/loading-spinner";
 
 export default function CarDetails() {
   const params = useParams();
@@ -38,6 +40,30 @@ export default function CarDetails() {
   );
   const make = vehicle?.make ?? "";
   const model = vehicle?.model ?? "";
+  const year = vehicle?.year ?? "";
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [selected, setSelected] = useState("interested");
+  const [postCode, setPostCode] = useState(0);
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [preferredContact, setPreferredContact] = useState("");
+  const [commentText, setCommentText] = useState("");
+  const [emailNotifications, setEmailNotifications] = useState(false);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmailNotifications(event.target.checked);
+  };
+
+  const canSendMessage = () => {
+    return (
+      fname !== "" &&
+      lname !== "" &&
+      email !== "" &&
+      postCode !== null &&
+      phone !== "" &&
+      preferredContact !== ""
+    );
+  };
 
   const { data: vehicleFeatures, isLoading: featureLoading } =
     useVehicleFeatures(make, model, !!vehicle?.make && !!vehicle.model);
@@ -81,10 +107,13 @@ export default function CarDetails() {
     );
   };
   const DropdownOptions = () => {
-    const [selected, setSelected] = useState("interested");
     const options = [
       { label: "I'm interested in this", value: "interested" },
-      { label: "I'm interested in this", value: "_interested" },
+      {
+        label: "I'd like to know your best price for this",
+        value: "best_price",
+      },
+      { label: "I'd like to test drive this", value: "test_drive" },
     ];
     return (
       <Dropdown
@@ -93,73 +122,194 @@ export default function CarDetails() {
         onChange={(value) => {
           setSelected(value);
         }}>
-        <Dropdown.Select options={options} styles={customSelectStyles} />
+        <Dropdown.Select options={options} styles={contactDropdownStyle} />
       </Dropdown>
     );
   };
   const InputFirstName = () => {
-    const [fname, setFname] = useState("");
+    const [localFname, setLocalFname] = useState(fname);
+    const [touched, setTouched] = useState(false);
+    const isValid = /^[A-Za-z]+$/.test(localFname.trim());
+    const showError = touched && !isValid;
     return (
-      <Input
-        width="160px"
-        placeholder="First name"
-        value={fname}
-        onChange={(e) => setFname(e.target.value)}>
-        <Input.Field />
+      <Input width="160px">
+        <Input.Field
+          placeholder="First name"
+          value={localFname}
+          onChange={(e) => setLocalFname(e.target.value)}
+          onBlur={(e) => {
+            setTouched(true);
+            setFname(e.target.value);
+          }}
+          className={showError ? classes.error : undefined}
+        />
       </Input>
     );
   };
+
   const InputLastName = () => {
-    const [lname, setLname] = useState("");
+    const [localLname, setLocalLname] = useState(lname);
     return (
-      <Input
-        width="160px"
-        placeholder="Last name"
-        value={lname}
-        onChange={(e) => setLname(e.target.value)}>
-        <Input.Field />
+      <Input width="160px">
+        <Input.Field
+          placeholder="Last name"
+          value={localLname}
+          onChange={(e) => setLocalLname(e.target.value)}
+          onBlur={(e) => setLname(e.target.value)}
+        />
       </Input>
     );
   };
   const InputPostCode = () => {
-    const [postCode, setPostCode] = useState(0);
+    const [localPostCode, setLocalPostCode] = useState(postCode);
     return (
-      <Input
-        type="number"
-        width="100px"
-        placeholder="54000"
-        value={postCode}
-        onChange={(e) => setPostCode(Number(e.target.value))}>
-        <Input.Field />
+      <Input width="160px">
+        <Input.Field
+          type="number"
+          placeholder="54000"
+          value={localPostCode}
+          onChange={(e) => setLocalPostCode(Number(e.target.value))}
+          onBlur={(e) => setPostCode(Number(e.target.value))}
+        />
       </Input>
     );
   };
   const InputEmail = () => {
-    const [email, setEmail] = useState("");
+    const [localEmail, setLocalEmail] = useState(email);
     return (
-      <Input
-        width="260px"
-        placeholder="Email address"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}>
-        <Input.Field />
+      <Input width="160px">
+        <Input.Field
+          type="email"
+          placeholder="Email address"
+          value={localEmail}
+          onChange={(e) => setLocalEmail(e.target.value)}
+          onBlur={(e) => setEmail(e.target.value)}
+        />
       </Input>
     );
   };
   const InputPhone = () => {
-    const [phone, setPhone] = useState("");
+    const [localPhone, setLocalPhone] = useState(phone);
     return (
-      <Input
-        placeholder="0770 000 000"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}>
-        <Input.Field />
+      <Input width="160px">
+        <Input.Field
+          placeholder="0770 000 000"
+          value={localPhone}
+          onChange={(e) => setLocalPhone(e.target.value)}
+          onBlur={(e) => setPhone(e.target.value)}
+        />
       </Input>
     );
   };
-  const Form = () => {
+  const AddComment = () => {
+    const [showComment, setShowComment] = useState(false);
+    const [localCommentText, setLocalCommentText] = useState(commentText);
+    const handleCancelComment = () => {
+      setShowComment(false);
+      setLocalCommentText("");
+      setCommentText("");
+    };
     return (
-      <form className={classes.form}>
+      <div>
+        {!showComment ? (
+          <ButtonPrimary
+            imgSrc="/images/add.png"
+            btnText="Add comments"
+            className={classes.addComment}
+            onClick={() => setShowComment(true)}
+          />
+        ) : (
+          <div className={classes.commentBoxContainer}>
+            <textarea
+              className={classes.commentBox}
+              rows={10}
+              cols={5}
+              value={localCommentText}
+              onChange={(e) => setLocalCommentText(e.target.value)}
+              onBlur={(e) => setCommentText(e.target.value)}
+            />
+            <ButtonPrimary
+              className={classes.cancelCommentBtn}
+              btnText="Cancel"
+              onClick={handleCancelComment}
+            />
+          </div>
+        )}
+      </div>
+    );
+  };
+  const PreferredChoice = () => {
+    const handleCheckboxChange = (option: string) => {
+      setPreferredContact((prev) => (prev === option ? "" : option));
+    };
+
+    return (
+      <FormControl component="fieldset" className={classes.options}>
+        <p>I prefer:</p>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={preferredContact === "Call"}
+              onChange={() => handleCheckboxChange("Call")}
+            />
+          }
+          label="Call"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={preferredContact === "Text"}
+              onChange={() => handleCheckboxChange("Text")}
+            />
+          }
+          label="Text"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={preferredContact === "Email"}
+              onChange={() => handleCheckboxChange("Email")}
+            />
+          }
+          label="Email"
+        />
+      </FormControl>
+    );
+  };
+  const Form = () => {
+    const { mutate: submitInfo, isPending } = useSubmitInfo();
+    const resetFields = () => {
+      setFname("");
+      setLname("");
+      setSelected("interested");
+      setPostCode(0);
+      setEmail("");
+      setPhone("");
+      setPreferredContact("");
+      setCommentText("");
+      setEmailNotifications(false);
+    };
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      console.log(isPending);
+      const formData = {
+        fname,
+        lname,
+        selected,
+        postcode: postCode,
+        email,
+        phone,
+        vehicleName: `${year} ${make} ${model}`,
+        preferredContact,
+        commentText,
+        emailNotifs: emailNotifications,
+      };
+
+      submitInfo(formData);
+      resetFields();
+    };
+    return (
+      <form className={classes.form} onSubmit={handleSubmit}>
         <div className={classes.infoHeader}>
           <h1 className={classes.header}>Request information</h1>
           <p className={classes.contact}>020 3984 7581</p>
@@ -193,26 +343,30 @@ export default function CarDetails() {
             <p>. Thank you!</p>
           </div>
         </div>
-        <div className={classes.options}>
-          <p>I prefer: </p>
-          <FormControlLabel control={<Checkbox />} label="Call" />
-          <FormControlLabel control={<Checkbox />} label="Text" />
-          <FormControlLabel control={<Checkbox />} label="Email" />
-        </div>
-        <ButtonPrimary
-          imgSrc="/images/add.png"
-          btnText="Add comments"
-          className={classes.addComment}
-        />
+        <PreferredChoice />
+        <AddComment />
         <div>
           <FormControlLabel
-            control={<Checkbox />}
+            control={
+              <Checkbox checked={emailNotifications} onChange={handleChange} />
+            }
             label="Email me new results for my search"
           />
         </div>
-        <ThemeProvider value={BLUE_THEME}>
-          <ButtonPrimary btnText="Send Message" className={classes.marginTop} />
-        </ThemeProvider>
+        {isPending ? (
+          <LoadingSpinner
+            className={classes.loading}
+            color="var(--color-black500)"
+          />
+        ) : (
+          <button
+            disabled={!canSendMessage()}
+            className={`${classes.marginTop} ${classes.submitBtn}`}
+            type="submit">
+            Send Message
+          </button>
+        )}
+
         <div className={classes.text}>
           By submitting my contact information on CarGurus, I agree to receive
           communications from CarGurus, from the vehicle&#39;s seller and from
@@ -399,12 +553,14 @@ export default function CarDetails() {
                 height={340}
               />
               <div className={classes.allImages}>
+                <ButtonNavigate type="prev" />
                 <CarImages />
                 <CarImages />
                 <CarImages />
                 <CarImages />
                 <CarImages />
                 <CarImages />
+                <ButtonNavigate type="next" />
               </div>
             </div>
             <Features />
@@ -423,6 +579,7 @@ export default function CarDetails() {
           </div>
         </div>
       </Wrapper>
+      <ToastContainer />
       <Footer />
     </div>
   );
