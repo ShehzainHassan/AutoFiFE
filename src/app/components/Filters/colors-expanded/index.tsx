@@ -32,8 +32,7 @@ export default function ColorsExpanded() {
     }
   };
   return (
-    <div
-      className={`${classes.gearboxContainer} ${colorClasses.colorExpandedContainer} `}>
+    <div className={`${classes.gearboxContainer}`}>
       <FormGroup>
         {Object.entries(vehicleList.colorCounts).map(([color, count]) => {
           const isDisabled = count === 0;

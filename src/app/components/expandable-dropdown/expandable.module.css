@@ -1,7 +1,6 @@
 .mainContainer {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--color-gray300);
 }
 .container {
   display: flex;

@@ -10,9 +10,9 @@ import YearsExpanded from "../filters/years-expanded";
 import classes from "./expandable.module.css";
 type ExpandableProps = {
   title: string;
-  roundedSides?: boolean;
+  className?: string;
 };
-export default function Expandable({ title }: ExpandableProps) {
+export default function Expandable({ title, className }: ExpandableProps) {
   const { expandedSections, setExpandedSections } = useSearch();
   const isClicked = expandedSections.has(title);
 
@@ -26,7 +26,7 @@ export default function Expandable({ title }: ExpandableProps) {
     setExpandedSections(newSet);
   };
   return (
-    <div className={classes.mainContainer}>
+    <div className={`${classes.mainContainer} ${className}`}>
       <div className={classes.container} onClick={toggleExpanded}>
         <p className={headings.filterText}>{title}</p>
         <div className={classes.icon}>
