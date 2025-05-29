@@ -6,7 +6,7 @@ import CarImages from "@/app/components/car-images";
 import Dropdown from "@/app/components/dropdown";
 import EmptyState from "@/app/components/empty-state";
 import Footer from "@/app/components/footer";
-import Input from "@/app/components/input";
+import Input from "@/app/components/input-field/input-field";
 import LoadingSpinner from "@/app/components/loading-spinner";
 import Navbar from "@/app/components/navbar";
 import RatingStars from "@/app/components/rating-stars";

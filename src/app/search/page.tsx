@@ -58,6 +58,7 @@ export default function Search() {
     setSearchParams({
       ...searchParams,
       make,
+      offset: 0,
       model,
       startPrice,
       endPrice,
