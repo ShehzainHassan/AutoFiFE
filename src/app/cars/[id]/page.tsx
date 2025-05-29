@@ -14,7 +14,6 @@ import { CURRENCY } from "@/constants";
 import useVehiclesById from "@/hooks/useVehicleById";
 import useVehicleFeatures from "@/hooks/useVehicleFeatures";
 import headings from "@/styles/typography.module.css";
-import { formatLabel } from "@/utilities/utilities";
 import {
   faArrowCircleUp,
   faInfoCircle,
@@ -109,122 +108,202 @@ export default function CarDetails() {
     );
   };
   const Features = () => {
+    const featureList = [
+      {
+        title: "Mileage",
+        value: vehicle.mileage.toLocaleString(),
+      },
+      {
+        title: "Drivetrain",
+        value: vehicleFeatures.features.drivetrain.type,
+      },
+      {
+        title: "Exterior color",
+        value: vehicle.color,
+      },
+      {
+        title: "MPG",
+        value: vehicleFeatures.features.fuelEconomy.combinedMPG + " MPG",
+      },
+      {
+        title: "Engine",
+        value: vehicleFeatures.features.engine.type,
+      },
+      {
+        title: "Fuel type",
+        value: vehicle.fuelType,
+      },
+      {
+        title: "Gearbox",
+        value: vehicle.transmission,
+      },
+    ];
+
     return (
       <div className={classes.titleContainer}>
         <h1 className={headings.carPageTitle}>Features</h1>
         <div className={classes.features}>
-          <CarFeature
-            title="Mileage"
-            value={vehicle.mileage.toLocaleString()}
-          />
-          <CarFeature
-            title="Drivetrain"
-            value={formatLabel(vehicleFeatures.features.drivetrain.type)}
-          />
-          <CarFeature title="Exterior color" value={vehicle.color} />
-          {/* <CarFeature title="MPG" value="39 MPG" /> */}
-          <CarFeature
-            title="Engine"
-            value={vehicleFeatures.features.engine.type}
-          />
-          <CarFeature title="Fuel type" value={vehicle.fuelType} />
-          <CarFeature title="Gearbox" value={vehicle.transmission} />
-          {/* <CarFeature title="ULEZ compliant" value="Yes" /> */}
+          {featureList.map((feature, index) => (
+            <CarFeature
+              key={index}
+              title={feature.title}
+              value={feature.value}
+            />
+          ))}
         </div>
       </div>
     );
   };
   const Overview = () => {
+    const overviewData = [
+      { label: "Make", value: vehicle.make },
+      { label: "Mileage", value: `${vehicle.mileage.toLocaleString()} mi` },
+      { label: "Model", value: vehicle.model },
+      { label: "Condition", value: vehicle.status.toLowerCase() },
+      { label: "Year", value: vehicle.year },
+      { label: "Vin", value: vehicle.vin },
+      { label: "Exterior color", value: vehicle.color },
+    ];
+
     return (
       <div className={classes.titleContainer}>
         <h1 className={headings.carPageTitle}>Overview</h1>
         <div className={`${classes.features} ${classes.space}`}>
-          <p>
-            <strong>Make:</strong> {vehicle.make}
-          </p>
-          <p>
-            <strong>Mileage:</strong> {vehicle.mileage.toLocaleString() + " mi"}
-          </p>
-          <p>
-            <strong>Model:</strong> {vehicle.model}
-          </p>
-          <p>
-            <strong>Condition: </strong>
-            {formatLabel(vehicle.status.toLocaleLowerCase())}
-          </p>
-          <p>
-            <strong>Year:</strong> {vehicle.year}
-          </p>
-          <p>
-            <strong>Vin:</strong> {vehicle.vin}
-          </p>
-
-          <p>
-            <strong>Exterior color:</strong> {vehicle.color}
-          </p>
+          {overviewData.map((item, index) => (
+            <p key={index}>
+              <span className={classes.bold}>{item.label}</span> {item.value}
+            </p>
+          ))}
         </div>
       </div>
     );
   };
   const FuelEconomy = () => {
+    const fuelEconomyData = [
+      {
+        label: "Fuel Tank Size",
+        value: vehicleFeatures.features.fuelEconomy.fuelTankSize + " L",
+      },
+      {
+        label: "Combined MPG",
+        value: vehicleFeatures.features.fuelEconomy.combinedMPG + " MPG",
+      },
+      {
+        label: "City MPG",
+        value: vehicleFeatures.features.fuelEconomy.cityMPG + " MPG",
+      },
+      {
+        label: "Highway MPG",
+        value: vehicleFeatures.features.fuelEconomy.highwayMPG + " MPG",
+      },
+      {
+        label: "CO2 Emissions",
+        value: vehicleFeatures.features.fuelEconomy.cO2Emissions + " g/km",
+      },
+    ];
+
     return (
       <div className={classes.titleContainer}>
         <h1 className={headings.carPageTitle}>Fuel economy</h1>
         <div className={`${classes.features} ${classes.space}`}>
-          {vehicleFeatures?.features.fuelEconomy &&
-            Object.entries(vehicleFeatures.features.fuelEconomy).map(
-              ([key, value]) => (
-                <div key={key}>
-                  <strong>{formatLabel(key)}</strong>: {value}
-                </div>
-              )
-            )}
+          {fuelEconomyData.map((item, index) => (
+            <p key={index}>
+              <span className={classes.bold}>{item.label}:</span> {item.value}
+            </p>
+          ))}
         </div>
       </div>
     );
   };
+
   const Performance = () => {
+    const performance = [
+      {
+        label: "Zero To 60 MPH",
+        value: vehicleFeatures.features.performance.zeroTo60MPH + " seconds",
+      },
+      {
+        label: "Horsepower",
+        value: vehicleFeatures.features.engine.horsepower + " hp",
+      },
+    ];
+
     return (
       <div className={classes.titleContainer}>
         <h1 className={headings.carPageTitle}>Performance</h1>
         <div className={`${classes.features} ${classes.space}`}>
-          {vehicleFeatures?.features.performance &&
-            Object.entries(vehicleFeatures.features.performance).map(
-              ([key, value]) => (
-                <div key={key}>
-                  <strong>{formatLabel(key)}</strong>: {value}
-                </div>
-              )
-            )}
+          {performance.map((item, index) => (
+            <p key={index}>
+              <span className={classes.bold}>{item.label}:</span> {item.value}
+            </p>
+          ))}
         </div>
       </div>
     );
   };
-  const Safety = () => {
-    return (
-      <div className={classes.titleContainer}>
-        <h1 className={headings.carPageTitle}>Safety</h1>
-        <p>Cruise control</p>
-      </div>
-    );
-  };
+  // const Safety = () => {
+  //   return (
+  //     <div className={classes.titleContainer}>
+  //       <h1 className={headings.carPageTitle}>Safety</h1>
+  //       <p>Cruise control</p>
+  //     </div>
+  //   );
+  // };
   const Measurements = () => {
+    const measurementsData = [
+      {
+        label: "Doors",
+        value: vehicleFeatures.features.measurements.doors + " doors",
+      },
+      {
+        label: "Maximum Seating",
+        value: vehicleFeatures.features.measurements.maximumSeating,
+      },
+      {
+        label: "Height",
+        value: vehicleFeatures.features.measurements.heightInches + " in",
+      },
+      {
+        label: "Width",
+        value: vehicleFeatures.features.measurements.widthInches + " in",
+      },
+      {
+        label: "Length",
+        value: vehicleFeatures.features.measurements.lengthInches + " in",
+      },
+      {
+        label: "Wheelbase",
+        value: vehicleFeatures.features.measurements.wheelbaseInches + " in",
+      },
+      {
+        label: "Ground Clearance",
+        value: vehicleFeatures.features.measurements.groundClearance + " in",
+      },
+      {
+        label: "Cargo Capacity",
+        value:
+          vehicleFeatures.features.measurements.cargoCapacityCuFt + " cuft",
+      },
+      {
+        label: "Curb Weight",
+        value: vehicleFeatures.features.measurements.curbWeightLBS + " lbs",
+      },
+    ];
+
     return (
       <div className={classes.titleContainer}>
         <h1 className={headings.carPageTitle}>Measurements</h1>
         <div className={`${classes.features} ${classes.space}`}>
-          {vehicleFeatures?.features.measurements &&
-            Object.entries(vehicleFeatures.features.measurements).map(
-              ([key, value]) => (
-                <div key={key}>
-                  <strong>{formatLabel(key)}</strong>: {value}
-                </div>
-              )
-            )}
+          {measurementsData.map((item, index) => (
+            <p key={index}>
+              <span className={classes.bold}>{item.label}:</span> {item.value}
+            </p>
+          ))}
         </div>
       </div>
     );
   };
+
   const Options = () => {
     return (
       <div className={classes.titleContainer}>
@@ -267,7 +346,7 @@ export default function CarDetails() {
             <Overview />
             <FuelEconomy />
             <Performance />
-            <Safety />
+            {/* <Safety /> */}
             <Measurements />
             <Options />
           </div>
