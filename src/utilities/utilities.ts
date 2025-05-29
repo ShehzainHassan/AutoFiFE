@@ -1,5 +1,6 @@
 import { MODEL_OPTIONS } from "@/constants";
 import { Options } from "@/interfaces/dropdown-options";
+import { Vehicle } from "@/interfaces/vehicle";
 
 export function getModelOptions(make: string): Options[] {
   const isAnyMake = !make || make === "Any_Makes";
@@ -76,4 +77,69 @@ export function formatLabel(word: string): string {
     .split(" ")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
+}
+
+export function getUniqueFuelTypes(vehicles: Vehicle[]) {
+  const fuelTypes = vehicles.map((vehicle) => vehicle.fuelType);
+  const uniqueFuelTypes = [...new Set(fuelTypes)];
+  return uniqueFuelTypes;
+}
+
+export function validateName(value: string, label: string) {
+  if (value.trim() === "") {
+    return `${label} is required.`;
+  } else if (!/^[A-Za-z]+$/.test(value.trim())) {
+    return `${label} must contain only letters.`;
+  }
+  return "";
+}
+export function validatePostCode(value: string): string {
+  const trimmed = value.trim();
+
+  if (!trimmed || trimmed === "-" || /^[-\s]+$/.test(trimmed)) {
+    return "Please enter a valid postcode";
+  }
+
+  if (!/\d/.test(trimmed)) {
+    return "Postcode must contain at least one digit";
+  }
+
+  if (/^[a-zA-Z\s]+$/.test(trimmed)) {
+    return "Postcode cannot be only letters";
+  }
+
+  if (!/^[a-zA-Z0-9\s]+$/.test(trimmed)) {
+    return "Postcode contains invalid characters";
+  }
+  return "";
+}
+
+export function validateEmail(value: string): string {
+  if (value.trim() === "") {
+    return "Email is required.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) {
+    return "Please enter a valid email address.";
+  }
+  return "";
+}
+
+export function validatePhoneNumber(value: string): string {
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return "Please enter a phone number";
+  }
+
+  if (/[a-zA-Z]/.test(trimmed)) {
+    return "Phone number cannot contain letters";
+  }
+  if (!/^[0-9+\-\s()]+$/.test(trimmed)) {
+    return "Phone number contains invalid characters";
+  }
+  const digits = trimmed.replace(/\D/g, "");
+  if (digits.length < 7) {
+    return "Phone number is too short";
+  }
+
+  return "";
 }

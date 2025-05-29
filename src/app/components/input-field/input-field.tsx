@@ -1,8 +1,7 @@
 "use client";
 
 import { ReactNode, ChangeEvent } from "react";
-import classes from "./input.module.css";
-
+import classes from "./input-field.module.css";
 type InputFieldProps = {
   type?: "text" | "number" | "email";
   placeholder?: string;

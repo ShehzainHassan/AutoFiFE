@@ -2,7 +2,7 @@ export interface ContactFormData {
   fname: string;
   lname: string;
   selected: string;
-  postcode: number;
+  postcode: string;
   email: string;
   phone: string;
   vehicleName: string;
