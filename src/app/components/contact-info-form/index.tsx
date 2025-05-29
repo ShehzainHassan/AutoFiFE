@@ -67,6 +67,8 @@ export default function Form() {
   const [preferredContact, setPreferredContact] = useState("");
   const [commentText, setCommentText] = useState("");
   const [emailNotifications, setEmailNotifications] = useState(false);
+  const [showComment, setShowComment] = useState(false);
+
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -155,7 +157,7 @@ export default function Form() {
       validate(value);
     };
     return (
-      <Input width="160px">
+      <Input width="110px">
         <Input.Field
           placeholder="54000"
           value={localPostCode}
@@ -178,7 +180,7 @@ export default function Form() {
       validate(value);
     };
     return (
-      <Input width="160px">
+      <Input width="310px">
         <Input.Field
           type="email"
           placeholder="Email address"
@@ -203,7 +205,7 @@ export default function Form() {
       validate(value);
     };
     return (
-      <Input width="160px">
+      <Input width="200px">
         <Input.Field
           placeholder="0770 000 000"
           value={localPhone}
@@ -215,7 +217,6 @@ export default function Form() {
     );
   };
   const AddComment = () => {
-    const [showComment, setShowComment] = useState(false);
     const [localCommentText, setLocalCommentText] = useState(commentText);
     const handleCancelComment = () => {
       setShowComment(false);
@@ -235,6 +236,7 @@ export default function Form() {
           <div className={classes.commentBoxContainer}>
             <textarea
               className={classes.commentBox}
+              placeholder="Enter comment"
               rows={10}
               cols={5}
               value={localCommentText}
@@ -251,6 +253,7 @@ export default function Form() {
       </div>
     );
   };
+
   const PreferredChoice = () => {
     const handleCheckboxChange = (option: string) => {
       setPreferredContact((prev) => (prev === option ? "" : option));
@@ -371,10 +374,10 @@ export default function Form() {
           />
           <p>and</p>
           <DropdownOptions />
-          <p>{vehicle?.year}</p>
+          <p className={classes.bold}>{vehicle?.year}</p>
         </div>
         <div className={classes.line}>
-          <span>
+          <span className={classes.bold}>
             {vehicle?.make} {vehicle?.model}
           </span>
           <p>I&#39;m in the </p>

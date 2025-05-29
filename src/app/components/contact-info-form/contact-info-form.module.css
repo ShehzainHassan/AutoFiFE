@@ -34,6 +34,9 @@
   margin-top: 21.5px;
 }
 .commentBox {
+  outline: none;
+  resize: none;
+  padding: 10px;
   margin-top: 10px;
 }
 .commentBoxContainer {
@@ -90,7 +93,7 @@
 .form {
   border: 1px solid var(--color-gray400);
   border-radius: 20px;
-  padding: 33px;
+  padding: 30px;
 }
 .infoHeader {
   display: flex;
@@ -114,4 +117,7 @@
   gap: 5px;
   color: var(--color-red500);
   font-weight: 500;
+}
+.bold {
+  font-weight: bold;
 }
