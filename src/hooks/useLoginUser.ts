@@ -9,7 +9,9 @@ const useLoginUser = () => {
     mutationFn: async (formData: LoginDTO) => {
       return await userAPI.loginUser(formData);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.userId);
       toast.success("Registration successfull!");
     },
     onError: (error: unknown) => {
