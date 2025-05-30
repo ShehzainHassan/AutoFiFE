@@ -23,6 +23,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const router = useRouter();
   const redirectToLogin = () => {
@@ -91,9 +92,8 @@ export default function SignUp() {
     if (validateFields()) {
       saveUser(formData, {
         onSuccess: () => {
-          setTimeout(() => {
-            router.push("/");
-          }, 1500);
+          router.push("/");
+          setIsButtonDisabled(true);
         },
       });
     }
@@ -148,7 +148,11 @@ export default function SignUp() {
                 <p className={classes.error}>{errors.password}</p>
               )}
             </div>
-            <AuthButton btnText="Become a Member" onClick={handleSignUp} />
+            <AuthButton
+              btnText="Become a Member"
+              onClick={handleSignUp}
+              disabled={isPending || isButtonDisabled}
+            />
             {isPending && <LoadingSpinner color="var(--color-black100)" />}
             <ToastContainer />
           </div>

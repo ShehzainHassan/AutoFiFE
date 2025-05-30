@@ -13,11 +13,9 @@ import { CURRENCY } from "@/constants";
 import useVehiclesById from "@/hooks/useVehicleById";
 import useVehicleFeatures from "@/hooks/useVehicleFeatures";
 import headings from "@/styles/typography.module.css";
-import {
-  faArrowCircleUp,
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowCircleUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { ToastContainer } from "react-toastify";
@@ -59,12 +57,9 @@ export default function CarDetails() {
               <FontAwesomeIcon icon={faArrowCircleUp} />
               <div className={classes.deal}>Great Deal</div>
             </div>
-            <div>
+            <div className={classes.marketContainer}>
               $1,557 below market
-              <FontAwesomeIcon
-                icon={faInfoCircle}
-                style={{ width: "16px", height: "16px" }}
-              />
+              <InfoOutlinedIcon className={classes.icon} />
             </div>
           </div>
           <div className={classes.dealerRating}>

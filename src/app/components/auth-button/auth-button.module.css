@@ -10,3 +10,7 @@
 .button:hover {
   background-color: var(--color-black100);
 }
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
