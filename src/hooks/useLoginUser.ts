@@ -9,9 +9,14 @@ const useLoginUser = () => {
     mutationFn: async (formData: LoginDTO) => {
       return await userAPI.loginUser(formData);
     },
-    onSuccess: (data) => {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("userId", data.userId);
+    onSuccess: async (data) => {
+      const userData = {
+        token: data.token,
+        userId: data.userId,
+        userName: data.userName,
+      };
+
+      localStorage.setItem("authData", JSON.stringify(userData));
       toast.success("Registration successfull!");
     },
     onError: (error: unknown) => {

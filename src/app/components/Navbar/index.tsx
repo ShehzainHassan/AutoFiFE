@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import classes from "./navbar.module.css";
 import headings from "@/styles/typography.module.css";
@@ -24,6 +24,37 @@ export default function Navbar({
     setMileage(null);
   };
   const navbarItems = t("navbar.navItems");
+
+  let userName: string | null = null;
+  if (typeof window !== "undefined") {
+    const authData = localStorage.getItem("authData");
+    if (authData) {
+      try {
+        userName = JSON.parse(authData)?.userName;
+      } catch (err) {
+        console.error("Error parsing authData:", err);
+      }
+    }
+  }
+  const [showLogout, setShowLogout] = useState(false);
+
+  const handleSignInClick = () => {
+    if (userName) {
+      setShowLogout((prev) => !prev);
+    } else {
+      router.push("/sign-in");
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("authData");
+    setShowLogout(false);
+    setPrice("All_Prices");
+    setStartPrice(null);
+    setEndPrice(null);
+    setMileage(null);
+    router.push("/");
+  };
   return (
     <div className={classes.navbar} style={{ backgroundColor }}>
       <Image
@@ -36,6 +67,7 @@ export default function Navbar({
       />
       <div className={classes.navList}>
         {Object.entries(navbarItems).map(([key, label]) => {
+          const isSignIn = key === "signIn";
           const showExpandIcon = [
             t("navbar.navItems.home"),
             t("navbar.navItems.listings"),
@@ -48,10 +80,10 @@ export default function Navbar({
               key={key}
               className={classes.navContainer}
               onClick={() => {
-                if (key === "signIn") router.push("/sign-in");
+                if (isSignIn) handleSignInClick();
               }}>
               <h3 className={`${headings.navElement} ${classes.white}`}>
-                {label}
+                {isSignIn && userName ? userName : label}
               </h3>
               {showExpandIcon && (
                 <Image
@@ -60,6 +92,21 @@ export default function Navbar({
                   width={8}
                   height={4}
                 />
+              )}
+              {isSignIn && userName && showLogout && (
+                <div
+                  className={`${classes.logoutContainer} ${
+                    showLogout ? classes.show : ""
+                  }`}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLogout();
+                    }}
+                    className={classes.logout}>
+                    Logout
+                  </button>
+                </div>
               )}
             </div>
           );
