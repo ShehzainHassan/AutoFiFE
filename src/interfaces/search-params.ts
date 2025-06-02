@@ -5,6 +5,7 @@ export interface SearchParams {
   model: string | null;
   startPrice: number | null;
   endPrice: number | null;
+  status: string | null;
   mileage: number | null;
   startYear: number;
   endYear: number;

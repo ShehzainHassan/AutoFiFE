@@ -13,6 +13,7 @@ type CarSearchContextType = {
   price: string;
   startPrice: number | null;
   endPrice: number | null;
+  status: string;
   mileage: number | null;
   sortOrder: string | null;
   startYear: number;
@@ -26,6 +27,7 @@ type CarSearchContextType = {
   setPrice: (value: string) => void;
   setStartPrice: (value: number | null) => void;
   setEndPrice: (value: number | null) => void;
+  setStatus: (value: string) => void;
   setMileage: (value: number | null) => void;
   setSearchParams: (value: SearchParams) => void;
   setSortOrder: (value: string) => void;
@@ -44,6 +46,7 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const queryParams = useSearchParams();
   const makeParam = queryParams.get("make") || "Any_Makes";
+  const statusParam = queryParams.get("status") || "Any";
   const modelParam = queryParams.get("model") || "Any_Models";
   const priceParam = queryParams.get("price") || "All_Prices";
   const startYearParam = Number(queryParams.get("startYear")) || MIN_YEAR;
@@ -57,6 +60,7 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
   const [endPrice, setEndPrice] = useState<number | null>(priceEnd);
   const [mileage, setMileage] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<string | null>(null);
+  const [status, setStatus] = useState<string>(statusParam);
   const [startYear, setStartYear] = useState<number>(startYearParam);
   const [endYear, setEndYear] = useState<number>(endYearParam);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
@@ -92,6 +96,7 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
     model,
     startPrice,
     endPrice,
+    status,
     mileage,
     startYear,
     endYear,
@@ -107,6 +112,7 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
         price,
         startPrice,
         endPrice,
+        status,
         mileage,
         sortOrder,
         startYear,
@@ -120,6 +126,7 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
         setPrice,
         setStartPrice,
         setEndPrice,
+        setStatus,
         setMileage,
         setSortOrder,
         setSearchParams,

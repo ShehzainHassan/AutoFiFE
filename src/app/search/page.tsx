@@ -42,6 +42,7 @@ export default function Search() {
     mileage,
     startYear,
     endYear,
+    status,
     selectedGearboxes,
     selectedColors,
     searchParams,
@@ -61,6 +62,7 @@ export default function Search() {
       model,
       startPrice,
       endPrice,
+      status,
       mileage,
       startYear,
       endYear,
@@ -82,7 +84,7 @@ export default function Search() {
       colorsText = selectedColors.join(",");
     }
     router.push(
-      `/search?make=${make}&model=${model}&price=${price}&mileage=${mileageText}&startYear=${startYear}&endYear=${endYear}&gearbox=${gearboxText}&colors=${colorsText}`
+      `/search?make=${make}&model=${model}&price=${price}&mileage=${mileageText}&startYear=${startYear}&endYear=${endYear}&gearbox=${gearboxText}&colors=${colorsText}&status=${status}`
     );
   };
 

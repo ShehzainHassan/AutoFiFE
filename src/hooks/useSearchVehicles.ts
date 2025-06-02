@@ -13,6 +13,7 @@ const useSearchVehicles = (params: SearchParams) => {
         params.model,
         params.startPrice,
         params.endPrice,
+        params.status,
         params.mileage,
         params.startYear,
         params.endYear,

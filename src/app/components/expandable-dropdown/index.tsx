@@ -8,6 +8,7 @@ import MileageExpanded from "../filters/mileage-expanded";
 import PriceExpanded from "../filters/price-expanded";
 import YearsExpanded from "../filters/years-expanded";
 import classes from "./expandable.module.css";
+import StatusExpanded from "../filters/status-expanded";
 type ExpandableProps = {
   title: string;
   className?: string;
@@ -38,6 +39,7 @@ export default function Expandable({ title, className }: ExpandableProps) {
       </div>
       {isClicked && title === "Price" && <PriceExpanded />}
       {isClicked && title === "Mileage" && <MileageExpanded />}
+      {isClicked && title === "Status" && <StatusExpanded />}
       {isClicked && title === "Years" && <YearsExpanded />}
       {isClicked && title === "Gearbox" && <GearboxExpanded />}
       {isClicked && title === "Exterior color" && <ColorsExpanded />}
