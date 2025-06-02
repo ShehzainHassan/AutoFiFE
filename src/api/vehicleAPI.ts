@@ -20,6 +20,10 @@ const vehicleAPI = {
     );
     return response.data;
   },
+  getAllMakes: async () => {
+    const response = await axios.get(`${API_BASE_URL}/Vehicle/get-makes`);
+    return response.data;
+  },
   getByMake: async (make: string, offset: number, pageSize: number) => {
     const response = await axios.get<VehicleListResult>(
       `${API_BASE_URL}/Vehicle/by-make`,

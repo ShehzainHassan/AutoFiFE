@@ -7,6 +7,16 @@ export const PREMIUM_BRANDS = [
   { imgSrc: "/images/volkswagen.png", brand: "Volkswagen" },
 ];
 
+export const BRAND_IMAGES: Record<string, string> = {
+  Audi: "/images/audi.png",
+  BMW: "/images/bmw.png",
+  Ford: "/images/ford.png",
+  "Mercedes-Benz": "/images/mercedes-benz.png",
+  Nissan: "/images/nissan.png",
+  Volkswagen: "/images/volkswagen.png",
+  Tesla: "/images/tesla.png",
+};
+
 export const MAKE_OPTIONS = [
   { label: "Any Makes", value: "Any_Makes" },
   { label: "Acura", value: "Acura" },
