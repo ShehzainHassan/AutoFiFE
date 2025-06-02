@@ -14,7 +14,7 @@ import useLoginUser from "@/hooks/useLoginUser";
 import LoadingSpinner from "../components/loading-spinner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import contactInfoClasses from "../components/contact-info-form/contact-info-form.module.css";
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -116,9 +116,14 @@ export default function SignIn() {
               onClick={handleLogin}
               disabled={isPending || isButtonDisabled}
             />
-            {isPending && <LoadingSpinner color="var(--color-black100)" />}
             <ToastContainer />
           </div>
+          {isPending && (
+            <LoadingSpinner
+              color="var(--color-black100)"
+              className={contactInfoClasses.loading}
+            />
+          )}
         </div>
         <NeedHelp />
       </div>

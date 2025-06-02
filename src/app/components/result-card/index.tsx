@@ -53,7 +53,7 @@ type CarImageProps = {
 };
 const CarImage = ({ src, vin }: CarImageProps) => {
   const { userLikes } = useUserFavorites();
-  const [isLiked, setIsLiked] = useState(userLikes.includes(vin));
+  const [isLiked, setIsLiked] = useState(userLikes?.includes(vin));
   const addLikeMutation = useAddUserLike();
   const deleteLikeMutation = useDeleteUserLike();
   const authData = localStorage.getItem("authData") ?? "";
