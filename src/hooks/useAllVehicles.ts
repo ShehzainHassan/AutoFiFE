@@ -19,7 +19,6 @@ const useAllVehicles = (vehicleStatus: string | null) => {
       return totalLoaded < lastPage.totalCount ? totalLoaded : undefined;
     },
     initialPageParam: 0,
-    staleTime: 5 * 60 * 1000,
   });
 };
 

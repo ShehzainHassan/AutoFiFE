@@ -6,7 +6,6 @@ const useGetAllMakes = () => {
   return useQuery({
     queryKey: ["allMakes"],
     queryFn: () => vehicleAPI.getAllMakes(),
-    staleTime: 5 * 60 * 1000,
   });
 };
 

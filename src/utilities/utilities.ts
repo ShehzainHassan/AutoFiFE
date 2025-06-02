@@ -196,3 +196,12 @@ export function parseStatus(status: string): string {
       return "Any";
   }
 }
+export function formatMakeOptions(makes: string[] = []) {
+  const dynamicOptions = makes.map((make) => {
+    const value =
+      make === "Aston Martin" ? "Aston Martin" : make.replace(/\s+/g, "-");
+    return { label: make, value };
+  });
+
+  return [{ label: "Any Makes", value: "Any_Makes" }, ...dynamicOptions];
+}

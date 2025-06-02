@@ -1,14 +1,17 @@
-import { MAKE_OPTIONS, PRICE_OPTIONS } from "@/constants";
+import { PRICE_OPTIONS } from "@/constants";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
 import { useSearch } from "@/contexts/carSearchContext";
+import useGetAllMakes from "@/hooks/useGetAllMakes";
 import { customSelectStyles } from "@/styles/custom-select";
 import { ThemeProvider } from "@/theme/themeContext";
 import {
+  formatMakeOptions,
   getModelOptions,
   getPriceRange,
   parseStatus,
 } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
+import { useMemo } from "react";
 import ButtonPrimary from "../buttons/Primary";
 import Dropdown from "../dropdown";
 import CustomDropdownIndicator from "../dropdown-indicator";
@@ -51,6 +54,12 @@ export default function SearchForm({ statusTab }: SearchFormProps) {
     );
   };
   const MakeDropdown = () => {
+    const { data: makes, isLoading } = useGetAllMakes();
+    const loadMakeOptions = useMemo(() => {
+      if (!makes || isLoading) return [];
+      return formatMakeOptions(makes);
+    }, [makes, isLoading]);
+
     return (
       <div className={classes.criteriaContainer}>
         <Dropdown
@@ -61,7 +70,7 @@ export default function SearchForm({ statusTab }: SearchFormProps) {
           }}
           placeholder="Select make">
           <Dropdown.Select
-            options={MAKE_OPTIONS}
+            options={loadMakeOptions}
             styles={customSelectStyles}
             components={{ DropdownIndicator: CustomDropdownIndicator }}
           />

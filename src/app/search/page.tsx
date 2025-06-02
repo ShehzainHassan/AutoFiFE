@@ -1,18 +1,19 @@
 "use client";
-import { MAKE_OPTIONS } from "@/constants";
 import { BLUE_THEME, WHITE_THEME } from "@/constants/button-primary-themes";
 import { useSearch } from "@/contexts/carSearchContext";
+import useGetAllMakes from "@/hooks/useGetAllMakes";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
 import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
 import {
   convertArrayToString,
+  formatMakeOptions,
   getModelOptions,
   getResultTitle,
 } from "@/utilities/utilities";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ButtonPrimary from "../components/buttons/Primary";
 import Dropdown from "../components/dropdown";
 import EmptyState from "../components/empty-state";
@@ -100,6 +101,11 @@ export default function Search() {
   //   );
   // };
   const MakeDropdown = () => {
+    const { data: makes, isLoading } = useGetAllMakes();
+    const loadMakeOptions = useMemo(() => {
+      if (!makes || isLoading) return [];
+      return formatMakeOptions(makes);
+    }, [makes, isLoading]);
     return (
       <Dropdown
         value={make}
@@ -109,7 +115,7 @@ export default function Search() {
         }}
         placeholder="Select make">
         <Dropdown.Label>Make</Dropdown.Label>
-        <Dropdown.Select options={MAKE_OPTIONS} />
+        <Dropdown.Select options={loadMakeOptions} />
       </Dropdown>
     );
   };

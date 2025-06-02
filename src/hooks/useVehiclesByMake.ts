@@ -20,7 +20,6 @@ const useVehiclesByMake = (make: string) => {
       return totalLoaded < lastPage.totalCount ? totalLoaded : undefined;
     },
     initialPageParam: 0,
-    staleTime: 5 * 60 * 1000,
   });
 };
 export default useVehiclesByMake;

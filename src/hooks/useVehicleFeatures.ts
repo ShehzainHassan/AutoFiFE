@@ -7,7 +7,6 @@ const useVehicleFeatures = (make: string, model: string, enabled: boolean) => {
     queryKey: ["vehicles", make, model],
     queryFn: () => vehicleAPI.getCarFeatures(make, model),
     enabled,
-    staleTime: 5 * 60 * 1000,
   });
 };
 
