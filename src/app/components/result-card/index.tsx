@@ -1,12 +1,19 @@
-import Image from "next/image";
-import { FC } from "react";
-import classes from "./result-card.module.css";
-import headings from "@/styles/typography.module.css";
 import { CURRENCY } from "@/constants";
-import ButtonPrimary from "../buttons/Primary";
-import { ThemeProvider } from "@/theme/themeContext";
 import { WHITE_THEME } from "@/constants/button-primary-themes";
+import { useUserFavorites } from "@/contexts/userFavoritesContext";
+import useAddUserLike from "@/hooks/useAddUserLike";
+import useDeleteUserLike from "@/hooks/useDeleteUserLike";
+import headings from "@/styles/typography.module.css";
+import { ThemeProvider } from "@/theme/themeContext";
+import { getUserIdFromLocalStorage } from "@/utilities/utilities";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { FC, useState } from "react";
+import { toast } from "react-toastify";
+import ButtonPrimary from "../buttons/Primary";
+import classes from "./result-card.module.css";
 
 type ResultCardProps = {
   id: number;
@@ -15,6 +22,7 @@ type ResultCardProps = {
   miles: number;
   price: number;
   carTitle: string;
+  vin: string;
 };
 
 export default function ResultCard({
@@ -24,14 +32,11 @@ export default function ResultCard({
   miles,
   price,
   carTitle,
+  vin,
 }: ResultCardProps) {
-  const router = useRouter();
-  const redirectToCarsPage = () => {
-    router.push(`/cars/${id}`);
-  };
   return (
-    <div className={classes.container} onClick={redirectToCarsPage}>
-      <CarImage src={carImg} />
+    <div className={classes.container}>
+      <CarImage src={carImg} vin={vin} />
       <CarDetails
         id={id}
         specialText={specialText}
@@ -42,35 +47,65 @@ export default function ResultCard({
     </div>
   );
 }
-
-const CarImage: FC<{ src: string }> = ({ src }) => (
-  <div className={classes.carImg}>
-    <Image
-      src={src}
-      alt="car-img"
-      width={360}
-      height={200}
-      className={classes.car}
-    />
-    <div className={classes.imgContainer}>
+type CarImageProps = {
+  src: string;
+  vin: string;
+};
+const CarImage = ({ src, vin }: CarImageProps) => {
+  const { userLikes } = useUserFavorites();
+  const [isLiked, setIsLiked] = useState(userLikes.includes(vin));
+  const addLikeMutation = useAddUserLike();
+  const deleteLikeMutation = useDeleteUserLike();
+  const authData = localStorage.getItem("authData") ?? "";
+  const userId = getUserIdFromLocalStorage() ?? -1;
+  const handleLike = async () => {
+    if (!authData) {
+      toast.error("Please sign in to like a vehicle");
+      return;
+    }
+    try {
+      if (!isLiked) {
+        await addLikeMutation.mutateAsync({ userId, vin });
+      } else {
+        await deleteLikeMutation.mutateAsync({ userId, vin });
+      }
+      setIsLiked(!isLiked);
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
+  return (
+    <div className={classes.carImg}>
       <Image
-        src="/images/love.png"
-        alt="heart-icon"
-        width={25}
-        height={21.33}
+        src={src}
+        alt="car-img"
+        width={360}
+        height={200}
+        className={classes.car}
       />
+      <div className={classes.imgContainer} onClick={handleLike}>
+        {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-const CarDetails: FC<Omit<ResultCardProps, "carImg">> = ({
-  specialText,
+type CarDetailsProps = {
+  id: number;
+  specialText?: string;
+  miles: number;
+  price: number;
+  carTitle: string;
+};
+const CarDetails = ({
+  id,
   carTitle,
+  specialText,
   miles,
   price,
-}) => (
+}: CarDetailsProps) => (
   <div className={classes.carDetails}>
-    <CardHeader {...{ specialText, carTitle, miles, price }} />
+    <CardHeader {...{ id, specialText, carTitle, miles, price }} />
 
     <div className={classes.cardMiddle}>
       <PartnerInfo />
@@ -85,22 +120,34 @@ const CarDetails: FC<Omit<ResultCardProps, "carImg">> = ({
 );
 
 const CardHeader: FC<
-  Pick<ResultCardProps, "specialText" | "carTitle" | "miles" | "price">
-> = ({ specialText, carTitle, miles, price }) => (
-  <>
-    <div className={classes.cardTop}>
-      {specialText && <p className={headings.smallText}>{specialText}</p>}
-      <h1 className={headings.carTitle}>{carTitle}</h1>
-    </div>
-    <div className={classes.distancePrice}>
-      <p className={headings.mileage}>{miles.toLocaleString()} mi</p>
-      <p className={headings.resultCardPrice}>
-        {CURRENCY}
-        {price.toLocaleString()}
-      </p>
-    </div>
-  </>
-);
+  Pick<ResultCardProps, "id" | "specialText" | "carTitle" | "miles" | "price">
+> = ({ id, specialText, carTitle, miles, price }) => {
+  const router = useRouter();
+
+  const handleTitleClick = () => {
+    router.push(`/cars/${id}`);
+  };
+
+  return (
+    <>
+      <div className={classes.cardTop}>
+        {specialText && <p className={headings.smallText}>{specialText}</p>}
+        <h1
+          className={`${headings.carTitle} ${classes.clickableTitle}`}
+          onClick={handleTitleClick}>
+          {carTitle}
+        </h1>
+      </div>
+      <div className={classes.distancePrice}>
+        <p className={headings.mileage}>{miles.toLocaleString()} mi</p>
+        <p className={headings.resultCardPrice}>
+          {CURRENCY}
+          {price.toLocaleString()}
+        </p>
+      </div>
+    </>
+  );
+};
 
 const PartnerInfo = () => (
   <div className={classes.partner}>

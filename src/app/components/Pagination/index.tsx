@@ -65,7 +65,7 @@ export default function Pagination() {
         <FontAwesomeIcon icon={faChevronLeft} />
       </div>
       <div>
-        Page {currentPage} of {totalPages}
+        Page {currentPage.toLocaleString()} of {totalPages.toLocaleString()}
       </div>
       <div
         className={`${classes.buttonContainer} ${

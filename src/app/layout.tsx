@@ -4,6 +4,8 @@ import { Metadata } from "next";
 import { DM_Sans, Inter, Roboto } from "next/font/google";
 import "./globals.css";
 import { CarSearchProvider } from "@/contexts/carSearchContext";
+import { UserFavoritesProvider } from "@/contexts/userFavoritesContext";
+import { AuthProvider } from "@/contexts/authContext";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -39,10 +41,14 @@ export default function RootLayout({
       <CarSearchProvider>
         <ThemeProvider>
           <ReactQueryProvider>
-            <body
-              className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
-              {children}
-            </body>
+            <AuthProvider>
+              <UserFavoritesProvider>
+                <body
+                  className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
+                  {children}
+                </body>
+              </UserFavoritesProvider>
+            </AuthProvider>
           </ReactQueryProvider>
         </ThemeProvider>
       </CarSearchProvider>

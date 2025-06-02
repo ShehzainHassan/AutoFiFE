@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
-import Image from "next/image";
-import classes from "./navbar.module.css";
-import headings from "@/styles/typography.module.css";
-import useTranslation from "@/i18n";
-import { useRouter } from "next/navigation";
 import { useSearch } from "@/contexts/carSearchContext";
+import useTranslation from "@/i18n";
+import headings from "@/styles/typography.module.css";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import ButtonPrimary from "../buttons/Primary";
+import classes from "./navbar.module.css";
 type NavbarProps = {
   backgroundColor?: string;
 };
@@ -25,17 +25,18 @@ export default function Navbar({
   };
   const navbarItems = t("navbar.navItems");
 
-  let userName: string | null = null;
-  if (typeof window !== "undefined") {
-    const authData = localStorage.getItem("authData");
+  const [userName, setUserName] = useState<string | null>(null);
+  useEffect(() => {
+    const authData = localStorage.getItem("authData") ?? "";
     if (authData) {
       try {
-        userName = JSON.parse(authData)?.userName;
+        const parsed = JSON.parse(authData);
+        setUserName(parsed?.userName ?? null);
       } catch (err) {
         console.error("Error parsing authData:", err);
       }
     }
-  }
+  }, []);
   const [showLogout, setShowLogout] = useState(false);
 
   const handleSignInClick = () => {
@@ -53,7 +54,7 @@ export default function Navbar({
     setStartPrice(null);
     setEndPrice(null);
     setMileage(null);
-    router.push("/");
+    window.location.reload();
   };
   return (
     <div className={classes.navbar} style={{ backgroundColor }}>

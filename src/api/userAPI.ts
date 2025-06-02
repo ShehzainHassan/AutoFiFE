@@ -19,6 +19,31 @@ const userAPI = {
     });
     return response.data;
   },
+  addUserLike: async (userId: number, vin: string) => {
+    const response = await axios.post(`${API_BASE_URL}/user/add-user-like`, {
+      userId,
+      vehicleVin: vin,
+    });
+    return response.data;
+  },
+  removeUserLike: async (userId: number, vin: string) => {
+    const response = await axios.delete(
+      `${API_BASE_URL}/user/remove-user-like`,
+      {
+        data: {
+          userId,
+          vehicleVin: vin,
+        },
+      }
+    );
+    return response.data;
+  },
+  getUserLikedVins: async (userId: number) => {
+    const response = await axios.get(
+      `${API_BASE_URL}/user/get-user-liked-vins/${userId}`
+    );
+    return response.data;
+  },
 };
 
 export default userAPI;

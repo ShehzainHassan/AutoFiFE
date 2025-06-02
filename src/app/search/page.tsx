@@ -33,7 +33,6 @@ export default function Search() {
   const carInfoTabs = ["FAQs", "Reviews", "Variants", "Pricing"];
   const [selectedInfoTab, setSelectedInfoTab] = useState(carInfoTabs[0]);
   // const [postCode, setPostCode] = useState<number>(0);
-
   const {
     make,
     model,
@@ -190,7 +189,9 @@ export default function Search() {
     if (!data) return <EmptyState message="0 results" />;
     return (
       <div className={classes.results}>
-        <p className={classes.noOfResults}>{data?.totalCount} results</p>
+        <p className={classes.noOfResults}>
+          {data?.totalCount.toLocaleString()} results
+        </p>
         <Image
           src="/images/location.png"
           alt="location"

@@ -167,3 +167,14 @@ export function validatePassword(value: string): string {
 
   return "";
 }
+
+export function getUserIdFromLocalStorage(): number | null {
+  try {
+    const authData = localStorage.getItem("authData");
+    if (!authData) return null;
+    const parsed = JSON.parse(authData);
+    return parsed.userId ?? null;
+  } catch {
+    return null;
+  }
+}
