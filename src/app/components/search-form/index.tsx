@@ -3,13 +3,20 @@ import { BLUE_THEME } from "@/constants/button-primary-themes";
 import { useSearch } from "@/contexts/carSearchContext";
 import { customSelectStyles } from "@/styles/custom-select";
 import { ThemeProvider } from "@/theme/themeContext";
-import { getModelOptions, getPriceRange } from "@/utilities/utilities";
+import {
+  getModelOptions,
+  getPriceRange,
+  parseStatus,
+} from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
 import ButtonPrimary from "../buttons/Primary";
 import Dropdown from "../dropdown";
 import CustomDropdownIndicator from "../dropdown-indicator";
 import classes from "./search-form.module.css";
-export default function SearchForm() {
+type SearchFormProps = {
+  statusTab: string;
+};
+export default function SearchForm({ statusTab }: SearchFormProps) {
   const {
     make,
     model,
@@ -21,11 +28,13 @@ export default function SearchForm() {
     setStartPrice,
     setEndPrice,
     setSearchParams,
+    setStatus,
   } = useSearch();
   const router = useRouter();
 
   const handleSearchClick = () => {
     const { startPrice, endPrice } = getPriceRange(price);
+    const status = parseStatus(statusTab);
     setStartPrice(startPrice);
     setEndPrice(endPrice);
     setSearchParams({
@@ -33,9 +42,13 @@ export default function SearchForm() {
       make,
       model,
       startPrice,
+      status,
       endPrice,
     });
-    router.push(`/search?make=${make}&model=${model}&price=${price}`);
+    setStatus(status);
+    router.push(
+      `/search?make=${make}&model=${model}&price=${price}&status=${status}`
+    );
   };
   const MakeDropdown = () => {
     return (

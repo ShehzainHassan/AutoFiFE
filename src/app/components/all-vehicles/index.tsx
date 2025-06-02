@@ -6,7 +6,7 @@ import SectionTitle from "../section-title";
 import Wrapper from "../wrapper";
 import classes from "./all-vehicles.module.css";
 import { useRouter } from "next/navigation";
-import { convertArrayToString } from "@/utilities/utilities";
+import { convertArrayToString, parseStatus } from "@/utilities/utilities";
 import { MAX_YEAR, MIN_YEAR } from "@/constants";
 import { useSearch } from "@/contexts/carSearchContext";
 export default function ExploreVehicles() {
@@ -27,12 +27,7 @@ export default function ExploreVehicles() {
     setSelectedColors,
   } = useSearch();
   const handleViewAll = () => {
-    const parsedStatus =
-      selectedTab === TABS[0]
-        ? "Any"
-        : selectedTab === TABS[1]
-        ? "New"
-        : "Used";
+    const parsedStatus = parseStatus(selectedTab);
     setSearchParams({
       ...searchParams,
       make: "Any_Makes",

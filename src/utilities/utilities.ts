@@ -178,3 +178,21 @@ export function getUserIdFromLocalStorage(): number | null {
     return null;
   }
 }
+export function parseStatus(status: string): string {
+  switch (status) {
+    case "All":
+      return "Any";
+    case "New":
+      return "New";
+    case "Used":
+      return "Used";
+    case "In Stock":
+      return "Any";
+    case "New Cars":
+      return "New";
+    case "Used Cars":
+      return "Used";
+    default:
+      return "Any";
+  }
+}

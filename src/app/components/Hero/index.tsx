@@ -60,7 +60,7 @@ export default function Hero() {
                 borderColor="transparent"
               />
             </ThemeProvider>
-            <SearchForm />
+            <SearchForm statusTab={selectedTab} />
           </div>
         </div>
         <div className={classes.textContainer}>
