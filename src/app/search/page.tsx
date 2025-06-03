@@ -103,9 +103,14 @@ export default function Search() {
   const MakeDropdown = () => {
     const { data: makes, isLoading } = useGetAllMakes();
     const loadMakeOptions = useMemo(() => {
-      if (!makes || isLoading) return [];
-      return formatMakeOptions(makes);
+      if (isLoading) {
+        return [{ label: "Any Makes", value: "Any_Makes" }];
+      }
+      return makes
+        ? formatMakeOptions(makes)
+        : [{ label: "Any Makes", value: "Any_Makes" }];
     }, [makes, isLoading]);
+
     return (
       <Dropdown
         value={make}
@@ -119,11 +124,15 @@ export default function Search() {
       </Dropdown>
     );
   };
-  const ModelDropdown = () => {
+  const ModelDropdown = ({ make }: { make: string }) => {
+    const modelOptions = useMemo(
+      () => getModelOptions(make ?? "Any_Makes"),
+      [make]
+    );
     return (
       <Dropdown value={model} onChange={setModel} placeholder="Select model">
         <Dropdown.Label>Model</Dropdown.Label>
-        <Dropdown.Select options={getModelOptions(make)} />
+        <Dropdown.Select options={modelOptions} />
       </Dropdown>
     );
   };
@@ -151,7 +160,7 @@ export default function Search() {
       <div className={classes.filters}>
         {/* <ShowTabs /> */}
         <MakeDropdown />
-        <ModelDropdown />
+        <ModelDropdown make={make} />
         {/* <InputPostcode /> */}
         <SearchButton />
       </div>

@@ -197,11 +197,11 @@ export function parseStatus(status: string): string {
   }
 }
 export function formatMakeOptions(makes: string[] = []) {
-  const dynamicOptions = makes.map((make) => {
-    const value =
-      make === "Aston Martin" ? "Aston Martin" : make.replace(/\s+/g, "-");
-    return { label: make, value };
-  });
+  const specialMakes = ["Aston Martin", "Alfa Romeo", "Land Rover"];
+  const dynamicOptions = makes.map((make) => ({
+    label: make,
+    value: specialMakes.includes(make) ? make : make.replace(/\s+/g, "-"),
+  }));
 
   return [{ label: "Any Makes", value: "Any_Makes" }, ...dynamicOptions];
 }

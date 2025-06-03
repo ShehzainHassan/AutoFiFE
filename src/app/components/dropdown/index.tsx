@@ -6,7 +6,10 @@ import { createContext, useContext, ReactNode } from "react";
 import classes from "./dropdown.module.css";
 import { Options } from "@/interfaces/dropdown-options";
 
-const Select = dynamic(() => import("react-select"), { ssr: false });
+const Select = dynamic(() => import("react-select"), {
+  ssr: false,
+  loading: () => <div className={classes.loading}>Loading...</div>,
+});
 const TypedSelect = Select as unknown as React.ComponentType<
   SelectProps<Options, false, GroupBase<Options>>
 >;

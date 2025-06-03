@@ -56,14 +56,18 @@ export default function SearchForm({ statusTab }: SearchFormProps) {
   const MakeDropdown = () => {
     const { data: makes, isLoading } = useGetAllMakes();
     const loadMakeOptions = useMemo(() => {
-      if (!makes || isLoading) return [];
-      return formatMakeOptions(makes);
+      if (isLoading) {
+        return [{ label: "Any Makes", value: "Any_Makes" }];
+      }
+      return makes
+        ? formatMakeOptions(makes)
+        : [{ label: "Any Makes", value: "Any_Makes" }];
     }, [makes, isLoading]);
 
     return (
       <div className={classes.criteriaContainer}>
         <Dropdown
-          value={make ?? "Any_Makes"}
+          value={make}
           onChange={(value) => {
             setMake(value);
             setModel("Any_Models");
@@ -80,7 +84,11 @@ export default function SearchForm({ statusTab }: SearchFormProps) {
       </div>
     );
   };
-  const ModelDropdown = () => {
+  const ModelDropdown = ({ make }: { make: string }) => {
+    const modelOptions = useMemo(
+      () => getModelOptions(make ?? "Any_Makes"),
+      [make]
+    );
     return (
       <div className={classes.criteriaContainer}>
         <Dropdown
@@ -89,12 +97,11 @@ export default function SearchForm({ statusTab }: SearchFormProps) {
           onChange={setModel}
           placeholder="Select model">
           <Dropdown.Select
-            options={getModelOptions(make ?? "Any_Makes")}
+            options={modelOptions}
             styles={customSelectStyles}
             components={{ DropdownIndicator: CustomDropdownIndicator }}
           />
         </Dropdown>
-
         <div className={classes.verticalBorder} />
       </div>
     );
@@ -127,7 +134,7 @@ export default function SearchForm({ statusTab }: SearchFormProps) {
   return (
     <div className={classes.container}>
       <MakeDropdown />
-      <ModelDropdown />
+      <ModelDropdown make={make} />
       <PriceDropdown />
       <SearchButton />
     </div>
