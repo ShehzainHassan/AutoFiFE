@@ -47,7 +47,6 @@ export function getPriceRange(priceValue: string): PriceRange {
     endPrice: isNaN(end) ? null : end,
   };
 }
-
 export function generateYearOptions(startYear: number, endYear: number) {
   const years = [];
   for (let year = startYear; year <= endYear; year++) {
@@ -55,11 +54,9 @@ export function generateYearOptions(startYear: number, endYear: number) {
   }
   return years;
 }
-
 export function convertArrayToString(arr: string[]): string {
   return arr.join(",");
 }
-
 export function getResultTitle(make: string, model: string): string {
   const isAnyMake = make === "Any_Makes";
   const isAnyModel = model === "Any_Models";
@@ -72,13 +69,11 @@ export function getResultTitle(make: string, model: string): string {
     return `Used ${make} ${model} for sale nationwide`;
   }
 }
-
 export function getUniqueFuelTypes(vehicles: Vehicle[]) {
   const fuelTypes = vehicles.map((vehicle) => vehicle.fuelType);
   const uniqueFuelTypes = [...new Set(fuelTypes)];
   return uniqueFuelTypes;
 }
-
 export function validateName(value: string, label: string) {
   if (value.trim() === "") {
     return `${label} is required.`;
@@ -107,7 +102,6 @@ export function validatePostCode(value: string): string {
   }
   return "";
 }
-
 export function validateEmail(value: string): string {
   if (value.trim() === "") {
     return "Email is required.";
@@ -116,7 +110,6 @@ export function validateEmail(value: string): string {
   }
   return "";
 }
-
 export function validatePhoneNumber(value: string): string {
   const trimmed = value.trim();
 
@@ -137,7 +130,6 @@ export function validatePhoneNumber(value: string): string {
 
   return "";
 }
-
 export function validatePassword(value: string): string {
   const trimmed = value.trim();
 
@@ -167,7 +159,6 @@ export function validatePassword(value: string): string {
 
   return "";
 }
-
 export function getUserIdFromLocalStorage(): number | null {
   try {
     const authData = localStorage.getItem("authData");
@@ -210,7 +201,6 @@ export function getFAQTitle(make: string, model: string): string {
   if (make !== "Any_Makes" && model !== "Any_Models") return `${make} ${model}`;
   return "";
 }
-
 export function getVehicleText(make: string, model: string): string {
   if (make !== "Any_Makes" && model === "Any_Models") return `${make}`;
   if (make !== "Any_Makes" && model !== "Any_Models") return `${make} ${model}`;

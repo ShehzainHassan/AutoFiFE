@@ -39,9 +39,22 @@ export const BRAND_IMAGES: Record<string, string> = {
   Mazda: "/images/mazda.png",
   McLaren: "/images/mclaren.png",
   "Mercedes-Benz": "/images/mercedes-benz.png",
+  MINI: "/images/mini.png",
+  Mitsubishi: "/images/mitsubishi.png",
   Nissan: "/images/nissan.png",
-  Volkswagen: "/images/volkswagen.png",
+  Polestar: "/images/polestar.png",
+  Porsche: "/images/porsche.png",
+  Ram: "/images/ram.png",
+  Rivian: "/images/rivian.png",
+  "Rolls-Royce": "/images/rolls-royce.png",
+  Scion: "/images/scion.png",
+  Smart: "/images/smart.png",
+  Subaru: "/images/subaru.png",
+  Suzuki: "/images/suzuki.png",
   Tesla: "/images/tesla.png",
+  Toyota: "/images/toyota.png",
+  Volkswagen: "/images/volkswagen.png",
+  Volvo: "/images/volvo.png",
 };
 
 export const FEATURED_MODELS = [
