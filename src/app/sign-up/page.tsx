@@ -106,11 +106,11 @@ export default function SignUp() {
       saveUser(formData, {
         onSuccess: () => {
           setIsButtonDisabled(true);
-        },
-      });
-      loginUser(formData, {
-        onSuccess: () => {
-          router.push("/");
+          loginUser(formData, {
+            onSuccess: () => {
+              router.push("/");
+            },
+          });
         },
       });
     }

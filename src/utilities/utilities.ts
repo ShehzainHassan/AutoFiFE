@@ -82,8 +82,8 @@ export function getUniqueFuelTypes(vehicles: Vehicle[]) {
 export function validateName(value: string, label: string) {
   if (value.trim() === "") {
     return `${label} is required.`;
-  } else if (!/^[A-Za-z]+$/.test(value.trim())) {
-    return `${label} must contain only letters.`;
+  } else if (!/^[A-Za-z _]+$/.test(value.trim())) {
+    return `${label} must contain only letters, spaces, or underscores.`;
   }
   return "";
 }
