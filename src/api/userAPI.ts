@@ -19,6 +19,28 @@ const userAPI = {
     });
     return response.data;
   },
+  getUserSearches: async (userId: number) => {
+    const response = await axios.get(
+      `${API_BASE_URL}/user/get-user-saved-searches/${userId}`
+    );
+    return response.data;
+  },
+  saveUserSearch: async (userId: number, search: string) => {
+    const response = await axios.post(`${API_BASE_URL}/user/save-search`, {
+      userId,
+      search,
+    });
+    return response.data;
+  },
+  removeUserSearch: async (userId: number, search: string) => {
+    const response = await axios.delete(`${API_BASE_URL}/user/delete-search`, {
+      data: {
+        userId,
+        search,
+      },
+    });
+    return response.data;
+  },
   addUserLike: async (userId: number, vin: string) => {
     const response = await axios.post(`${API_BASE_URL}/user/add-user-like`, {
       userId,

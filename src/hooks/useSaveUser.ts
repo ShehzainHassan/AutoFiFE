@@ -21,7 +21,6 @@ const useSaveUser = () => {
       } else if (typeof error === "string") {
         errorMessage = error;
       }
-
       toast.error(errorMessage);
     },
   });

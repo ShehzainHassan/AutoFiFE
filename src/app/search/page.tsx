@@ -1,5 +1,5 @@
 "use client";
-import { BLUE_THEME, WHITE_THEME } from "@/constants/button-primary-themes";
+import { BLUE_THEME } from "@/constants/button-primary-themes";
 import { useSearch } from "@/contexts/carSearchContext";
 import useGetAllMakes from "@/hooks/useGetAllMakes";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
@@ -10,10 +10,18 @@ import {
   formatMakeOptions,
   getModelOptions,
   getResultTitle,
+  getUserIdFromLocalStorage,
 } from "@/utilities/utilities";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
+import { useUserFavorites } from "@/contexts/userFavoritesContext";
+import useAddUserSearch from "@/hooks/useAddUserSearch";
+import { useCurrentUrl } from "@/hooks/useCurrentUrl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import { toast } from "react-toastify";
 import ButtonPrimary from "../components/buttons/Primary";
 import Dropdown from "../components/dropdown";
 import EmptyState from "../components/empty-state";
@@ -27,6 +35,7 @@ import Pagination from "../components/pagination";
 import SortBy from "../components/sort-by";
 import Wrapper from "../components/wrapper";
 import classes from "./page.module.css";
+import useDeleteUserSearch from "@/hooks/useDeleteUserSearch";
 
 export default function Search() {
   // const tabs = ["Car", "Body style", "Price"];
@@ -172,7 +181,42 @@ export default function Search() {
       </div>
     );
   };
+  const SaveSearchButton = () => {
+    const { userSearches } = useUserFavorites();
+    const saveSearchMutation = useAddUserSearch();
+    const deleteSearchMutation = useDeleteUserSearch();
+    const userId = getUserIdFromLocalStorage();
+    const currentUrl = useCurrentUrl();
+    const search = currentUrl?.search.toString() ?? "";
+    const isSaved = useMemo(() => {
+      if (!userSearches || !search) return false;
+      return userSearches.includes(search);
+    }, [userSearches, search]);
+    const handleSaveSearch = async () => {
+      if (!userId) {
+        toast.error("Please sign in to save search");
+        return;
+      }
+      try {
+        if (!isSaved) {
+          await saveSearchMutation.mutateAsync({ userId, search });
+        } else {
+          await deleteSearchMutation.mutateAsync({ userId, search });
+        }
+      } catch {
+        toast.error("Something went wrong. Please try again.");
+      }
+    };
+    return (
+      <div className={classes.saveBtnContainer} onClick={handleSaveSearch}>
+        {isSaved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        <button className={classes.saveBtn}>Save Search</button>
+      </div>
+    );
+  };
   const ResultHeader = () => {
+    const { loadingSearches } = useUserFavorites();
+
     return (
       <div className={classes.resultHeader}>
         <h1 className={headings.resultTitle}>{resultText}</h1>
@@ -183,9 +227,14 @@ export default function Search() {
             <span className={classes.star} />
             Trustpilot
           </p>
-          <ThemeProvider value={WHITE_THEME}>
-            <ButtonPrimary imgSrc="/images/love.png" btnText="Save Search" />
-          </ThemeProvider>
+          {loadingSearches ? <p>Loading...</p> : <SaveSearchButton />}
+          {/* <ThemeProvider value={WHITE_THEME}>
+            <ButtonPrimary
+              imgSrc="/images/love.png"
+              btnText="Save Search"
+              onClick={handleSaveSearch}
+            />
+          </ThemeProvider> */}
         </div>
       </div>
     );
