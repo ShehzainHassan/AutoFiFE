@@ -142,7 +142,7 @@ export function validatePassword(value: string): string {
   const trimmed = value.trim();
 
   if (!trimmed) {
-    return "Please enter a password";
+    return "Password is required.";
   }
 
   if (trimmed.length < 8) {

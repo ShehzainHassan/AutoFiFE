@@ -9,7 +9,7 @@ import signUpClasses from "../sign-up/sign-up.module.css";
 import NeedHelp from "../components/need-help";
 import AuthButton from "../components/auth-button";
 import { useRouter } from "next/navigation";
-import { validateEmail } from "@/utilities/utilities";
+import { validateEmail, validatePassword } from "@/utilities/utilities";
 import useLoginUser from "@/hooks/useLoginUser";
 import LoadingSpinner from "../components/loading-spinner";
 import { ToastContainer } from "react-toastify";
@@ -26,20 +26,23 @@ export default function SignIn() {
   const redirectToSignUp = () => {
     router.push("/sign-up");
   };
-
-  let err = "";
-  const validateEmailAddress = (value: string) => {
-    err = validateEmail(value);
-    setErrors((prev) => ({ ...prev, email: err }));
-  };
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
-    validateEmailAddress(value);
+    const error = validateEmail(value);
+    setErrors((prev) => ({
+      ...prev,
+      email: error || "",
+    }));
   };
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
+    const error = validatePassword(value);
+    setErrors((prev) => ({
+      ...prev,
+      password: error || "",
+    }));
   };
   const validateFields = () => {
     let isValid = true;
@@ -52,6 +55,15 @@ export default function SignIn() {
 
     if (!password.trim()) {
       newErrors.password = "Password is required!";
+      isValid = false;
+    }
+
+    if (validateEmail(email) != "") {
+      newErrors.email = validateEmail(email);
+      isValid = false;
+    }
+    if (validatePassword(password) != "") {
+      newErrors.password = validatePassword(password);
       isValid = false;
     }
 

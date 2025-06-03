@@ -18,6 +18,7 @@ import LoadingSpinner from "../components/loading-spinner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import contactInfoClasses from "../components/contact-info-form/contact-info-form.module.css";
+import useLoginUser from "@/hooks/useLoginUser";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -25,38 +26,37 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
+  const { mutate: loginUser, isPending: loginLoading } = useLoginUser();
   const router = useRouter();
   const redirectToLogin = () => {
     router.push("sign-in");
   };
-  let err = "";
-  const validateUserName = (value: string) => {
-    err = validateName(value, "Name");
-    setErrors((prev) => ({ ...prev, name: err }));
-  };
-  const validateEmailAddress = (value: string) => {
-    err = validateEmail(value);
-    setErrors((prev) => ({ ...prev, email: err }));
-  };
-  const validateUserPassword = (value: string) => {
-    err = validatePassword(value);
-    setErrors((prev) => ({ ...prev, password: err }));
-  };
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setName(value);
-    validateUserName(value);
+    const error = validateName(value, "Name");
+    setErrors((prev) => ({
+      ...prev,
+      name: error || "",
+    }));
   };
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
-    validateEmailAddress(value);
+    const error = validateEmail(value);
+    setErrors((prev) => ({
+      ...prev,
+      email: error || "",
+    }));
   };
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
-    validateUserPassword(value);
+    const error = validatePassword(value);
+    setErrors((prev) => ({
+      ...prev,
+      password: error || "",
+    }));
   };
   const validateFields = () => {
     let isValid = true;
@@ -76,6 +76,18 @@ export default function SignUp() {
       newErrors.password = "Password is required!";
       isValid = false;
     }
+    if (validateName(name, "Name") != "") {
+      newErrors.name = validateName(name, "Name");
+      isValid = false;
+    }
+    if (validateEmail(email) != "") {
+      newErrors.email = validateEmail(email);
+      isValid = false;
+    }
+    if (validatePassword(password) != "") {
+      newErrors.password = validatePassword(password);
+      isValid = false;
+    }
 
     setErrors(newErrors);
 
@@ -93,8 +105,12 @@ export default function SignUp() {
     if (validateFields()) {
       saveUser(formData, {
         onSuccess: () => {
-          router.push("/");
           setIsButtonDisabled(true);
+        },
+      });
+      loginUser(formData, {
+        onSuccess: () => {
+          router.push("/");
         },
       });
     }
@@ -154,13 +170,12 @@ export default function SignUp() {
               onClick={handleSignUp}
               disabled={isPending || isButtonDisabled}
             />
-            {isPending && (
+            {(isPending || loginLoading) && (
               <LoadingSpinner
                 color="var(--color-black100)"
                 className={contactInfoClasses.loading}
               />
             )}
-
             <ToastContainer />
           </div>
         </div>
