@@ -54,9 +54,11 @@ export default function Search() {
   } = useSearch();
   const router = useRouter();
   const [resultText, setResultText] = useState(getResultTitle(make, model));
-
+  const [submittedParams, setSubmittedParams] = useState(searchParams);
+  const [submittedMake, setSubmittedMake] = useState(make);
+  const [submittedModel, setSubmittedModel] = useState(model);
   const handleSearchClick = () => {
-    setSearchParams({
+    const newParams = {
       ...searchParams,
       make,
       offset: 0,
@@ -69,7 +71,11 @@ export default function Search() {
       endYear,
       gearbox: convertArrayToString(selectedGearboxes),
       selectedColor: convertArrayToString(selectedColors),
-    });
+    };
+    setSubmittedMake(make);
+    setSubmittedModel(model);
+    setSearchParams(newParams);
+    setSubmittedParams(newParams);
     setExpandedSections(new Set());
     setResultText(getResultTitle(make, model));
     let mileageText = "Any";
@@ -196,7 +202,11 @@ export default function Search() {
           selectedTabColor="var(--color-blue400)"
           selectedTabBorderColor="var(--color-blue400)"
         />
-        <FAQs />
+        <FAQs
+          make={submittedMake}
+          model={submittedModel}
+          searchParams={submittedParams}
+        />
       </Wrapper>
     );
   };
@@ -241,7 +251,6 @@ export default function Search() {
             <Pagination />
           </div>
         </div>
-
         <CarDetailsTabs />
       </Wrapper>
       <Footer />

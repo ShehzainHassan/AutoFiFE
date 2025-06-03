@@ -205,3 +205,14 @@ export function formatMakeOptions(makes: string[] = []) {
 
   return [{ label: "Any Makes", value: "Any_Makes" }, ...dynamicOptions];
 }
+export function getFAQTitle(make: string, model: string): string {
+  if (make !== "Any_Makes" && model === "Any_Models") return `${make}`;
+  if (make !== "Any_Makes" && model !== "Any_Models") return `${make} ${model}`;
+  return "";
+}
+
+export function getVehicleText(make: string, model: string): string {
+  if (make !== "Any_Makes" && model === "Any_Models") return `${make}`;
+  if (make !== "Any_Makes" && model !== "Any_Models") return `${make} ${model}`;
+  return "BoxCars vehicles";
+}

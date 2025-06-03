@@ -9,11 +9,11 @@ import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import ButtonPrimary from "../buttons/Primary";
 import classes from "./result-card.module.css";
+import { useRouter } from "next/navigation";
 
 type ResultCardProps = {
   id: number;
@@ -63,14 +63,16 @@ const CarImage = ({ src, vin }: CarImageProps) => {
       toast.error("Please sign in to like a vehicle");
       return;
     }
+    const prev = isLiked;
+    setIsLiked(!isLiked);
     try {
-      if (!isLiked) {
+      if (!prev) {
         await addLikeMutation.mutateAsync({ userId, vin });
       } else {
         await deleteLikeMutation.mutateAsync({ userId, vin });
       }
-      setIsLiked(!isLiked);
     } catch {
+      setIsLiked(prev);
       toast.error("Something went wrong. Please try again.");
     }
   };
@@ -103,38 +105,34 @@ const CarDetails = ({
   specialText,
   miles,
   price,
-}: CarDetailsProps) => (
-  <div className={classes.carDetails}>
-    <CardHeader {...{ id, specialText, carTitle, miles, price }} />
-
-    <div className={classes.cardMiddle}>
-      <PartnerInfo />
-      <EstimatedMonthly />
-    </div>
-
-    <Rating />
-    <Features />
-    <Contact />
-    <CardBottom />
-  </div>
-);
-
-const CardHeader: FC<
-  Pick<ResultCardProps, "id" | "specialText" | "carTitle" | "miles" | "price">
-> = ({ id, specialText, carTitle, miles, price }) => {
+}: CarDetailsProps) => {
   const router = useRouter();
-
-  const handleTitleClick = () => {
+  const handleRedirect = () => {
     router.push(`/cars/${id}`);
   };
+  return (
+    <div className={classes.carDetails} onClick={handleRedirect}>
+      <CardHeader {...{ id, specialText, carTitle, miles, price }} />
+      <div className={classes.cardMiddle}>
+        <PartnerInfo />
+        <EstimatedMonthly />
+      </div>
 
+      <Rating />
+      <Features />
+      <Contact />
+      <CardBottom />
+    </div>
+  );
+};
+const CardHeader: FC<
+  Pick<ResultCardProps, "id" | "specialText" | "carTitle" | "miles" | "price">
+> = ({ specialText, carTitle, miles, price }) => {
   return (
     <>
       <div className={classes.cardTop}>
         {specialText && <p className={headings.smallText}>{specialText}</p>}
-        <h1
-          className={`${headings.carTitle} ${classes.clickableTitle}`}
-          onClick={handleTitleClick}>
+        <h1 className={`${headings.carTitle} ${classes.clickableTitle}`}>
           {carTitle}
         </h1>
       </div>
