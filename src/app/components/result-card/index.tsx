@@ -66,14 +66,16 @@ const CarImage = ({ src, vin }: CarImageProps) => {
     const prev = isLiked;
     setIsLiked(!isLiked);
     try {
+      console.log("Try");
       if (!prev) {
         await addLikeMutation.mutateAsync({ userId, vin });
       } else {
         await deleteLikeMutation.mutateAsync({ userId, vin });
       }
-    } catch {
+    } catch (err) {
+      console.log("Catch", err);
       setIsLiked(prev);
-      toast.error("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.", err);
     }
   };
   return (

@@ -206,3 +206,13 @@ export function getVehicleText(make: string, model: string): string {
   if (make !== "Any_Makes" && model !== "Any_Models") return `${make} ${model}`;
   return "BoxCars vehicles";
 }
+export function getTokenFromLocalStorage(): string | null {
+  try {
+    const authData = localStorage.getItem("authData");
+    if (!authData) return null;
+    const parsed = JSON.parse(authData);
+    return parsed.token ?? null;
+  } catch {
+    return null;
+  }
+}
