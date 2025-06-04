@@ -1,11 +1,5 @@
 "use client";
 import { useState } from "react";
-import AuthButton from "../components/auth-button";
-import AuthHeader from "../components/auth-header";
-import AuthImage from "../components/auth-image";
-import AuthInputField from "../components/auth-input";
-import TopSection from "../components/auth-top-section";
-import NeedHelp from "../components/need-help";
 import classes from "./sign-up.module.css";
 import { useRouter } from "next/navigation";
 import {
@@ -14,11 +8,17 @@ import {
   validatePassword,
 } from "@/utilities/utilities";
 import useSaveUser from "@/hooks/useSaveUser";
-import LoadingSpinner from "../components/loading-spinner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import contactInfoClasses from "../components/contact-info-form/contact-info-form.module.css";
 import useLoginUser from "@/hooks/useLoginUser";
+import AuthImage from "../components/auth-image/auth-image";
+import TopSection from "../components/auth-top-section/auth-top-section";
+import AuthHeader from "../components/auth-header/auth-header";
+import AuthInputField from "../components/auth-input/auth-input";
+import AuthButton from "../components/auth-button/auth-button";
+import LoadingSpinner from "../components/loading-spinner/loading-spinner";
+import NeedHelp from "../components/need-help/need-help";
 
 export default function SignUp() {
   const [name, setName] = useState("");

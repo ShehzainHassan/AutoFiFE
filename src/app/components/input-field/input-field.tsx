@@ -1,20 +1,8 @@
 "use client";
 
-import { ReactNode, ChangeEvent } from "react";
+import { ReactNode } from "react";
 import classes from "./input-field.module.css";
-type InputFieldProps = {
-  type?: "text" | "number" | "email";
-  placeholder?: string;
-  value?: string | number;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  className?: string;
-};
-
-type InputProps = {
-  width?: string;
-  children: ReactNode;
-};
+import { InputFieldProps, InputProps } from "./input-field.types";
 
 export function Input({ width, children }: InputProps) {
   return (

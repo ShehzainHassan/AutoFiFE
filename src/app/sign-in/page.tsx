@@ -1,20 +1,20 @@
 "use client";
 import { useState } from "react";
-import AuthHeader from "../components/auth-header";
-import AuthImage from "../components/auth-image";
-import AuthInputField from "../components/auth-input";
-import TopSection from "../components/auth-top-section";
 import classes from "./sign-in.module.css";
 import signUpClasses from "../sign-up/sign-up.module.css";
-import NeedHelp from "../components/need-help";
-import AuthButton from "../components/auth-button";
 import { useRouter } from "next/navigation";
 import { validateEmail, validatePassword } from "@/utilities/utilities";
 import useLoginUser from "@/hooks/useLoginUser";
-import LoadingSpinner from "../components/loading-spinner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import contactInfoClasses from "../components/contact-info-form/contact-info-form.module.css";
+import AuthImage from "../components/auth-image/auth-image";
+import TopSection from "../components/auth-top-section/auth-top-section";
+import AuthHeader from "../components/auth-header/auth-header";
+import AuthInputField from "../components/auth-input/auth-input";
+import AuthButton from "../components/auth-button/auth-button";
+import LoadingSpinner from "../components/loading-spinner/loading-spinner";
+import NeedHelp from "../components/need-help/need-help";
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

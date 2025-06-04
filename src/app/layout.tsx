@@ -3,9 +3,10 @@ import { ThemeProvider } from "@/theme/themeContext";
 import { Metadata } from "next";
 import { DM_Sans, Inter, Roboto } from "next/font/google";
 import "./globals.css";
-import { CarSearchProvider } from "@/contexts/carSearchContext";
-import { UserFavoritesProvider } from "@/contexts/userFavoritesContext";
-import { AuthProvider } from "@/contexts/authContext";
+import { CarSearchProvider } from "@/contexts/car-search-context/car-search-context";
+import { AuthProvider } from "@/contexts/auth-context";
+import { UserFavoritesProvider } from "@/contexts/user-favorites-context/user-favorites-context";
+import { Suspense } from "react";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -38,20 +39,22 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <CarSearchProvider>
-        <ThemeProvider>
-          <ReactQueryProvider>
-            <AuthProvider>
-              <UserFavoritesProvider>
-                <body
-                  className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
-                  {children}
-                </body>
-              </UserFavoritesProvider>
-            </AuthProvider>
-          </ReactQueryProvider>
-        </ThemeProvider>
-      </CarSearchProvider>
+      <Suspense>
+        <CarSearchProvider>
+          <ThemeProvider>
+            <ReactQueryProvider>
+              <AuthProvider>
+                <UserFavoritesProvider>
+                  <body
+                    className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
+                    {children}
+                  </body>
+                </UserFavoritesProvider>
+              </AuthProvider>
+            </ReactQueryProvider>
+          </ThemeProvider>
+        </CarSearchProvider>
+      </Suspense>
     </html>
   );
 }

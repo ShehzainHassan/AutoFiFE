@@ -1,6 +1,6 @@
 "use client";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
-import { useSearch } from "@/contexts/carSearchContext";
+import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import useGetAllMakes from "@/hooks/useGetAllMakes";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
 import headings from "@/styles/typography.module.css";
@@ -14,28 +14,27 @@ import {
 } from "@/utilities/utilities";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
-import { useUserFavorites } from "@/contexts/userFavoritesContext";
 import useAddUserSearch from "@/hooks/useAddUserSearch";
 import { useCurrentUrl } from "@/hooks/useCurrentUrl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
-import ButtonPrimary from "../components/buttons/Primary";
-import Dropdown from "../components/dropdown";
-import EmptyState from "../components/empty-state";
-import FAQs from "../components/faqs";
-import Filters from "../components/filters";
-import Footer from "../components/footer";
-import HorizontalTabs from "../components/horizontal-tabs";
-import LoadResults from "../components/load-results";
-import Navbar from "../components/navbar";
-import Pagination from "../components/pagination";
-import SortBy from "../components/sort-by";
-import Wrapper from "../components/wrapper";
 import classes from "./page.module.css";
 import useDeleteUserSearch from "@/hooks/useDeleteUserSearch";
+import { Dropdown } from "../components/dropdown";
+import ButtonPrimary from "../components/buttons/button-primary/button-primary";
+import Wrapper from "../components/wrapper/wrapper";
+import HorizontalTabs from "../components/horizontal-tabs/horizontal-tabs";
+import FAQs from "../components/faqs/faqs";
+import EmptyState from "../components/empty-state/empty-state";
+import Navbar from "../components/navbar/navbar";
+import Filters from "../components/filters/filters";
+import SortBy from "../components/sort-by/sort-by";
+import LoadResults from "../components/load-results/load-results";
+import Pagination from "../components/pagination/pagination";
+import Footer from "../components/footer/footer";
+import { useUserFavorites } from "@/contexts/user-favorites-context/user-favorites-context";
 
 export default function Search() {
   // const tabs = ["Car", "Body style", "Price"];

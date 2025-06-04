@@ -1,0 +1,32 @@
+import { SearchParams } from "@/interfaces/search-params";
+
+export type CarSearchContextType = {
+  make: string;
+  model: string;
+  price: string;
+  startPrice: number | null;
+  endPrice: number | null;
+  status: string;
+  mileage: number | null;
+  sortOrder: string | null;
+  startYear: number;
+  endYear: number;
+  expandedSections: Set<string>;
+  selectedGearboxes: string[];
+  selectedColors: string[];
+  searchParams: SearchParams;
+  setMake: (value: string) => void;
+  setModel: (value: string) => void;
+  setPrice: (value: string) => void;
+  setStartPrice: (value: number | null) => void;
+  setEndPrice: (value: number | null) => void;
+  setStatus: (value: string) => void;
+  setMileage: (value: number | null) => void;
+  setSearchParams: (value: SearchParams) => void;
+  setSortOrder: (value: string) => void;
+  setStartYear: (value: number) => void;
+  setEndYear: (value: number) => void;
+  setExpandedSections: (value: Set<string>) => void;
+  setSelectedGearboxes: (value: string[]) => void;
+  setSelectedColors: (value: string[]) => void;
+};

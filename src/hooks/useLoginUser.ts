@@ -1,6 +1,6 @@
 "use client";
 import userAPI from "@/api/userAPI";
-import { useAuth } from "@/contexts/authContext";
+import { useAuth } from "@/contexts/auth-context";
 import { LoginDTO } from "@/interfaces/user";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
