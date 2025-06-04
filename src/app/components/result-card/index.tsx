@@ -65,17 +65,24 @@ const CarImage = ({ src, vin }: CarImageProps) => {
     }
     const prev = isLiked;
     setIsLiked(!isLiked);
-    try {
-      console.log("Try");
-      if (!prev) {
-        await addLikeMutation.mutateAsync({ userId, vin });
-      } else {
-        await deleteLikeMutation.mutateAsync({ userId, vin });
-      }
-    } catch (err) {
-      console.log("Catch", err);
-      setIsLiked(prev);
-      toast.error("Something went wrong. Please try again.", err);
+    if (!prev) {
+      addLikeMutation.mutate(
+        { userId, vin },
+        {
+          onError: () => {
+            setIsLiked(prev);
+          },
+        }
+      );
+    } else {
+      deleteLikeMutation.mutate(
+        { userId, vin },
+        {
+          onError: () => {
+            setIsLiked(prev);
+          },
+        }
+      );
     }
   };
   return (

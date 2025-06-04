@@ -1,12 +1,13 @@
 "use client";
 import userAPI from "@/api/userAPI";
+import { handleApiError } from "@/utilities/utilities";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 const useAddUserSearch = () => {
   const queryClient = useQueryClient();
-
+  const router = useRouter();
   return useMutation({
     mutationFn: async ({
       userId,
@@ -23,16 +24,7 @@ const useAddUserSearch = () => {
       });
       toast.success("Search saved!");
     },
-    onError: (error: unknown) => {
-      let errorMessage = "An unexpected error occurred.";
-
-      if (axios.isAxiosError(error)) {
-        errorMessage = error.response?.data?.message || error.message;
-      } else if (typeof error === "string") {
-        errorMessage = error;
-      }
-      toast.error(errorMessage);
-    },
+    onError: (error) => handleApiError(error, router),
   });
 };
 export default useAddUserSearch;

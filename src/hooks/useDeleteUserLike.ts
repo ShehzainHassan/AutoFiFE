@@ -1,11 +1,13 @@
 "use client";
 import userAPI from "@/api/userAPI";
+import { handleApiError } from "@/utilities/utilities";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 const useDeleteUserLike = () => {
   const queryClient = useQueryClient();
-
+  const router = useRouter();
   return useMutation({
     mutationFn: async ({ userId, vin }: { userId: number; vin: string }) => {
       return await userAPI.removeUserLike(userId, vin);
@@ -14,6 +16,7 @@ const useDeleteUserLike = () => {
       await queryClient.refetchQueries({ queryKey: ["userLikedVins", userId] });
       toast.success("Vehicle removed from favorites!");
     },
+    onError: (error) => handleApiError(error, router),
   });
 };
 

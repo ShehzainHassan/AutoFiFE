@@ -27,17 +27,30 @@ const userAPI = {
     return response.data;
   },
   saveUserSearch: async (userId: number, search: string) => {
-    const response = await axios.post(`${API_BASE_URL}/user/save-search`, {
-      userId,
-      search,
-    });
+    const token = getTokenFromLocalStorage();
+    const response = await axios.post(
+      `${API_BASE_URL}/user/save-search`,
+      {
+        userId,
+        search,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   },
   removeUserSearch: async (userId: number, search: string) => {
+    const token = getTokenFromLocalStorage();
     const response = await axios.delete(`${API_BASE_URL}/user/delete-search`, {
       data: {
         userId,
         search,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
@@ -59,12 +72,16 @@ const userAPI = {
     return response.data;
   },
   removeUserLike: async (userId: number, vin: string) => {
+    const token = getTokenFromLocalStorage();
     const response = await axios.delete(
       `${API_BASE_URL}/user/remove-user-like`,
       {
         data: {
           userId,
           vehicleVin: vin,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       }
     );

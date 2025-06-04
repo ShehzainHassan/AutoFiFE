@@ -192,19 +192,16 @@ export default function Search() {
       if (!userSearches || !search) return false;
       return userSearches.includes(search);
     }, [userSearches, search]);
+
     const handleSaveSearch = async () => {
       if (!userId) {
         toast.error("Please sign in to save search");
         return;
       }
-      try {
-        if (!isSaved) {
-          await saveSearchMutation.mutateAsync({ userId, search });
-        } else {
-          await deleteSearchMutation.mutateAsync({ userId, search });
-        }
-      } catch {
-        toast.error("Something went wrong. Please try again.");
+      if (!isSaved) {
+        saveSearchMutation.mutate({ userId, search });
+      } else {
+        deleteSearchMutation.mutate({ userId, search });
       }
     };
     return (
@@ -228,13 +225,6 @@ export default function Search() {
             Trustpilot
           </p>
           {loadingSearches ? <p>Loading...</p> : <SaveSearchButton />}
-          {/* <ThemeProvider value={WHITE_THEME}>
-            <ButtonPrimary
-              imgSrc="/images/love.png"
-              btnText="Save Search"
-              onClick={handleSaveSearch}
-            />
-          </ThemeProvider> */}
         </div>
       </div>
     );

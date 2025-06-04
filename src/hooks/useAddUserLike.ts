@@ -1,11 +1,13 @@
 "use client";
 import userAPI from "@/api/userAPI";
+import { handleApiError } from "@/utilities/utilities";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 const useAddUserLike = () => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   return useMutation({
     mutationFn: async ({ userId, vin }: { userId: number; vin: string }) => {
@@ -15,16 +17,7 @@ const useAddUserLike = () => {
       await queryClient.refetchQueries({ queryKey: ["userLikedVins", userId] });
       toast.success("Vehicle added to favorites!");
     },
-    onError: (error: unknown) => {
-      console.log(error);
-      let errorMessage = "An unexpected error occurred.";
-      if (axios.isAxiosError(error)) {
-        errorMessage = error.response?.data?.message || error.message;
-      } else if (typeof error === "string") {
-        errorMessage = error;
-      }
-      toast.error(errorMessage);
-    },
+    onError: (error) => handleApiError(error, router),
   });
 };
 

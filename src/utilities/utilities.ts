@@ -1,6 +1,9 @@
 import { MODEL_OPTIONS } from "@/constants";
 import { Options } from "@/interfaces/dropdown-options";
 import { Vehicle } from "@/interfaces/vehicle";
+import axios from "axios";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { toast } from "react-toastify";
 
 export function getModelOptions(make: string): Options[] {
   const isAnyMake = !make || make === "Any_Makes";
@@ -215,4 +218,22 @@ export function getTokenFromLocalStorage(): string | null {
   } catch {
     return null;
   }
+}
+export function handleApiError(error: unknown, router?: AppRouterInstance) {
+  let errorMessage = "An unexpected error occurred.";
+
+  if (axios.isAxiosError(error)) {
+    if (error.response?.status === 401 && router) {
+      router.push("/sign-in");
+      setTimeout(() => {
+        toast.error("Session expired. Please sign in again.");
+      }, 500);
+      return;
+    }
+    errorMessage = error.response?.data?.message || error.message;
+  } else if (typeof error === "string") {
+    errorMessage = error;
+  }
+
+  toast.error(errorMessage);
 }
