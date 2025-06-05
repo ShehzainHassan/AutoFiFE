@@ -14,7 +14,13 @@ import {
   validatePhoneNumber,
   validatePostCode,
 } from "@/utilities/utilities";
-import { EmailProps, FirstNameProps, LastNameProps, PhoneProps, PostCodeProps } from "./contact-info-form.types";
+import {
+  EmailProps,
+  FirstNameProps,
+  LastNameProps,
+  PhoneProps,
+  PostCodeProps,
+} from "./contact-info-form.types";
 import ButtonPrimary from "../buttons/button-primary/button-primary";
 import { Dropdown } from "../dropdown";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
@@ -213,6 +219,7 @@ export default function Form() {
               onChange={(e) => setLocalCommentText(e.target.value)}
               onBlur={(e) => setCommentText(e.target.value)}
             />
+            {/* <button onClick={handleCancelComment}>Cancel</button> */}
             <ButtonPrimary
               className={classes.cancelCommentBtn}
               btnText="Cancel"

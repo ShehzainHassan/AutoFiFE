@@ -19,17 +19,17 @@
   line-height: 28px;
 }
 /**************          DM Sans Font          *****************/
-.title {
-  font-family: DM Sans, sans-serif;
-  font-weight: 700;
-  font-size: 70px;
-  line-height: 70px;
-}
 .sectionTitle {
   font-family: DM Sans, sans-serif;
   font-weight: 700;
   font-size: 40px;
   line-height: 40px;
+}
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: 25px;
+    line-height: 25px;
+  }
 }
 .spacedTitle {
   font-family: DM Sans, sans-serif;
@@ -108,13 +108,6 @@
   font-weight: 500;
   font-size: 15px;
   line-height: 18px;
-}
-
-.shortText {
-  font-family: DM Sans, sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 16px;
 }
 
 .mediumSpaced {

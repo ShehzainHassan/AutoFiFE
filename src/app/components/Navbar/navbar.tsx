@@ -5,9 +5,9 @@ import headings from "@/styles/typography.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import classes from "./navbar.module.css";
-import { NavbarProps } from "./navbar-types";
 import ButtonPrimary from "../buttons/button-primary/button-primary";
+import { NavbarProps } from "./navbar-types";
+import classes from "./navbar.module.css";
 
 export default function Navbar({
   backgroundColor = "transparent",
@@ -55,6 +55,7 @@ export default function Navbar({
     setMileage(null);
     window.location.reload();
   };
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div className={classes.navbar} style={{ backgroundColor }}>
       <Image
@@ -65,7 +66,18 @@ export default function Navbar({
         height={26}
         onClick={redirectToHome}
       />
-      <div className={classes.navList}>
+      <button
+        className={classes.hamburger}
+        aria-label="Toggle menu"
+        onClick={() => setMenuOpen(!menuOpen)}>
+        <span className={classes.bar}></span>
+        <span className={classes.bar}></span>
+        <span className={classes.bar}></span>
+      </button>
+      <div
+        className={`${classes.navList} ${classes.navListMobile} ${
+          menuOpen ? classes.navListMobileShow : ""
+        }`}>
         {Object.entries(navbarItems).map(([key, label]) => {
           const isSignIn = key === "signIn";
           const showExpandIcon = [

@@ -34,21 +34,19 @@
   transform: translateX(-50%) translateY(-10px);
   width: 120px;
   padding: 10px;
-  background-color: white;
-  border: 1px solid #ccc;
+  background-color: var(--color-white100);
+  border: 1px solid transparent;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
   z-index: 20;
 }
 
-/* Active state to toggle visibility */
 .logoutContainer.show {
   opacity: 1;
   visibility: visible;
@@ -57,10 +55,10 @@
 
 .logout {
   padding: 10px 16px;
-  background-color: #ff4d4f;
+  background-color: var(--color-red500);
   border: none;
   border-radius: 6px;
-  color: white;
+  color: var(--color-white100);
   font-weight: 600;
   cursor: pointer;
   width: 100%;
@@ -68,5 +66,59 @@
 }
 
 .logout:hover {
-  background-color: #e04344;
+  background-color: var(--color-red800);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.bar {
+  height: 3px;
+  width: 100%;
+  background-color: var(--color-white100);
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 28px 40px;
+  }
+  .hamburger {
+    display: flex;
+  }
+  .navList {
+    display: none;
+  }
+  .navListMobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--color-black100);
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    transform: translateY(-100%);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: -1;
+    display: flex;
+    opacity: 0;
+  }
+
+  .navListMobileShow {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 }

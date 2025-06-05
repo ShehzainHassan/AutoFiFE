@@ -1,18 +1,17 @@
 "use client";
 import { FEATURED_MODELS } from "@/constants";
+import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import useTranslation from "@/i18n";
-import headings from "@/styles/typography.module.css";
+import { WHITE_THEME } from "@/styles/tab-styles";
+import { ThemeProvider } from "@/theme/themeContext";
+import { getMakeByModel } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import classes from "./hero.module.css";
-import { ThemeProvider } from "@/theme/themeContext";
-import { useSearch } from "@/contexts/car-search-context/car-search-context";
-import { getMakeByModel } from "@/utilities/utilities";
-import { WHITE_THEME } from "@/styles/tab-styles";
 import FeaturedIcon from "../featured-icons/featured-icons";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
-import SearchForm from "../search-form/search-form";
 import Navbar from "../navbar/navbar";
+import SearchForm from "../search-form/search-form";
+import classes from "./hero.module.css";
 export default function Hero() {
   const { t } = useTranslation();
   const router = useRouter();
@@ -45,12 +44,8 @@ export default function Hero() {
       <Navbar />
       <div className={classes.container}>
         <div className={classes.textContainer}>
-          <p className={`${classes.shortText} ${classes.white}`}>
-            {t("hero.subHeading")}
-          </p>
-          <p className={`${headings.title} ${classes.white}`}>
-            {t("hero.title")}
-          </p>
+          <p className={classes.subTitle}>{t("hero.subHeading")}</p>
+          <p className={classes.title}>{t("hero.title")}</p>
           <div className={classes.searchContainer}>
             <ThemeProvider value={WHITE_THEME}>
               <HorizontalTabs
