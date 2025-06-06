@@ -169,14 +169,14 @@ export function getUserIdFromLocalStorage(): number | null {
     return null;
   }
 }
-export function getUserEmailFromLocalStorage(): number | null {
+export function getUserEmailFromLocalStorage(): string {
   try {
     const authData = localStorage.getItem("authData");
-    if (!authData) return null;
+    if (!authData) return "";
     const parsed = JSON.parse(authData);
     return parsed.userEmail ?? null;
   } catch {
-    return null;
+    return "";
   }
 }
 export function getNameFromLocalStorage(): {

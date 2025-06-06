@@ -223,7 +223,6 @@ export default function Form() {
               value={localCommentText}
               onChange={(e) => setLocalCommentText(e.target.value)}
             />
-            {/* <button onClick={handleCancelComment}>Cancel</button> */}
             <ButtonPrimary
               className={classes.cancelCommentBtn}
               btnText="Cancel"
