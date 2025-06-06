@@ -41,6 +41,7 @@ export default function CarImageGallery() {
               key={index}
               imgSrc={image}
               selected={index === currentIndex}
+              onClick={() => setCurrentIndex(index)}
             />
           ))}
         </div>

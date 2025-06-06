@@ -28,3 +28,7 @@ export type PhoneProps = {
   errors: { [key: string]: string };
   setErrors: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>;
 };
+export type CommentProps = {
+  commentText: string;
+  setCommentText: (value: string) => void;
+};

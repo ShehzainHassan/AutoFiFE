@@ -9,12 +9,15 @@ import Input from "../input-field/input-field";
 import classes from "./contact-info-form.module.css";
 import { VEHICLE_OPTIONS } from "@/constants";
 import {
+  getNameFromLocalStorage,
+  getUserEmailFromLocalStorage,
   validateEmail,
   validateName,
   validatePhoneNumber,
   validatePostCode,
 } from "@/utilities/utilities";
 import {
+  CommentProps,
   EmailProps,
   FirstNameProps,
   LastNameProps,
@@ -34,16 +37,18 @@ export default function Form() {
   const model = vehicle?.model ?? "";
   const year = vehicle?.year ?? "";
   const { mutate: submitInfo, isPending } = useSubmitInfo();
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
+  const { firstName, lastName } = getNameFromLocalStorage();
+  const [fname, setFname] = useState(firstName);
+  const [lname, setLname] = useState(lastName);
   const [selected, setSelected] = useState("interested");
   const [postCode, setPostCode] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(getUserEmailFromLocalStorage());
   const [phone, setPhone] = useState("");
   const [preferredContact, setPreferredContact] = useState("");
   const [commentText, setCommentText] = useState("");
-  const [emailNotifications, setEmailNotifications] = useState(false);
   const [showComment, setShowComment] = useState(false);
+
+  const [emailNotifications, setEmailNotifications] = useState(false);
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -192,7 +197,7 @@ export default function Form() {
       </Input>
     );
   };
-  const AddComment = () => {
+  const AddComment = ({ commentText, setCommentText }: CommentProps) => {
     const [localCommentText, setLocalCommentText] = useState(commentText);
     const handleCancelComment = () => {
       setShowComment(false);
@@ -217,7 +222,6 @@ export default function Form() {
               cols={5}
               value={localCommentText}
               onChange={(e) => setLocalCommentText(e.target.value)}
-              onBlur={(e) => setCommentText(e.target.value)}
             />
             {/* <button onClick={handleCancelComment}>Cancel</button> */}
             <ButtonPrimary
@@ -387,7 +391,7 @@ export default function Form() {
         </div>
       </div>
       <PreferredChoice />
-      <AddComment />
+      <AddComment commentText={commentText} setCommentText={setCommentText} />
       <div>
         <FormControlLabel
           control={

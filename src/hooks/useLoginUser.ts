@@ -16,8 +16,8 @@ const useLoginUser = () => {
         token: data.token,
         userId: data.userId,
         userName: data.userName,
+        userEmail: data.userEmail,
       };
-
       localStorage.setItem("authData", JSON.stringify(userData));
       login(data.userId);
       toast.success("Login successfull!");

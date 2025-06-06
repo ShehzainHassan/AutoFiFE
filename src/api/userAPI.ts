@@ -73,7 +73,6 @@ const userAPI = {
   },
   removeUserLike: async (userId: number, vin: string) => {
     const token = getTokenFromLocalStorage();
-    console.log(token);
     const response = await axios.delete(
       `${API_BASE_URL}/user/remove-user-like`,
       {

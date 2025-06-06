@@ -4,6 +4,7 @@ import { Vehicle } from "@/interfaces/vehicle";
 import axios from "axios";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { toast } from "react-toastify";
+import { PriceRange } from "./utilities.types";
 
 export function getModelOptions(make: string): Options[] {
   const isAnyMake = !make || make === "Any_Makes";
@@ -27,10 +28,6 @@ export function getMakeByModel(modelName: string): string {
   return "Any_Makes";
 }
 
-type PriceRange = {
-  startPrice: number | null;
-  endPrice: number | null;
-};
 export function getPriceRange(priceValue: string): PriceRange {
   if (!priceValue || priceValue === "All_Prices") {
     return { startPrice: null, endPrice: null };
@@ -170,6 +167,36 @@ export function getUserIdFromLocalStorage(): number | null {
     return parsed.userId ?? null;
   } catch {
     return null;
+  }
+}
+export function getUserEmailFromLocalStorage(): number | null {
+  try {
+    const authData = localStorage.getItem("authData");
+    if (!authData) return null;
+    const parsed = JSON.parse(authData);
+    return parsed.userEmail ?? null;
+  } catch {
+    return null;
+  }
+}
+export function getNameFromLocalStorage(): {
+  firstName: string;
+  lastName: string;
+} {
+  try {
+    const authData = localStorage.getItem("authData");
+    if (!authData) return { firstName: "", lastName: "" };
+
+    const parsed = JSON.parse(authData);
+    const fullName: string = parsed.userName || "";
+
+    const nameParts = fullName.trim().split(" ");
+    const firstName = nameParts[0] || "";
+    const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
+
+    return { firstName, lastName };
+  } catch {
+    return { firstName: "", lastName: "" };
   }
 }
 export function parseStatus(status: string): string {

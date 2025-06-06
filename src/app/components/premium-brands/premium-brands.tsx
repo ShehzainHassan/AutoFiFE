@@ -22,8 +22,8 @@ export default function PremiumBrands() {
     setSearchParams,
   } = useSearch();
 
-  const { data: allMakes } = useGetAllMakes();
   const [showAllBrands, setShowAllBrands] = useState(false);
+  const { data: allMakes, isLoading, refetch } = useGetAllMakes();
 
   const handleBrandClick = (make: string) => {
     setMake(make);
@@ -37,36 +37,52 @@ export default function PremiumBrands() {
     });
     router.push(`/search?make=${make}`);
   };
-
   const brandsToShow: BrandData[] = useMemo(() => {
     if (!showAllBrands || !allMakes) return PREMIUM_BRANDS;
-    const fullBrandList: BrandData[] = allMakes.map((make: string) => ({
-      brand: make,
-      imgSrc: BRAND_IMAGES[make] || PLACEHOLDER_IMG,
-    }));
 
-    return fullBrandList;
+    const premiumBrandNames = PREMIUM_BRANDS.map((b) => b.brand.toLowerCase());
+
+    const nonPremiumSorted = allMakes
+      .filter((make: string) => !premiumBrandNames.includes(make.toLowerCase()))
+      .sort((a: string, b: string) => a.localeCompare(b))
+      .map((make: string) => ({
+        brand: make,
+        imgSrc: BRAND_IMAGES[make] || PLACEHOLDER_IMG,
+      }));
+
+    return [...PREMIUM_BRANDS, ...nonPremiumSorted];
   }, [showAllBrands, allMakes]);
+
+  const handleViewAll = () => {
+    if (!showAllBrands && !allMakes) {
+      refetch();
+    }
+    setShowAllBrands(!showAllBrands);
+  };
 
   return (
     <div className={classes.container}>
       <SectionTitle
         title="Explore Our Premium Brands"
         buttonText={showAllBrands ? "Hide All Brands" : "View All"}
-        onClick={() => setShowAllBrands(!showAllBrands)}
+        onClick={handleViewAll}
         backgroundColor="var(--color-white300)"
         padding="115px 180px 15px"
       />
 
       <div className={classes.cardContainer}>
-        {brandsToShow.map((brand) => (
-          <BrandCard
-            key={brand.brand}
-            brand={brand.brand}
-            imgSrc={brand.imgSrc}
-            onClick={() => handleBrandClick(brand.brand)}
-          />
-        ))}
+        {isLoading && showAllBrands ? (
+          <p>Fetching all brands...</p>
+        ) : (
+          brandsToShow.map((brand) => (
+            <BrandCard
+              key={brand.brand}
+              brand={brand.brand}
+              imgSrc={brand.imgSrc}
+              onClick={() => handleBrandClick(brand.brand)}
+            />
+          ))
+        )}
       </div>
     </div>
   );
