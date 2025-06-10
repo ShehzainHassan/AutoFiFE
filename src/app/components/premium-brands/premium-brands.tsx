@@ -67,7 +67,6 @@ export default function PremiumBrands() {
         buttonText={showAllBrands ? "Hide All Brands" : "View All"}
         onClick={handleViewAll}
         backgroundColor="var(--color-white300)"
-        padding="115px 180px 15px"
       />
 
       <div className={classes.cardContainer}>

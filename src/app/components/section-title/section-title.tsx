@@ -10,13 +10,12 @@ export default function SectionTitle({
   showButton = true,
   ratingsText,
   color = "var(--color-black100)",
-  padding = "115px 260px 15px",
   onClick,
 }: SectionTitleProps) {
   return (
     <div
       className={`${classes.headingsContainer}`}
-      style={{ backgroundColor, color, padding }}>
+      style={{ backgroundColor, color }}>
       <h1 className={headings.sectionTitle}>{title}</h1>
       {showButton && (
         <div

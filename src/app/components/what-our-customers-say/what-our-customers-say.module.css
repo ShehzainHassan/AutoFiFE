@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 60px;
   background-color: var(--color-white300);
-  padding-bottom: 115px;
+  padding: 115px 260px;
 }
 .reviewContainer {
   display: flex;
@@ -42,10 +42,6 @@
   background-color: var(--color-yellow500);
   border-radius: 28px;
 }
-.wrapper {
-  padding: 0 145px;
-}
-
 .subContainer {
   display: flex;
   gap: 150px;

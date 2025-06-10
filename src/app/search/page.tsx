@@ -89,6 +89,8 @@ export default function Search() {
     let mileageText = "Any";
     if (mileage) {
       mileageText = `<=${mileage}`;
+    } else if (mileage === 0) {
+      mileageText = "0";
     }
     let gearboxText = "Any";
     if (selectedGearboxes.length > 0 && selectedGearboxes.length !== 3) {

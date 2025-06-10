@@ -1,14 +1,13 @@
 "use client";
-import { useState } from "react";
-import classes from "./all-vehicles.module.css";
-import { useRouter } from "next/navigation";
-import { convertArrayToString, parseStatus } from "@/utilities/utilities";
 import { MAX_YEAR, MIN_YEAR } from "@/constants";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
+import { convertArrayToString, parseStatus } from "@/utilities/utilities";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import AllVehiclesSwiper from "../all-vehicle-swiper/all-vehicle-swiper";
-import SectionTitle from "../section-title/section-title";
-import Wrapper from "../wrapper/wrapper";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
+import SectionTitle from "../section-title/section-title";
+import classes from "./all-vehicles.module.css";
 export default function ExploreVehicles() {
   const TABS = ["In Stock", "New Cars", "Used Cars"];
   const [selectedTab, setSelectedTab] = useState<string>(TABS[0]);
@@ -63,16 +62,16 @@ export default function ExploreVehicles() {
           onClick={handleViewAll}
           backgroundColor="var(--color-white100)"
         />
-        <Wrapper padding="0 0 115px 265px">
-          <div className={classes.space}>
-            <HorizontalTabs
-              tabs={TABS}
-              selectedTab={selectedTab}
-              onTabChange={(tab) => {
-                setSelectedTab(tab);
-              }}
-            />
-          </div>
+        <div className={classes.space}>
+          <HorizontalTabs
+            tabs={TABS}
+            selectedTab={selectedTab}
+            onTabChange={(tab) => {
+              setSelectedTab(tab);
+            }}
+          />
+        </div>
+        <div className={classes.vehicleSwiperContainer}>
           <AllVehiclesSwiper
             vehicleStatus={
               selectedTab === TABS[0]
@@ -82,7 +81,7 @@ export default function ExploreVehicles() {
                 : "USED"
             }
           />
-        </Wrapper>
+        </div>
       </div>
     </>
   );

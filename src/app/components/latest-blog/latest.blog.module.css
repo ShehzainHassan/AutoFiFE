@@ -13,7 +13,7 @@
 .blog {
   display: flex;
   flex-direction: column;
-  background-color: var(--color-black100);
+  padding: 115px 260px;
 }
 .round {
   border-bottom-left-radius: 80px;

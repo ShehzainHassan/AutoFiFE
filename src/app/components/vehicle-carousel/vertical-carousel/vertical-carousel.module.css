@@ -1,9 +1,10 @@
 .swiperContainer {
   position: relative;
   left: -20px;
-  padding: 50px 20px;
+  padding: 25px 20px;
 }
 .navigate {
+  margin-top: 50px;
   display: flex;
   gap: 25px;
 }

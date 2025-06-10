@@ -1,3 +1,6 @@
+.container {
+  padding: 115px 260px;
+}
 .list {
   display: flex;
   justify-content: unset;

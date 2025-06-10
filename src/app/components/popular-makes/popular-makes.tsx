@@ -1,16 +1,15 @@
 "use client";
+import { MAX_YEAR, MIN_YEAR } from "@/constants";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import { WHITE_THEME } from "@/styles/tab-styles";
 import { ThemeProvider } from "@/theme/themeContext";
 import { convertArrayToString } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import classes from "./popular-makes.module.css";
-import { MAX_YEAR, MIN_YEAR } from "@/constants";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
-import SectionTitle from "../section-title/section-title";
-import Wrapper from "../wrapper/wrapper";
 import PopularMakesSwiper from "../popular-makes-swiper/popular-makes-swiper";
+import SectionTitle from "../section-title/section-title";
+import classes from "./popular-makes.module.css";
 export default function PopularMakes() {
   const {
     mileage,
@@ -61,19 +60,18 @@ export default function PopularMakes() {
         backgroundColor="var(--color-black100)"
         color="var(--color-white100)"
       />
-      <Wrapper padding="0 0 115px 265px">
-        <ThemeProvider value={WHITE_THEME}>
-          <HorizontalTabs
-            tabs={tabs}
-            selectedTab={selectedTab}
-            onTabChange={(tab) => {
-              setSelectedTab(tab);
-            }}
-          />
-        </ThemeProvider>
-
+      <ThemeProvider value={WHITE_THEME}>
+        <HorizontalTabs
+          tabs={tabs}
+          selectedTab={selectedTab}
+          onTabChange={(tab) => {
+            setSelectedTab(tab);
+          }}
+        />
+      </ThemeProvider>
+      <div className={classes.popularMakesSwiperContainer}>
         <PopularMakesSwiper make={selectedTab} />
-      </Wrapper>
+      </div>
     </div>
   );
 }

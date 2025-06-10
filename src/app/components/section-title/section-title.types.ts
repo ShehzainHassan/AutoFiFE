@@ -5,6 +5,5 @@ export type SectionTitleProps = {
   showButton?: boolean;
   ratingsText?: string;
   color?: string;
-  padding?: string;
   onClick?: () => void;
 };

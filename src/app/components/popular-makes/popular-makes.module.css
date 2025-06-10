@@ -1,3 +1,7 @@
 .container {
   background-color: var(--color-black100);
+  padding: 115px 260px;
+}
+.popularMakesSwiperContainer {
+  margin-right: -260px;
 }

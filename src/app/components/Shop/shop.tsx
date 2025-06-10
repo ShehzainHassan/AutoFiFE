@@ -1,12 +1,11 @@
 "use client";
-import headings from "@/styles/typography.module.css";
-import footerClasses from "../footer/footer.module.css";
-import classes from "./shop.module.css";
-import { useState } from "react";
 import useTranslation from "@/i18n";
+import headings from "@/styles/typography.module.css";
+import { useState } from "react";
+import footerClasses from "../footer/footer.module.css";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
 import SectionTitle from "../section-title/section-title";
-import Wrapper from "../wrapper/wrapper";
+import classes from "./shop.module.css";
 export default function Shop() {
   const tabs = [
     "New Cars For Sale",
@@ -44,14 +43,12 @@ export default function Shop() {
   return (
     <div className={classes.container}>
       <SectionTitle title="Shop BoxCar Your Way" buttonText="View More" />
-      <Wrapper>
-        <HorizontalTabs
-          tabs={tabs}
-          selectedTab={selectedTab}
-          onTabChange={(tab) => setSelectedTab(tab)}
-        />
-        <CarsList />
-      </Wrapper>
+      <HorizontalTabs
+        tabs={tabs}
+        selectedTab={selectedTab}
+        onTabChange={(tab) => setSelectedTab(tab)}
+      />
+      <CarsList />
     </div>
   );
 }
