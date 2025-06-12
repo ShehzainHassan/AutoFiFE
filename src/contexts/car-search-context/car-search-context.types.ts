@@ -15,7 +15,8 @@ export type CarSearchContextType = {
   selectedGearboxes: string[];
   selectedColors: string[];
   searchParams: SearchParams;
-
+  gearboxesCount: Record<string, number>;
+  colorsCount: Record<string, number>;
   stagedStatus: string;
   stagedStartYear: number;
   stagedEndYear: number;
@@ -24,6 +25,8 @@ export type CarSearchContextType = {
   stagedMileage: number | null;
   stagedGearboxes: string[];
   stagedColors: string[];
+  allColors: string[];
+  setAllColors: (value: string[]) => void;
   setMake: (value: string) => void;
   setModel: (value: string) => void;
   setPrice: (value: string) => void;
@@ -38,7 +41,8 @@ export type CarSearchContextType = {
   setExpandedSections: (value: Set<string>) => void;
   setSelectedGearboxes: (value: string[]) => void;
   setSelectedColors: (value: string[]) => void;
-
+  setGearboxesCount: (value: Record<string, number>) => void;
+  setColorsCount: (value: Record<string, number>) => void;
   setStagedStatus: (value: string) => void;
   setStagedStartYear: (value: number) => void;
   setStagedEndYear: (value: number) => void;

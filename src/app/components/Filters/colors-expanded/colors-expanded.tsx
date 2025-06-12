@@ -1,56 +1,16 @@
 "use client";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
-import useVehicleColorCount from "@/hooks/useVehicleColorCount";
-import { VehicleFilter } from "@/interfaces/vehicle";
-import { convertArrayToString } from "@/utilities/utilities";
 import {
   Checkbox,
   FormControlLabel,
   FormGroup,
   Typography,
 } from "@mui/material";
-import EmptyState from "../../empty-state/empty-state";
-import ErrorMessage from "../../error-message/error-message";
-import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import classes from "../gearbox-expanded/gearbox-expanded.module.css";
 import colorClasses from "./colors-expanded.module.css";
-import useAllColors from "@/hooks/useAllColors";
 
 export default function ColorsExpanded() {
-  const {
-    make,
-    model,
-    startPrice,
-    endPrice,
-    mileage,
-    startYear,
-    endYear,
-    status,
-    selectedColors,
-    selectedGearboxes,
-    stagedColors,
-    setStagedColors,
-  } = useSearch();
-
-  const filters: VehicleFilter = {
-    make,
-    model,
-    startPrice,
-    endPrice,
-    mileage,
-    startYear,
-    endYear,
-    gearbox: convertArrayToString(selectedGearboxes),
-    selectedColors: convertArrayToString(selectedColors),
-    status,
-  };
-
-  const { data, isLoading, isError, error } = useVehicleColorCount(filters);
-  const { data: allColors } = useAllColors();
-
-  if (isLoading) return <LoadingSpinner color="var(--color-black100)" />;
-  if (!allColors) return <EmptyState message="No color options available" />;
-  if (isError) return <ErrorMessage message={error.message} />;
+  const { stagedColors, setStagedColors, colorsCount, allColors } = useSearch();
 
   const handleCheckboxChange = (color: string, checked: boolean) => {
     if (checked) {
@@ -64,7 +24,7 @@ export default function ColorsExpanded() {
     <div className={`${classes.gearboxContainer}`}>
       <FormGroup>
         {allColors.map((color: string) => {
-          const count = data?.[color] || 0;
+          const count = colorsCount?.[color] || 0;
           const isDisabled = count === 0;
 
           return (

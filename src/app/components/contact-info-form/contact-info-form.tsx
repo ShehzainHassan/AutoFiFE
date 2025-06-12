@@ -96,7 +96,7 @@ export default function Form() {
   }: LastNameProps) => {
     const [localLname, setLocalLname] = useState(lname);
     const validate = (value: string) => {
-      err = validateName(value, "Last name");
+      err = validateName(value, "Last name", false);
       setErrors((prev) => ({ ...prev, lname: err }));
     };
 
@@ -291,7 +291,6 @@ export default function Form() {
   const canSendMessage = () => {
     return (
       fname !== "" &&
-      lname !== "" &&
       email !== "" &&
       postCode !== "" &&
       phone !== "" &&

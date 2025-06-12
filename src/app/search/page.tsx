@@ -21,7 +21,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import ButtonPrimary from "../components/buttons/button-primary/button-primary";
 import { Dropdown } from "../components/dropdown";
@@ -35,6 +35,9 @@ import Pagination from "../components/pagination/pagination";
 import SortBy from "../components/sort-by/sort-by";
 import Wrapper from "../components/wrapper/wrapper";
 import classes from "./page.module.css";
+import useGearboxCount from "@/hooks/useGearboxCount";
+import useVehicleColorCount from "@/hooks/useVehicleColorCount";
+import useAllColors from "@/hooks/useAllColors";
 
 export default function Search() {
   // const tabs = ["Car", "Body style", "Price"];
@@ -75,12 +78,57 @@ export default function Search() {
     setStartPrice,
     setEndPrice,
     setSelectedColors,
+    setGearboxesCount,
+    setColorsCount,
+    setAllColors,
   } = useSearch();
   const router = useRouter();
   const [resultText, setResultText] = useState(getResultTitle(make, model));
   const [submittedParams, setSubmittedParams] = useState(searchParams);
   const [submittedMake, setSubmittedMake] = useState(make);
   const [submittedModel, setSubmittedModel] = useState(model);
+
+  const filters: VehicleFilter = useMemo(
+    () => ({
+      make,
+      model,
+      startPrice,
+      endPrice,
+      mileage,
+      startYear,
+      endYear,
+      gearbox: convertArrayToString(selectedGearboxes),
+      selectedColors: convertArrayToString(selectedColors),
+      status,
+    }),
+    [
+      make,
+      model,
+      startPrice,
+      endPrice,
+      mileage,
+      startYear,
+      endYear,
+      selectedGearboxes,
+      selectedColors,
+      status,
+    ]
+  );
+  const { data: gearboxesCount } = useGearboxCount(filters);
+  const { data: colorsCount } = useVehicleColorCount(filters);
+  const { data: allColors } = useAllColors();
+  useEffect(() => {
+    if (gearboxesCount) setGearboxesCount(gearboxesCount);
+    if (colorsCount) setColorsCount(colorsCount);
+    if (allColors) setAllColors(allColors);
+  }, [
+    gearboxesCount,
+    colorsCount,
+    allColors,
+    setGearboxesCount,
+    setColorsCount,
+    setAllColors,
+  ]);
 
   const handleSearchClick = () => {
     const newParams = {
@@ -122,8 +170,8 @@ export default function Search() {
       gearboxText = stagedGearboxes.join(",");
     }
     let colorsText = "Any";
-    if (selectedColors.length > 0 && selectedColors.length !== 16) {
-      colorsText = selectedColors.join(",");
+    if (stagedColors.length > 0 && stagedColors.length !== 16) {
+      colorsText = stagedColors.join(",");
     }
     router.push(
       `/search?make=${submittedMake}&model=${submittedModel}&price=${price}&mileage=${mileageText}&startYear=${stagedStartYear}&endYear=${stagedEndYear}&gearbox=${gearboxText}&colors=${colorsText}&status=${stagedStatus}`
@@ -274,20 +322,7 @@ export default function Search() {
       </Wrapper>
     );
   };
-  const filters: VehicleFilter = {
-    make,
-    model,
-    startPrice,
-    endPrice,
-    mileage,
-    startYear,
-    endYear,
-    gearbox: convertArrayToString(selectedGearboxes),
-    selectedColors: convertArrayToString(selectedColors),
-    status,
-  };
   const { data: vehicleCount, isLoading } = useVehicleCount(filters);
-
   const NoOfLoadResultText = () => {
     if (isLoading) return <p>Loading...</p>;
     return (

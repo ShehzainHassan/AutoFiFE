@@ -68,7 +68,11 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
   const [stagedMileage, setStagedMileage] = useState<number | null>(null);
   const [stagedGearboxes, setStagedGearboxes] = useState<string[]>([]);
   const [stagedColors, setStagedColors] = useState<string[]>([]);
-
+  const [gearboxesCount, setGearboxesCount] = useState<Record<string, number>>(
+    {}
+  );
+  const [colorsCount, setColorsCount] = useState<Record<string, number>>({});
+  const [allColors, setAllColors] = useState<string[]>([]);
   const [searchParams, setSearchParams] = useState<SearchParams>({
     pageSize: PAGE_SIZE,
     offset: 0,
@@ -102,7 +106,7 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
         selectedGearboxes,
         selectedColors,
         searchParams,
-
+        gearboxesCount,
         stagedStatus,
         stagedStartYear,
         stagedEndYear,
@@ -111,7 +115,9 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
         stagedMileage,
         stagedGearboxes,
         stagedColors,
-
+        colorsCount,
+        allColors,
+        setAllColors,
         setMake,
         setModel,
         setPrice,
@@ -134,6 +140,8 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
         setStagedMileage,
         setStagedGearboxes,
         setStagedColors,
+        setGearboxesCount,
+        setColorsCount,
       }}>
       {children}
     </CarSearchContext.Provider>

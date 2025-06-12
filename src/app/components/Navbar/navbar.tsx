@@ -1,7 +1,9 @@
 "use client";
+import { MAX_YEAR, MIN_YEAR, PAGE_SIZE } from "@/constants";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import useTranslation from "@/i18n";
 import headings from "@/styles/typography.module.css";
+import { convertArrayToString } from "@/utilities/utilities";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,14 +16,70 @@ export default function Navbar({
 }: NavbarProps) {
   const { t } = useTranslation();
   const router = useRouter();
-  const { setPrice, setStartPrice, setEndPrice, setMileage } = useSearch();
-  const redirectToHome = () => {
-    router.push("/");
+  const {
+    setMake,
+    setModel,
+    setStatus,
+    setStartYear,
+    setEndYear,
+    setSelectedGearboxes,
+    setSelectedColors,
+    setPrice,
+    setStartPrice,
+    setEndPrice,
+    setMileage,
+    setStagedStatus,
+    setStagedStartYear,
+    setStagedEndYear,
+    setStagedStartPrice,
+    setStagedEndPrice,
+    setStagedMileage,
+    setStagedGearboxes,
+    setStagedColors,
+    setSearchParams,
+  } = useSearch();
+  const resetFilters = () => {
+    setMake("Any_Makes");
+    setModel("Any_Models");
+    setStatus("Any");
+    setStagedStatus("Any");
+    setStartYear(MIN_YEAR);
+    setEndYear(MAX_YEAR);
+    setSelectedGearboxes([]);
+    setSelectedColors([]);
     setPrice("All_Prices");
     setStartPrice(null);
     setEndPrice(null);
     setMileage(null);
+    setStagedStartYear(MIN_YEAR);
+    setStagedEndYear(MAX_YEAR);
+    setStagedGearboxes([]);
+    setStagedMileage(null);
+    setStagedStartPrice(null);
+    setStagedEndPrice(null);
+    setStagedColors([]);
+    setSearchParams({
+      pageSize: PAGE_SIZE,
+      offset: 0,
+      make: "Any_Makes",
+      model: "Any_Models",
+      startPrice: null,
+      endPrice: null,
+      status: "Any",
+      mileage: null,
+      startYear: MIN_YEAR,
+      endYear: MAX_YEAR,
+      sortOrder: null,
+      gearbox: convertArrayToString([]),
+      selectedColor: convertArrayToString([]),
+    });
   };
+
+  const redirectToHome = () => {
+    router.push("/");
+    resetFilters();
+  };
+
   const navbarItems = t("navbar.navItems");
 
   const [userName, setUserName] = useState<string | null>(null);

@@ -74,14 +74,20 @@ export function getUniqueFuelTypes(vehicles: Vehicle[]) {
   const uniqueFuelTypes = [...new Set(fuelTypes)];
   return uniqueFuelTypes;
 }
-export function validateName(value: string, label: string) {
-  if (value.trim() === "") {
+export function validateName(value: string, label: string, required = true) {
+  const trimmedValue = value.trim();
+
+  if (required && trimmedValue === "") {
     return `${label} is required.`;
-  } else if (!/^[A-Za-z _]+$/.test(value.trim())) {
+  }
+
+  if (trimmedValue !== "" && !/^[A-Za-z _]+$/.test(trimmedValue)) {
     return `${label} must contain only letters, spaces, or underscores.`;
   }
+
   return "";
 }
+
 export function validatePostCode(value: string): string {
   const trimmed = value.trim();
 
