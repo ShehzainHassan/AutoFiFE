@@ -13,17 +13,11 @@ export default function ExploreVehicles() {
   const [selectedTab, setSelectedTab] = useState<string>(TABS[0]);
   const router = useRouter();
   const {
-    mileage,
+    mainSearch,
     searchParams,
-    setMake,
-    setModel,
     setSearchParams,
     setExpandedSections,
-    setStatus,
-    setStartYear,
-    setEndYear,
-    setSelectedGearboxes,
-    setSelectedColors,
+    setMainSearch,
   } = useSearch();
   const handleViewAll = () => {
     const parsedStatus = parseStatus(selectedTab);
@@ -33,7 +27,7 @@ export default function ExploreVehicles() {
       model: "Any_Models",
       offset: 0,
       status: parsedStatus,
-      mileage,
+      mileage: mainSearch.mileage,
       startYear: MIN_YEAR,
       endYear: MAX_YEAR,
       gearbox: convertArrayToString([]),
@@ -41,13 +35,16 @@ export default function ExploreVehicles() {
     });
     setExpandedSections(new Set());
 
-    setMake("Any_Makes");
-    setModel("Any_Models");
-    setStatus(parsedStatus);
-    setStartYear(MIN_YEAR);
-    setEndYear(MAX_YEAR);
-    setSelectedColors([]);
-    setSelectedGearboxes([]);
+    setMainSearch((prev) => ({
+      ...prev,
+      make: "Any_Makes",
+      model: "Any_Models",
+      status: parsedStatus,
+      startYear: MIN_YEAR,
+      endYear: MAX_YEAR,
+      selectedColors: [],
+      selectedGearboxes: [],
+    }));
 
     router.push(
       `/search?make=${selectedTab}&model=Any_Models&status=${parsedStatus}`

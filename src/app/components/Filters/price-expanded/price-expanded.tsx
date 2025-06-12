@@ -6,18 +6,11 @@ import { useState } from "react";
 import classes from "./price-expanded.module.css";
 
 export default function PriceExpanded() {
-  const {
-    stagedStartPrice,
-    stagedEndPrice,
-    setPrice,
-    setStagedStartPrice,
-    setStagedEndPrice,
-  } = useSearch();
+  const { mainSearch, setStagedSearch, setMainSearch } = useSearch();
   const [localRange, setLocalRange] = useState<[number, number]>([
-    stagedStartPrice ?? MIN_PRICE,
-    stagedEndPrice ?? MAX_PRICE,
+    mainSearch.startPrice ?? MIN_PRICE,
+    mainSearch.endPrice ?? MAX_PRICE,
   ]);
-
   const getDisplayText = () => {
     const [min, max] = localRange;
     if (min === 0 && max === 0) return "$0";
@@ -35,31 +28,41 @@ export default function PriceExpanded() {
       setLocalRange(value as [number, number]);
     }
   };
-
   const handleChangeCommitted = (
     _: React.SyntheticEvent | Event,
     value: number | number[]
   ) => {
     if (Array.isArray(value)) {
       const [min, max] = value;
-      setStagedStartPrice(min === MIN_PRICE ? null : min);
-      setStagedEndPrice(max === MAX_PRICE ? null : max);
-
+      setStagedSearch((prev) => ({
+        ...prev,
+        stagedStartPrice: min === MIN_PRICE ? null : min,
+        stagedEndPrice: max === MAX_PRICE ? null : max,
+      }));
       let priceText = "All_Prices";
       if (min === 0 && max === 0) priceText = "0";
       else if (min === MIN_PRICE && max !== MAX_PRICE) priceText = `<${max}`;
       else if (min !== MIN_PRICE && max === MAX_PRICE) priceText = `>${min}`;
       else if (min !== MIN_PRICE && max !== MAX_PRICE)
         priceText = `${min}-${max}`;
-      setPrice(priceText);
+      setMainSearch({
+        ...mainSearch,
+        price: priceText,
+      });
     }
   };
 
   const handleClear = () => {
     setLocalRange([MIN_PRICE, MAX_PRICE]);
-    setStagedStartPrice(null);
-    setStagedEndPrice(null);
-    setPrice("All_Prices");
+    setStagedSearch((prev) => ({
+      ...prev,
+      stagedStartPrice: null,
+      stagedEndPrice: null,
+    }));
+    setMainSearch({
+      ...mainSearch,
+      price: "All_Prices",
+    });
   };
 
   return (

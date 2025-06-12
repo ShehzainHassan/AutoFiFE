@@ -1,4 +1,4 @@
-import { MODEL_OPTIONS } from "@/constants";
+import { CURRENCY, MODEL_OPTIONS } from "@/constants";
 import { Options } from "@/interfaces/dropdown-options";
 import { Vehicle } from "@/interfaces/vehicle";
 import axios from "axios";
@@ -74,6 +74,18 @@ export function getUniqueFuelTypes(vehicles: Vehicle[]) {
   const uniqueFuelTypes = [...new Set(fuelTypes)];
   return uniqueFuelTypes;
 }
+export function getAveragePrice(vehicles: Vehicle[]) {
+  const price = vehicles.map((vehicle) => vehicle.price);
+  const avg = price.reduce((sum, num) => sum + num, 0) / price.length;
+  return `${CURRENCY}${avg.toLocaleString()}`;
+}
+export function getRange(vehicles: Vehicle[]) {
+  const prices = vehicles.map((vehicle) => vehicle.price);
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+  return { min, max };
+}
+
 export function validateName(value: string, label: string, required = true) {
   const trimmedValue = value.trim();
 

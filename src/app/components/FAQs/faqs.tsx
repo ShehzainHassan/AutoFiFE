@@ -1,40 +1,56 @@
+import { useSearch } from "@/contexts/car-search-context";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
 import {
+  getAveragePrice,
   getFAQTitle,
+  getRange,
   getUniqueFuelTypes,
   getVehicleText,
 } from "@/utilities/utilities";
-import classes from "./faqs.module.css";
 import EmptyState from "../empty-state/empty-state";
-import { FAQProps } from "./faqs.types";
 import ErrorMessage from "../error-message/error-message";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
+import classes from "./faqs.module.css";
+import { FAQProps } from "./faqs.types";
+import { CURRENCY } from "@/constants";
 
-export default function FAQs({ make, model, searchParams }: FAQProps) {
+export default function FAQs({ searchParams }: FAQProps) {
+  const { mainSearch } = useSearch();
+
   const { data, isLoading, error } = useSearchVehicles(searchParams);
   if (isLoading) return <LoadingSpinner color="var(--color-black100)" />;
   if (!data) return <EmptyState message="No FAQs found" />;
   if (error) return <ErrorMessage message={error.message} />;
-  const fuelTypes = getUniqueFuelTypes(data);
+  const fuelTypes = getUniqueFuelTypes(Array.isArray(data) ? data : [data]);
+  const { min, max } = getRange(Array.isArray(data) ? data : [data]);
   return (
     <div className={classes.faqs}>
-      <h2 className={`${classes.bold}`}>{getFAQTitle(make, model)} FAQs</h2>
+      <h2 className={`${classes.bold}`}>
+        {getFAQTitle(mainSearch.make, mainSearch.model)} FAQs
+      </h2>
       <p className={`${classes.bold}`}>
-        How much does the {getVehicleText(make, model)} cost?
+        How much does the {getVehicleText(mainSearch.make, mainSearch.model)}{" "}
+        cost?
       </p>
       <p>
-        The average {getVehicleText(make, model)} costs about $29,299.08. The
+        The average {getVehicleText(mainSearch.make, mainSearch.model)} costs
+        about {getAveragePrice(Array.isArray(data) ? data : [data])}. The
         average price has decreased by -7.6% since last year. The 16 for sale on
-        CarGurus range from $11,995 to $69,950 in price.
+        CarGurus range from {`${CURRENCY}${min.toLocaleString()}`} to{" "}
+        {`${CURRENCY}${max.toLocaleString()}`} in price.
       </p>
       <p className={`${classes.bold}`}>
-        How many {getVehicleText(make, model)} vehicles have no reported
-        accidents or damage?
+        How many {getVehicleText(mainSearch.make, mainSearch.model)} vehicles
+        have no reported accidents or damage?
       </p>
       <p>16 out of 16 for sale have no reported accidents or damage</p>
       <p className={`${classes.bold}`}>What fuel types are available?</p>
       <div className={classes.fuelTypes}>
-        <p>{fuelTypes.join(", ")} are available</p>
+        {Array.isArray(data) && data.length === 1 ? (
+          <p>{fuelTypes.join(", ")} is available</p>
+        ) : (
+          <p>{fuelTypes.join(", ")} are available</p>
+        )}
       </div>
     </div>
   );

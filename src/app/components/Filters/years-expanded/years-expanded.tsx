@@ -6,12 +6,8 @@ import classes from "./years-expanded.module.css";
 import { Dropdown } from "../../dropdown";
 
 export default function YearsExpanded() {
-  const {
-    stagedStartYear,
-    stagedEndYear,
-    setStagedStartYear,
-    setStagedEndYear,
-  } = useSearch();
+  const { stagedSearch, setStagedSearch } = useSearch();
+  const { stagedStartYear, stagedEndYear } = stagedSearch;
 
   const startYearOptions = generateYearOptions(
     MIN_YEAR,
@@ -29,18 +25,33 @@ export default function YearsExpanded() {
     value: opt.value.toString(),
   }));
 
+  const handleStartYearChange = (value: string) => {
+    const newStart = Number(value);
+    setStagedSearch((prev) => {
+      const updated = { ...prev, stagedStartYear: newStart };
+      if (prev.stagedEndYear !== null && newStart > prev.stagedEndYear) {
+        updated.stagedEndYear = newStart;
+      }
+      return updated;
+    });
+  };
+
+  const handleEndYearChange = (value: string) => {
+    const newEnd = Number(value);
+    setStagedSearch((prev) => {
+      const updated = { ...prev, stagedEndYear: newEnd };
+      if (prev.stagedStartYear !== null && newEnd < prev.stagedStartYear) {
+        updated.stagedStartYear = newEnd;
+      }
+      return updated;
+    });
+  };
+
   return (
     <div className={classes.yearsContainer}>
       <Dropdown
         value={stagedStartYear?.toString()}
-        onChange={(value) => {
-          const newStart = Number(value);
-          setStagedStartYear(newStart);
-
-          if (stagedEndYear !== null && newStart > stagedEndYear) {
-            setStagedEndYear(newStart);
-          }
-        }}
+        onChange={handleStartYearChange}
         placeholder="Select start year">
         <Dropdown.Label>Min</Dropdown.Label>
         <Dropdown.Select options={startYearOptions} />
@@ -48,13 +59,7 @@ export default function YearsExpanded() {
 
       <Dropdown
         value={stagedEndYear?.toString()}
-        onChange={(value) => {
-          const newEnd = Number(value);
-          setStagedEndYear(newEnd);
-          if (stagedStartYear !== null && newEnd < stagedStartYear) {
-            setStagedStartYear(newEnd);
-          }
-        }}
+        onChange={handleEndYearChange}
         placeholder="Select end year">
         <Dropdown.Label>Max</Dropdown.Label>
         <Dropdown.Select options={endYearOptions} />

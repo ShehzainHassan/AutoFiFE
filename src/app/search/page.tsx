@@ -46,135 +46,102 @@ export default function Search() {
   const [selectedInfoTab, setSelectedInfoTab] = useState(carInfoTabs[0]);
   // const [postCode, setPostCode] = useState<number>(0);
   const {
-    make,
-    model,
-    price,
-    startPrice,
-    endPrice,
-    mileage,
-    startYear,
-    endYear,
-    status,
-    selectedGearboxes,
-    stagedGearboxes,
-    selectedColors,
+    mainSearch,
     searchParams,
-    stagedStatus,
-    stagedStartYear,
-    stagedEndYear,
-    stagedMileage,
-    stagedStartPrice,
-    stagedEndPrice,
-    stagedColors,
-    setMake,
-    setModel,
+    stagedSearch,
+    setMainSearch,
     setSearchParams,
     setExpandedSections,
-    setSelectedGearboxes,
-    setStatus,
-    setStartYear,
-    setEndYear,
-    setMileage,
-    setStartPrice,
-    setEndPrice,
-    setSelectedColors,
-    setGearboxesCount,
-    setColorsCount,
     setAllColors,
+    setCounts,
+    setStagedSearch,
   } = useSearch();
   const router = useRouter();
-  const [resultText, setResultText] = useState(getResultTitle(make, model));
   const [submittedParams, setSubmittedParams] = useState(searchParams);
-  const [submittedMake, setSubmittedMake] = useState(make);
-  const [submittedModel, setSubmittedModel] = useState(model);
-
   const filters: VehicleFilter = useMemo(
     () => ({
-      make,
-      model,
-      startPrice,
-      endPrice,
-      mileage,
-      startYear,
-      endYear,
-      gearbox: convertArrayToString(selectedGearboxes),
-      selectedColors: convertArrayToString(selectedColors),
-      status,
+      make: mainSearch.make,
+      model: mainSearch.model,
+      startPrice: mainSearch.startPrice,
+      endPrice: mainSearch.endPrice,
+      mileage: mainSearch.mileage,
+      startYear: mainSearch.startYear,
+      endYear: mainSearch.endYear,
+      gearbox: convertArrayToString(mainSearch.selectedGearboxes),
+      selectedColors: convertArrayToString(mainSearch.selectedColors),
+      status: mainSearch.status,
     }),
-    [
-      make,
-      model,
-      startPrice,
-      endPrice,
-      mileage,
-      startYear,
-      endYear,
-      selectedGearboxes,
-      selectedColors,
-      status,
-    ]
+    [mainSearch]
+  );
+  const [resultText, setResultText] = useState(
+    getResultTitle(mainSearch.make, mainSearch.model)
   );
   const { data: gearboxesCount } = useGearboxCount(filters);
   const { data: colorsCount } = useVehicleColorCount(filters);
   const { data: allColors } = useAllColors();
   useEffect(() => {
-    if (gearboxesCount) setGearboxesCount(gearboxesCount);
-    if (colorsCount) setColorsCount(colorsCount);
+    if (gearboxesCount) setCounts((prev) => ({ ...prev, gearboxesCount }));
+    if (colorsCount) setCounts((prev) => ({ ...prev, colorsCount }));
     if (allColors) setAllColors(allColors);
-  }, [
-    gearboxesCount,
-    colorsCount,
-    allColors,
-    setGearboxesCount,
-    setColorsCount,
-    setAllColors,
-  ]);
+  }, [gearboxesCount, colorsCount, allColors, setCounts, setAllColors]);
 
   const handleSearchClick = () => {
     const newParams = {
       ...searchParams,
-      make: submittedMake,
+      make: stagedSearch.stagedMake,
       offset: 0,
-      model: submittedModel,
-      startPrice: stagedStartPrice,
-      endPrice: stagedEndPrice,
-      status: stagedStatus,
-      mileage: stagedMileage,
-      startYear: stagedStartYear,
-      endYear: stagedEndYear,
-      gearbox: convertArrayToString(stagedGearboxes),
-      selectedColor: convertArrayToString(stagedColors),
+      model: stagedSearch.stagedModel,
+      startPrice: stagedSearch.stagedStartPrice,
+      endPrice: stagedSearch.stagedEndPrice,
+      status: stagedSearch.stagedStatus,
+      mileage: stagedSearch.stagedMileage,
+      startYear: stagedSearch.stagedStartYear,
+      endYear: stagedSearch.stagedEndYear,
+      gearbox: convertArrayToString(stagedSearch.stagedGearboxes),
+      selectedColor: convertArrayToString(stagedSearch.stagedColors),
     };
-    setSelectedGearboxes(stagedGearboxes);
-    setMake(submittedMake);
-    setModel(submittedModel);
+    setMainSearch({
+      ...mainSearch,
+      make: stagedSearch.stagedMake,
+      model: stagedSearch.stagedModel,
+      startPrice: stagedSearch.stagedStartPrice,
+      endPrice: stagedSearch.stagedEndPrice,
+      status: stagedSearch.stagedStatus,
+      mileage: stagedSearch.stagedMileage,
+      startYear: stagedSearch.stagedStartYear,
+      endYear: stagedSearch.stagedEndYear,
+      selectedGearboxes: stagedSearch.stagedGearboxes,
+      selectedColors: stagedSearch.stagedColors,
+    });
     setSearchParams(newParams);
     setSubmittedParams(newParams);
     setExpandedSections(new Set());
-    setStatus(stagedStatus);
-    setStartYear(stagedStartYear);
-    setEndYear(stagedEndYear);
-    setResultText(getResultTitle(make, model));
-    setMileage(stagedMileage);
-    setStartPrice(stagedStartPrice);
-    setEndPrice(stagedEndPrice);
-    setSelectedColors(stagedColors);
+    setResultText(
+      getResultTitle(stagedSearch.stagedMake, stagedSearch.stagedModel)
+    );
     let mileageText = "Any";
-    if (stagedMileage) {
-      mileageText = `<=${stagedMileage}`;
-    } else if (stagedMileage === 0) {
+    if (stagedSearch.stagedMileage) {
+      mileageText = `<=${stagedSearch.stagedMileage}`;
+    } else if (stagedSearch.stagedMileage === 0) {
       mileageText = "0";
     }
     let gearboxText = "Any";
-    if (stagedGearboxes.length > 0 && stagedGearboxes.length !== 3) {
-      gearboxText = stagedGearboxes.join(",");
+    if (
+      stagedSearch.stagedGearboxes.length > 0 &&
+      stagedSearch.stagedGearboxes.length !== 3
+    ) {
+      gearboxText = stagedSearch.stagedGearboxes.join(",");
     }
     let colorsText = "Any";
-    if (stagedColors.length > 0 && stagedColors.length !== 16) {
-      colorsText = stagedColors.join(",");
+    if (
+      stagedSearch.stagedColors.length > 0 &&
+      stagedSearch.stagedColors.length !== 16
+    ) {
+      colorsText = stagedSearch.stagedColors.join(",");
     }
+
     router.push(
-      `/search?make=${submittedMake}&model=${submittedModel}&price=${price}&mileage=${mileageText}&startYear=${stagedStartYear}&endYear=${stagedEndYear}&gearbox=${gearboxText}&colors=${colorsText}&status=${stagedStatus}`
+      `/search?make=${stagedSearch.stagedMake}&model=${stagedSearch.stagedModel}&price=${mainSearch.price}&mileage=${mileageText}&startYear=${stagedSearch.stagedStartYear}&endYear=${stagedSearch.stagedEndYear}&gearbox=${gearboxText}&colors=${colorsText}&status=${stagedSearch.stagedStatus}`
     );
   };
 
@@ -202,10 +169,13 @@ export default function Search() {
 
     return (
       <Dropdown
-        value={submittedMake}
+        value={stagedSearch.stagedMake}
         onChange={(value) => {
-          setSubmittedMake(value);
-          setSubmittedModel("Any_Models");
+          setStagedSearch({
+            ...stagedSearch,
+            stagedMake: value,
+            stagedModel: "Any_Models",
+          });
         }}
         placeholder="Select make">
         <Dropdown.Label>Make</Dropdown.Label>
@@ -220,8 +190,13 @@ export default function Search() {
     );
     return (
       <Dropdown
-        value={submittedModel}
-        onChange={setSubmittedModel}
+        value={stagedSearch.stagedModel}
+        onChange={(value) => {
+          setStagedSearch({
+            ...stagedSearch,
+            stagedModel: value,
+          });
+        }}
         placeholder="Select model">
         <Dropdown.Label>Model</Dropdown.Label>
         <Dropdown.Select options={modelOptions} />
@@ -252,7 +227,7 @@ export default function Search() {
       <div className={classes.filters}>
         {/* <ShowTabs /> */}
         <MakeDropdown />
-        <ModelDropdown make={submittedMake} />
+        <ModelDropdown make={stagedSearch.stagedMake} />
         {/* <InputPostcode /> */}
         <SearchButton />
       </div>
@@ -318,7 +293,7 @@ export default function Search() {
           selectedTabColor="var(--color-blue400)"
           selectedTabBorderColor="var(--color-blue400)"
         />
-        <FAQs make={make} model={model} searchParams={submittedParams} />
+        <FAQs searchParams={submittedParams} />
       </Wrapper>
     );
   };

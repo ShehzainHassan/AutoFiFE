@@ -1,6 +1,5 @@
 import { SearchParams } from "@/interfaces/search-params";
-
-export type CarSearchContextType = {
+export type MainSearchState = {
   make: string;
   model: string;
   price: string;
@@ -11,12 +10,13 @@ export type CarSearchContextType = {
   sortOrder: string | null;
   startYear: number;
   endYear: number;
-  expandedSections: Set<string>;
   selectedGearboxes: string[];
   selectedColors: string[];
-  searchParams: SearchParams;
-  gearboxesCount: Record<string, number>;
-  colorsCount: Record<string, number>;
+};
+
+export type StagedSearchState = {
+  stagedMake: string;
+  stagedModel: string;
   stagedStatus: string;
   stagedStartYear: number;
   stagedEndYear: number;
@@ -25,30 +25,24 @@ export type CarSearchContextType = {
   stagedMileage: number | null;
   stagedGearboxes: string[];
   stagedColors: string[];
+};
+
+export type CountsState = {
+  gearboxesCount: Record<string, number>;
+  colorsCount: Record<string, number>;
+};
+
+export type CarSearchContextType = {
+  mainSearch: MainSearchState;
+  stagedSearch: StagedSearchState;
+  counts: CountsState;
+  expandedSections: Set<string>;
   allColors: string[];
-  setAllColors: (value: string[]) => void;
-  setMake: (value: string) => void;
-  setModel: (value: string) => void;
-  setPrice: (value: string) => void;
-  setStartPrice: (value: number | null) => void;
-  setEndPrice: (value: number | null) => void;
-  setStatus: (value: string) => void;
-  setMileage: (value: number | null) => void;
-  setSearchParams: (value: SearchParams) => void;
-  setSortOrder: (value: string) => void;
-  setStartYear: (value: number) => void;
-  setEndYear: (value: number) => void;
+  searchParams: SearchParams;
+  setMainSearch: React.Dispatch<React.SetStateAction<MainSearchState>>;
+  setStagedSearch: React.Dispatch<React.SetStateAction<StagedSearchState>>;
+  setCounts: React.Dispatch<React.SetStateAction<CountsState>>;
   setExpandedSections: (value: Set<string>) => void;
-  setSelectedGearboxes: (value: string[]) => void;
-  setSelectedColors: (value: string[]) => void;
-  setGearboxesCount: (value: Record<string, number>) => void;
-  setColorsCount: (value: Record<string, number>) => void;
-  setStagedStatus: (value: string) => void;
-  setStagedStartYear: (value: number) => void;
-  setStagedEndYear: (value: number) => void;
-  setStagedStartPrice: (value: number | null) => void;
-  setStagedEndPrice: (value: number | null) => void;
-  setStagedMileage: (value: number | null) => void;
-  setStagedGearboxes: (value: string[]) => void;
-  setStagedColors: (value: string[]) => void;
+  setAllColors: (value: string[]) => void;
+  setSearchParams: (value: SearchParams) => void;
 };

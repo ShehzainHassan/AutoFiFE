@@ -4,14 +4,23 @@ import { Checkbox, FormControl, FormControlLabel } from "@mui/material";
 import classes from "./status-expanded.module.css";
 
 export default function StatusExpanded() {
-  const { stagedStatus, setStagedStatus } = useSearch();
+  const { stagedSearch, setStagedSearch } = useSearch();
+  const selectedStatus = stagedSearch.stagedStatus;
+
+  const handleChange = (status: string) => {
+    setStagedSearch((prev) => ({
+      ...prev,
+      stagedStatus: status,
+    }));
+  };
+
   return (
     <FormControl component="fieldset" className={classes.options}>
       <FormControlLabel
         control={
           <Checkbox
-            checked={stagedStatus === "Any"}
-            onChange={() => setStagedStatus("Any")}
+            checked={selectedStatus === "Any"}
+            onChange={() => handleChange("Any")}
           />
         }
         label="Any"
@@ -19,8 +28,8 @@ export default function StatusExpanded() {
       <FormControlLabel
         control={
           <Checkbox
-            checked={stagedStatus === "New"}
-            onChange={() => setStagedStatus("New")}
+            checked={selectedStatus === "New"}
+            onChange={() => handleChange("New")}
           />
         }
         label="New"
@@ -28,8 +37,8 @@ export default function StatusExpanded() {
       <FormControlLabel
         control={
           <Checkbox
-            checked={stagedStatus === "Used"}
-            onChange={() => setStagedStatus("Used")}
+            checked={selectedStatus === "Used"}
+            onChange={() => handleChange("Used")}
           />
         }
         label="Used"

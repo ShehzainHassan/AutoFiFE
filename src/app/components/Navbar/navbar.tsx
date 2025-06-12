@@ -16,48 +16,35 @@ export default function Navbar({
 }: NavbarProps) {
   const { t } = useTranslation();
   const router = useRouter();
-  const {
-    setMake,
-    setModel,
-    setStatus,
-    setStartYear,
-    setEndYear,
-    setSelectedGearboxes,
-    setSelectedColors,
-    setPrice,
-    setStartPrice,
-    setEndPrice,
-    setMileage,
-    setStagedStatus,
-    setStagedStartYear,
-    setStagedEndYear,
-    setStagedStartPrice,
-    setStagedEndPrice,
-    setStagedMileage,
-    setStagedGearboxes,
-    setStagedColors,
-    setSearchParams,
-  } = useSearch();
+  const { mainSearch, setMainSearch, setStagedSearch, setSearchParams } =
+    useSearch();
   const resetFilters = () => {
-    setMake("Any_Makes");
-    setModel("Any_Models");
-    setStatus("Any");
-    setStagedStatus("Any");
-    setStartYear(MIN_YEAR);
-    setEndYear(MAX_YEAR);
-    setSelectedGearboxes([]);
-    setSelectedColors([]);
-    setPrice("All_Prices");
-    setStartPrice(null);
-    setEndPrice(null);
-    setMileage(null);
-    setStagedStartYear(MIN_YEAR);
-    setStagedEndYear(MAX_YEAR);
-    setStagedGearboxes([]);
-    setStagedMileage(null);
-    setStagedStartPrice(null);
-    setStagedEndPrice(null);
-    setStagedColors([]);
+    setMainSearch({
+      make: "Any_Makes",
+      model: "Any_Models",
+      status: "Any",
+      startYear: MIN_YEAR,
+      endYear: MAX_YEAR,
+      selectedGearboxes: [],
+      selectedColors: [],
+      price: "All_Prices",
+      startPrice: null,
+      endPrice: null,
+      mileage: null,
+      sortOrder: null,
+    });
+    setStagedSearch({
+      stagedMake: "Any_Makes",
+      stagedModel: "Any_Models",
+      stagedStatus: "Any",
+      stagedStartYear: MIN_YEAR,
+      stagedEndYear: MAX_YEAR,
+      stagedGearboxes: [],
+      stagedColors: [],
+      stagedStartPrice: null,
+      stagedEndPrice: null,
+      stagedMileage: null,
+    });
     setSearchParams({
       pageSize: PAGE_SIZE,
       offset: 0,
@@ -77,7 +64,9 @@ export default function Navbar({
 
   const redirectToHome = () => {
     router.push("/");
-    resetFilters();
+    setTimeout(() => {
+      resetFilters();
+    }, 2000);
   };
 
   const navbarItems = t("navbar.navItems");
@@ -107,10 +96,13 @@ export default function Navbar({
   const handleLogout = () => {
     localStorage.removeItem("authData");
     setShowLogout(false);
-    setPrice("All_Prices");
-    setStartPrice(null);
-    setEndPrice(null);
-    setMileage(null);
+    setMainSearch({
+      ...mainSearch,
+      price: "All_Prices",
+      startPrice: null,
+      endPrice: null,
+      mileage: null,
+    });
     window.location.reload();
   };
   const [menuOpen, setMenuOpen] = useState(false);

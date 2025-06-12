@@ -10,21 +10,26 @@ import classes from "../gearbox-expanded/gearbox-expanded.module.css";
 import colorClasses from "./colors-expanded.module.css";
 
 export default function ColorsExpanded() {
-  const { stagedColors, setStagedColors, colorsCount, allColors } = useSearch();
+  const { stagedSearch, setStagedSearch, counts, allColors } = useSearch();
 
   const handleCheckboxChange = (color: string, checked: boolean) => {
-    if (checked) {
-      setStagedColors([...stagedColors, color]);
-    } else {
-      setStagedColors(stagedColors.filter((c) => c !== color));
-    }
+    setStagedSearch((prev) => {
+      const updatedColors = checked
+        ? [...prev.stagedColors, color]
+        : prev.stagedColors.filter((c) => c !== color);
+
+      return {
+        ...prev,
+        stagedColors: updatedColors,
+      };
+    });
   };
 
   return (
     <div className={`${classes.gearboxContainer}`}>
       <FormGroup>
         {allColors.map((color: string) => {
-          const count = colorsCount?.[color] || 0;
+          const count = counts?.colorsCount?.[color] || 0;
           const isDisabled = count === 0;
 
           return (
@@ -33,7 +38,7 @@ export default function ColorsExpanded() {
               control={
                 <Checkbox
                   value={color}
-                  checked={stagedColors.includes(color)}
+                  checked={stagedSearch.stagedColors.includes(color)}
                   onChange={(e) =>
                     handleCheckboxChange(color, e.target.checked)
                   }

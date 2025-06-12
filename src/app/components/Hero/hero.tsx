@@ -12,30 +12,31 @@ import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
 import Navbar from "../navbar/navbar";
 import SearchForm from "../search-form/search-form";
 import classes from "./hero.module.css";
+
 export default function Hero() {
   const { t } = useTranslation();
   const router = useRouter();
   const tabs = ["All", "New", "Used"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
-  const {
-    searchParams,
-    setMake,
-    setModel,
-    setStartPrice,
-    setEndPrice,
-    setSearchParams,
-  } = useSearch();
+
+  const { mainSearch, setMainSearch, searchParams, setSearchParams } =
+    useSearch();
+
   const handleCarModelClick = (model: string) => {
     const make = getMakeByModel(model);
-    setMake(make);
-    setModel(model);
-    setStartPrice(null);
-    setEndPrice(null);
+    setMainSearch({
+      ...mainSearch,
+      make,
+      model,
+      startPrice: null,
+      endPrice: null,
+    });
     setSearchParams({
       ...searchParams,
       make,
       model,
     });
+
     router.push(`/search?make=${make}&model=${model}`);
   };
 

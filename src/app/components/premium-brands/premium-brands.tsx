@@ -13,23 +13,20 @@ const PLACEHOLDER_IMG = "/images/brands/placeholder.png";
 
 export default function PremiumBrands() {
   const router = useRouter();
-  const {
-    searchParams,
-    setMake,
-    setModel,
-    setStartPrice,
-    setEndPrice,
-    setSearchParams,
-  } = useSearch();
+  const { mainSearch, searchParams, setMainSearch, setSearchParams } =
+    useSearch();
 
   const [showAllBrands, setShowAllBrands] = useState(false);
   const { data: allMakes, isLoading, refetch } = useGetAllMakes();
 
   const handleBrandClick = (make: string) => {
-    setMake(make);
-    setModel("Any_Models");
-    setStartPrice(null);
-    setEndPrice(null);
+    setMainSearch({
+      ...mainSearch,
+      make,
+      model: "Any_Models",
+      startPrice: null,
+      endPrice: null,
+    });
     setSearchParams({
       ...searchParams,
       make,

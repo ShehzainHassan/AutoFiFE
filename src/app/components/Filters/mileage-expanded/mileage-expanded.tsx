@@ -6,9 +6,11 @@ import { useState } from "react";
 import classes from "../price-expanded/price-expanded.module.css";
 
 export default function MileageExpanded() {
-  const { stagedMileage, setStagedMileage } = useSearch();
+  const { stagedSearch, setStagedSearch } = useSearch();
   const [localMileage, setLocalMileage] = useState(
-    stagedMileage === null ? MAX_MILEAGE : stagedMileage
+    stagedSearch.stagedMileage === null
+      ? MAX_MILEAGE
+      : stagedSearch.stagedMileage
   );
 
   const getDisplayText = () => {
@@ -29,12 +31,18 @@ export default function MileageExpanded() {
     value: number | number[]
   ) => {
     const newMileage = value as number;
-    setStagedMileage(newMileage >= MAX_MILEAGE ? null : newMileage);
+    setStagedSearch((prev) => ({
+      ...prev,
+      stagedMileage: newMileage >= MAX_MILEAGE ? null : newMileage,
+    }));
   };
 
   const handleClear = () => {
     setLocalMileage(MAX_MILEAGE);
-    setStagedMileage(null);
+    setStagedSearch((prev) => ({
+      ...prev,
+      stagedMileage: null,
+    }));
   };
 
   return (

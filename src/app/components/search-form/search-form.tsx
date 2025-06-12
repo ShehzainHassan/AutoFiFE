@@ -20,41 +20,39 @@ import CustomDropdownIndicator from "../dropdown-indicator/dropdown-indicator";
 import ButtonPrimary from "../buttons/button-primary/button-primary";
 
 export default function SearchForm({ statusTab }: SearchFormProps) {
-  const {
-    make,
-    model,
-    price,
-    searchParams,
-    setMake,
-    setModel,
-    setPrice,
-    setStartPrice,
-    setEndPrice,
-    setSearchParams,
-    setStatus,
-  } = useSearch();
+  const { mainSearch, setMainSearch, searchParams, setSearchParams } =
+    useSearch();
+
   const router = useRouter();
 
   const handleSearchClick = () => {
-    const { startPrice, endPrice } = getPriceRange(price);
+    const { startPrice, endPrice } = getPriceRange(mainSearch.price);
     const status = parseStatus(statusTab);
-    setStartPrice(startPrice);
-    setEndPrice(endPrice);
+    const updatedSearch = {
+      ...mainSearch,
+      startPrice: startPrice,
+      endPrice: endPrice,
+      status,
+    };
+
+    setMainSearch(updatedSearch);
+
     setSearchParams({
       ...searchParams,
-      make,
-      model,
-      startPrice,
-      status,
-      endPrice,
+      make: updatedSearch.make,
+      model: updatedSearch.model,
+      status: updatedSearch.status,
+      startPrice: startPrice,
+      endPrice: endPrice,
     });
-    setStatus(status);
     router.push(
-      `/search?make=${make}&model=${model}&price=${price}&status=${status}`
+      `/search?make=${updatedSearch.make}&model=${updatedSearch.model}&price=${updatedSearch.price}&status=${updatedSearch.status}`
     );
   };
+
   const MakeDropdown = () => {
     const { data: makes, isLoading } = useGetAllMakes();
+
     const loadMakeOptions = useMemo(() => {
       if (isLoading) {
         return [{ label: "Any Makes", value: "Any_Makes" }];
@@ -67,11 +65,14 @@ export default function SearchForm({ statusTab }: SearchFormProps) {
     return (
       <div className={classes.criteriaContainer}>
         <Dropdown
-          value={make}
-          onChange={(value) => {
-            setMake(value);
-            setModel("Any_Models");
-          }}
+          value={mainSearch.make}
+          onChange={(value) =>
+            setMainSearch((prev) => ({
+              ...prev,
+              make: value,
+              model: "Any_Models",
+            }))
+          }
           placeholder="Select make">
           <Dropdown.Select
             options={loadMakeOptions}
@@ -79,22 +80,24 @@ export default function SearchForm({ statusTab }: SearchFormProps) {
             components={{ DropdownIndicator: CustomDropdownIndicator }}
           />
         </Dropdown>
-
         <div className={classes.verticalBorder} />
       </div>
     );
   };
+
   const ModelDropdown = ({ make }: { make: string }) => {
     const modelOptions = useMemo(
       () => getModelOptions(make ?? "Any_Makes"),
       [make]
     );
+
     return (
       <div className={classes.criteriaContainer}>
         <Dropdown
-          key={model}
-          value={model ?? "Any_Models"}
-          onChange={setModel}
+          value={mainSearch.model}
+          onChange={(value) =>
+            setMainSearch((prev) => ({ ...prev, model: value }))
+          }
           placeholder="Select model">
           <Dropdown.Select
             options={modelOptions}
@@ -106,10 +109,16 @@ export default function SearchForm({ statusTab }: SearchFormProps) {
       </div>
     );
   };
+
   const PriceDropdown = () => {
     return (
       <div className={classes.priceBtnContainer}>
-        <Dropdown value={price} onChange={setPrice} placeholder="Select price">
+        <Dropdown
+          value={mainSearch.price}
+          onChange={(value) =>
+            setMainSearch((prev) => ({ ...prev, price: value }))
+          }
+          placeholder="Select price">
           <Dropdown.Select
             options={PRICE_OPTIONS}
             styles={customSelectStyles}
@@ -119,6 +128,7 @@ export default function SearchForm({ statusTab }: SearchFormProps) {
       </div>
     );
   };
+
   const SearchButton = () => {
     return (
       <ThemeProvider value={BLUE_THEME}>
@@ -131,10 +141,11 @@ export default function SearchForm({ statusTab }: SearchFormProps) {
       </ThemeProvider>
     );
   };
+
   return (
     <div className={classes.container}>
       <MakeDropdown />
-      <ModelDropdown make={make} />
+      <ModelDropdown make={mainSearch.make} />
       <PriceDropdown />
       <SearchButton />
     </div>

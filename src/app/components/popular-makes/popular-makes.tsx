@@ -12,17 +12,11 @@ import SectionTitle from "../section-title/section-title";
 import classes from "./popular-makes.module.css";
 export default function PopularMakes() {
   const {
-    mileage,
+    mainSearch,
     searchParams,
-    setMake,
-    setModel,
     setSearchParams,
     setExpandedSections,
-    setStatus,
-    setStartYear,
-    setEndYear,
-    setSelectedGearboxes,
-    setSelectedColors,
+    setMainSearch,
   } = useSearch();
   const tabs = ["Audi", "Ford", "Mercedes-Benz"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
@@ -34,7 +28,7 @@ export default function PopularMakes() {
       offset: 0,
       model: "Any_Models",
       status: "Any",
-      mileage,
+      mileage: mainSearch.mileage,
       startYear: MIN_YEAR,
       endYear: MAX_YEAR,
       gearbox: convertArrayToString([]),
@@ -42,13 +36,16 @@ export default function PopularMakes() {
     });
     setExpandedSections(new Set());
 
-    setMake(selectedTab);
-    setModel("Any_Models");
-    setStatus("Any");
-    setStartYear(MIN_YEAR);
-    setEndYear(MAX_YEAR);
-    setSelectedColors([]);
-    setSelectedGearboxes([]);
+    setMainSearch({
+      ...mainSearch,
+      make: selectedTab,
+      model: "Any_Models",
+      status: "Any",
+      startYear: MIN_YEAR,
+      endYear: MAX_YEAR,
+      selectedColors: [],
+      selectedGearboxes: [],
+    });
     router.push(`/search?make=${selectedTab}&model=Any_Models`);
   };
   return (
