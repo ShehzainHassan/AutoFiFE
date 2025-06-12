@@ -6,11 +6,16 @@ import { useState } from "react";
 import classes from "./price-expanded.module.css";
 
 export default function PriceExpanded() {
-  const { startPrice, endPrice, setPrice, setStartPrice, setEndPrice } =
-    useSearch();
+  const {
+    stagedStartPrice,
+    stagedEndPrice,
+    setPrice,
+    setStagedStartPrice,
+    setStagedEndPrice,
+  } = useSearch();
   const [localRange, setLocalRange] = useState<[number, number]>([
-    startPrice ?? MIN_PRICE,
-    endPrice ?? MAX_PRICE,
+    stagedStartPrice ?? MIN_PRICE,
+    stagedEndPrice ?? MAX_PRICE,
   ]);
 
   const getDisplayText = () => {
@@ -37,8 +42,8 @@ export default function PriceExpanded() {
   ) => {
     if (Array.isArray(value)) {
       const [min, max] = value;
-      setStartPrice(min === MIN_PRICE ? null : min);
-      setEndPrice(max === MAX_PRICE ? null : max);
+      setStagedStartPrice(min === MIN_PRICE ? null : min);
+      setStagedEndPrice(max === MAX_PRICE ? null : max);
 
       let priceText = "All_Prices";
       if (min === 0 && max === 0) priceText = "0";
@@ -52,8 +57,8 @@ export default function PriceExpanded() {
 
   const handleClear = () => {
     setLocalRange([MIN_PRICE, MAX_PRICE]);
-    setStartPrice(null);
-    setEndPrice(null);
+    setStagedStartPrice(null);
+    setStagedEndPrice(null);
     setPrice("All_Prices");
   };
 

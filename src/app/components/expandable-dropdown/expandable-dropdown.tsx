@@ -25,6 +25,7 @@ export default function Expandable({ title, className }: ExpandableProps) {
     }
     setExpandedSections(newSet);
   };
+
   return (
     <div className={`${classes.mainContainer} ${className}`}>
       <div className={classes.container} onClick={toggleExpanded}>

@@ -13,10 +13,9 @@ import LoadingSpinner from "../loading-spinner/loading-spinner";
 export default function FAQs({ make, model, searchParams }: FAQProps) {
   const { data, isLoading, error } = useSearchVehicles(searchParams);
   if (isLoading) return <LoadingSpinner color="var(--color-black100)" />;
-  if (!data || data.totalCount === 0)
-    return <EmptyState message="No FAQs found" />;
+  if (!data) return <EmptyState message="No FAQs found" />;
   if (error) return <ErrorMessage message={error.message} />;
-  const fuelTypes = getUniqueFuelTypes(data.vehicles);
+  const fuelTypes = getUniqueFuelTypes(data);
   return (
     <div className={classes.faqs}>
       <h2 className={`${classes.bold}`}>{getFAQTitle(make, model)} FAQs</h2>

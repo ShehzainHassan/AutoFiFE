@@ -19,23 +19,23 @@ export default function LoadResults() {
   } = useSearchVehicles(searchParams);
 
   if (isLoading) return <LoadingSpinner color="var(--color-black100)" />;
-  if (!vehicleList || vehicleList.totalCount === 0)
-    return <EmptyState message="No vehicles found" />;
+  if (!vehicleList) return <EmptyState message="No vehicles found" />;
   if (isError) return <ErrorMessage message={error.message} />;
   return (
     <div className={classes.resultCards}>
-      {vehicleList?.vehicles.map((vehicle) => (
-        <div key={vehicle.id}>
-          <ResultCard
-            id={vehicle.id}
-            carImg="/images/Bentley-Arnage4.4.png"
-            miles={vehicle.mileage}
-            price={vehicle.price}
-            carTitle={`${vehicle.make} ${vehicle.model} ${vehicle.year}`}
-            vin={vehicle.vin}
-          />
-        </div>
-      ))}
+      {Array.isArray(vehicleList) &&
+        vehicleList.map((vehicle) => (
+          <div key={vehicle.id}>
+            <ResultCard
+              id={vehicle.id}
+              carImg="/images/Bentley-Arnage4.4.png"
+              miles={vehicle.mileage}
+              price={vehicle.price}
+              carTitle={`${vehicle.make} ${vehicle.model} ${vehicle.year}`}
+              vin={vehicle.vin}
+            />
+          </div>
+        ))}
       <ToastContainer />
     </div>
   );

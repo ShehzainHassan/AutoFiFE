@@ -1,8 +1,13 @@
 "use client";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
+import { useUserFavorites } from "@/contexts/user-favorites-context/user-favorites-context";
+import useAddUserSearch from "@/hooks/useAddUserSearch";
+import { useCurrentUrl } from "@/hooks/useCurrentUrl";
+import useDeleteUserSearch from "@/hooks/useDeleteUserSearch";
 import useGetAllMakes from "@/hooks/useGetAllMakes";
-import useSearchVehicles from "@/hooks/useSearchVehicles";
+import useVehicleCount from "@/hooks/useVehicleCount";
+import { VehicleFilter } from "@/interfaces/vehicle";
 import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
 import {
@@ -14,27 +19,22 @@ import {
 } from "@/utilities/utilities";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import useAddUserSearch from "@/hooks/useAddUserSearch";
-import { useCurrentUrl } from "@/hooks/useCurrentUrl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
-import classes from "./page.module.css";
-import useDeleteUserSearch from "@/hooks/useDeleteUserSearch";
-import { Dropdown } from "../components/dropdown";
 import ButtonPrimary from "../components/buttons/button-primary/button-primary";
-import Wrapper from "../components/wrapper/wrapper";
-import HorizontalTabs from "../components/horizontal-tabs/horizontal-tabs";
+import { Dropdown } from "../components/dropdown";
 import FAQs from "../components/faqs/faqs";
-import EmptyState from "../components/empty-state/empty-state";
-import Navbar from "../components/navbar/navbar";
 import Filters from "../components/filters/filters";
-import SortBy from "../components/sort-by/sort-by";
-import LoadResults from "../components/load-results/load-results";
-import Pagination from "../components/pagination/pagination";
 import Footer from "../components/footer/footer";
-import { useUserFavorites } from "@/contexts/user-favorites-context/user-favorites-context";
+import HorizontalTabs from "../components/horizontal-tabs/horizontal-tabs";
+import LoadResults from "../components/load-results/load-results";
+import Navbar from "../components/navbar/navbar";
+import Pagination from "../components/pagination/pagination";
+import SortBy from "../components/sort-by/sort-by";
+import Wrapper from "../components/wrapper/wrapper";
+import classes from "./page.module.css";
 
 export default function Search() {
   // const tabs = ["Car", "Body style", "Price"];
@@ -53,55 +53,80 @@ export default function Search() {
     endYear,
     status,
     selectedGearboxes,
+    stagedGearboxes,
     selectedColors,
     searchParams,
+    stagedStatus,
+    stagedStartYear,
+    stagedEndYear,
+    stagedMileage,
+    stagedStartPrice,
+    stagedEndPrice,
+    stagedColors,
     setMake,
     setModel,
     setSearchParams,
     setExpandedSections,
+    setSelectedGearboxes,
+    setStatus,
+    setStartYear,
+    setEndYear,
+    setMileage,
+    setStartPrice,
+    setEndPrice,
+    setSelectedColors,
   } = useSearch();
   const router = useRouter();
   const [resultText, setResultText] = useState(getResultTitle(make, model));
   const [submittedParams, setSubmittedParams] = useState(searchParams);
   const [submittedMake, setSubmittedMake] = useState(make);
   const [submittedModel, setSubmittedModel] = useState(model);
+
   const handleSearchClick = () => {
     const newParams = {
       ...searchParams,
-      make,
+      make: submittedMake,
       offset: 0,
-      model,
-      startPrice,
-      endPrice,
-      status,
-      mileage,
-      startYear,
-      endYear,
-      gearbox: convertArrayToString(selectedGearboxes),
-      selectedColor: convertArrayToString(selectedColors),
+      model: submittedModel,
+      startPrice: stagedStartPrice,
+      endPrice: stagedEndPrice,
+      status: stagedStatus,
+      mileage: stagedMileage,
+      startYear: stagedStartYear,
+      endYear: stagedEndYear,
+      gearbox: convertArrayToString(stagedGearboxes),
+      selectedColor: convertArrayToString(stagedColors),
     };
-    setSubmittedMake(make);
-    setSubmittedModel(model);
+    setSelectedGearboxes(stagedGearboxes);
+    setMake(submittedMake);
+    setModel(submittedModel);
     setSearchParams(newParams);
     setSubmittedParams(newParams);
     setExpandedSections(new Set());
+    setStatus(stagedStatus);
+    setStartYear(stagedStartYear);
+    setEndYear(stagedEndYear);
     setResultText(getResultTitle(make, model));
+    setMileage(stagedMileage);
+    setStartPrice(stagedStartPrice);
+    setEndPrice(stagedEndPrice);
+    setSelectedColors(stagedColors);
     let mileageText = "Any";
-    if (mileage) {
-      mileageText = `<=${mileage}`;
-    } else if (mileage === 0) {
+    if (stagedMileage) {
+      mileageText = `<=${stagedMileage}`;
+    } else if (stagedMileage === 0) {
       mileageText = "0";
     }
     let gearboxText = "Any";
-    if (selectedGearboxes.length > 0 && selectedGearboxes.length !== 3) {
-      gearboxText = selectedGearboxes.join(",");
+    if (stagedGearboxes.length > 0 && stagedGearboxes.length !== 3) {
+      gearboxText = stagedGearboxes.join(",");
     }
     let colorsText = "Any";
     if (selectedColors.length > 0 && selectedColors.length !== 16) {
       colorsText = selectedColors.join(",");
     }
     router.push(
-      `/search?make=${make}&model=${model}&price=${price}&mileage=${mileageText}&startYear=${startYear}&endYear=${endYear}&gearbox=${gearboxText}&colors=${colorsText}&status=${status}`
+      `/search?make=${submittedMake}&model=${submittedModel}&price=${price}&mileage=${mileageText}&startYear=${stagedStartYear}&endYear=${stagedEndYear}&gearbox=${gearboxText}&colors=${colorsText}&status=${stagedStatus}`
     );
   };
 
@@ -129,10 +154,10 @@ export default function Search() {
 
     return (
       <Dropdown
-        value={make}
+        value={submittedMake}
         onChange={(value) => {
-          setMake(value);
-          setModel("Any_Models");
+          setSubmittedMake(value);
+          setSubmittedModel("Any_Models");
         }}
         placeholder="Select make">
         <Dropdown.Label>Make</Dropdown.Label>
@@ -146,7 +171,10 @@ export default function Search() {
       [make]
     );
     return (
-      <Dropdown value={model} onChange={setModel} placeholder="Select model">
+      <Dropdown
+        value={submittedModel}
+        onChange={setSubmittedModel}
+        placeholder="Select model">
         <Dropdown.Label>Model</Dropdown.Label>
         <Dropdown.Select options={modelOptions} />
       </Dropdown>
@@ -176,7 +204,7 @@ export default function Search() {
       <div className={classes.filters}>
         {/* <ShowTabs /> */}
         <MakeDropdown />
-        <ModelDropdown make={make} />
+        <ModelDropdown make={submittedMake} />
         {/* <InputPostcode /> */}
         <SearchButton />
       </div>
@@ -242,22 +270,30 @@ export default function Search() {
           selectedTabColor="var(--color-blue400)"
           selectedTabBorderColor="var(--color-blue400)"
         />
-        <FAQs
-          make={submittedMake}
-          model={submittedModel}
-          searchParams={submittedParams}
-        />
+        <FAQs make={make} model={model} searchParams={submittedParams} />
       </Wrapper>
     );
   };
+  const filters: VehicleFilter = {
+    make,
+    model,
+    startPrice,
+    endPrice,
+    mileage,
+    startYear,
+    endYear,
+    gearbox: convertArrayToString(selectedGearboxes),
+    selectedColors: convertArrayToString(selectedColors),
+    status,
+  };
+  const { data: vehicleCount, isLoading } = useVehicleCount(filters);
+
   const NoOfLoadResultText = () => {
-    const { data, isLoading } = useSearchVehicles(searchParams);
     if (isLoading) return <p>Loading...</p>;
-    if (!data) return <EmptyState message="0 results" />;
     return (
       <div className={classes.results}>
         <p className={classes.noOfResults}>
-          {data?.totalCount.toLocaleString()} results
+          {vehicleCount?.toLocaleString()} results
         </p>
         <Image
           src="/images/location.png"
@@ -288,7 +324,7 @@ export default function Search() {
 
               <LoadResults />
             </div>
-            <Pagination />
+            <Pagination totalCount={vehicleCount ?? 0} />
           </div>
         </div>
         <CarDetailsTabs />

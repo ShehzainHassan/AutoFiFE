@@ -61,3 +61,16 @@ export interface VehicleFeatures {
     options: string[];
   };
 }
+
+export interface VehicleFilter {
+  make: string | null;
+  model: string | null;
+  startPrice: number | null;
+  endPrice: number | null;
+  mileage: number | null;
+  startYear: number | null;
+  endYear: number | null;
+  gearbox: string | null;
+  selectedColors: string | null;
+  status: string | null;
+}

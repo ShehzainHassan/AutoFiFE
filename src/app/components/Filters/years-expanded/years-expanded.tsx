@@ -6,18 +6,23 @@ import classes from "./years-expanded.module.css";
 import { Dropdown } from "../../dropdown";
 
 export default function YearsExpanded() {
-  const { startYear, endYear, setStartYear, setEndYear } = useSearch();
+  const {
+    stagedStartYear,
+    stagedEndYear,
+    setStagedStartYear,
+    setStagedEndYear,
+  } = useSearch();
 
   const startYearOptions = generateYearOptions(
     MIN_YEAR,
-    endYear ?? MAX_YEAR
+    stagedEndYear ?? MAX_YEAR
   ).map((opt) => ({
     ...opt,
     value: opt.value.toString(),
   }));
 
   const endYearOptions = generateYearOptions(
-    startYear ?? MIN_YEAR,
+    stagedStartYear ?? MIN_YEAR,
     MAX_YEAR
   ).map((opt) => ({
     ...opt,
@@ -27,13 +32,13 @@ export default function YearsExpanded() {
   return (
     <div className={classes.yearsContainer}>
       <Dropdown
-        value={startYear?.toString()}
+        value={stagedStartYear?.toString()}
         onChange={(value) => {
           const newStart = Number(value);
-          setStartYear(newStart);
+          setStagedStartYear(newStart);
 
-          if (endYear !== null && newStart > endYear) {
-            setEndYear(newStart);
+          if (stagedEndYear !== null && newStart > stagedEndYear) {
+            setStagedEndYear(newStart);
           }
         }}
         placeholder="Select start year">
@@ -42,12 +47,12 @@ export default function YearsExpanded() {
       </Dropdown>
 
       <Dropdown
-        value={endYear?.toString()}
+        value={stagedEndYear?.toString()}
         onChange={(value) => {
           const newEnd = Number(value);
-          setEndYear(newEnd);
-          if (startYear !== null && newEnd < startYear) {
-            setStartYear(newEnd);
+          setStagedEndYear(newEnd);
+          if (stagedStartYear !== null && newEnd < stagedStartYear) {
+            setStagedStartYear(newEnd);
           }
         }}
         placeholder="Select end year">

@@ -1,41 +1,70 @@
 "use client";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
-import useSearchVehicles from "@/hooks/useSearchVehicles";
+import useVehicleColorCount from "@/hooks/useVehicleColorCount";
+import { VehicleFilter } from "@/interfaces/vehicle";
+import { convertArrayToString } from "@/utilities/utilities";
 import {
   Checkbox,
   FormControlLabel,
   FormGroup,
   Typography,
 } from "@mui/material";
-import classes from "../gearbox-expanded/gearbox-expanded.module.css";
-import colorClasses from "./colors-expanded.module.css";
 import EmptyState from "../../empty-state/empty-state";
 import ErrorMessage from "../../error-message/error-message";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
+import classes from "../gearbox-expanded/gearbox-expanded.module.css";
+import colorClasses from "./colors-expanded.module.css";
+import useAllColors from "@/hooks/useAllColors";
+
 export default function ColorsExpanded() {
-  const { searchParams, selectedColors, setSelectedColors } = useSearch();
   const {
-    data: vehicleList,
-    isLoading,
-    error,
-    isError,
-  } = useSearchVehicles(searchParams);
+    make,
+    model,
+    startPrice,
+    endPrice,
+    mileage,
+    startYear,
+    endYear,
+    status,
+    selectedColors,
+    selectedGearboxes,
+    stagedColors,
+    setStagedColors,
+  } = useSearch();
+
+  const filters: VehicleFilter = {
+    make,
+    model,
+    startPrice,
+    endPrice,
+    mileage,
+    startYear,
+    endYear,
+    gearbox: convertArrayToString(selectedGearboxes),
+    selectedColors: convertArrayToString(selectedColors),
+    status,
+  };
+
+  const { data, isLoading, isError, error } = useVehicleColorCount(filters);
+  const { data: allColors } = useAllColors();
 
   if (isLoading) return <LoadingSpinner color="var(--color-black100)" />;
-  if (!vehicleList) return <EmptyState message="No color options available" />;
+  if (!allColors) return <EmptyState message="No color options available" />;
   if (isError) return <ErrorMessage message={error.message} />;
 
-  const handleCheckboxChange = (gearbox: string, checked: boolean) => {
+  const handleCheckboxChange = (color: string, checked: boolean) => {
     if (checked) {
-      setSelectedColors([...selectedColors, gearbox]);
+      setStagedColors([...stagedColors, color]);
     } else {
-      setSelectedColors(selectedColors.filter((g) => g !== gearbox));
+      setStagedColors(stagedColors.filter((c) => c !== color));
     }
   };
+
   return (
     <div className={`${classes.gearboxContainer}`}>
       <FormGroup>
-        {Object.entries(vehicleList.colorCounts).map(([color, count]) => {
+        {allColors.map((color: string) => {
+          const count = data?.[color] || 0;
           const isDisabled = count === 0;
 
           return (
@@ -44,7 +73,7 @@ export default function ColorsExpanded() {
               control={
                 <Checkbox
                   value={color}
-                  checked={selectedColors.includes(color)}
+                  checked={stagedColors.includes(color)}
                   onChange={(e) =>
                     handleCheckboxChange(color, e.target.checked)
                   }
@@ -73,9 +102,7 @@ export default function ColorsExpanded() {
                     sx={{
                       color: isDisabled ? "var(--color-gray500)" : "inherit",
                     }}>
-                    {isDisabled
-                      ? color
-                      : `${color} (${count.toLocaleString()})`}
+                    {`${color} (${count.toLocaleString()})`}
                   </Typography>
                 </div>
               }

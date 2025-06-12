@@ -1,16 +1,15 @@
 "use client";
-import useSearchVehicles from "@/hooks/useSearchVehicles";
+import { PAGE_SIZE } from "@/constants";
+import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classes from "./pagination.module.css";
-import { useSearch } from "@/contexts/car-search-context/car-search-context";
-import { PAGE_SIZE } from "@/constants";
-export default function Pagination() {
+import { PaginationProps } from "./pagination.types";
+export default function Pagination({ totalCount }: PaginationProps) {
   const { searchParams, setSearchParams } = useSearch();
-  const { data } = useSearchVehicles(searchParams);
   const handleFirstPage = () => {
     setSearchParams({
       ...searchParams,
@@ -19,7 +18,7 @@ export default function Pagination() {
   };
 
   const handleLastPage = () => {
-    const totalPages = Math.ceil((data?.totalCount ?? 0) / PAGE_SIZE);
+    const totalPages = Math.ceil((totalCount ?? 0) / PAGE_SIZE);
     const lastOffset = (totalPages - 1) * PAGE_SIZE;
 
     setSearchParams({
@@ -42,12 +41,12 @@ export default function Pagination() {
     });
   };
 
-  const totalPages = Math.ceil((data?.totalCount ?? 0) / PAGE_SIZE);
+  const totalPages = Math.ceil((totalCount ?? 0) / PAGE_SIZE);
   const currentPage = Math.floor(searchParams.offset / PAGE_SIZE) + 1;
   const isPrevDisabled = currentPage === 1;
   const isNextDisabled = currentPage === totalPages;
 
-  if (!data || data.totalCount === 0) return null;
+  if (totalCount === 0) return null;
   return (
     <div className={classes.pagination}>
       <div

@@ -15,6 +15,15 @@ export type CarSearchContextType = {
   selectedGearboxes: string[];
   selectedColors: string[];
   searchParams: SearchParams;
+
+  stagedStatus: string;
+  stagedStartYear: number;
+  stagedEndYear: number;
+  stagedStartPrice: number | null;
+  stagedEndPrice: number | null;
+  stagedMileage: number | null;
+  stagedGearboxes: string[];
+  stagedColors: string[];
   setMake: (value: string) => void;
   setModel: (value: string) => void;
   setPrice: (value: string) => void;
@@ -29,4 +38,13 @@ export type CarSearchContextType = {
   setExpandedSections: (value: Set<string>) => void;
   setSelectedGearboxes: (value: string[]) => void;
   setSelectedColors: (value: string[]) => void;
+
+  setStagedStatus: (value: string) => void;
+  setStagedStartYear: (value: number) => void;
+  setStagedEndYear: (value: number) => void;
+  setStagedStartPrice: (value: number | null) => void;
+  setStagedEndPrice: (value: number | null) => void;
+  setStagedMileage: (value: number | null) => void;
+  setStagedGearboxes: (value: string[]) => void;
+  setStagedColors: (value: string[]) => void;
 };

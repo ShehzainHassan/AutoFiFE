@@ -1,6 +1,7 @@
 import {
   Vehicle,
   VehicleFeatures,
+  VehicleFilter,
   VehicleListResult,
 } from "@/interfaces/vehicle";
 import axios from "axios";
@@ -37,6 +38,10 @@ const vehicleAPI = {
     const response = await axios.get<Vehicle>(`${API_BASE_URL}/Vehicle/${id}`);
     return response.data;
   },
+  getAllColors: async () => {
+    const response = await axios.get(`${API_BASE_URL}/Vehicle/get-colors`);
+    return response.data;
+  },
   getCarFeatures: async (make: string, model: string) => {
     const response = await axios.get<VehicleFeatures>(
       `${API_BASE_URL}/Vehicle/features`,
@@ -44,6 +49,27 @@ const vehicleAPI = {
         params: { make, model },
       }
     );
+    return response.data;
+  },
+  getVehicleCount: async (filters: VehicleFilter) => {
+    const response = await axios.get<number>(
+      `${API_BASE_URL}/Vehicle/total-vehicle-count`,
+      {
+        params: { ...filters },
+      }
+    );
+    return response.data;
+  },
+  getGearboxCount: async (filters: VehicleFilter) => {
+    const response = await axios.get(`${API_BASE_URL}/Vehicle/gearbox-count`, {
+      params: { ...filters },
+    });
+    return response.data;
+  },
+  getColorsCount: async (filters: VehicleFilter) => {
+    const response = await axios.get(`${API_BASE_URL}/Vehicle/colors-count`, {
+      params: { ...filters },
+    });
     return response.data;
   },
   searchVehicles: async (
@@ -61,7 +87,7 @@ const vehicleAPI = {
     gearbox?: string | null,
     selectedColors?: string | null
   ) => {
-    const response = await axios.get<VehicleListResult>(
+    const response = await axios.get<Vehicle>(
       `${API_BASE_URL}/Vehicle/search-vehicles`,
       {
         params: {
