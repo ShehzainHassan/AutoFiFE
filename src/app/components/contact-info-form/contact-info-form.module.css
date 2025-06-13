@@ -94,17 +94,19 @@
   border: 1px solid var(--color-gray400);
   border-radius: 20px;
   padding: 30px;
+  width: 525px;
 }
 .infoHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.line {
+.formContent {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
   padding: 10px 0;
+  gap: 10px;
 }
 .loading {
   display: flex !important;
@@ -113,6 +115,7 @@
 }
 .errorList {
   display: flex;
+  align-items: center;
   color: var(--color-red600);
   font-family: Inter, sans-serif;
   font-size: 14px;

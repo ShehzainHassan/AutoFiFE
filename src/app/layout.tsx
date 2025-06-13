@@ -7,7 +7,6 @@ import { CarSearchProvider } from "@/contexts/car-search-context/car-search-cont
 import { AuthProvider } from "@/contexts/auth-context";
 import { UserFavoritesProvider } from "@/contexts/user-favorites-context/user-favorites-context";
 import { Suspense } from "react";
-
 const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "700"],

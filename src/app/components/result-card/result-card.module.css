@@ -110,3 +110,49 @@
 .blue {
   color: var(--color-blue400);
 }
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-white100);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 640px;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+.modalContent {
+  border: none !important;
+  border-radius: unset !important;
+  background-color: var(--color-white100);
+  padding: 0 30px 30px 30px !important;
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  width: 100% !important;
+}
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: var(--color-white100);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.closeBtn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: var(--color-black200);
+}

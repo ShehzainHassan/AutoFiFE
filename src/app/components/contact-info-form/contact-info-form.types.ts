@@ -1,3 +1,7 @@
+export type ContactInfoFormProps = {
+  carId: number;
+  className?: string;
+};
 export type FirstNameProps = {
   fname: string;
   setFname: (value: string) => void;

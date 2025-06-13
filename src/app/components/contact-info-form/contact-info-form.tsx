@@ -18,6 +18,7 @@ import {
 } from "@/utilities/utilities";
 import {
   CommentProps,
+  ContactInfoFormProps,
   EmailProps,
   FirstNameProps,
   LastNameProps,
@@ -29,10 +30,10 @@ import { Dropdown } from "../dropdown";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
 import Image from "next/image";
 
-export default function Form() {
+export default function Form({ carId, className }: ContactInfoFormProps) {
   const params = useParams();
   const idParam = params.id;
-  const id = idParam ? Number(idParam) : undefined;
+  const id = idParam ? Number(idParam) : carId;
   const { data: vehicle } = useVehiclesById(id as number);
   const make = vehicle?.make ?? "";
   const model = vehicle?.model ?? "";
@@ -331,64 +332,55 @@ export default function Form() {
     resetFields();
   };
   return (
-    <form className={classes.form} onSubmit={handleSubmit}>
-      <div className={classes.infoHeader}>
-        <h1 className={classes.header}>Request information</h1>
-        <p className={classes.contact}>020 3984 7581</p>
-      </div>
-      <div>
-        <div className={classes.line}>
-          <p>Hello, my name is</p>
-          <InputFirstName
-            fname={fname}
-            setFname={setFname}
-            errors={errors}
-            setErrors={setErrors}
-          />
+    <form className={`${classes.form} ${className}`} onSubmit={handleSubmit}>
+      {!carId && (
+        <div className={classes.infoHeader}>
+          <h1 className={classes.header}>Request information</h1>
+          <p className={classes.contact}>020 3984 7581</p>
         </div>
-        <div className={classes.line}>
-          <InputLastName
-            lname={lname}
-            setLname={setLname}
-            errors={errors}
-            setErrors={setErrors}
-          />
-          <p>and</p>
-          <DropdownOptions />
-          <p className={classes.bold}>{vehicle?.year}</p>
-        </div>
-        <div className={classes.line}>
-          <span className={classes.bold}>
-            {vehicle?.make} {vehicle?.model}
-          </span>
-          <p>I&#39;m in the </p>
-          <InputPostCode
-            postCode={postCode}
-            setPostCode={setPostCode}
-            errors={errors}
-            setErrors={setErrors}
-          />
-          <div>area. You can</div>
-        </div>
-        <div>reach me by email at</div>
-        <div className={classes.line}>
-          <InputEmail
-            email={email}
-            setEmail={setEmail}
-            errors={errors}
-            setErrors={setErrors}
-          />
-          <p>or by phone at </p>
-        </div>
-        <div className={classes.line}>
-          <InputPhone
-            phone={phone}
-            setPhone={setPhone}
-            errors={errors}
-            setErrors={setErrors}
-          />
-          <p>. Thank you!</p>
-        </div>
+      )}
+      <div className={classes.formContent}>
+        <p>Hello, my name is</p>
+        <InputFirstName
+          fname={fname}
+          setFname={setFname}
+          errors={errors}
+          setErrors={setErrors}
+        />
+        <InputLastName
+          lname={lname}
+          setLname={setLname}
+          errors={errors}
+          setErrors={setErrors}
+        />
+        <p>and</p>
+        <DropdownOptions />
+        <p className={classes.bold}>{vehicle?.year}</p>
+        <span className={classes.bold}>
+          {vehicle?.make} {vehicle?.model}
+        </span>
+        <p>I&#39;m in the </p>
+        <InputPostCode
+          postCode={postCode}
+          setPostCode={setPostCode}
+          errors={errors}
+          setErrors={setErrors}
+        />
+        <div>area. You can reach me by email at</div>
+        <InputEmail
+          email={email}
+          setEmail={setEmail}
+          errors={errors}
+          setErrors={setErrors}
+        />
+        <p>or by phone at </p>
+        <InputPhone
+          phone={phone}
+          setPhone={setPhone}
+          errors={errors}
+          setErrors={setErrors}
+        />
+        <p>. Thank you!</p>
       </div>
       <PreferredChoice />
       <AddComment commentText={commentText} setCommentText={setCommentText} />
