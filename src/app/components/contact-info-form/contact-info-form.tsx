@@ -27,6 +27,7 @@ import {
 import ButtonPrimary from "../buttons/button-primary/button-primary";
 import { Dropdown } from "../dropdown";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
+import Image from "next/image";
 
 export default function Form() {
   const params = useParams();
@@ -96,7 +97,7 @@ export default function Form() {
   }: LastNameProps) => {
     const [localLname, setLocalLname] = useState(lname);
     const validate = (value: string) => {
-      err = validateName(value, "Last name", false);
+      err = validateName(value, "Last name");
       setErrors((prev) => ({ ...prev, lname: err }));
     };
 
@@ -291,6 +292,7 @@ export default function Form() {
   const canSendMessage = () => {
     return (
       fname !== "" &&
+      lname !== "" &&
       email !== "" &&
       postCode !== "" &&
       phone !== "" &&
@@ -398,13 +400,25 @@ export default function Form() {
           label="Email me new results for my search"
         />
       </div>
-      <div className={classes.errorList}>
-        {errors.fname && <p>{errors.fname}</p>}
-        {errors.lname && <p>{errors.lname}</p>}
-        {errors.postcode && <p>{errors.postcode}</p>}
-        {errors.email && <p>{errors.email}</p>}
-        {errors.phone && <p>{errors.phone}</p>}
-      </div>
+      {Object.values(errors).some(Boolean) && (
+        <div className={classes.errorList}>
+          <div className={classes.warningImage}>
+            <Image
+              src="/images/warning.png"
+              alt="warning"
+              width={18}
+              height={18}
+            />
+          </div>
+          <div className={classes.errorText}>
+            {errors.fname && <p>{errors.fname}</p>}
+            {errors.lname && <p>{errors.lname}</p>}
+            {errors.postcode && <p>{errors.postcode}</p>}
+            {errors.email && <p>{errors.email}</p>}
+            {errors.phone && <p>{errors.phone}</p>}
+          </div>
+        </div>
+      )}
 
       {isPending ? (
         <LoadingSpinner

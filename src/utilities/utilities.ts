@@ -86,11 +86,11 @@ export function getRange(vehicles: Vehicle[]) {
   return { min, max };
 }
 
-export function validateName(value: string, label: string, required = true) {
+export function validateName(value: string, label: string) {
   const trimmedValue = value.trim();
 
-  if (required && trimmedValue === "") {
-    return `${label} is required.`;
+  if (trimmedValue === "") {
+    return `Please enter your ${label}.`;
   }
 
   if (trimmedValue !== "" && !/^[A-Za-z _]+$/.test(trimmedValue)) {
