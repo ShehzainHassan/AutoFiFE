@@ -20,8 +20,14 @@ import CustomDropdownIndicator from "../dropdown-indicator/dropdown-indicator";
 import ButtonPrimary from "../buttons/button-primary/button-primary";
 
 export default function SearchForm({ statusTab }: SearchFormProps) {
-  const { mainSearch, setMainSearch, searchParams, setSearchParams } =
-    useSearch();
+  const {
+    mainSearch,
+    stagedSearch,
+    setStagedSearch,
+    setMainSearch,
+    searchParams,
+    setSearchParams,
+  } = useSearch();
 
   const router = useRouter();
 
@@ -36,7 +42,13 @@ export default function SearchForm({ statusTab }: SearchFormProps) {
     };
 
     setMainSearch(updatedSearch);
-
+    setStagedSearch({
+      ...stagedSearch,
+      stagedMake: mainSearch.make,
+      stagedModel: mainSearch.model,
+      stagedStartPrice: mainSearch.startPrice,
+      stagedEndPrice: mainSearch.endPrice,
+    });
     setSearchParams({
       ...searchParams,
       make: updatedSearch.make,
