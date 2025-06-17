@@ -5,7 +5,12 @@ import dynamic from "next/dynamic";
 import { createContext, useContext } from "react";
 import { GroupBase, Props as SelectProps } from "react-select";
 import classes from "./dropdown.module.css";
-import { DropdownContextType, DropdownProps, LabelProps, SelectComponentProps } from "./dropdown.types";
+import {
+  DropdownContextType,
+  DropdownProps,
+  LabelProps,
+  SelectComponentProps,
+} from "./dropdown.types";
 
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
@@ -45,6 +50,7 @@ function SelectComponent({
   className,
   styles,
   components,
+  showDropdownIndicator = true,
 }: SelectComponentProps) {
   const context = useContext(DropdownContext);
   if (!context) {
@@ -62,7 +68,13 @@ function SelectComponent({
       value={options.find((opt) => opt.value === value)}
       onChange={(option) => onChange(option?.value || "")}
       styles={styles}
-      components={components}
+      components={{
+        ...components,
+        ...(showDropdownIndicator === false && {
+          DropdownIndicator: () => null,
+          IndicatorSeparator: () => null,
+        }),
+      }}
     />
   );
 }

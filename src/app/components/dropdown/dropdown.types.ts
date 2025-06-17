@@ -24,4 +24,5 @@ export type SelectComponentProps = {
   className?: string;
   styles?: SelectProps<Options, false>["styles"];
   components?: SelectProps<Options, false>["components"];
+  showDropdownIndicator?: boolean;
 };

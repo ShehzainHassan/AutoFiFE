@@ -1,0 +1,10 @@
+.featureContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: var(--color-black100);
+  color: var(--color-white100);
+  width: fit-content;
+  padding: 4px 8px;
+}

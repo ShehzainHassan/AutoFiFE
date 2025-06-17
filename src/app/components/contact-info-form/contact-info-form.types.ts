@@ -1,5 +1,5 @@
 export type ContactInfoFormProps = {
-  carId: number;
+  carId?: number;
   className?: string;
 };
 export type FirstNameProps = {

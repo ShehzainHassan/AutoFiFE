@@ -1,13 +1,8 @@
 "use client";
+import { VEHICLE_OPTIONS } from "@/constants";
 import useSubmitInfo from "@/hooks/useSubmitInfo";
 import useVehiclesById from "@/hooks/useVehicleById";
 import { contactDropdownStyle } from "@/styles/custom-select";
-import { Checkbox, FormControl, FormControlLabel } from "@mui/material";
-import { useParams } from "next/navigation";
-import { useState } from "react";
-import Input from "../input-field/input-field";
-import classes from "./contact-info-form.module.css";
-import { VEHICLE_OPTIONS } from "@/constants";
 import {
   getNameFromLocalStorage,
   getUserEmailFromLocalStorage,
@@ -16,6 +11,15 @@ import {
   validatePhoneNumber,
   validatePostCode,
 } from "@/utilities/utilities";
+import { Checkbox, FormControl, FormControlLabel } from "@mui/material";
+import { useParams } from "next/navigation";
+import { useState } from "react";
+import ButtonPrimary from "../buttons/button-primary/button-primary";
+import { Dropdown } from "../dropdown";
+import ErrorSummary from "../error-summary/error-summary";
+import Input from "../input-field/input-field";
+import LoadingSpinner from "../loading-spinner/loading-spinner";
+import classes from "./contact-info-form.module.css";
 import {
   CommentProps,
   ContactInfoFormProps,
@@ -25,10 +29,6 @@ import {
   PhoneProps,
   PostCodeProps,
 } from "./contact-info-form.types";
-import ButtonPrimary from "../buttons/button-primary/button-primary";
-import { Dropdown } from "../dropdown";
-import LoadingSpinner from "../loading-spinner/loading-spinner";
-import Image from "next/image";
 
 export default function Form({ carId, className }: ContactInfoFormProps) {
   const params = useParams();
@@ -392,25 +392,7 @@ export default function Form({ carId, className }: ContactInfoFormProps) {
           label="Email me new results for my search"
         />
       </div>
-      {Object.values(errors).some(Boolean) && (
-        <div className={classes.errorList}>
-          <div className={classes.warningImage}>
-            <Image
-              src="/images/warning.png"
-              alt="warning"
-              width={18}
-              height={18}
-            />
-          </div>
-          <div className={classes.errorText}>
-            {errors.fname && <p>{errors.fname}</p>}
-            {errors.lname && <p>{errors.lname}</p>}
-            {errors.postcode && <p>{errors.postcode}</p>}
-            {errors.email && <p>{errors.email}</p>}
-            {errors.phone && <p>{errors.phone}</p>}
-          </div>
-        </div>
-      )}
+      <ErrorSummary errors={errors} />
 
       {isPending ? (
         <LoadingSpinner

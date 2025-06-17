@@ -1,0 +1,13 @@
+.policyContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  color: var(--color-black1000);
+}
+.bold {
+  font-weight: 500;
+  text-decoration: underline;
+  cursor: pointer;
+}

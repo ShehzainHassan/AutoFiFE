@@ -3,9 +3,12 @@ import { BLUE_THEME } from "@/constants/button-primary-themes";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import { useUserFavorites } from "@/contexts/user-favorites-context/user-favorites-context";
 import useAddUserSearch from "@/hooks/useAddUserSearch";
+import useAllColors from "@/hooks/useAllColors";
 import { useCurrentUrl } from "@/hooks/useCurrentUrl";
 import useDeleteUserSearch from "@/hooks/useDeleteUserSearch";
+import useGearboxCount from "@/hooks/useGearboxCount";
 import useGetAllMakes from "@/hooks/useGetAllMakes";
+import useVehicleColorCount from "@/hooks/useVehicleColorCount";
 import useVehicleCount from "@/hooks/useVehicleCount";
 import { VehicleFilter } from "@/interfaces/vehicle";
 import headings from "@/styles/typography.module.css";
@@ -27,7 +30,6 @@ import ButtonPrimary from "../components/buttons/button-primary/button-primary";
 import { Dropdown } from "../components/dropdown";
 import FAQs from "../components/faqs/faqs";
 import Filters from "../components/filters/filters";
-import Footer from "../components/footer/footer";
 import HorizontalTabs from "../components/horizontal-tabs/horizontal-tabs";
 import LoadResults from "../components/load-results/load-results";
 import Navbar from "../components/navbar/navbar";
@@ -35,9 +37,6 @@ import Pagination from "../components/pagination/pagination";
 import SortBy from "../components/sort-by/sort-by";
 import Wrapper from "../components/wrapper/wrapper";
 import classes from "./page.module.css";
-import useGearboxCount from "@/hooks/useGearboxCount";
-import useVehicleColorCount from "@/hooks/useVehicleColorCount";
-import useAllColors from "@/hooks/useAllColors";
 
 export default function Search() {
   // const tabs = ["Car", "Body style", "Price"];
@@ -339,7 +338,6 @@ export default function Search() {
         </div>
         <CarDetailsTabs />
       </Wrapper>
-      <Footer />
     </>
   );
 }

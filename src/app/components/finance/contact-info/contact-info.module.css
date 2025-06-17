@@ -1,0 +1,43 @@
+.heading {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 35px;
+  line-height: 40px;
+}
+.contactContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 25px 0 16px;
+}
+.terms {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 25px;
+}
+.termsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.button {
+  flex-direction: row-reverse;
+  background-color: var(--color-blue500) !important;
+  border-radius: 6px !important;
+  padding: 21.5px !important;
+}
+.quoteBtn {
+  margin: 16px 0 17px;
+  padding: 21.5px !important;
+}
+.button:hover {
+  background-color: var(--color-blue600) !important;
+}
+.policyText {
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--color-black1000);
+}

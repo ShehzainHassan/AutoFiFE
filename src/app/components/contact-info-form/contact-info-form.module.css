@@ -113,26 +113,7 @@
   margin: 0px !important;
   height: 60px !important;
 }
-.errorList {
-  display: flex;
-  align-items: center;
-  color: var(--color-red600);
-  font-family: Inter, sans-serif;
-  font-size: 14px;
-  line-height: 21px;
-  font-weight: 400;
-  gap: 8px;
-  padding: 12px 4px;
-  background-color: var(--color-red100);
-}
-.warningImage {
-  padding: 4px 8px;
-}
-.errorText {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+
 .bold {
   font-weight: bold;
 }

@@ -1,3 +1,4 @@
+import { Questionnaire } from "@/interfaces/questionnaire";
 import {
   Vehicle,
   VehicleFeatures,
@@ -106,6 +107,16 @@ const vehicleAPI = {
           selectedColors,
         },
       }
+    );
+    return response.data;
+  },
+  saveQuestionnaire: async (
+    questionnaire: Questionnaire,
+    vehicleId: number
+  ) => {
+    const response = await axios.post(
+      `${API_BASE_URL}/Vehicle/save-questionnaire?vehicleId=${vehicleId}`,
+      questionnaire
     );
     return response.data;
   },

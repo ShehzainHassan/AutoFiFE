@@ -1,0 +1,39 @@
+.headerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20.75px;
+}
+.vehicleTitle {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--color-gray450);
+  margin-bottom: 24px;
+}
+.vehicleName {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 15.5px;
+  line-height: 20px;
+}
+.vehiclePrice {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 13.5px;
+  line-height: 20px;
+}
+.previousContainer {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  cursor: pointer;
+}
+.previousText {
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  font-size: 15.5px;
+  text-decoration: underline;
+}
+.prev {
+  transform: rotate(180deg);
+}

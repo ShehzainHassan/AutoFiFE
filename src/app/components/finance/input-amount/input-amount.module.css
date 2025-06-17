@@ -1,0 +1,15 @@
+.inputField {
+  position: relative;
+}
+
+.inputElement {
+  width: 100%;
+  padding-right: 30px;
+}
+.tick {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-green600);
+}

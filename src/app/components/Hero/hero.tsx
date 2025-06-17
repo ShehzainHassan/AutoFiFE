@@ -9,9 +9,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import FeaturedIcon from "../featured-icons/featured-icons";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
-import Navbar from "../navbar/navbar";
 import SearchForm from "../search-form/search-form";
 import classes from "./hero.module.css";
+import Navbar from "../navbar/navbar";
 
 export default function Hero() {
   const { t } = useTranslation();
@@ -19,9 +19,14 @@ export default function Hero() {
   const tabs = ["All", "New", "Used"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
-  const { mainSearch, setMainSearch, searchParams, setSearchParams } =
-    useSearch();
-
+  const {
+    mainSearch,
+    stagedSearch,
+    setMainSearch,
+    setStagedSearch,
+    searchParams,
+    setSearchParams,
+  } = useSearch();
   const handleCarModelClick = (model: string) => {
     const make = getMakeByModel(model);
     setMainSearch({
@@ -31,12 +36,18 @@ export default function Hero() {
       startPrice: null,
       endPrice: null,
     });
+    setStagedSearch({
+      ...stagedSearch,
+      stagedMake: make,
+      stagedModel: model,
+      stagedStartPrice: null,
+      stagedEndPrice: null,
+    });
     setSearchParams({
       ...searchParams,
       make,
       model,
     });
-
     router.push(`/search?make=${make}&model=${model}`);
   };
 

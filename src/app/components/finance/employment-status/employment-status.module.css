@@ -1,0 +1,31 @@
+.heading {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 35px;
+  line-height: 40px;
+}
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.button {
+  flex-direction: row-reverse;
+  background-color: var(--color-blue500) !important;
+  border-radius: 6px !important;
+  padding: 21.5px !important;
+}
+.button:hover {
+  background-color: var(--color-blue600) !important;
+}
+.buttonPrimary {
+  border: 1px solid var(--color-blue500) !important;
+  background-color: var(--color-white100) !important;
+  justify-content: space-between !important;
+  padding: 17px 21px !important;
+}
+.buttonPrimary:hover {
+  background-color: var(--color-blue400) !important;
+}

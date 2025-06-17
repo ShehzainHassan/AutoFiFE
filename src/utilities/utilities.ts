@@ -85,7 +85,6 @@ export function getRange(vehicles: Vehicle[]) {
   const max = Math.max(...prices);
   return { min, max };
 }
-
 export function validateName(value: string, label: string) {
   const trimmedValue = value.trim();
 
@@ -99,7 +98,6 @@ export function validateName(value: string, label: string) {
 
   return "";
 }
-
 export function validatePostCode(value: string): string {
   const trimmed = value.trim();
 
@@ -281,4 +279,7 @@ export function handleApiError(error: unknown, router?: AppRouterInstance) {
   }
 
   toast.error(errorMessage);
+}
+export function isLeapYear(y: number) {
+  return y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0);
 }

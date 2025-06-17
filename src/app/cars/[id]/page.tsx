@@ -1,4 +1,13 @@
 "use client";
+import ButtonPrimary from "@/app/components/buttons/button-primary/button-primary";
+import CarFeature from "@/app/components/car-feature/car-feature";
+import CarImageGallery from "@/app/components/car-image-gallery/car-image-gallery";
+import Form from "@/app/components/contact-info-form/contact-info-form";
+import EmptyState from "@/app/components/empty-state/empty-state";
+import LoadingSpinner from "@/app/components/loading-spinner/loading-spinner";
+import Navbar from "@/app/components/navbar/navbar";
+import RatingStars from "@/app/components/rating-stars/ratings-stars";
+import Wrapper from "@/app/components/wrapper/wrapper";
 import { CURRENCY } from "@/constants";
 import useVehiclesById from "@/hooks/useVehicleById";
 import useVehicleFeatures from "@/hooks/useVehicleFeatures";
@@ -7,20 +16,10 @@ import { faArrowCircleUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./page.module.css";
-import LoadingSpinner from "@/app/components/loading-spinner/loading-spinner";
-import EmptyState from "@/app/components/empty-state/empty-state";
-import RatingStars from "@/app/components/rating-stars/ratings-stars";
-import ButtonPrimary from "@/app/components/buttons/button-primary/button-primary";
-import CarFeature from "@/app/components/car-feature/car-feature";
-import Navbar from "@/app/components/navbar/navbar";
-import Wrapper from "@/app/components/wrapper/wrapper";
-import CarImageGallery from "@/app/components/car-image-gallery/car-image-gallery";
-import Form from "@/app/components/contact-info-form/contact-info-form";
-import Footer from "@/app/components/footer/footer";
 
 export default function CarDetails() {
   const params = useParams();
@@ -72,6 +71,10 @@ export default function CarDetails() {
   };
 
   const CarFinance = () => {
+    const router = useRouter();
+    const handleQuote = () => {
+      router.push(`/finance/${id}`);
+    };
     return (
       <div className={classes.financeContainer}>
         <div className={classes.financeBenefits}>
@@ -91,6 +94,7 @@ export default function CarDetails() {
           <ButtonPrimary
             imgSrc="/images/get-quote.png"
             btnText="Get my quote"
+            onClick={handleQuote}
             className={classes.button}
           />
         </div>
@@ -335,7 +339,6 @@ export default function CarDetails() {
         </div>
       </Wrapper>
       <ToastContainer />
-      <Footer />
     </div>
   );
 }
