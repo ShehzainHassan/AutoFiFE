@@ -12,10 +12,6 @@
 .container:hover {
   transform: scale(1.05);
 }
-.car {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
 .carDetails {
   display: flex;
   flex-direction: column;
@@ -32,11 +28,7 @@
   justify-content: space-between;
   margin-top: 14.5px;
 }
-.partner {
-  display: flex;
-  gap: 1.5px;
-  align-items: center;
-}
+
 .perMonth {
   display: flex;
   gap: 4px;
@@ -85,28 +77,7 @@
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
-.imgContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--color-white100);
-  width: 44px;
-  height: 44px;
-  border-radius: 22px;
-  position: absolute;
-  z-index: 1;
-  top: 12px;
-  right: 12px;
-  padding: 10px;
-  cursor: pointer;
-}
-.imgContainer:hover {
-  cursor: pointer;
-  background-color: var(--color-gray300);
-}
-.carImg {
-  position: relative;
-}
+
 .blue {
   color: var(--color-blue400);
 }

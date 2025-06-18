@@ -1,6 +1,5 @@
 import { Vehicle } from "@/interfaces/vehicle";
 
-export type ResultCardProps = {
+export type HandleLikeProps = {
   vehicle: Vehicle;
-  carImg: string;
 };

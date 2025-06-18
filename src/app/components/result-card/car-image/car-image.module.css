@@ -1,0 +1,14 @@
+.carImg {
+  position: relative;
+}
+.car {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.imgOverlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 8px;
+}

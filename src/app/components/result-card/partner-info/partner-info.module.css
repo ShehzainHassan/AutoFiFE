@@ -1,0 +1,5 @@
+.partner {
+  display: flex;
+  gap: 1.5px;
+  align-items: center;
+}

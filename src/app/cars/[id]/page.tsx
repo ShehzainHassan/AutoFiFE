@@ -321,7 +321,7 @@ export default function CarDetails() {
       <Wrapper padding="24px 240px">
         <div className={classes.container}>
           <div>
-            <CarImageGallery />
+            <CarImageGallery vehicle={vehicle} />
             <Features />
             <CarFinance />
             <Overview />

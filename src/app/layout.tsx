@@ -1,5 +1,6 @@
 import { AuthProvider } from "@/contexts/auth-context";
 import { CarSearchProvider } from "@/contexts/car-search-context/car-search-context";
+import { QuestionnaireProvider } from "@/contexts/questionnaire-context";
 import { UserFavoritesProvider } from "@/contexts/user-favorites-context/user-favorites-context";
 import ReactQueryProvider from "@/providers/react-query-provider";
 import { ThemeProvider } from "@/theme/themeContext";
@@ -7,8 +8,6 @@ import { Metadata } from "next";
 import { DM_Sans, Inter, Roboto } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
-import Footer from "./components/footer/footer";
-import { QuestionnaireProvider } from "@/contexts/questionnaire-context";
 const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
@@ -50,7 +49,6 @@ export default function RootLayout({
                     <body
                       className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
                       {children}
-                      <Footer />
                     </body>
                   </QuestionnaireProvider>
                 </UserFavoritesProvider>

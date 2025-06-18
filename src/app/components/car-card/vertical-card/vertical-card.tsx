@@ -6,6 +6,7 @@ import { TagLabel } from "../../tag-label";
 import { useRouter } from "next/navigation";
 import { VerticalCardProps } from "./vertical-card.types";
 import BookmarkIcon from "../../bookmark-icon/bookmark-icon";
+import useTracking from "@/hooks/useTracking";
 
 export default function VerticalCard({
   id,
@@ -21,8 +22,10 @@ export default function VerticalCard({
   showPreviousPrice = false,
 }: VerticalCardProps) {
   const router = useRouter();
+  const addInteraction = useTracking();
   const redirectToCarDetails = () => {
     router.push(`/cars/${id}`);
+    addInteraction.mutate({ vehicleId: id, interactionType: "view" });
   };
   return (
     <div className={classes.container} onClick={redirectToCarDetails}>

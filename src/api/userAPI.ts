@@ -1,5 +1,8 @@
 import { LoginDTO, User } from "@/interfaces/user";
-import { getTokenFromLocalStorage } from "@/utilities/utilities";
+import {
+  getTokenFromLocalStorage,
+  getUserIdFromLocalStorage,
+} from "@/utilities/utilities";
 import axios from "axios";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -53,6 +56,23 @@ const userAPI = {
         Authorization: `Bearer ${token}`,
       },
     });
+    return response.data;
+  },
+  addUserInteraction: async (vehicleId: number, interactionType: string) => {
+    const token = getTokenFromLocalStorage();
+    const response = await axios.post(
+      `${API_BASE_URL}/user/add-interaction`,
+      {
+        UserId: getUserIdFromLocalStorage(),
+        VehicleId: vehicleId,
+        InteractionType: interactionType,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   },
   addUserLike: async (userId: number, vin: string) => {

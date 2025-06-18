@@ -37,6 +37,7 @@ import Pagination from "../components/pagination/pagination";
 import SortBy from "../components/sort-by/sort-by";
 import Wrapper from "../components/wrapper/wrapper";
 import classes from "./page.module.css";
+import Footer from "../components/footer/footer";
 
 export default function Search() {
   // const tabs = ["Car", "Body style", "Price"];
@@ -338,6 +339,7 @@ export default function Search() {
         </div>
         <CarDetailsTabs />
       </Wrapper>
+      <Footer />
     </>
   );
 }

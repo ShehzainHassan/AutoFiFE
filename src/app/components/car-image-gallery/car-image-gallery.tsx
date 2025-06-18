@@ -1,9 +1,12 @@
-import Image from "next/image";
-import classes from "./car-image-gallery.module.css";
 import { useState } from "react";
 import ButtonNavigate from "../buttons/button-navigate/button-navigate";
 import CarImages from "../car-images/car-images";
-export default function CarImageGallery() {
+import CarImage from "../result-card/car-image/car-image";
+import classes from "./car-image-gallery.module.css";
+import { CarImageGalleryProps } from "./car-image-gallery.types";
+import HandleLike from "../result-card/handle-like/handle-like";
+import HandleShare from "../result-card/handle-share/handle-share";
+export default function CarImageGallery({ vehicle }: CarImageGalleryProps) {
   const images = [
     "/images/glc_2023.png",
     "/images/atlis_2023.png",
@@ -23,12 +26,10 @@ export default function CarImageGallery() {
   };
   return (
     <div className={classes.imgContainer}>
-      <Image
-        src={images[currentIndex]}
-        alt="car-img"
-        width={740}
-        height={340}
-      />
+      <CarImage src={images[currentIndex]} width={740} height={340}>
+        <HandleShare />
+        <HandleLike vehicle={vehicle} />
+      </CarImage>
       <div className={classes.allImagesContainer}>
         <ButtonNavigate
           type="prev"

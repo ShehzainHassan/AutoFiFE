@@ -6,6 +6,7 @@ import { TagLabel } from "../../tag-label";
 import { useRouter } from "next/navigation";
 import { HorizontalCardProps } from "./horizontal-card.types";
 import BookmarkIcon from "../../bookmark-icon/bookmark-icon";
+import useTracking from "@/hooks/useTracking";
 
 export default function HorizontalCarCard({
   id,
@@ -22,8 +23,10 @@ export default function HorizontalCarCard({
   showPreviousPrice = false,
 }: HorizontalCardProps) {
   const router = useRouter();
+  const addInteraction = useTracking();
   const redirectToCarDetails = () => {
     router.push(`/cars/${id}`);
+    addInteraction.mutate({ vehicleId: id, interactionType: "view" });
   };
   return (
     <div className={classes.horizontalContainer} onClick={redirectToCarDetails}>

@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 const useAddUserLike = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
-
   return useMutation({
     mutationFn: async ({ userId, vin }: { userId: number; vin: string }) => {
       return await userAPI.addUserLike(userId, vin);

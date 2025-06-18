@@ -1,5 +1,6 @@
 import ExploreVehicles from "./components/all-vehicles/all-vehicle";
 import CarVideo from "./components/car-video/car-video";
+import Footer from "./components/footer/footer";
 import Hero from "./components/hero/hero";
 import LatestBlog from "./components/latest-blog/latest-blog";
 import PopularMakes from "./components/popular-makes/popular-makes";
@@ -22,6 +23,7 @@ export default function Home() {
       <Shop />
       <Customers />
       <LatestBlog />
+      <Footer />
     </div>
   );
 }

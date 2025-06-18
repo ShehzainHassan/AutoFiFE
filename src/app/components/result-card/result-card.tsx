@@ -1,97 +1,34 @@
 import { CURRENCY } from "@/constants";
 import { WHITE_THEME } from "@/constants/button-primary-themes";
-import useAddUserLike from "@/hooks/useAddUserLike";
-import useDeleteUserLike from "@/hooks/useDeleteUserLike";
+import useTracking from "@/hooks/useTracking";
 import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Image from "next/image";
-import { FC, useState } from "react";
-import { toast } from "react-toastify";
-import classes from "./result-card.module.css";
 import { useRouter } from "next/navigation";
-import { ResultCardProps } from "./result-card.types";
-import ButtonPrimary from "../buttons/button-primary/button-primary";
-import { useUserFavorites } from "@/contexts/user-favorites-context/user-favorites-context";
+import { useState } from "react";
 import Modal from "react-modal";
+import ButtonPrimary from "../buttons/button-primary/button-primary";
 import Form from "../contact-info-form/contact-info-form";
-export default function ResultCard({
-  id,
-  specialText,
-  carImg,
-  miles,
-  price,
-  carTitle,
-  vin,
-}: ResultCardProps) {
+import CarImage from "./car-image/car-image";
+import HandleLike from "./handle-like/handle-like";
+import classes from "./result-card.module.css";
+import { ResultCardProps } from "./result-card.types";
+import PartnerInfo from "./partner-info/partner-info";
+export default function ResultCard({ vehicle, carImg }: ResultCardProps) {
   return (
     <div className={classes.container}>
-      <CarImage src={carImg} vin={vin} />
+      <CarImage src={carImg}>
+        <HandleLike vehicle={vehicle} />
+      </CarImage>
       <CarDetails
-        id={id}
-        specialText={specialText}
-        carTitle={carTitle}
-        miles={miles}
-        price={price}
+        id={vehicle.id}
+        carTitle={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
+        miles={vehicle.mileage}
+        price={vehicle.price}
       />
     </div>
   );
 }
-type CarImageProps = {
-  src: string;
-  vin: string;
-};
-const CarImage = ({ src, vin }: CarImageProps) => {
-  const { userLikes } = useUserFavorites();
-  const [isLiked, setIsLiked] = useState(userLikes?.includes(vin));
-  const addLikeMutation = useAddUserLike();
-  const deleteLikeMutation = useDeleteUserLike();
-  const authData = localStorage.getItem("authData") ?? "";
-  const userId = getUserIdFromLocalStorage() ?? -1;
-  const handleLike = async () => {
-    if (!authData) {
-      toast.error("Please sign in to like a vehicle");
-      return;
-    }
-    const prev = isLiked;
-    setIsLiked(!isLiked);
-    if (!prev) {
-      addLikeMutation.mutate(
-        { userId, vin },
-        {
-          onError: () => {
-            setIsLiked(prev);
-          },
-        }
-      );
-    } else {
-      deleteLikeMutation.mutate(
-        { userId, vin },
-        {
-          onError: () => {
-            setIsLiked(prev);
-          },
-        }
-      );
-    }
-  };
-  return (
-    <div className={classes.carImg}>
-      <Image
-        src={src}
-        alt="car-img"
-        width={360}
-        height={200}
-        className={classes.car}
-      />
-      <div className={classes.imgContainer} onClick={handleLike}>
-        {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-      </div>
-    </div>
-  );
-};
 
 type CarDetailsProps = {
   id: number;
@@ -100,23 +37,18 @@ type CarDetailsProps = {
   price: number;
   carTitle: string;
 };
-const CarDetails = ({
-  id,
-  carTitle,
-  specialText,
-  miles,
-  price,
-}: CarDetailsProps) => {
+const CarDetails = ({ id, carTitle, miles, price }: CarDetailsProps) => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const addInteraction = useTracking();
   const handleRedirect = () => {
     router.push(`/cars/${id}`);
+    addInteraction.mutate({ vehicleId: id, interactionType: "view" });
   };
   return (
     <div className={classes.carDetails}>
       <div onClick={handleRedirect}>
-        <CardHeader {...{ id, specialText, carTitle, miles, price }} />
+        <CardHeader {...{ carTitle, miles, price }} />
         <div className={classes.cardMiddle}>
           <PartnerInfo />
           <EstimatedMonthly />
@@ -149,13 +81,19 @@ const CarDetails = ({
     </div>
   );
 };
-const CardHeader: FC<
-  Pick<ResultCardProps, "id" | "specialText" | "carTitle" | "miles" | "price">
-> = ({ specialText, carTitle, miles, price }) => {
+const CardHeader = ({
+  carTitle,
+  miles,
+  price,
+}: {
+  carTitle: string;
+  miles: number;
+  price: number;
+}) => {
   return (
     <>
       <div className={classes.cardTop}>
-        {specialText && <p className={headings.smallText}>{specialText}</p>}
+        {/* {specialText && <p className={headings.smallText}>{specialText}</p>} */}
         <h1 className={`${headings.carTitle} ${classes.clickableTitle}`}>
           {carTitle}
         </h1>
@@ -170,13 +108,6 @@ const CardHeader: FC<
     </>
   );
 };
-
-const PartnerInfo = () => (
-  <div className={classes.partner}>
-    <Image src="/images/partner.png" alt="partner" width={16} height={16} />
-    <p className={headings.carTitle}>CarGurus partner</p>
-  </div>
-);
 
 const EstimatedMonthly = () => (
   <div className={`${classes.perMonth} ${headings.smallText}`}>
