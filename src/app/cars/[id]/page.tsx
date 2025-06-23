@@ -4,6 +4,7 @@ import CarFeature from "@/app/components/car-feature/car-feature";
 import CarImageGallery from "@/app/components/car-image-gallery/car-image-gallery";
 import Form from "@/app/components/contact-info-form/contact-info-form";
 import EmptyState from "@/app/components/empty-state/empty-state";
+import Footer from "@/app/components/footer/footer";
 import LoadingSpinner from "@/app/components/loading-spinner/loading-spinner";
 import Navbar from "@/app/components/navbar/navbar";
 import RatingStars from "@/app/components/rating-stars/ratings-stars";
@@ -20,6 +21,7 @@ import { useParams, useRouter } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./page.module.css";
+import VehicleRecommendations from "@/app/components/vehicle-recommendations/vehicle-recommendations";
 
 export default function CarDetails() {
   const params = useParams();
@@ -351,6 +353,7 @@ export default function CarDetails() {
             {/* <Safety /> */}
             <Measurements />
             <Options />
+            <VehicleRecommendations />
           </div>
 
           <div>
@@ -360,6 +363,7 @@ export default function CarDetails() {
         </div>
       </Wrapper>
       <ToastContainer />
+      <Footer />
     </div>
   );
 }

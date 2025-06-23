@@ -74,3 +74,34 @@ export interface VehicleFilter {
   selectedColors: string | null;
   status: string | null;
 }
+
+export interface RecommendationFeature {
+  CO2Emissions: string;
+  CityMPG: string;
+  Color: string;
+  DrivetrainType: string;
+  EngineSize: string;
+  FuelType: string;
+  Horsepower: string;
+  Make: string;
+  Mileage: string;
+  Model: string;
+  OptionsCount: string;
+  Price: string;
+  Status: string;
+  TorqueFtLbs: string;
+  Transmission: string;
+  Year: string;
+  ZeroTo60MPH: string;
+}
+
+export interface VehicleRecommendation {
+  vehicle_id: number;
+  score: number;
+  features: RecommendationFeature;
+}
+
+export interface RecommendationsResponse {
+  model_type: string;
+  recommendations: VehicleRecommendation[];
+}
