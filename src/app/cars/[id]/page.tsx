@@ -38,6 +38,7 @@ export default function CarDetails() {
   }
   if (!vehicle || !vehicleFeatures)
     return <EmptyState message="Vehicle not found" />;
+
   const CarInfo = () => {
     return (
       <div>
@@ -223,6 +224,26 @@ export default function CarDetails() {
       {
         label: "Horsepower",
         value: vehicleFeatures.features.engine.horsepower + " hp",
+      },
+      {
+        label: "Cam Type",
+        value: vehicleFeatures.features.engine.camType,
+      },
+      {
+        label: "Engine Size",
+        value: vehicleFeatures.features.engine.size,
+      },
+      {
+        label: "Torque FT LBS",
+        value: vehicleFeatures.features.engine.torqueFtLBS,
+      },
+      {
+        label: "Torque RPM",
+        value: vehicleFeatures.features.engine.torqueRPM,
+      },
+      {
+        label: "Valves",
+        value: vehicleFeatures.features.engine.valves,
       },
     ];
 

@@ -29,6 +29,7 @@ import {
   PhoneProps,
   PostCodeProps,
 } from "./contact-info-form.types";
+import useTracking from "@/hooks/useTracking";
 
 export default function Form({ carId, className }: ContactInfoFormProps) {
   const params = useParams();
@@ -313,6 +314,7 @@ export default function Form({ carId, className }: ContactInfoFormProps) {
     setCommentText("");
     setEmailNotifications(false);
   };
+  const addInteraction = useTracking();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = {
@@ -329,6 +331,11 @@ export default function Form({ carId, className }: ContactInfoFormProps) {
     };
 
     submitInfo(formData);
+    addInteraction.mutate({
+      vehicleId: (id ?? carId) as number,
+      interactionType: "contacted-seller",
+    });
+
     resetFields();
   };
   return (
