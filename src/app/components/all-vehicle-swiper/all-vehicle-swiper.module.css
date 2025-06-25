@@ -1,13 +1,6 @@
-.container {
+.loading {
   display: flex;
-  flex-direction: column;
-}
-.navigate {
-  display: flex;
-  gap: 25px;
-}
-.swiperContainer {
-  position: relative;
-  left: -20px;
-  padding: 25px 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
 }

@@ -1,18 +1,25 @@
 "use client";
 import useAllVehicles from "@/hooks/useAllVehicles";
+import CircularProgress from "@mui/material/CircularProgress";
 import "swiper/css";
-import { AllVehicleSwiperProps } from "./all-vehicle-swiper.types";
-import LoadingSpinner from "../loading-spinner/loading-spinner";
 import EmptyState from "../empty-state/empty-state";
 import ErrorMessage from "../error-message/error-message";
 import VerticalCarousel from "../vehicle-carousel/vertical-carousel/vertical-carousel";
+import { AllVehicleSwiperProps } from "./all-vehicle-swiper.types";
+import classes from "./all-vehicle-swiper.module.css";
 export default function AllVehiclesSwiper({
   vehicleStatus,
 }: AllVehicleSwiperProps) {
   const { data, isLoading, isError, error, fetchNextPage, hasNextPage } =
     useAllVehicles(vehicleStatus);
 
-  if (isLoading) return <LoadingSpinner color="var(--color-black100)" />;
+  if (isLoading) {
+    return (
+      <div role="status" className={classes.loading}>
+        <CircularProgress />
+      </div>
+    );
+  }
   if (!data) return <EmptyState message="No vehicles found" />;
   if (isError) return <ErrorMessage message={error.message} />;
   const allVehicles = data.pages.flatMap((page) => page.vehicles) || [];
