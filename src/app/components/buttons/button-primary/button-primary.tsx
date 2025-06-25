@@ -37,7 +37,13 @@ export default function ButtonPrimary({
         pointerEvents: isDisabled ? "none" : "auto",
         cursor: isDisabled ? "not-allowed" : "pointer",
       }}
-      onClick={onClick}
+      onClick={(e) => {
+        if (isDisabled) {
+          e.stopPropagation();
+          return;
+        }
+        onClick?.();
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
       {imgSrc && <Image src={imgSrc} alt="icon" width={15} height={15} />}
