@@ -1,3 +1,4 @@
+import { CURRENCY } from "@/constants";
 import { useSearch } from "@/contexts/car-search-context";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
 import {
@@ -7,20 +8,22 @@ import {
   getUniqueFuelTypes,
   getVehicleText,
 } from "@/utilities/utilities";
+import { CircularProgress } from "@mui/material";
 import EmptyState from "../empty-state/empty-state";
 import ErrorMessage from "../error-message/error-message";
-import LoadingSpinner from "../loading-spinner/loading-spinner";
 import classes from "./faqs.module.css";
 import { FAQProps } from "./faqs.types";
-import { CURRENCY } from "@/constants";
 
 export default function FAQs({ searchParams }: FAQProps) {
   const { mainSearch } = useSearch();
 
   const { data, isLoading, error } = useSearchVehicles(searchParams);
-  if (isLoading) return <LoadingSpinner color="var(--color-black100)" />;
-  if (!data) return <EmptyState message="No FAQs found" />;
+  if (isLoading) return <CircularProgress />;
   if (error) return <ErrorMessage message={error.message} />;
+  if (!data || (Array.isArray(data) && data.length === 0)) {
+    return <EmptyState message="No FAQs found" />;
+  }
+
   const fuelTypes = getUniqueFuelTypes(Array.isArray(data) ? data : [data]);
   const { min, max } = getRange(Array.isArray(data) ? data : [data]);
   return (
