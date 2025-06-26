@@ -6,14 +6,12 @@ import useDeleteUserLike from "@/hooks/useDeleteUserLike";
 import useTracking from "@/hooks/useTracking";
 import { toast } from "react-toastify";
 
-// Mocks
 jest.mock("@/contexts/user-favorites-context/user-favorites-context", () => ({
   useUserFavorites: jest.fn(),
 }));
 
 jest.mock("@/hooks/useAddUserLike", () => jest.fn());
 jest.mock("@/hooks/useDeleteUserLike", () => jest.fn());
-jest.mock("@/hooks/useTracking", () => jest.fn());
 jest.mock("@/utilities/utilities", () => ({
   getUserIdFromLocalStorage: jest.fn(() => 123),
 }));

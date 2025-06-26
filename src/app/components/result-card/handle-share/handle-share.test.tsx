@@ -1,14 +1,12 @@
 import { screen, fireEvent, waitFor } from "@testing-library/react";
 import HandleShare from "./handle-share";
-import { renderWithClient } from "@/test-utils/render-with-client"; // Adjust path if needed
+import { renderWithClient } from "@/test-utils/render-with-client";
 import useTracking from "@/hooks/useTracking";
 import { useParams } from "next/navigation";
 
 jest.mock("next/navigation", () => ({
   useParams: jest.fn(),
 }));
-
-jest.mock("@/hooks/useTracking", () => jest.fn());
 
 beforeEach(() => {
   jest.clearAllMocks();
