@@ -125,6 +125,7 @@ export default function Navbar({
         <span className={classes.bar}></span>
       </button>
       <div
+        data-testid="nav-container"
         className={`${classes.navList} ${classes.navListMobile} ${
           menuOpen ? classes.navListMobileShow : ""
         }`}>

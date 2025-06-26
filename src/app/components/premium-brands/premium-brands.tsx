@@ -81,7 +81,7 @@ export default function PremiumBrands() {
 
       <div className={classes.cardContainer}>
         {isLoading && showAllBrands ? (
-          <p>Fetching all brands...</p>
+          <p data-testid="fetching">Fetching all brands...</p>
         ) : (
           brandsToShow.map((brand) => (
             <BrandCard

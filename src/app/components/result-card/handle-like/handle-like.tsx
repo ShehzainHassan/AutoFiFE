@@ -59,7 +59,10 @@ export default function HandleLike({ vehicle }: HandleLikeProps) {
     }
   };
   return (
-    <div className={classes.imgContainer} onClick={handleLike}>
+    <div
+      className={classes.imgContainer}
+      data-testid="like-button"
+      onClick={handleLike}>
       {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
     </div>
   );

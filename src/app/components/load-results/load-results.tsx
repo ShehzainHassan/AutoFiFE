@@ -21,11 +21,11 @@ export default function LoadResults() {
   if (isLoading)
     return (
       <div role="status">
-        <CircularProgress />{" "}
+        <CircularProgress />
       </div>
     );
-  if (!vehicleList) return <EmptyState message="No vehicles found" />;
   if (isError) return <ErrorMessage message={error.message} />;
+  if (!vehicleList) return <EmptyState message="No vehicles found" />;
   return (
     <div className={classes.resultCards}>
       {Array.isArray(vehicleList) &&
