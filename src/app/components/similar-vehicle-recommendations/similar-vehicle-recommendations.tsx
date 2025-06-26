@@ -5,7 +5,7 @@ import { CircularProgress } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
 import ErrorMessage from "../error-message/error-message";
 import CarImage from "../result-card/car-image/car-image";
-import classes from "./vehicle-recommendations.module.css";
+import classes from "./similar-vehicle-recommendations.module.css";
 
 export default function SimilarVehicleRecommendations() {
   const params = useParams();
