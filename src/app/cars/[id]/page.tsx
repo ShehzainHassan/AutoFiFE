@@ -7,7 +7,7 @@ import EmptyState from "@/app/components/empty-state/empty-state";
 import Footer from "@/app/components/footer/footer";
 import Navbar from "@/app/components/navbar/navbar";
 import RatingStars from "@/app/components/rating-stars/ratings-stars";
-import VehicleRecommendations from "@/app/components/similar-vehicle-recommendations/similar-vehicle-recommendations";
+import SimilarVehicleRecommendations from "@/app/components/similar-vehicle-recommendations/similar-vehicle-recommendations";
 import Wrapper from "@/app/components/wrapper/wrapper";
 import { CURRENCY } from "@/constants";
 import useVehiclesById from "@/hooks/useVehicleById";
@@ -361,7 +361,7 @@ export default function CarDetails() {
           </div>
         </div>
         <div className={classes.vehicleFeatures}>
-          <VehicleRecommendations />
+          <SimilarVehicleRecommendations />
         </div>
       </Wrapper>
 
