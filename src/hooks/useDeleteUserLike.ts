@@ -8,15 +8,39 @@ import { toast } from "react-toastify";
 const useDeleteUserLike = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
+
   return useMutation({
     mutationFn: async ({ userId, vin }: { userId: number; vin: string }) => {
       return await userAPI.removeUserLike(userId, vin);
     },
-    onSuccess: async (_, { userId }) => {
-      await queryClient.refetchQueries({ queryKey: ["userLikedVins", userId] });
+    onMutate: async ({ userId, vin }) => {
+      const queryKey = ["userLikedVins", userId];
+
+      await queryClient.cancelQueries({ queryKey });
+
+      const previousLikes = queryClient.getQueryData<string[]>(queryKey) || [];
+
+      queryClient.setQueryData<string[]>(queryKey, (old = []) =>
+        old.filter((v) => v !== vin)
+      );
+
+      return { previousLikes };
+    },
+    onError: (error, _, context) => {
+      if (context?.previousLikes) {
+        queryClient.setQueryData(
+          ["userLikedVins", _.userId],
+          context.previousLikes
+        );
+      }
+      handleApiError(error, router);
+    },
+    onSuccess: () => {
       toast.success("Vehicle removed from favorites!");
     },
-    onError: (error) => handleApiError(error, router),
+    onSettled: (_, __, { userId }) => {
+      queryClient.invalidateQueries({ queryKey: ["userLikedVins", userId] });
+    },
   });
 };
 

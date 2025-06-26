@@ -4,8 +4,8 @@ import CarImages from "../car-images/car-images";
 import CarImage from "../result-card/car-image/car-image";
 import classes from "./car-image-gallery.module.css";
 import { CarImageGalleryProps } from "./car-image-gallery.types";
-import HandleLike from "../handle-like/handle-like";
 import HandleShare from "../handle-share/handle-share";
+import HandleLike from "../handle-like/handle-like";
 export default function CarImageGallery({ vehicle }: CarImageGalleryProps) {
   const images = [
     "/images/glc_2023.png",
