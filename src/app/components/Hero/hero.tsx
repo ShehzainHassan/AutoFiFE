@@ -9,9 +9,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import FeaturedIcon from "../featured-icons/featured-icons";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
-import SearchForm from "../search-form/search-form";
-import classes from "./hero.module.css";
 import Navbar from "../navbar/navbar";
+import SearchFormContainer from "../search-form/search-form-container";
+import classes from "./hero.module.css";
 
 export default function Hero() {
   const { t } = useTranslation();
@@ -67,7 +67,7 @@ export default function Hero() {
                 borderColor="transparent"
               />
             </ThemeProvider>
-            <SearchForm statusTab={selectedTab} />
+            <SearchFormContainer statusTab={selectedTab} />
           </div>
         </div>
         <div className={classes.textContainer}>
