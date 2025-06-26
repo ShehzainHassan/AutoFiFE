@@ -1,0 +1,10 @@
+.cardTop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.distancePrice {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14.5px;
+}

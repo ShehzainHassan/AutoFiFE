@@ -1,0 +1,5 @@
+.perMonth {
+  display: flex;
+  gap: 4px;
+  margin-top: 3px;
+}

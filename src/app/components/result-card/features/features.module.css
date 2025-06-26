@@ -1,0 +1,7 @@
+.features {
+  display: flex;
+  gap: 4.5px;
+  align-items: center;
+  padding-bottom: 18.5px;
+  border-bottom: 1px solid var(--color-gray300);
+}

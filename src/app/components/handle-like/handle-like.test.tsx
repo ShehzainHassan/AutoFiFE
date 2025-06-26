@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import HandleLike from "./handle-like";
 import { useUserFavorites } from "@/contexts/user-favorites-context/user-favorites-context";
 import useAddUserLike from "@/hooks/useAddUserLike";
 import useDeleteUserLike from "@/hooks/useDeleteUserLike";
 import useTracking from "@/hooks/useTracking";
 import { toast } from "react-toastify";
+import HandleLike from "./handle-like";
 
 jest.mock("@/contexts/user-favorites-context/user-favorites-context", () => ({
   useUserFavorites: jest.fn(),
@@ -48,12 +48,10 @@ describe("HandleLike", () => {
     (useDeleteUserLike as jest.Mock).mockReturnValue({ mutate: mutateDelete });
     (useTracking as jest.Mock).mockReturnValue({ mutate: mutateTrack });
 
-    // Simulate user already liked the vehicle
     (useUserFavorites as jest.Mock).mockReturnValue({
       userLikes: ["1234VIN"],
     });
 
-    // Setup localStorage
     Storage.prototype.getItem = jest.fn((key) => {
       if (key === "authData") return JSON.stringify({ token: "abc123" });
       return null;
@@ -75,7 +73,6 @@ describe("HandleLike", () => {
   });
 
   it("calls addLike and tracking when liking a vehicle", () => {
-    // Simulate vehicle not yet liked
     (useUserFavorites as jest.Mock).mockReturnValue({
       userLikes: [],
     });
@@ -93,7 +90,6 @@ describe("HandleLike", () => {
   });
 
   it("calls deleteLike and tracking when unliking a vehicle", () => {
-    // Simulate already liked
     (useUserFavorites as jest.Mock).mockReturnValue({
       userLikes: ["1234VIN"],
     });

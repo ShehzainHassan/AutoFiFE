@@ -1,0 +1,11 @@
+.cardBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 12px;
+  margin-left: -12px;
+  margin-right: -12px;
+  background-color: var(--color-gray300);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
