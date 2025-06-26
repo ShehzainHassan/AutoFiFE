@@ -343,7 +343,7 @@ export default function CarDetails() {
       <Navbar backgroundColor="var(--color-gray600)" />
       <Wrapper padding="24px 240px">
         <div className={classes.container}>
-          <div>
+          <div className={classes.vehicleFeatures}>
             <CarImageGallery vehicle={vehicle} />
             <Features />
             <CarFinance />
@@ -353,15 +353,18 @@ export default function CarDetails() {
             {/* <Safety /> */}
             <Measurements />
             <Options />
-            <VehicleRecommendations />
           </div>
 
-          <div>
+          <div className={classes.vehicleFeatures}>
             <CarInfo />
             <Form />
           </div>
         </div>
+        <div className={classes.vehicleFeatures}>
+          <VehicleRecommendations />
+        </div>
       </Wrapper>
+
       <ToastContainer />
       <Footer />
     </div>

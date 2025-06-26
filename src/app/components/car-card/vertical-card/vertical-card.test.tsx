@@ -9,7 +9,6 @@ jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 
-jest.mock("@/hooks/useTracking", () => jest.fn());
 
 describe("VerticalCard", () => {
   const mockPush = jest.fn();

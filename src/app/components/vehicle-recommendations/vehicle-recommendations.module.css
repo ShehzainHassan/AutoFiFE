@@ -9,6 +9,7 @@
   flex-direction: column;
   gap: 12px;
   border-radius: 12px;
+  cursor: pointer;
 }
 
 .vehicleInfoText {
@@ -37,4 +38,6 @@
   border-radius: 22px;
   padding: 13px;
   background-color: var(--color-white100);
+  font-size: 13px;
+  font-weight: 700;
 }

@@ -75,33 +75,43 @@ export interface VehicleFilter {
   status: string | null;
 }
 
-export interface RecommendationFeature {
+export interface VehicleFeatures {
+  Make: string;
+  Model: string;
+  Year: string;
+  Price: string;
+  Mileage: string;
+  Color: string;
+  FuelType: string;
+  Transmission: string;
+  Status: string;
   CO2Emissions: string;
   CityMPG: string;
-  Color: string;
-  DrivetrainType: string;
-  EngineSize: string;
-  FuelType: string;
   Horsepower: string;
-  Make: string;
-  Mileage: string;
-  Model: string;
-  OptionsCount: string;
-  Price: string;
-  Status: string;
   TorqueFtLbs: string;
-  Transmission: string;
-  Year: string;
+  EngineSize: string;
   ZeroTo60MPH: string;
+  DrivetrainType: string;
 }
 
 export interface VehicleRecommendation {
   vehicle_id: number;
   score: number;
-  features: RecommendationFeature;
+  features: VehicleFeatures;
 }
 
 export interface RecommendationsResponse {
   model_type: string;
   recommendations: VehicleRecommendation[];
+}
+
+export interface SimilarVehicle {
+  vehicle_id: number;
+  similarity_score: number;
+  features: VehicleFeatures;
+}
+
+export interface SimilarVehicleResponse {
+  vehicle_id: number;
+  similar_vehicles: SimilarVehicle[];
 }

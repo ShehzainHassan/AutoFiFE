@@ -7,6 +7,9 @@ jest.mock("next/dynamic", () => {
     return () => null;
   };
 });
+
+jest.mock("@/hooks/useTracking", () => jest.fn());
+
 jest.mock("next/image", () => ({
   __esModule: true,
   default: ({ fill, ...rest }) => {

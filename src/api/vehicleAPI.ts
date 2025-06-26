@@ -1,6 +1,7 @@
 import { Questionnaire } from "@/interfaces/questionnaire";
 import {
   RecommendationsResponse,
+  SimilarVehicleResponse,
   Vehicle,
   VehicleFeatures,
   VehicleFilter,
@@ -118,6 +119,12 @@ const vehicleAPI = {
     const response = await axios.post(
       `${API_BASE_URL}/Vehicle/save-questionnaire?vehicleId=${vehicleId}`,
       questionnaire
+    );
+    return response.data;
+  },
+  getSimilarVehicles: async (vehicleId: number) => {
+    const response = await axios.get<SimilarVehicleResponse>(
+      `http://localhost:8000/api/recommendations/similar/${vehicleId}`
     );
     return response.data;
   },
