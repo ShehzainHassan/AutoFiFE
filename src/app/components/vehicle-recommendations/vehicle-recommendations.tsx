@@ -1,11 +1,11 @@
 import { CURRENCY } from "@/constants";
-import CarImage from "../result-card/car-image/car-image";
-import headings from "@/styles/typography.module.css";
-import classes from "./vehicle-recommendations.module.css";
 import useGetRecommendations from "@/hooks/useGetRecommendations";
+import headings from "@/styles/typography.module.css";
 import { getUserIdFromLocalStorage } from "@/utilities/utilities";
+import { CircularProgress } from "@mui/material";
 import ErrorMessage from "../error-message/error-message";
-import LoadingSpinner from "../loading-spinner/loading-spinner";
+import CarImage from "../result-card/car-image/car-image";
+import classes from "./vehicle-recommendations.module.css";
 
 export default function VehicleRecommendations() {
   const authData = localStorage.getItem("authData") ?? "";
@@ -20,7 +20,12 @@ export default function VehicleRecommendations() {
 
   if (!authData) return null;
 
-  if (isLoading) return <LoadingSpinner color="var(--color-black500)" />;
+  if (isLoading)
+    return (
+      <div role="status">
+        <CircularProgress />
+      </div>
+    );
   if (isError) return <ErrorMessage message={error.message} />;
   if (!recommendedVehicles || recommendedVehicles.recommendations.length === 0)
     return null;

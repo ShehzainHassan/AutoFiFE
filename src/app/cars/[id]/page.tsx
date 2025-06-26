@@ -5,9 +5,9 @@ import CarImageGallery from "@/app/components/car-image-gallery/car-image-galler
 import Form from "@/app/components/contact-info-form/contact-info-form";
 import EmptyState from "@/app/components/empty-state/empty-state";
 import Footer from "@/app/components/footer/footer";
-import LoadingSpinner from "@/app/components/loading-spinner/loading-spinner";
 import Navbar from "@/app/components/navbar/navbar";
 import RatingStars from "@/app/components/rating-stars/ratings-stars";
+import VehicleRecommendations from "@/app/components/vehicle-recommendations/vehicle-recommendations";
 import Wrapper from "@/app/components/wrapper/wrapper";
 import { CURRENCY } from "@/constants";
 import useVehiclesById from "@/hooks/useVehicleById";
@@ -16,12 +16,12 @@ import headings from "@/styles/typography.module.css";
 import { faArrowCircleUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { CircularProgress } from "@mui/material";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./page.module.css";
-import VehicleRecommendations from "@/app/components/vehicle-recommendations/vehicle-recommendations";
 
 export default function CarDetails() {
   const params = useParams();
@@ -36,7 +36,7 @@ export default function CarDetails() {
   const { data: vehicleFeatures, isLoading: featureLoading } =
     useVehicleFeatures(make, model, !!vehicle?.make && !!vehicle.model);
   if (vehicleLoading || featureLoading) {
-    return <LoadingSpinner color="var(--color-black500)" />;
+    return <CircularProgress />;
   }
   if (!vehicle || !vehicleFeatures)
     return <EmptyState message="Vehicle not found" />;

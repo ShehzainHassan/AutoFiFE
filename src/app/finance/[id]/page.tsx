@@ -1,19 +1,19 @@
 "use client";
 import ErrorMessage from "@/app/components/error-message/error-message";
 import Borrow from "@/app/components/finance/borrow/borrow";
+import ContactInfo from "@/app/components/finance/contact-info/contact-info";
 import DOB from "@/app/components/finance/dob/dob";
 import DrivingLicenseType from "@/app/components/finance/driving-license-type/driving-license-type";
 import EmploymentStatus from "@/app/components/finance/employment-status/employment-status";
 import GetFinanceQuote from "@/app/components/finance/get-finance-quote/get-finance-quote";
 import Header from "@/app/components/finance/header/header";
 import MaritalStatus from "@/app/components/finance/marital-status/marital-status";
-import LoadingSpinner from "@/app/components/loading-spinner/loading-spinner";
 import Navbar from "@/app/components/navbar/navbar";
 import useVehiclesById from "@/hooks/useVehicleById";
+import { CircularProgress } from "@mui/material";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import classes from "./page.module.css";
-import ContactInfo from "@/app/components/finance/contact-info/contact-info";
 export default function FinancePage() {
   const params = useParams();
   const idParam = params.id;
@@ -29,7 +29,7 @@ export default function FinancePage() {
   } = useVehiclesById(id as number);
 
   if (isLoading) {
-    return <LoadingSpinner color="var(--color-black100)" />;
+    return <CircularProgress />;
   }
   if (!vehicle) return <div>Vehicle not found</div>;
   if (isError) {

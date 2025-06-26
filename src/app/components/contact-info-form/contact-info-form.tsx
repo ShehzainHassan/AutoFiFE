@@ -1,6 +1,7 @@
 "use client";
 import { VEHICLE_OPTIONS } from "@/constants";
 import useSubmitInfo from "@/hooks/useSubmitInfo";
+import useTracking from "@/hooks/useTracking";
 import useVehiclesById from "@/hooks/useVehicleById";
 import { contactDropdownStyle } from "@/styles/custom-select";
 import {
@@ -11,14 +12,18 @@ import {
   validatePhoneNumber,
   validatePostCode,
 } from "@/utilities/utilities";
-import { Checkbox, FormControl, FormControlLabel } from "@mui/material";
+import {
+  Checkbox,
+  CircularProgress,
+  FormControl,
+  FormControlLabel,
+} from "@mui/material";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import ButtonPrimary from "../buttons/button-primary/button-primary";
 import { Dropdown } from "../dropdown";
 import ErrorSummary from "../error-summary/error-summary";
 import Input from "../input-field/input-field";
-import LoadingSpinner from "../loading-spinner/loading-spinner";
 import classes from "./contact-info-form.module.css";
 import {
   CommentProps,
@@ -29,7 +34,6 @@ import {
   PhoneProps,
   PostCodeProps,
 } from "./contact-info-form.types";
-import useTracking from "@/hooks/useTracking";
 
 export default function Form({ carId, className }: ContactInfoFormProps) {
   const params = useParams();
@@ -402,10 +406,9 @@ export default function Form({ carId, className }: ContactInfoFormProps) {
       <ErrorSummary errors={errors} />
 
       {isPending ? (
-        <LoadingSpinner
-          className={classes.loading}
-          color="var(--color-black500)"
-        />
+        <div>
+          <CircularProgress className={classes.loading} />
+        </div>
       ) : (
         <button
           disabled={!canSendMessage()}

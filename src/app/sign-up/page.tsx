@@ -1,24 +1,24 @@
 "use client";
-import { useState } from "react";
-import classes from "./sign-up.module.css";
-import { useRouter } from "next/navigation";
+import useLoginUser from "@/hooks/useLoginUser";
+import useSaveUser from "@/hooks/useSaveUser";
 import {
   validateEmail,
   validateName,
   validatePassword,
 } from "@/utilities/utilities";
-import useSaveUser from "@/hooks/useSaveUser";
+import { CircularProgress } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import contactInfoClasses from "../components/contact-info-form/contact-info-form.module.css";
-import useLoginUser from "@/hooks/useLoginUser";
-import AuthImage from "../components/auth-image/auth-image";
-import TopSection from "../components/auth-top-section/auth-top-section";
-import AuthHeader from "../components/auth-header/auth-header";
-import AuthInputField from "../components/auth-input/auth-input";
 import AuthButton from "../components/auth-button/auth-button";
-import LoadingSpinner from "../components/loading-spinner/loading-spinner";
+import AuthHeader from "../components/auth-header/auth-header";
+import AuthImage from "../components/auth-image/auth-image";
+import AuthInputField from "../components/auth-input/auth-input";
+import TopSection from "../components/auth-top-section/auth-top-section";
+import contactInfoClasses from "../components/contact-info-form/contact-info-form.module.css";
 import NeedHelp from "../components/need-help/need-help";
+import classes from "./sign-up.module.css";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -171,10 +171,9 @@ export default function SignUp() {
               disabled={isPending || isButtonDisabled}
             />
             {(isPending || loginLoading) && (
-              <LoadingSpinner
-                color="var(--color-black100)"
-                className={contactInfoClasses.loading}
-              />
+              <div>
+                <CircularProgress className={contactInfoClasses.loading} />
+              </div>
             )}
             <ToastContainer />
           </div>

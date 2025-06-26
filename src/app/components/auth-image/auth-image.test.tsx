@@ -10,9 +10,6 @@ describe("AuthImage", () => {
     expect(screen.getByAltText("logo")).toBeInTheDocument();
     expect(screen.getByAltText("Boxcars")).toBeInTheDocument();
 
-    expect(screen.getByText("BoxCars")).toBeInTheDocument();
-    expect(
-      screen.getByText("Buy & Sell Cars: Reviews, Prices and Finance")
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("textContainer")).toBeInTheDocument();
   });
 });

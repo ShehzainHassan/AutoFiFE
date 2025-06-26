@@ -20,7 +20,7 @@ export default function AuthImage() {
         />
         <Image src="/images/logo.png" alt="Boxcars" width={108} height={26} />
       </div>
-      <div className={classes.textContainer}>
+      <div className={classes.textContainer} data-testid="textContainer">
         <h1 className={headings.authTitle}>BoxCars</h1>
         <p className={headings.authDescription}>
           Buy & Sell Cars: Reviews, Prices and Finance

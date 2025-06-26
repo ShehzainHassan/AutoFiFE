@@ -6,14 +6,17 @@ import { validatePhoneNumber } from "@/utilities/utilities";
 const InputPhone = ({ errors, setErrors }: InputPhoneProps) => {
   const { formData, setFormData } = useQuestionnaire();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const err = validatePhoneNumber(formData.phone);
-    setErrors((prev) => {
-      const updated = { ...prev, email: err };
-      return updated;
-    });
+    const newVal = e.target.value;
+    const err = validatePhoneNumber(newVal);
+
+    setErrors((prev) => ({
+      ...prev,
+      phone: err,
+    }));
+
     setFormData((prev) => ({
       ...prev,
-      phone: e.target.value,
+      phone: newVal,
     }));
   };
   return (

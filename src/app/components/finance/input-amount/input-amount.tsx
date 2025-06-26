@@ -9,17 +9,17 @@ const InputAmount = ({ vehiclePrice }: InputAmountProps) => {
   const { formData, setFormData } = useQuestionnaire();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-    const num = Number(val);
-    const newValue =
-      val === ""
-        ? 0
-        : isNaN(num)
-        ? 0
-        : Math.max(0, Math.min(num, vehiclePrice));
+    let num = Number(val);
+
+    if (val === "" || isNaN(num)) {
+      num = 0;
+    } else {
+      num = Math.max(0, Math.min(num, vehiclePrice));
+    }
 
     setFormData((prev) => ({
       ...prev,
-      borrowAmount: newValue,
+      borrowAmount: num,
     }));
   };
 

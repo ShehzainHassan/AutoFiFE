@@ -3,7 +3,6 @@ import "@testing-library/jest-dom";
 import TopSection from "./auth-top-section";
 import { useRouter } from "next/navigation";
 
-// Mock next/navigation
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));

@@ -1,13 +1,13 @@
 "use client";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
-import classes from "./load-results.module.css";
+import { CircularProgress } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EmptyState from "../empty-state/empty-state";
 import ErrorMessage from "../error-message/error-message";
-import LoadingSpinner from "../loading-spinner/loading-spinner";
 import ResultCard from "../result-card/result-card";
+import classes from "./load-results.module.css";
 
 export default function LoadResults() {
   const { searchParams } = useSearch();
@@ -18,7 +18,12 @@ export default function LoadResults() {
     isError,
   } = useSearchVehicles(searchParams);
 
-  if (isLoading) return <LoadingSpinner color="var(--color-black100)" />;
+  if (isLoading)
+    return (
+      <div role="status">
+        <CircularProgress />{" "}
+      </div>
+    );
   if (!vehicleList) return <EmptyState message="No vehicles found" />;
   if (isError) return <ErrorMessage message={error.message} />;
   return (
