@@ -7,7 +7,7 @@ import ErrorMessage from "../error-message/error-message";
 import CarImage from "../result-card/car-image/car-image";
 import classes from "./vehicle-recommendations.module.css";
 
-export default function VehicleRecommendations() {
+export default function SimilarVehicleRecommendations() {
   const params = useParams();
   const idParam = params.id;
   const vehicleId = idParam ? Number(idParam) : -1;
