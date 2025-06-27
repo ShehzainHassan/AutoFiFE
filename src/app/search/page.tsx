@@ -2,10 +2,7 @@
 import { BLUE_THEME } from "@/constants/button-primary-themes";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import { useUserFavorites } from "@/contexts/user-favorites-context/user-favorites-context";
-import useAddUserSearch from "@/hooks/useAddUserSearch";
 import useAllColors from "@/hooks/useAllColors";
-import { useCurrentUrl } from "@/hooks/useCurrentUrl";
-import useDeleteUserSearch from "@/hooks/useDeleteUserSearch";
 import useGearboxCount from "@/hooks/useGearboxCount";
 import useGetAllMakes from "@/hooks/useGetAllMakes";
 import useVehicleColorCount from "@/hooks/useVehicleColorCount";
@@ -18,18 +15,16 @@ import {
   formatMakeOptions,
   getModelOptions,
   getResultTitle,
-  getUserIdFromLocalStorage,
 } from "@/utilities/utilities";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { toast } from "react-toastify";
 import ButtonPrimary from "../components/buttons/button-primary/button-primary";
 import { Dropdown } from "../components/dropdown";
 import FAQs from "../components/faqs/faqs";
 import Filters from "../components/filters/filters";
+import Footer from "../components/footer/footer";
+import SaveSearchButton from "../components/handle-save-search/handle-save-search";
 import HorizontalTabs from "../components/horizontal-tabs/horizontal-tabs";
 import LoadResults from "../components/load-results/load-results";
 import Navbar from "../components/navbar/navbar";
@@ -37,7 +32,6 @@ import Pagination from "../components/pagination/pagination";
 import SortBy from "../components/sort-by/sort-by";
 import Wrapper from "../components/wrapper/wrapper";
 import classes from "./page.module.css";
-import Footer from "../components/footer/footer";
 
 export default function Search() {
   // const tabs = ["Car", "Body style", "Price"];
@@ -233,36 +227,7 @@ export default function Search() {
       </div>
     );
   };
-  const SaveSearchButton = () => {
-    const { userSearches } = useUserFavorites();
-    const saveSearchMutation = useAddUserSearch();
-    const deleteSearchMutation = useDeleteUserSearch();
-    const userId = getUserIdFromLocalStorage();
-    const currentUrl = useCurrentUrl();
-    const search = currentUrl?.search.toString() ?? "";
-    const isSaved = useMemo(() => {
-      if (!userSearches || !search) return false;
-      return userSearches.includes(search);
-    }, [userSearches, search]);
 
-    const handleSaveSearch = async () => {
-      if (!userId) {
-        toast.error("Please sign in to save search");
-        return;
-      }
-      if (!isSaved) {
-        saveSearchMutation.mutate({ userId, search });
-      } else {
-        deleteSearchMutation.mutate({ userId, search });
-      }
-    };
-    return (
-      <div className={classes.saveBtnContainer} onClick={handleSaveSearch}>
-        {isSaved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-        <button className={classes.saveBtn}>Save Search</button>
-      </div>
-    );
-  };
   const ResultHeader = () => {
     const { loadingSearches } = useUserFavorites();
 

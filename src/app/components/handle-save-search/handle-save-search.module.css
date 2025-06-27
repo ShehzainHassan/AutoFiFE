@@ -1,0 +1,18 @@
+.saveBtnContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 46px;
+  padding: 8px 25px;
+  border: 1px solid var(--color-black100);
+  cursor: pointer;
+}
+.saveBtnContainer:hover {
+  background-color: var(--color-white200);
+}
+.saveBtn {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
