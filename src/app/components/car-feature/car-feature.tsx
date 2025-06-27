@@ -29,7 +29,13 @@ export default function CarFeature({ title, value }: CarFeatureProps) {
   return (
     <div className={classes.container}>
       <div className={classes.iconContainer}>
-        <Image src={getImage()} alt="icon" width={32} height={32} />
+        <Image
+          src={getImage()}
+          alt="icon"
+          width={32}
+          height={32}
+          loading="lazy"
+        />
       </div>
       <div className={classes.featureContainer}>
         <p className={classes.featureTitle}>{title}</p>

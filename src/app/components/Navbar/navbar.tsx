@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import ButtonPrimary from "../buttons/button-primary/button-primary";
 import { NavbarProps } from "./navbar-types";
 import classes from "./navbar.module.css";
+import Logo from "@/assets/images/logos/logo.png";
+import ExpandIcon from "@/assets/images/icons/expand.png";
 
 export default function Navbar({
   backgroundColor = "transparent",
@@ -109,11 +111,13 @@ export default function Navbar({
   return (
     <div className={classes.navbar} style={{ backgroundColor }}>
       <Image
-        src="/images/logo.png"
+        src={Logo}
         className={classes.logo}
         alt="logo"
         width={108}
         height={26}
+        loading="lazy"
+        placeholder="blur"
         onClick={redirectToHome}
       />
       <button
@@ -150,10 +154,12 @@ export default function Navbar({
               </h3>
               {showExpandIcon && (
                 <Image
-                  src="/images/expand.png"
+                  src={ExpandIcon}
                   alt="expand"
                   width={8}
                   height={4}
+                  loading="lazy"
+                  placeholder="blur"
                 />
               )}
               {isSignIn && userName && showLogout && (

@@ -2,7 +2,8 @@ import headings from "@/styles/typography.module.css";
 import classes from "./footer.module.css";
 import Image from "next/image";
 import EmailBox from "../email-box/email-box";
-
+import AppleIcon from "@/assets/images/icons/apple.png";
+import AndroidIcon from "@/assets/images/icons/android.svg";
 const footerData = [
   {
     title: "Company",
@@ -64,10 +65,12 @@ export default function Footer() {
           <div className={classes.appleAndroid}>
             <div className={classes.downloadContainer}>
               <Image
-                src="/images/apple.png"
+                src={AppleIcon}
                 alt="apple"
                 width={25}
                 height={25}
+                loading="lazy"
+                placeholder="blur"
               />
               <div className={classes.downloadText}>
                 <p className={headings.tinyText}>Download on the</p>
@@ -76,10 +79,11 @@ export default function Footer() {
             </div>
             <div className={classes.downloadContainer}>
               <Image
-                src="/images/android.svg"
+                src={AndroidIcon}
                 alt="android"
                 width={25}
                 height={25}
+                loading="lazy"
               />
               <div className={classes.downloadText}>
                 <p className={headings.tinyText}>Download on the</p>
@@ -99,6 +103,7 @@ export default function Footer() {
                       alt={platform}
                       width={20}
                       height={20}
+                      loading="lazy"
                     />
                   </div>
                 )

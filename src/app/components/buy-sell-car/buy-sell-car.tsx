@@ -33,6 +33,7 @@ export default function BuySellCard({
         alt="car"
         width={110}
         height={110}
+        loading="lazy"
       />
     </div>
   );

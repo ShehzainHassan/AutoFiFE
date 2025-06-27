@@ -16,6 +16,7 @@ const CarImage = ({
         width={width}
         height={height}
         className={classes.car}
+        loading="lazy"
       />
       <div className={classes.imgOverlay}>{children}</div>
     </div>

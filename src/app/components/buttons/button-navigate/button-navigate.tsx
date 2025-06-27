@@ -1,5 +1,5 @@
 import Image from "next/image";
-import classes from "./button-navigate.module.css"
+import classes from "./button-navigate.module.css";
 import { ButtonNavigateProps } from "./button-navigate.types";
 
 export default function ButtonNavigate({
@@ -27,6 +27,7 @@ export default function ButtonNavigate({
         className={imageClassName}
         width={width}
         height={height}
+        loading="lazy"
       />
     </div>
   );

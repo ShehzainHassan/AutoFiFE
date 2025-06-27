@@ -11,7 +11,13 @@ export default function BrandCard({
 }: BrandCardProps) {
   return (
     <div className={classes.cardContainer} onClick={onClick}>
-      <Image src={imgSrc} alt="brand-logo" width={100} height={100} />
+      <Image
+        src={imgSrc}
+        alt="brand-logo"
+        width={100}
+        height={100}
+        loading="lazy"
+      />
       <p className={`${headings.brandText} ${classes.centerText}`}>{brand}</p>
     </div>
   );

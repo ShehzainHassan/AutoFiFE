@@ -7,6 +7,10 @@ import { useRouter } from "next/navigation";
 import { VerticalCardProps } from "./vertical-card.types";
 import BookmarkIcon from "../../bookmark-icon/bookmark-icon";
 import useTracking from "@/hooks/useTracking";
+import ArrowBlue from "@/assets/images/icons/arrow-blue.png";
+import SpeedometerIcon from "@/assets/images/icons/speedometer.png";
+import GearboxIcon from "@/assets/images/icons/gearbox.png";
+import FuelIcon from "@/assets/images/icons/fuel-type.png";
 
 export default function VerticalCard({
   id,
@@ -45,7 +49,7 @@ export default function VerticalCard({
           <div className={classes.mileageDetails}>
             <div className={classes.imgContainer}>
               <Image
-                src={"/images/speedometer.png"}
+                src={SpeedometerIcon}
                 alt="speedometer"
                 width={18}
                 height={18}
@@ -53,21 +57,11 @@ export default function VerticalCard({
               <p className={headings.carDescription}>{miles}</p>
             </div>
             <div className={classes.imgContainer}>
-              <Image
-                src={"/images/diesel.svg"}
-                alt="diesel"
-                width={18}
-                height={18}
-              />
+              <Image src={FuelIcon} alt="diesel" width={18} height={18} />
               <p className={headings.carDescription}>{fuelType}</p>
             </div>
             <div className={classes.imgContainer}>
-              <Image
-                src={"/images/gearType.png"}
-                alt="gearType"
-                width={18}
-                height={18}
-              />
+              <Image src={GearboxIcon} alt="gearType" width={18} height={18} />
               <p className={headings.carDescription}>{gearType}</p>
             </div>
           </div>
@@ -84,12 +78,7 @@ export default function VerticalCard({
           </h2>
           <div className={classes.btnContainer}>
             <button className={classes.btn}>View Details</button>
-            <Image
-              src="/images/arrow-blue.png"
-              alt="arrow"
-              width={14}
-              height={14}
-            />
+            <Image src={ArrowBlue} alt="arrow" width={14} height={14} />
           </div>
         </div>
       </div>

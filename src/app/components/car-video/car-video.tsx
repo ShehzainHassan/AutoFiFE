@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import ButtonSecondary from "../buttons/button-secondary/button-secondary";
 import Wrapper from "../wrapper/wrapper";
-
+import Thumbnail from "@/assets/images/general/thumbnail.jpg";
+import PlayIcon from "@/assets/images/icons/play.png";
 export default function CarVideo() {
   const benefits = [
     "We are the UK's largest provider, with more patrols in more places",
@@ -42,9 +43,22 @@ export default function CarVideo() {
     <Wrapper padding="0px 110px 0px 120px">
       <div className={classes.container}>
         <div className={classes.imageWrapper}>
-          <Image src="/images/thumbnail.jpg" alt="thumbnail" fill />
+          <Image
+            src={Thumbnail}
+            loading="lazy"
+            placeholder="blur"
+            alt="thumbnail"
+            fill
+          />
           <div className={classes.playButton}>
-            <Image src="/images/play.png" alt="play" width={22} height={24} />
+            <Image
+              src={PlayIcon}
+              loading="lazy"
+              placeholder="blur"
+              alt="play"
+              width={22}
+              height={24}
+            />
           </div>
         </div>
         <VideoDescription />

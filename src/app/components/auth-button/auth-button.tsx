@@ -1,7 +1,7 @@
 import Image from "next/image";
 import classes from "./auth-button.module.css";
 import { AuthButtonProps } from "./auth-button.types";
-
+import arrowWhiteIcon from "@/assets/images/icons/arrow-white.png";
 export default function AuthButton({
   btnText,
   onClick,
@@ -18,10 +18,12 @@ export default function AuthButton({
       onClick={handleClick}>
       <div>{btnText}</div>
       <Image
-        src="/images/arrow-white.png"
+        src={arrowWhiteIcon}
         alt="arrow"
         width={20}
         height={20}
+        loading="lazy"
+        placeholder="blur"
         style={{ rotate: "45deg" }}
       />
     </div>

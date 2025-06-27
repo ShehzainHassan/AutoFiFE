@@ -24,6 +24,7 @@ export default function AuthInputField({
         alt="icon"
         width={24}
         height={24}
+        loading="lazy"
         className={classes.icon}
       />
       <input

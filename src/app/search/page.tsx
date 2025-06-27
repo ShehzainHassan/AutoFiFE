@@ -32,6 +32,7 @@ import Pagination from "../components/pagination/pagination";
 import SortBy from "../components/sort-by/sort-by";
 import Wrapper from "../components/wrapper/wrapper";
 import classes from "./page.module.css";
+import LocationIcon from "@/assets/images/icons/location.png";
 
 export default function Search() {
   // const tabs = ["Car", "Body style", "Price"];
@@ -271,11 +272,13 @@ export default function Search() {
           {vehicleCount?.toLocaleString()} results
         </p>
         <Image
-          src="/images/location.png"
+          src={LocationIcon}
           alt="location"
           width={12}
           height={12}
           className={classes.location}
+          loading="lazy"
+          placeholder="blur"
         />
       </div>
     );

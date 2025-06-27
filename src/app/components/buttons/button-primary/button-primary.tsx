@@ -46,7 +46,9 @@ export default function ButtonPrimary({
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
-      {imgSrc && <Image src={imgSrc} alt="icon" width={15} height={15} />}
+      {imgSrc && (
+        <Image src={imgSrc} alt="icon" width={15} height={15} loading="lazy" />
+      )}
       <button
         type={type}
         className={classes.btn}

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import classes from "./error-summary.module.css";
 import { ErrorSummaryProps } from "./error-summary.types";
+import WarningIcon from "@/assets/images/icons/warning.png";
 
 export default function ErrorSummary({ errors }: ErrorSummaryProps) {
   const hasErrors = Object.values(errors).some(Boolean);
@@ -10,7 +11,14 @@ export default function ErrorSummary({ errors }: ErrorSummaryProps) {
   return (
     <div className={classes.errorList}>
       <div className={classes.warningImage}>
-        <Image src="/images/warning.png" alt="warning" width={18} height={18} />
+        <Image
+          src={WarningIcon}
+          loading="lazy"
+          placeholder="blur"
+          alt="warning"
+          width={18}
+          height={18}
+        />
       </div>
       <div className={classes.errorText}>
         {errors.fname && <p>{errors.fname}</p>}

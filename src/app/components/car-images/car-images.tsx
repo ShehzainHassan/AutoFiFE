@@ -15,6 +15,7 @@ export default function CarImages({
         src={imgSrc}
         alt="car-image"
         fill
+        loading="lazy"
         style={{
           objectFit: "cover",
         }}

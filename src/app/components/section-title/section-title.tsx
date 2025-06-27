@@ -2,7 +2,7 @@ import Image from "next/image";
 import classes from "./section-title.module.css";
 import headings from "@/styles/typography.module.css";
 import { SectionTitleProps } from "./section-title.types";
-
+import ArrowIcon from "@/assets/images/icons/arrow.svg";
 export default function SectionTitle({
   title,
   buttonText,
@@ -22,7 +22,13 @@ export default function SectionTitle({
           className={`${classes.subHeadingContainer} ${classes.subHeading}`}
           onClick={onClick}>
           <h1 className={`${headings.modelText}`}>{buttonText}</h1>
-          <Image src="/images/arrow.svg" alt="arrow" width={14} height={14} />
+          <Image
+            src={ArrowIcon}
+            alt="arrow"
+            width={14}
+            height={14}
+            loading="lazy"
+          />
         </div>
       )}
       {ratingsText && (

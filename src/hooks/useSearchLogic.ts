@@ -6,7 +6,7 @@ import {
   getPriceRange,
   parseStatus,
 } from "@/utilities/utilities";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { PRICE_OPTIONS } from "@/constants";
 
@@ -33,7 +33,7 @@ export function useSearchLogic(statusTab: string) {
     [mainSearch.make]
   );
 
-  const handleSearchClick = () => {
+  const handleSearchClick = useCallback(() => {
     const { startPrice, endPrice } = getPriceRange(mainSearch.price);
     const status = parseStatus(statusTab);
     const updatedSearch = {
@@ -62,7 +62,16 @@ export function useSearchLogic(statusTab: string) {
     router.push(
       `/search?make=${updatedSearch.make}&model=${updatedSearch.model}&price=${updatedSearch.price}&status=${status}`
     );
-  };
+  }, [
+    mainSearch,
+    statusTab,
+    stagedSearch,
+    setMainSearch,
+    setStagedSearch,
+    setSearchParams,
+    searchParams,
+    router,
+  ]);
 
   return {
     makeProps: {

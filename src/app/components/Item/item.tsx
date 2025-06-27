@@ -19,7 +19,13 @@ export default function Item({
 
   return (
     <div className={classes.item}>
-      <Image src={imgSrc} alt="Icon" width={imgWidth} height={imgHeight} />
+      <Image
+        src={imgSrc}
+        alt="Icon"
+        width={imgWidth}
+        height={imgHeight}
+        loading="lazy"
+      />
       {renderText(title, description)}
     </div>
   );

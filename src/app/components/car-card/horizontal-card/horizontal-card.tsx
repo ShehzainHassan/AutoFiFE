@@ -7,7 +7,10 @@ import { useRouter } from "next/navigation";
 import { HorizontalCardProps } from "./horizontal-card.types";
 import BookmarkIcon from "../../bookmark-icon/bookmark-icon";
 import useTracking from "@/hooks/useTracking";
-
+import SpeedometerIcon from "@/assets/images/icons/speedometer-white.png";
+import FuelIcon from "@/assets/images/icons/fuel-white.png";
+import GearboxIcon from "@/assets/images/icons/gear-white.png";
+import ArrowBlueIcon from "@/assets/images/icons/arrow-blue.png";
 export default function HorizontalCarCard({
   id,
   imgSrc,
@@ -37,6 +40,7 @@ export default function HorizontalCarCard({
           className={classes.horizontalCarImg}
           width={318}
           height={0}
+          loading="lazy"
           style={{ height: "100%" }}
         />
         {tag && <TagLabel text={tag} color={tagColor} />}
@@ -53,28 +57,34 @@ export default function HorizontalCarCard({
           <div className={classes.horizontalMileageDetails}>
             <div className={classes.horizontalImgContainer}>
               <Image
-                src="/images/speedometer-white.png"
+                src={SpeedometerIcon}
                 alt="speedometer"
                 width={18}
                 height={18}
+                loading="lazy"
+                placeholder="blur"
               />
               <p className={headings.carDescription}>{miles}</p>
             </div>
             <div className={classes.horizontalImgContainer}>
               <Image
-                src="/images/fuel-white.png"
+                src={FuelIcon}
                 alt="diesel"
                 width={18}
                 height={18}
+                loading="lazy"
+                placeholder="blur"
               />
               <p className={headings.carDescription}>{fuelType}</p>
             </div>
             <div className={classes.horizontalImgContainer}>
               <Image
-                src="/images/gear-white.png"
+                src={GearboxIcon}
                 alt="gearType"
                 width={18}
                 height={18}
+                loading="lazy"
+                placeholder="blur"
               />
               <p className={headings.carDescription}>{gearType}</p>
             </div>
@@ -93,10 +103,12 @@ export default function HorizontalCarCard({
           <div className={classes.btnContainer}>
             <button className={classes.btn}>{btnText}</button>
             <Image
-              src="/images/arrow-blue.png"
+              src={ArrowBlueIcon}
               alt="arrow"
               width={14}
               height={14}
+              loading="lazy"
+              placeholder="blur"
             />
           </div>
         </div>

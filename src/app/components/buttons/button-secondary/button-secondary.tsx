@@ -4,6 +4,7 @@ import headings from "@/styles/typography.module.css";
 import { useState } from "react";
 import { ButtonSecondaryProps } from "./button-secondary.types";
 import classes from "./button-secondary.module.css";
+import ArrowWhite from "@/assets/images/icons/arrow-white.png";
 export default function ButtonSecondary({
   btnText,
   buttonColor = "var(--color-blue500)",
@@ -22,7 +23,14 @@ export default function ButtonSecondary({
       <button className={`${headings.modelText} ${classes.btn}`}>
         {btnText}
       </button>
-      <Image src="/images/arrow-white.png" alt="arrow" width={14} height={14} />
+      <Image
+        src={ArrowWhite}
+        alt="arrow"
+        width={14}
+        height={14}
+        loading="lazy"
+        placeholder="blur"
+      />
     </div>
   );
 }

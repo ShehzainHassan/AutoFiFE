@@ -6,6 +6,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import { useParams } from "next/navigation";
 import useTracking from "@/hooks/useTracking";
+import ShareIcon from "@/assets/images/icons/share.png";
 
 export default function HandleShare() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +30,14 @@ export default function HandleShare() {
   return (
     <>
       <div className={classes.imgContainer} onClick={handleShareClick}>
-        <Image src="/images/share.png" alt="share" width={22} height={22} />
+        <Image
+          src={ShareIcon}
+          alt="share"
+          width={22}
+          height={22}
+          loading="lazy"
+          placeholder="blur"
+        />
       </div>
 
       <Modal

@@ -22,6 +22,7 @@ import { useParams, useRouter } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./page.module.css";
+import carFinanceLogo from "@/assets/images/logos/CarFinance.png";
 
 export default function CarDetails() {
   const params = useParams();
@@ -89,10 +90,12 @@ export default function CarDetails() {
         </div>
         <div className={classes.btnContainer}>
           <Image
-            src="/images/CarFinance.png"
+            src={carFinanceLogo}
             alt="car-finance-logo"
             width={130}
             height={18}
+            loading="lazy"
+            placeholder="blur"
           />
           <ButtonPrimary
             imgSrc="/images/get-quote.png"

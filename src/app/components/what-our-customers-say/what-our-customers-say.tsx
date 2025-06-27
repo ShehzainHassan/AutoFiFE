@@ -2,7 +2,7 @@ import headings from "@/styles/typography.module.css";
 import Image from "next/image";
 import SectionTitle from "../section-title/section-title";
 import classes from "./what-our-customers-say.module.css";
-
+import Customer from "@/assets/images/general/customer.png";
 export default function Customers() {
   return (
     <div className={classes.container}>
@@ -18,10 +18,12 @@ export default function Customers() {
       <div className={classes.reviewContainer}>
         <div className={classes.subContainer}>
           <Image
-            src="/images/customer.png"
+            src={Customer}
             alt="customer"
             width={448}
             height={470}
+            loading="lazy"
+            placeholder="blur"
           />
           <div className={classes.review}>
             <div className={classes.rating}>

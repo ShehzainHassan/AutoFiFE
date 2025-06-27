@@ -10,7 +10,13 @@ export default function FeaturedIcon({
 }: FeaturedIconProps) {
   return (
     <div className={classes.container} onClick={onClick}>
-      <Image src={imgSrc} alt="car-icon" width={25} height={16} />
+      <Image
+        src={imgSrc}
+        alt="car-icon"
+        width={25}
+        height={16}
+        loading="lazy"
+      />
       <p className={`${headings.modelText} ${classes.white}`}>{model}</p>
     </div>
   );

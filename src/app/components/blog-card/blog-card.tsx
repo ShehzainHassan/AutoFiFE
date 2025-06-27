@@ -21,6 +21,7 @@ export default function BlogCard({
         alt="car"
         width={447}
         height={298}
+        loading="lazy"
       />
       <article className={classes.descriptionContainer}>
         <div className={classes.textContainer}>

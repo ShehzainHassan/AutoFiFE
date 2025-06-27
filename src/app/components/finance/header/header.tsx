@@ -2,15 +2,18 @@ import Image from "next/image";
 import classes from "./header.module.css";
 import { CURRENCY } from "@/constants";
 import { HeaderProps } from "./header.types";
+import NextIcon from "@/assets/images/icons/next.png";
 const Header = ({ prevStep, vehicle }: HeaderProps) => {
   return (
     <div className={classes.headerContainer}>
       <div onClick={prevStep} className={classes.previousContainer}>
         <Image
-          src="/images/next.png"
+          src={NextIcon}
           alt="prev"
           width={10}
           height={10}
+          loading="lazy"
+          placeholder="blur"
           className={classes.prev}
         />
         <p className={classes.previousText}>Previous Step</p>
