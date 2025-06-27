@@ -7,33 +7,22 @@ import { contactDropdownStyle } from "@/styles/custom-select";
 import {
   getNameFromLocalStorage,
   getUserEmailFromLocalStorage,
-  validateEmail,
-  validateName,
-  validatePhoneNumber,
-  validatePostCode,
 } from "@/utilities/utilities";
-import {
-  Checkbox,
-  CircularProgress,
-  FormControl,
-  FormControlLabel,
-} from "@mui/material";
+import { Checkbox, CircularProgress, FormControlLabel } from "@mui/material";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import ButtonPrimary from "../buttons/button-primary/button-primary";
 import { Dropdown } from "../dropdown";
 import ErrorSummary from "../error-summary/error-summary";
-import Input from "../input-field/input-field";
+import AddComment from "./add-comment/add-comment";
 import classes from "./contact-info-form.module.css";
-import {
-  CommentProps,
-  ContactInfoFormProps,
-  EmailProps,
-  FirstNameProps,
-  LastNameProps,
-  PhoneProps,
-  PostCodeProps,
-} from "./contact-info-form.types";
+import { ContactInfoFormProps } from "./contact-info-form.types";
+import InputEmail from "./input-email/input-email";
+import InputFirstName from "./input-firstname/firstname";
+import InputLastName from "./input-lastname/input-lastname";
+import InputPhone from "./input-phone/input-phone";
+import InputPostCode from "./input-postcode/input-postcode";
+import PreferredChoice from "./preferred-choice/preferred-choice";
+import PrivacyAgreementText from "./privacy-agreement-text/privacy-agreement-text";
 
 export default function Form({ carId, className }: ContactInfoFormProps) {
   const params = useParams();
@@ -51,10 +40,8 @@ export default function Form({ carId, className }: ContactInfoFormProps) {
   const [postCode, setPostCode] = useState("");
   const [email, setEmail] = useState(getUserEmailFromLocalStorage());
   const [phone, setPhone] = useState("");
-  const [preferredContact, setPreferredContact] = useState("");
   const [commentText, setCommentText] = useState("");
-  const [showComment, setShowComment] = useState(false);
-
+  const [preferredContact, setPreferredContact] = useState("");
   const [emailNotifications, setEmailNotifications] = useState(false);
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -62,223 +49,8 @@ export default function Form({ carId, className }: ContactInfoFormProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmailNotifications(event.target.checked);
   };
-  let err = "";
-  const InputFirstName = ({
-    fname,
-    setFname,
-    errors,
-    setErrors,
-  }: FirstNameProps) => {
-    const [localFname, setLocalFname] = useState(fname);
+  const err = "";
 
-    const validate = (value: string) => {
-      err = validateName(value, "First name");
-      setErrors((prev) => ({ ...prev, fname: err }));
-    };
-
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setFname(value);
-      validate(value);
-    };
-
-    return (
-      <Input width="160px">
-        <Input.Field
-          placeholder="First name"
-          value={localFname}
-          onChange={(e) => setLocalFname(e.target.value)}
-          onBlur={handleBlur}
-          className={errors.fname ? classes.error : undefined}
-        />
-      </Input>
-    );
-  };
-
-  const InputLastName = ({
-    lname,
-    setLname,
-    errors,
-    setErrors,
-  }: LastNameProps) => {
-    const [localLname, setLocalLname] = useState(lname);
-    const validate = (value: string) => {
-      err = validateName(value, "Last name");
-      setErrors((prev) => ({ ...prev, lname: err }));
-    };
-
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setLname(value);
-      validate(value);
-    };
-
-    return (
-      <div>
-        <Input width="160px">
-          <Input.Field
-            placeholder="Last name"
-            value={localLname}
-            onChange={(e) => setLocalLname(e.target.value)}
-            onBlur={handleBlur}
-            className={errors.lname ? classes.error : undefined}
-          />
-        </Input>
-      </div>
-    );
-  };
-
-  const InputPostCode = ({
-    postCode,
-    setPostCode,
-    errors,
-    setErrors,
-  }: PostCodeProps) => {
-    const [localPostCode, setLocalPostCode] = useState(postCode);
-    const validate = (value: string) => {
-      err = validatePostCode(value);
-      setErrors((prev) => ({ ...prev, postcode: err }));
-    };
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setPostCode(value);
-      validate(value);
-    };
-    return (
-      <Input width="110px">
-        <Input.Field
-          placeholder="54000"
-          value={localPostCode}
-          onChange={(e) => setLocalPostCode(e.target.value)}
-          onBlur={handleBlur}
-          className={errors.postcode ? classes.error : undefined}
-        />
-      </Input>
-    );
-  };
-  const InputEmail = ({ email, setEmail, errors, setErrors }: EmailProps) => {
-    const [localEmail, setLocalEmail] = useState(email);
-    const validate = (value: string) => {
-      err = validateEmail(value);
-      setErrors((prev) => ({ ...prev, email: err }));
-    };
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setEmail(value);
-      validate(value);
-    };
-    return (
-      <Input width="310px">
-        <Input.Field
-          type="email"
-          placeholder="Email address"
-          value={localEmail}
-          onChange={(e) => setLocalEmail(e.target.value)}
-          onBlur={handleBlur}
-          className={errors.email ? classes.error : undefined}
-        />
-      </Input>
-    );
-  };
-  const InputPhone = ({ phone, setPhone, errors, setErrors }: PhoneProps) => {
-    const [localPhone, setLocalPhone] = useState(phone);
-    const validate = (value: string) => {
-      err = validatePhoneNumber(value);
-      setErrors((prev) => ({ ...prev, phone: err }));
-    };
-
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setPhone(value);
-      validate(value);
-    };
-    return (
-      <Input width="200px">
-        <Input.Field
-          placeholder="0770 000 000"
-          value={localPhone}
-          onChange={(e) => setLocalPhone(e.target.value)}
-          onBlur={handleBlur}
-          className={errors.phone ? classes.error : undefined}
-        />
-      </Input>
-    );
-  };
-  const AddComment = ({ commentText, setCommentText }: CommentProps) => {
-    const [localCommentText, setLocalCommentText] = useState(commentText);
-    const handleCancelComment = () => {
-      setShowComment(false);
-      setLocalCommentText("");
-      setCommentText("");
-    };
-    return (
-      <div>
-        {!showComment ? (
-          <ButtonPrimary
-            imgSrc="/images/add.png"
-            btnText="Add comments"
-            className={classes.addComment}
-            onClick={() => setShowComment(true)}
-          />
-        ) : (
-          <div className={classes.commentBoxContainer}>
-            <textarea
-              className={classes.commentBox}
-              placeholder="Enter comment"
-              rows={10}
-              cols={5}
-              value={localCommentText}
-              onChange={(e) => setLocalCommentText(e.target.value)}
-            />
-            <ButtonPrimary
-              className={classes.cancelCommentBtn}
-              btnText="Cancel"
-              onClick={handleCancelComment}
-            />
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  const PreferredChoice = () => {
-    const handleCheckboxChange = (option: string) => {
-      setPreferredContact((prev) => (prev === option ? "" : option));
-    };
-
-    return (
-      <FormControl component="fieldset" className={classes.options}>
-        <p>I prefer:</p>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={preferredContact === "Call"}
-              onChange={() => handleCheckboxChange("Call")}
-            />
-          }
-          label="Call"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={preferredContact === "Text"}
-              onChange={() => handleCheckboxChange("Text")}
-            />
-          }
-          label="Text"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={preferredContact === "Email"}
-              onChange={() => handleCheckboxChange("Email")}
-            />
-          }
-          label="Email"
-        />
-      </FormControl>
-    );
-  };
   const DropdownOptions = () => {
     return (
       <Dropdown
@@ -357,12 +129,14 @@ export default function Form({ carId, className }: ContactInfoFormProps) {
           setFname={setFname}
           errors={errors}
           setErrors={setErrors}
+          err={err}
         />
         <InputLastName
           lname={lname}
           setLname={setLname}
           errors={errors}
           setErrors={setErrors}
+          err={err}
         />
         <p>and</p>
         <DropdownOptions />
@@ -376,6 +150,7 @@ export default function Form({ carId, className }: ContactInfoFormProps) {
           setPostCode={setPostCode}
           errors={errors}
           setErrors={setErrors}
+          err={err}
         />
         <div>area. You can reach me by email at</div>
         <InputEmail
@@ -383,6 +158,7 @@ export default function Form({ carId, className }: ContactInfoFormProps) {
           setEmail={setEmail}
           errors={errors}
           setErrors={setErrors}
+          err={err}
         />
         <p>or by phone at </p>
         <InputPhone
@@ -390,10 +166,14 @@ export default function Form({ carId, className }: ContactInfoFormProps) {
           setPhone={setPhone}
           errors={errors}
           setErrors={setErrors}
+          err={err}
         />
         <p>. Thank you!</p>
       </div>
-      <PreferredChoice />
+      <PreferredChoice
+        preferredContact={preferredContact}
+        setPreferredContact={setPreferredContact}
+      />
       <AddComment commentText={commentText} setCommentText={setCommentText} />
       <div>
         <FormControlLabel
@@ -417,16 +197,7 @@ export default function Form({ carId, className }: ContactInfoFormProps) {
           Send Message
         </button>
       )}
-
-      <div className={classes.text}>
-        By submitting my contact information on CarGurus, I agree to receive
-        communications from CarGurus, from the vehicle&#39;s seller and from the
-        seller&#39;s agent&#40;s&#41;. If I include my phone number, I agree to
-        receive calls and text messages &#40;including via automation&#41;. I
-        can opt out at any time. I also agree to the Terms of Use and Privacy
-        Statement, which explain how my data is used to better understand my
-        vehicle shopping interests.
-      </div>
+      <PrivacyAgreementText />
     </form>
   );
 }
