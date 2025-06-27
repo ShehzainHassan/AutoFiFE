@@ -1,0 +1,16 @@
+.results {
+  display: flex;
+  align-items: center;
+}
+
+.resultHeaderBottom {
+  display: flex;
+  justify-content: space-between;
+}
+.noOfResults {
+  padding: 0 8px 3px 3px;
+  border-right: 1px solid var(--color-gray500);
+}
+.location {
+  margin-left: 5px;
+}

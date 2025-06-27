@@ -1,0 +1,18 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  padding: 25px 25px 0;
+  border-bottom: 1px solid var(--color-gray500);
+}
+.filterContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  border: 1px solid var(--color-gray500);
+  height: fit-content;
+  border-radius: 20px;
+}
+.btn {
+  padding-top: 28px;
+  padding-bottom: 24px;
+}

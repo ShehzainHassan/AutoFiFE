@@ -1,0 +1,24 @@
+.resultHeader {
+  display: flex;
+  justify-content: space-between;
+  min-width: 1200px;
+}
+.resultHeaderText {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.text {
+  padding: 3px 26px;
+}
+.star::before {
+  content: "★";
+  color: var(--color-green700);
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 18.5px;
+  letter-spacing: 5px;
+}
+.bold {
+  font-weight: bold;
+}

@@ -1,5 +1,5 @@
 "use client";
-import { useSearchLogic } from "@/hooks/useSearchLogic";
+import { useSearchLogic } from "@/app/components/search-form/useSearchLogic";
 import { SearchFormView } from "./search-form-view";
 import { SearchFormContainerProps } from "./search-form.types";
 
