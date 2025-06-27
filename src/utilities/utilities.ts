@@ -283,3 +283,26 @@ export function handleApiError(error: unknown, router?: AppRouterInstance) {
 export function isLeapYear(y: number) {
   return y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0);
 }
+export function getImage(title: string) {
+  switch (title) {
+    case "Mileage":
+      return "/images/mileage.png";
+    case "Drivetrain":
+      return "/images/drivetrain.png";
+    case "Exterior color":
+      return "/images/color.png";
+    case "MPG":
+      return "/images/mpg.png";
+    case "Engine":
+      return "/images/engine.png";
+    case "Fuel type":
+      return "/images/fuel-type.png";
+    case "Gearbox":
+      return "/images/gearbox.png";
+    case "ULEZ compliant":
+      return "/images/ulez.png";
+
+    default:
+      return "/images/mileage.png";
+  }
+}

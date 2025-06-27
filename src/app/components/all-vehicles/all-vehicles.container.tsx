@@ -1,17 +1,16 @@
 "use client";
 import { MAX_YEAR, MIN_YEAR } from "@/constants";
-import { useSearch } from "@/contexts/car-search-context/car-search-context";
+import { useSearch } from "@/contexts/car-search-context";
 import { convertArrayToString, parseStatus } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import AllVehiclesSwiper from "../all-vehicle-swiper/all-vehicle-swiper";
-import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
-import SectionTitle from "../section-title/section-title";
-import classes from "./all-vehicles.module.css";
-export default function ExploreVehicles() {
+import AllVehiclesView from "./all-vehicles-view";
+
+export default function ExploreVehiclesContainer() {
   const TABS = ["In Stock", "New Cars", "Used Cars"];
   const [selectedTab, setSelectedTab] = useState<string>(TABS[0]);
   const router = useRouter();
+
   const {
     mainSearch,
     searchParams,
@@ -19,8 +18,10 @@ export default function ExploreVehicles() {
     setExpandedSections,
     setMainSearch,
   } = useSearch();
+
   const handleViewAll = () => {
     const parsedStatus = parseStatus(selectedTab);
+
     setSearchParams({
       ...searchParams,
       make: "Any_Makes",
@@ -33,6 +34,7 @@ export default function ExploreVehicles() {
       gearbox: convertArrayToString([]),
       selectedColor: convertArrayToString([]),
     });
+
     setExpandedSections(new Set());
 
     setMainSearch((prev) => ({
@@ -50,36 +52,13 @@ export default function ExploreVehicles() {
       `/search?make=${selectedTab}&model=Any_Models&status=${parsedStatus}`
     );
   };
+
   return (
-    <>
-      <div className={classes.container}>
-        <SectionTitle
-          title="Explore All Vehicles"
-          buttonText="View All"
-          onClick={handleViewAll}
-          backgroundColor="var(--color-white100)"
-        />
-        <div className={classes.space}>
-          <HorizontalTabs
-            tabs={TABS}
-            selectedTab={selectedTab}
-            onTabChange={(tab) => {
-              setSelectedTab(tab);
-            }}
-          />
-        </div>
-        <div className={classes.vehicleSwiperContainer}>
-          <AllVehiclesSwiper
-            vehicleStatus={
-              selectedTab === TABS[0]
-                ? null
-                : selectedTab === TABS[1]
-                ? "NEW"
-                : "USED"
-            }
-          />
-        </div>
-      </div>
-    </>
+    <AllVehiclesView
+      tabs={TABS}
+      selectedTab={selectedTab}
+      onTabChange={setSelectedTab}
+      onViewAll={handleViewAll}
+    />
   );
 }

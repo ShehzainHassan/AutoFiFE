@@ -1,11 +1,17 @@
-import { useState } from "react";
-import ButtonNavigate from "../buttons/button-navigate/button-navigate";
-import CarImages from "../car-images/car-images";
+import { useState, Suspense } from "react";
+import dynamic from "next/dynamic";
 import CarImage from "../result-card/car-image/car-image";
-import classes from "./car-image-gallery.module.css";
 import { CarImageGalleryProps } from "./car-image-gallery.types";
-import HandleShare from "../handle-share/handle-share";
-import HandleLike from "../handle-like/handle-like";
+import classes from "./car-image-gallery.module.css";
+
+const ButtonNavigate = dynamic(
+  () => import("../buttons/button-navigate/button-navigate")
+);
+const CarImages = dynamic(() => import("../car-images/car-images"));
+
+const HandleShare = dynamic(() => import("../handle-share/handle-share"));
+const HandleLike = dynamic(() => import("../handle-like/handle-like"));
+
 export default function CarImageGallery({ vehicle }: CarImageGalleryProps) {
   const images = [
     "/images/glc_2023.png",
@@ -17,6 +23,7 @@ export default function CarImageGallery({ vehicle }: CarImageGalleryProps) {
     "/images/ford_explorer_2023.png",
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
   };
@@ -24,37 +31,47 @@ export default function CarImageGallery({ vehicle }: CarImageGalleryProps) {
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
+
   return (
     <div className={classes.imgContainer}>
       <CarImage src={images[currentIndex]} width={740} height={340}>
-        <HandleShare />
-        <HandleLike vehicle={vehicle} />
+        <Suspense
+          fallback={<div className={classes.spinner}>Loading gallery...</div>}>
+          <HandleShare />
+          <HandleLike vehicle={vehicle} />
+        </Suspense>
       </CarImage>
-      <div className={classes.allImagesContainer}>
-        <ButtonNavigate
-          type="prev"
-          className={classes.navigate}
-          onClick={handlePrev}
-        />
-        <div className={classes.carImages}>
-          {images.map((image, index) => (
-            <CarImages
-              key={index}
-              imgSrc={image}
-              selected={index === currentIndex}
-              onClick={() => setCurrentIndex(index)}
-            />
-          ))}
+
+      <Suspense
+        fallback={<div className={classes.spinner}>Loading gallery...</div>}>
+        <div className={classes.allImagesContainer}>
+          <ButtonNavigate
+            type="prev"
+            className={classes.navigate}
+            onClick={handlePrev}
+          />
+
+          <div className={classes.carImages}>
+            {images.map((image, index) => (
+              <CarImages
+                key={index}
+                imgSrc={image}
+                selected={index === currentIndex}
+                onClick={() => setCurrentIndex(index)}
+              />
+            ))}
+          </div>
+
+          <ButtonNavigate
+            type="next"
+            className={classes.navigate}
+            onClick={handleNext}
+          />
+          <div className={classes.imageCount}>
+            {currentIndex + 1} / {images.length}
+          </div>
         </div>
-        <ButtonNavigate
-          type="next"
-          className={classes.navigate}
-          onClick={handleNext}
-        />
-        <div className={classes.imageCount}>
-          {currentIndex + 1} / {images.length}
-        </div>
-      </div>
+      </Suspense>
     </div>
   );
 }

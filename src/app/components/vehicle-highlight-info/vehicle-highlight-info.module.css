@@ -1,0 +1,66 @@
+.carTitle {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 30.13px;
+  line-height: 35.2px;
+  letter-spacing: 0.3px;
+}
+.carTitleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.carPrice {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 25.92px;
+  line-height: 32px;
+  letter-spacing: 0.3px;
+}
+.carDetails {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0 56px;
+}
+.arrowContainer {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.marketPrice {
+  display: flex;
+  flex-direction: column;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 15.5px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+}
+.deal {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.16px;
+}
+.marketContainer {
+  display: flex;
+  align-items: center;
+}
+.icon {
+  width: 16px;
+  height: 16px;
+}
+.dealer {
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+}
+
+.dealerRating {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}

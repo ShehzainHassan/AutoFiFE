@@ -1,0 +1,149 @@
+.container {
+  display: grid;
+  grid-template-columns: 7.6375fr 4.3625fr;
+  gap: 24px;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.carTitle {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 30.13px;
+  line-height: 35.2px;
+  letter-spacing: 0.3px;
+}
+.carTitleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.carPrice {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 25.92px;
+  line-height: 32px;
+  letter-spacing: 0.3px;
+}
+.deal {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.16px;
+}
+.dealer {
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+}
+.marketPrice {
+  display: flex;
+  flex-direction: column;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 15.5px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+}
+.dealerRating {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.carDetails {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0 56px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.space {
+  gap: 8px;
+}
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px 0;
+}
+.button {
+  display: inline-flex;
+  border: 1px solid var(--color-black300) !important;
+  flex-direction: row-reverse;
+}
+.list {
+  margin-left: 15px;
+}
+.arrowContainer {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.loading {
+  display: flex !important;
+  margin: 0px !important;
+  height: 60px !important;
+}
+.bold {
+  font-weight: Inter, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: var(--color-black500);
+}
+.marketContainer {
+  display: flex;
+  align-items: center;
+}
+.icon {
+  width: 16px;
+  height: 16px;
+}
+.vehicleFeatures {
+  padding: 40px 75px;
+}
+.financeBenefits {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.financeText {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 15.5px;
+  line-height: 20px;
+  letter-spacing: 0.7px;
+  color: var(--color-black200);
+}
+.financeContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 360px;
+}
+.btnContainer {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 8px;
+}
+.financeBottomText {
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 13.56px;
+  line-height: 21px;
+  letter-spacing: 0.16px;
+  color: var(--color-gray600);
+}

@@ -7,7 +7,7 @@ import { Suspense } from "react";
 import classes from "./page.module.css";
 
 const ExploreVehicles = dynamic(
-  () => import("./components/all-vehicles/all-vehicle")
+  () => import("./components/all-vehicles/all-vehicles.container")
 );
 const CarVideo = dynamic(() => import("./components/car-video/car-video"));
 const Statistics = dynamic(() => import("./components/statistics/statistics"));

@@ -1,36 +1,14 @@
 import Image from "next/image";
 import classes from "./car-feature.module.css";
 import { CarFeatureProps } from "./car-feature.types";
+import { getImage } from "@/utilities/utilities";
 
 export default function CarFeature({ title, value }: CarFeatureProps) {
-  const getImage = () => {
-    switch (title) {
-      case "Mileage":
-        return "/images/mileage.png";
-      case "Drivetrain":
-        return "/images/drivetrain.png";
-      case "Exterior color":
-        return "/images/color.png";
-      case "MPG":
-        return "/images/mpg.png";
-      case "Engine":
-        return "/images/engine.png";
-      case "Fuel type":
-        return "/images/fuel-type.png";
-      case "Gearbox":
-        return "/images/gearbox.png";
-      case "ULEZ compliant":
-        return "/images/ulez.png";
-
-      default:
-        return "/images/mileage.png";
-    }
-  };
   return (
     <div className={classes.container}>
       <div className={classes.iconContainer}>
         <Image
-          src={getImage()}
+          src={getImage(title)}
           alt="icon"
           width={32}
           height={32}
