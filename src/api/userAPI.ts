@@ -1,9 +1,7 @@
 import { LoginDTO, User } from "@/interfaces/user";
-import {
-  getTokenFromLocalStorage,
-  getUserIdFromLocalStorage,
-} from "@/utilities/utilities";
+import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import axios from "axios";
+import apiClient from "./apiClient";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -30,78 +28,52 @@ const userAPI = {
     return response.data;
   },
   saveUserSearch: async (userId: number, search: string) => {
-    const token = getTokenFromLocalStorage();
-    const response = await axios.post(
-      `${API_BASE_URL}/user/save-search`,
+    const response = await apiClient.post(`${API_BASE_URL}/user/save-search`, {
+      userId,
+      search,
+    });
+    return response.data;
+  },
+  removeUserSearch: async (userId: number, search: string) => {
+    const response = await apiClient.delete(
+      `${API_BASE_URL}/user/delete-search`,
       {
-        userId,
-        search,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+        data: {
+          userId,
+          search,
         },
       }
     );
     return response.data;
   },
-  removeUserSearch: async (userId: number, search: string) => {
-    const token = getTokenFromLocalStorage();
-    const response = await axios.delete(`${API_BASE_URL}/user/delete-search`, {
-      data: {
-        userId,
-        search,
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  },
   addUserInteraction: async (vehicleId: number, interactionType: string) => {
-    const token = getTokenFromLocalStorage();
-    const response = await axios.post(
+    const response = await apiClient.post(
       `${API_BASE_URL}/user/add-interaction`,
       {
         UserId: getUserIdFromLocalStorage(),
         VehicleId: vehicleId,
         InteractionType: interactionType,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }
     );
     return response.data;
   },
   addUserLike: async (userId: number, vin: string) => {
-    const token = getTokenFromLocalStorage();
-    const response = await axios.post(
+    const response = await apiClient.post(
       `${API_BASE_URL}/user/add-user-like`,
       {
         userId,
         vehicleVin: vin,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }
     );
     return response.data;
   },
   removeUserLike: async (userId: number, vin: string) => {
-    const token = getTokenFromLocalStorage();
-    const response = await axios.delete(
+    const response = await apiClient.delete(
       `${API_BASE_URL}/user/remove-user-like`,
       {
         data: {
           userId,
           vehicleVin: vin,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
         },
       }
     );
