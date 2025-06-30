@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { CommentProps } from "../contact-info-form.types";
 import ButtonPrimary from "../../buttons/button-primary/button-primary";
 import classes from "../contact-info-form.module.css";
-const AddComment = ({ commentText, setCommentText }: CommentProps) => {
-  const [localCommentText, setLocalCommentText] = useState(commentText);
+import { useContactFormContext } from "../../../../contexts/contact-form-context/contact-form-context";
+const AddComment = () => {
+  const { commentText, setCommentText } = useContactFormContext();
   const handleCancelComment = () => {
     setShowComment(false);
-    setLocalCommentText("");
     setCommentText("");
   };
   const [showComment, setShowComment] = useState(false);
@@ -27,8 +26,8 @@ const AddComment = ({ commentText, setCommentText }: CommentProps) => {
             placeholder="Enter comment"
             rows={10}
             cols={5}
-            value={localCommentText}
-            onChange={(e) => setLocalCommentText(e.target.value)}
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
           />
           <ButtonPrimary
             className={classes.cancelCommentBtn}

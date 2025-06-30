@@ -1,17 +1,18 @@
-import { useRouter } from "next/navigation";
-import { CarDetailsProps } from "./car-details.types";
-import { useState } from "react";
 import useTracking from "@/hooks/useTracking";
-import classes from "./car-details.module.css";
-import CardHeader from "../card-header/card-header";
-import PartnerInfo from "../partner-info/partner-info";
-import EstimatedMonthly from "../monthly-estimate/monthly-estimate";
-import Rating from "../rating/rating";
-import Features from "../features/features";
-import ContactInfoResultCard from "../contact/contact";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Modal from "react-modal";
+import ContactFormContainer from "../../contact-info-form/contact-form-container";
 import CardBottom from "../card-bottom/card-bottom";
-import Form from "../../contact-info-form/contact-info-form";
+import CardHeader from "../card-header/card-header";
+import ContactInfoResultCard from "../contact/contact";
+import Features from "../features/features";
+import EstimatedMonthly from "../monthly-estimate/monthly-estimate";
+import PartnerInfo from "../partner-info/partner-info";
+import Rating from "../rating/rating";
+import classes from "./car-details.module.css";
+import { CarDetailsProps } from "./car-details.types";
+import { ContactFormProvider } from "../../../../contexts/contact-form-context/contact-form-context";
 
 const CarDetails = ({ id, carTitle, miles, price }: CarDetailsProps) => {
   const router = useRouter();
@@ -51,7 +52,9 @@ const CarDetails = ({ id, carTitle, miles, price }: CarDetailsProps) => {
               X
             </button>
           </div>
-          <Form carId={id} className={classes.modalContent} />
+          <ContactFormProvider>
+            <ContactFormContainer carId={id} className={classes.modalContent} />
+          </ContactFormProvider>
         </div>
       </Modal>
     </div>

@@ -1,18 +1,11 @@
-import { useState } from "react";
-import { PostCodeProps } from "../contact-info-form.types";
 import { validatePostCode } from "@/utilities/utilities";
 import { Input } from "../../input-field";
+import { useContactFormContext } from "../../../../contexts/contact-form-context/contact-form-context";
 import classes from "../contact-info-form.module.css";
-const InputPostCode = ({
-  postCode,
-  setPostCode,
-  errors,
-  setErrors,
-  err,
-}: PostCodeProps) => {
-  const [localPostCode, setLocalPostCode] = useState(postCode);
+const InputPostCode = () => {
+  const { postCode, setPostCode, errors, setErrors } = useContactFormContext();
   const validate = (value: string) => {
-    err = validatePostCode(value);
+    const err = validatePostCode(value);
     setErrors((prev) => ({ ...prev, postcode: err }));
   };
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -24,8 +17,8 @@ const InputPostCode = ({
     <Input width="110px">
       <Input.Field
         placeholder="54000"
-        value={localPostCode}
-        onChange={(e) => setLocalPostCode(e.target.value)}
+        value={postCode}
+        onChange={(e) => setPostCode(e.target.value)}
         onBlur={handleBlur}
         className={errors.postcode ? classes.error : undefined}
       />

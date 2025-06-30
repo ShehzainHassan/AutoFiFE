@@ -1,17 +1,18 @@
 "use client";
-import React, { lazy, Suspense } from "react";
-import { CircularProgress } from "@mui/material";
-import { useParams } from "next/navigation";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import useVehiclesById from "@/hooks/useVehicleById";
-import useVehicleFeatures from "@/hooks/useVehicleFeatures";
+import ContactFormContainer from "@/app/components/contact-info-form/contact-form-container";
 import EmptyState from "@/app/components/empty-state/empty-state";
+import Footer from "@/app/components/footer/footer";
 import Navbar from "@/app/components/navbar/navbar";
 import Wrapper from "@/app/components/wrapper/wrapper";
-import Form from "@/app/components/contact-info-form/contact-info-form";
-import Footer from "@/app/components/footer/footer";
+import useVehiclesById from "@/hooks/useVehicleById";
+import useVehicleFeatures from "@/hooks/useVehicleFeatures";
+import { CircularProgress } from "@mui/material";
+import { useParams } from "next/navigation";
+import { lazy, Suspense } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import classes from "./page.module.css";
+import { ContactFormProvider } from "@/contexts/contact-form-context/contact-form-context";
 
 const CarImageGallery = lazy(
   () => import("@/app/components/car-image-gallery/car-image-gallery")
@@ -66,7 +67,9 @@ export default function CarDetails() {
             <Suspense fallback={<CircularProgress />}>
               <VehicleHighlightInfo vehicle={vehicle} />
             </Suspense>
-            <Form />
+            <ContactFormProvider>
+              <ContactFormContainer />
+            </ContactFormProvider>
           </div>
 
           <div className={classes.vehicleFeatures}>

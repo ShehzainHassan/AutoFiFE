@@ -1,19 +1,12 @@
-import { useState } from "react";
-import { EmailProps } from "../contact-info-form.types";
 import { validateEmail } from "@/utilities/utilities";
 import { Input } from "../../input-field";
+import { useContactFormContext } from "../../../../contexts/contact-form-context/contact-form-context";
 import classes from "../contact-info-form.module.css";
 
-const InputEmail = ({
-  email,
-  setEmail,
-  errors,
-  setErrors,
-  err,
-}: EmailProps) => {
-  const [localEmail, setLocalEmail] = useState(email);
+const InputEmail = () => {
+  const { email, setEmail, errors, setErrors } = useContactFormContext();
   const validate = (value: string) => {
-    err = validateEmail(value);
+    const err = validateEmail(value);
     setErrors((prev) => ({ ...prev, email: err }));
   };
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -26,8 +19,8 @@ const InputEmail = ({
       <Input.Field
         type="email"
         placeholder="Email address"
-        value={localEmail}
-        onChange={(e) => setLocalEmail(e.target.value)}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         onBlur={handleBlur}
         className={errors.email ? classes.error : undefined}
       />

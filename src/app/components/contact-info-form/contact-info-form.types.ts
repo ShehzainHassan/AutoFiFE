@@ -1,47 +1,16 @@
+import { Vehicle } from "@/interfaces/vehicle";
+
 export type ContactInfoFormProps = {
   carId?: number;
   className?: string;
 };
-export type FirstNameProps = {
-  fname: string;
-  setFname: (value: string) => void;
-  errors: { [key: string]: string };
-  setErrors: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>;
-  err: string;
-};
-export type LastNameProps = {
-  lname: string;
-  setLname: (value: string) => void;
-  errors: { [key: string]: string };
-  setErrors: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>;
-  err: string;
-};
-export type PostCodeProps = {
-  postCode: string;
-  setPostCode: (value: string) => void;
-  errors: { [key: string]: string };
-  setErrors: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>;
-  err: string;
-};
-export type EmailProps = {
-  email: string;
-  setEmail: (value: string) => void;
-  errors: { [key: string]: string };
-  setErrors: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>;
-  err: string;
-};
-export type PhoneProps = {
-  phone: string;
-  setPhone: (value: string) => void;
-  errors: { [key: string]: string };
-  setErrors: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>;
-  err: string;
-};
-export type CommentProps = {
-  commentText: string;
-  setCommentText: (value: string) => void;
-};
-export type PreferredChoiceProps = {
-  preferredContact: string;
-  setPreferredContact: (val: string) => void;
-};
+
+export interface ContactFormViewProps {
+  carId?: number;
+  className?: string;
+  vehicle?: Vehicle;
+  isPending: boolean;
+  canSendMessage: () => boolean;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}

@@ -1,19 +1,12 @@
-import { useState } from "react";
-import { FirstNameProps } from "../contact-info-form.types";
-import { Input } from "../../input-field";
-import classes from "../contact-info-form.module.css";
 import { validateName } from "@/utilities/utilities";
-const InputFirstName = ({
-  fname,
-  setFname,
-  errors,
-  setErrors,
-  err,
-}: FirstNameProps) => {
-  const [localFname, setLocalFname] = useState(fname);
+import { Input } from "../../input-field";
+import { useContactFormContext } from "../../../../contexts/contact-form-context/contact-form-context";
+import classes from "../contact-info-form.module.css";
+const InputFirstName = () => {
+  const { fname, setFname, errors, setErrors } = useContactFormContext();
 
   const validate = (value: string) => {
-    err = validateName(value, "First name");
+    const err = validateName(value, "First name");
     setErrors((prev) => ({ ...prev, fname: err }));
   };
 
@@ -27,8 +20,8 @@ const InputFirstName = ({
     <Input width="160px">
       <Input.Field
         placeholder="First name"
-        value={localFname}
-        onChange={(e) => setLocalFname(e.target.value)}
+        value={fname}
+        onChange={(e) => setFname(e.target.value)}
         onBlur={handleBlur}
         className={errors.fname ? classes.error : undefined}
       />

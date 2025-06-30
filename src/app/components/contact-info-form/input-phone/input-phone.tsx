@@ -1,18 +1,11 @@
-import { useState } from "react";
-import { PhoneProps } from "../contact-info-form.types";
 import { validatePhoneNumber } from "@/utilities/utilities";
 import { Input } from "../../input-field";
+import { useContactFormContext } from "../../../../contexts/contact-form-context/contact-form-context";
 import classes from "../contact-info-form.module.css";
-const InputPhone = ({
-  phone,
-  setPhone,
-  errors,
-  setErrors,
-  err,
-}: PhoneProps) => {
-  const [localPhone, setLocalPhone] = useState(phone);
+const InputPhone = () => {
+  const { phone, setPhone, errors, setErrors } = useContactFormContext();
   const validate = (value: string) => {
-    err = validatePhoneNumber(value);
+    const err = validatePhoneNumber(value);
     setErrors((prev) => ({ ...prev, phone: err }));
   };
 
@@ -25,8 +18,8 @@ const InputPhone = ({
     <Input width="200px">
       <Input.Field
         placeholder="0770 000 000"
-        value={localPhone}
-        onChange={(e) => setLocalPhone(e.target.value)}
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
         onBlur={handleBlur}
         className={errors.phone ? classes.error : undefined}
       />

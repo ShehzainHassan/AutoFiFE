@@ -1,10 +1,8 @@
 import { Checkbox, FormControl, FormControlLabel } from "@mui/material";
+import { useContactFormContext } from "../../../../contexts/contact-form-context/contact-form-context";
 import classes from "../contact-info-form.module.css";
-import { PreferredChoiceProps } from "../contact-info-form.types";
-const PreferredChoice = ({
-  preferredContact,
-  setPreferredContact,
-}: PreferredChoiceProps) => {
+const PreferredChoice = () => {
+  const { preferredContact, setPreferredContact } = useContactFormContext();
   const handleCheckboxChange = (option: string) => {
     setPreferredContact(preferredContact === option ? "" : option);
   };
