@@ -1,108 +1,132 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { useUserFavorites } from "@/contexts/user-favorites-context/user-favorites-context";
-import useAddUserLike from "@/hooks/useAddUserLike";
-import useDeleteUserLike from "@/hooks/useDeleteUserLike";
-import useTracking from "@/hooks/useTracking";
+import HandleLikeContainer from "./handle-like-container";
 import { toast } from "react-toastify";
-import HandleLike from "./handle-like";
+
+type MockHandleLikeProps = {
+  handleLike: () => void;
+  isLiked: boolean;
+};
+
+function MockHandleLike({ handleLike, isLiked }: MockHandleLikeProps) {
+  return (
+    <button onClick={handleLike} data-testid="like-button">
+      {isLiked ? "Unlike" : "Like"}
+    </button>
+  );
+}
+MockHandleLike.displayName = "MockHandleLike";
+
+jest.mock("./handle-like", () => MockHandleLike);
+
+const mockMutateAdd = jest.fn();
+const mockMutateDelete = jest.fn();
+const mockMutateTrack = jest.fn();
 
 jest.mock("@/contexts/user-favorites-context/user-favorites-context", () => ({
-  useUserFavorites: jest.fn(),
+  useUserFavorites: () => ({
+    userLikes: ["123ABC"],
+  }),
 }));
 
-jest.mock("@/hooks/useAddUserLike", () => jest.fn());
-jest.mock("@/hooks/useDeleteUserLike", () => jest.fn());
+jest.mock("@/hooks/useAddUserLike", () => () => ({
+  mutate: mockMutateAdd,
+}));
+
+jest.mock("@/hooks/useDeleteUserLike", () => () => ({
+  mutate: mockMutateDelete,
+}));
+
+jest.mock("@/hooks/useTracking", () => () => ({
+  mutate: mockMutateTrack,
+}));
+
 jest.mock("@/utilities/utilities", () => ({
-  getUserIdFromLocalStorage: jest.fn(() => 123),
+  getUserIdFromLocalStorage: () => 42,
 }));
 
 jest.mock("react-toastify", () => ({
-  toast: { error: jest.fn() },
+  toast: {
+    error: jest.fn(),
+  },
 }));
 
-const mockVehicle = {
-  id: 1,
-  vin: "1234VIN",
-  make: "Toyota",
-  model: "Corolla",
-  year: 2020,
-  price: 15000,
-  mileage: 30000,
-  color: "Blue",
-  fuelType: "Gasoline",
-  transmission: "Automatic",
-  status: "Available",
-};
-
-describe("HandleLike", () => {
-  let mutateAdd: jest.Mock;
-  let mutateDelete: jest.Mock;
-  let mutateTrack: jest.Mock;
+describe("HandleLikeContainer", () => {
+  const vehicle = {
+    vin: "123ABC",
+    id: 1,
+    make: "TestMake",
+    model: "TestModel",
+    year: 2020,
+    price: 10000,
+    mileage: 5000,
+    color: "Red",
+    fuelType: "Gasoline",
+    transmission: "Automatic",
+    status: "NEW",
+  };
+  const notLikedVehilce = {
+    vin: "12345678",
+    id: 2,
+    make: "TestMake",
+    model: "TestModel",
+    year: 2020,
+    price: 10000,
+    mileage: 5000,
+    color: "Red",
+    fuelType: "Gasoline",
+    transmission: "Automatic",
+    status: "NEW",
+  };
 
   beforeEach(() => {
-    mutateAdd = jest.fn();
-    mutateDelete = jest.fn();
-    mutateTrack = jest.fn();
+    jest.clearAllMocks();
+  });
+  it("calls deleteLikeMutation if vehicle is already liked", () => {
+    Storage.prototype.getItem = jest.fn(() => "mockAuthToken");
+    render(<HandleLikeContainer vehicle={vehicle} />);
+    fireEvent.click(screen.getByTestId("like-button"));
 
-    (useAddUserLike as jest.Mock).mockReturnValue({ mutate: mutateAdd });
-    (useDeleteUserLike as jest.Mock).mockReturnValue({ mutate: mutateDelete });
-    (useTracking as jest.Mock).mockReturnValue({ mutate: mutateTrack });
-
-    (useUserFavorites as jest.Mock).mockReturnValue({
-      userLikes: ["1234VIN"],
-    });
-
-    Storage.prototype.getItem = jest.fn((key) => {
-      if (key === "authData") return JSON.stringify({ token: "abc123" });
-      return null;
-    });
+    expect(mockMutateDelete).toHaveBeenCalledWith(
+      { userId: 42, vin: "123ABC" },
+      expect.any(Object)
+    );
   });
 
-  it("renders liked icon if vehicle is in userLikes", () => {
-    render(<HandleLike vehicle={mockVehicle} />);
-    expect(screen.getByTestId("FavoriteIcon")).toBeInTheDocument();
+  it("calls addLikeMutation if vehicle is not liked", () => {
+    Storage.prototype.getItem = jest.fn(() => "mockAuthToken");
+    render(<HandleLikeContainer vehicle={notLikedVehilce} />);
+    fireEvent.click(screen.getByTestId("like-button"));
+    expect(mockMutateAdd).toHaveBeenCalledWith(
+      { userId: 42, vin: notLikedVehilce.vin },
+      expect.any(Object)
+    );
   });
 
-  it("shows toast if user is not signed in", () => {
-    (localStorage.getItem as jest.Mock).mockReturnValue(null);
-    render(<HandleLike vehicle={mockVehicle} />);
+  it("shows toast error if user is not logged in", () => {
+    Storage.prototype.getItem = jest.fn(() => "");
+    render(<HandleLikeContainer vehicle={vehicle} />);
     fireEvent.click(screen.getByTestId("like-button"));
     expect(toast.error).toHaveBeenCalledWith(
       "Please sign in to like a vehicle"
     );
   });
 
-  it("calls addLike and tracking when liking a vehicle", () => {
-    (useUserFavorites as jest.Mock).mockReturnValue({
-      userLikes: [],
-    });
+  it("renders button with correct text when not liked", () => {
+    Storage.prototype.getItem = jest.fn(() => "mockAuthToken");
 
-    render(<HandleLike vehicle={mockVehicle} />);
-    fireEvent.click(screen.getByTestId("like-button"));
+    const notLikedVehicle = {
+      ...vehicle,
+      vin: "NOTLIKED123",
+      id: 2,
+    };
 
-    expect(mutateAdd).toHaveBeenCalledWith(
-      { userId: 123, vin: "1234VIN" },
-      expect.objectContaining({
-        onSuccess: expect.any(Function),
-        onError: expect.any(Function),
-      })
-    );
+    render(<HandleLikeContainer vehicle={notLikedVehicle} />);
+    expect(screen.getByTestId("like-button")).toHaveTextContent("Like");
   });
 
-  it("calls deleteLike and tracking when unliking a vehicle", () => {
-    (useUserFavorites as jest.Mock).mockReturnValue({
-      userLikes: ["1234VIN"],
-    });
-
-    render(<HandleLike vehicle={mockVehicle} />);
-    fireEvent.click(screen.getByTestId("like-button"));
-
-    expect(mutateDelete).toHaveBeenCalledWith(
-      { userId: 123, vin: "1234VIN" },
-      expect.objectContaining({
-        onSuccess: expect.any(Function),
-        onError: expect.any(Function),
-      })
-    );
+  it("renders button with correct text when not liked", () => {
+    Storage.prototype.getItem = jest.fn(() => "mockAuthToken");
+    render(<HandleLikeContainer vehicle={notLikedVehilce} />);
+    expect(screen.getByTestId("like-button")).toHaveTextContent("Like");
   });
 });

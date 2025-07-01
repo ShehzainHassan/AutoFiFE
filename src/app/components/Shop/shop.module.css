@@ -7,3 +7,12 @@
   gap: 180px;
   padding-top: 35px;
 }
+.subList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.text:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

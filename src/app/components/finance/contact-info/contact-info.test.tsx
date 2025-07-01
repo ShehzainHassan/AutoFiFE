@@ -103,7 +103,7 @@ describe("ContactInfo Component", () => {
     render(<ContactInfo id={id} />);
 
     const checkbox = screen.getByRole("checkbox");
-    fireEvent.click(checkbox); // agree to terms
+    fireEvent.click(checkbox);
 
     const button = screen.getByText("Get my quote");
     expect(button).not.toBeDisabled();

@@ -2,8 +2,9 @@
 import ContactFormContainer from "@/app/components/contact-info-form/contact-form-container";
 import EmptyState from "@/app/components/empty-state/empty-state";
 import Footer from "@/app/components/footer/footer";
-import Navbar from "@/app/components/navbar/navbar";
+import NavbarContainer from "@/app/components/navbar/navbar-container";
 import Wrapper from "@/app/components/wrapper/wrapper";
+import { ContactFormProvider } from "@/contexts/contact-form-context/contact-form-context";
 import useVehiclesById from "@/hooks/useVehicleById";
 import useVehicleFeatures from "@/hooks/useVehicleFeatures";
 import { CircularProgress } from "@mui/material";
@@ -12,7 +13,6 @@ import { lazy, Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./page.module.css";
-import { ContactFormProvider } from "@/contexts/contact-form-context/contact-form-context";
 
 const CarImageGallery = lazy(
   () => import("@/app/components/car-image-gallery/car-image-gallery")
@@ -23,10 +23,10 @@ const VehicleFeatures = lazy(
 const VehicleHighlightInfo = lazy(
   () => import("@/app/components/vehicle-highlight-info/vehicle-highlight-info")
 );
-const SimilarVehicleRecommendations = lazy(
+const SimilarVehicleRecommendationsContainer = lazy(
   () =>
     import(
-      "@/app/components/similar-vehicle-recommendations/similar-vehicle-recommendations"
+      "@/app/components/similar-vehicle-recommendations/similar-vehicle-recommendations-container"
     )
 );
 
@@ -48,7 +48,7 @@ export default function CarDetails() {
 
   return (
     <>
-      <Navbar backgroundColor="var(--color-gray600)" />
+      <NavbarContainer backgroundColor="var(--color-gray600)" />
       <Wrapper padding="24px 240px">
         <div className={classes.container}>
           <div className={classes.vehicleFeatures}>
@@ -74,7 +74,7 @@ export default function CarDetails() {
 
           <div className={classes.vehicleFeatures}>
             <Suspense fallback={<CircularProgress />}>
-              <SimilarVehicleRecommendations />
+              <SimilarVehicleRecommendationsContainer />
             </Suspense>
           </div>
         </div>

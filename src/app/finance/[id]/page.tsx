@@ -8,7 +8,7 @@ import EmploymentStatus from "@/app/components/finance/employment-status/employm
 import GetFinanceQuote from "@/app/components/finance/get-finance-quote/get-finance-quote";
 import Header from "@/app/components/finance/header/header";
 import MaritalStatus from "@/app/components/finance/marital-status/marital-status";
-import Navbar from "@/app/components/navbar/navbar";
+import NavbarContainer from "@/app/components/navbar/navbar-container";
 import useVehiclesById from "@/hooks/useVehicleById";
 import { CircularProgress } from "@mui/material";
 import { useParams } from "next/navigation";
@@ -54,7 +54,7 @@ export default function FinancePage() {
 
   return (
     <div className={classes.mainContainer}>
-      <Navbar backgroundColor="var(--color-gray600)" />
+      <NavbarContainer backgroundColor="var(--color-gray600)" />
       <div className={classes.container}>
         <ProgressBar />
         {step > 1 && <Header vehicle={vehicle} prevStep={prevStep} />}

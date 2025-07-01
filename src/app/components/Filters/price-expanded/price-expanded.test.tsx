@@ -1,104 +1,100 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import PriceExpanded from "./price-expanded";
+import { fireEvent, render, screen } from "@testing-library/react";
+import PriceExpandedContainer from "./price-expanded-container";
 
-// Mock the MUI Slider as a controlled range input
-jest.mock("@mui/material", () => {
-  const actual = jest.requireActual("@mui/material");
-  return {
-    ...actual,
-    Slider: ({
-      value,
-      onChange,
-      onChangeCommitted,
-      min,
-      max,
-      step,
-    }: React.ComponentPropsWithoutRef<typeof actual.Slider>) => (
-      <input
-        data-testid="slider"
-        type="range"
-        value={value[0]}
-        min={min}
-        max={max}
-        step={step}
-        onChange={(e) => {
-          const newVal = Number(e.target.value);
-          onChange?.({}, [newVal, value[1]]);
-        }}
-        onMouseUp={(e) => {
-          const newVal = Number((e.target as HTMLInputElement).value);
-          onChangeCommitted?.({}, [newVal, value[1]]);
-        }}
-      />
-    ),
-  };
-});
+interface MockPriceExpandedProps {
+  localRange: [number, number];
+  handleChange: (event: unknown, value: [number, number]) => void;
+  handleChangeCommitted: (event: unknown, value: [number, number]) => void;
+  handleClear: () => void;
+  getDisplayText: () => string;
+}
 
-const mockSetStagedSearch = jest.fn();
+jest.mock("./price-expanded.tsx", () => ({
+  __esModule: true,
+  default: ({
+    localRange,
+    handleChange,
+    handleChangeCommitted,
+    handleClear,
+    getDisplayText,
+  }: MockPriceExpandedProps) => (
+    <div>
+      <p data-testid="display-text">{getDisplayText()}</p>
+      <button onClick={() => handleChange(null, [1000, 5000])}>Change</button>
+      <button onClick={() => handleChangeCommitted(null, [1000, 5000])}>
+        Commit
+      </button>
+      <button onClick={handleClear}>Clear</button>
+      <p data-testid="range-values">
+        {localRange[0]} - {localRange[1]}
+      </p>
+    </div>
+  ),
+}));
+
 const mockSetMainSearch = jest.fn();
+const mockSetStagedSearch = jest.fn();
 
 jest.mock("@/contexts/car-search-context/car-search-context", () => ({
   useSearch: () => ({
-    mainSearch: {
-      startPrice: null,
-      endPrice: null,
-      price: "All_Prices",
-    },
+    mainSearch: { startPrice: null, endPrice: null, price: "All_Prices" },
     setStagedSearch: mockSetStagedSearch,
     setMainSearch: mockSetMainSearch,
   }),
 }));
 
-describe("PriceExpanded", () => {
+describe("PriceExpandedContainer", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("renders with default price text", () => {
-    render(<PriceExpanded />);
-    expect(screen.getByText("All Prices")).toBeInTheDocument();
+  it("displays correct default text", () => {
+    render(<PriceExpandedContainer />);
+    expect(screen.getByTestId("display-text")).toHaveTextContent("All Prices");
   });
 
-  it("updates local price range on slider change", async () => {
-    render(<PriceExpanded />);
-    const slider = screen.getByTestId("slider");
+  it("handles slider change", () => {
+    render(<PriceExpandedContainer />);
+    fireEvent.click(screen.getByText("Change"));
+    expect(screen.getByTestId("range-values")).toHaveTextContent("1000 - 5000");
+  });
 
-    fireEvent.change(slider, { target: { value: "10000" } });
+  it("commits slider change and updates context", () => {
+    render(<PriceExpandedContainer />);
+    fireEvent.click(screen.getByText("Commit"));
 
-    await waitFor(() => {
-      expect(screen.getByText("Greater than $10,000")).toBeInTheDocument();
+    expect(mockSetStagedSearch).toHaveBeenCalledWith(expect.any(Function));
+
+    const setFn = mockSetStagedSearch.mock.calls[0][0];
+    const result = setFn({});
+    expect(result).toEqual({
+      stagedStartPrice: 1000,
+      stagedEndPrice: 5000,
     });
+
+    expect(mockSetMainSearch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        price: "1000-5000",
+      })
+    );
   });
 
-  it("calls setStagedSearch and setMainSearch correctly on slider commit", () => {
-    render(<PriceExpanded />);
-    const slider = screen.getByTestId("slider");
-
-    fireEvent.mouseUp(slider, { target: { value: "10000" } });
-
-    expect(mockSetStagedSearch).toHaveBeenCalledTimes(1);
-    expect(typeof mockSetStagedSearch.mock.calls[0][0]).toBe("function");
-
-    expect(mockSetMainSearch).toHaveBeenCalledWith({
-      startPrice: null,
-      endPrice: null,
-      price: ">10000",
-    });
-  });
-
-  it("clears the price when Clear is clicked", () => {
-    render(<PriceExpanded />);
+  it("clears the price filter", () => {
+    render(<PriceExpandedContainer />);
     fireEvent.click(screen.getByText("Clear"));
 
-    expect(mockSetStagedSearch).toHaveBeenCalledTimes(1);
-    expect(typeof mockSetStagedSearch.mock.calls[0][0]).toBe("function");
-
-    expect(mockSetMainSearch).toHaveBeenCalledWith({
-      startPrice: null,
-      endPrice: null,
-      price: "All_Prices",
+    expect(mockSetStagedSearch).toHaveBeenCalledWith(expect.any(Function));
+    const clearFn = mockSetStagedSearch.mock.calls[0][0];
+    const result = clearFn({});
+    expect(result).toEqual({
+      stagedStartPrice: null,
+      stagedEndPrice: null,
     });
 
-    expect(screen.getByText("All Prices")).toBeInTheDocument();
+    expect(mockSetMainSearch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        price: "All_Prices",
+      })
+    );
   });
 });

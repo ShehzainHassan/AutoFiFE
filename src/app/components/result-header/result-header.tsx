@@ -1,7 +1,7 @@
 import { useUserFavorites } from "@/contexts/user-favorites-context/user-favorites-context";
-import SaveSearchButton from "../handle-save-search/handle-save-search";
-import classes from "./result-header.module.css";
 import headings from "@/styles/typography.module.css";
+import SaveSearchButtonContainer from "../handle-save-search/handle-save-search-container";
+import classes from "./result-header.module.css";
 import { ResultHeaderProps } from "./result-header.types";
 
 const ResultHeader = ({ resultText }: ResultHeaderProps) => {
@@ -17,7 +17,7 @@ const ResultHeader = ({ resultText }: ResultHeaderProps) => {
           <span className={classes.star} />
           Trustpilot
         </p>
-        {loadingSearches ? <p>Loading...</p> : <SaveSearchButton />}
+        {loadingSearches ? <p>Loading...</p> : <SaveSearchButtonContainer />}
       </div>
     </div>
   );

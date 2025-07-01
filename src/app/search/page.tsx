@@ -1,9 +1,8 @@
 "use client";
 
-import { useSearchPage } from "./useSearchPage";
 import Footer from "../components/footer/footer";
 import LoadResults from "../components/load-results/load-results";
-import Navbar from "../components/navbar/navbar";
+import NavbarContainer from "../components/navbar/navbar-container";
 import Pagination from "../components/pagination/pagination";
 import ResultHeaderBottom from "../components/result-header-bottom/result-header-bottom";
 import ResultHeader from "../components/result-header/result-header";
@@ -11,6 +10,7 @@ import SidebarContainer from "../components/sidebar/sidebar-container";
 import VehicleInfoTabs from "../components/vehicle-info/vehicle-info";
 import Wrapper from "../components/wrapper/wrapper";
 import classes from "./page.module.css";
+import { useSearchPage } from "./useSearchPage";
 
 export default function Search() {
   const {
@@ -24,7 +24,7 @@ export default function Search() {
 
   return (
     <>
-      <Navbar backgroundColor="var(--color-gray600)" />
+      <NavbarContainer backgroundColor="var(--color-gray600)" />
       <Wrapper padding="63px 240px">
         <div className={classes.container}>
           <SidebarContainer

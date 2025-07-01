@@ -1,8 +1,8 @@
-import { useState, Suspense } from "react";
 import dynamic from "next/dynamic";
+import { Suspense, useState } from "react";
 import CarImage from "../result-card/car-image/car-image";
-import { CarImageGalleryProps } from "./car-image-gallery.types";
 import classes from "./car-image-gallery.module.css";
+import { CarImageGalleryProps } from "./car-image-gallery.types";
 
 const ButtonNavigate = dynamic(
   () => import("../buttons/button-navigate/button-navigate")
@@ -10,7 +10,9 @@ const ButtonNavigate = dynamic(
 const CarImages = dynamic(() => import("../car-images/car-images"));
 
 const HandleShare = dynamic(() => import("../handle-share/handle-share"));
-const HandleLike = dynamic(() => import("../handle-like/handle-like"));
+const HandleLikeContainer = dynamic(
+  () => import("../handle-like/handle-like-container")
+);
 
 export default function CarImageGallery({ vehicle }: CarImageGalleryProps) {
   const images = [
@@ -38,7 +40,7 @@ export default function CarImageGallery({ vehicle }: CarImageGalleryProps) {
         <Suspense
           fallback={<div className={classes.spinner}>Loading gallery...</div>}>
           <HandleShare />
-          <HandleLike vehicle={vehicle} />
+          <HandleLikeContainer vehicle={vehicle} />
         </Suspense>
       </CarImage>
 

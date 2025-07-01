@@ -1,59 +1,25 @@
 "use client";
 import { FEATURED_MODELS } from "@/constants";
-import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import useTranslation from "@/i18n";
 import { WHITE_THEME } from "@/styles/tab-styles";
 import { ThemeProvider } from "@/theme/themeContext";
-import { getMakeByModel } from "@/utilities/utilities";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import FeaturedIcon from "../featured-icons/featured-icons";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
-import Navbar from "../navbar/navbar";
+import NavbarContainer from "../navbar/navbar-container";
 import SearchFormContainer from "../search-form/search-form-container";
 import classes from "./hero.module.css";
+import { HeroProps } from "./hero.types";
 
-export default function Hero() {
+export default function Hero({
+  tabs,
+  selectedTab,
+  setSelectedTab,
+  handleCarModelClick,
+}: HeroProps) {
   const { t } = useTranslation();
-  const router = useRouter();
-  const tabs = ["All", "New", "Used"];
-  const [selectedTab, setSelectedTab] = useState(tabs[0]);
-
-  const {
-    mainSearch,
-    stagedSearch,
-    setMainSearch,
-    setStagedSearch,
-    searchParams,
-    setSearchParams,
-  } = useSearch();
-  const handleCarModelClick = (model: string) => {
-    const make = getMakeByModel(model);
-    setMainSearch({
-      ...mainSearch,
-      make,
-      model,
-      startPrice: null,
-      endPrice: null,
-    });
-    setStagedSearch({
-      ...stagedSearch,
-      stagedMake: make,
-      stagedModel: model,
-      stagedStartPrice: null,
-      stagedEndPrice: null,
-    });
-    setSearchParams({
-      ...searchParams,
-      make,
-      model,
-    });
-    router.push(`/search?make=${make}&model=${model}`);
-  };
-
   return (
     <div className={classes.hero}>
-      <Navbar />
+      <NavbarContainer />
       <div className={classes.container}>
         <div className={classes.textContainer}>
           <p className={classes.subTitle}>{t("hero.subHeading")}</p>

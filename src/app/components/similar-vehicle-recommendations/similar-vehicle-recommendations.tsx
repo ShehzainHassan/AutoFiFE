@@ -1,45 +1,22 @@
 import { CURRENCY } from "@/constants";
-import useSimilarVehicles from "@/hooks/useSimilarVehicles";
 import headings from "@/styles/typography.module.css";
-import { CircularProgress } from "@mui/material";
-import { useParams, useRouter } from "next/navigation";
-import ErrorMessage from "../error-message/error-message";
 import CarImage from "../result-card/car-image/car-image";
 import classes from "./similar-vehicle-recommendations.module.css";
+import useSimilarVehicles from "@/hooks/useSimilarVehicles";
+import { SimilarVehicleRecommendationsProps } from "./similar-vehicle-recommendations.types";
 
-export default function SimilarVehicleRecommendations() {
-  const params = useParams();
-  const idParam = params.id;
-  const vehicleId = idParam ? Number(idParam) : -1;
+export default function SimilarVehicleRecommendations({
+  vehicleId,
+  authData,
+  redirectToCarPage,
+}: SimilarVehicleRecommendationsProps) {
+  const { data: similarVehicles } = useSimilarVehicles(vehicleId, !!authData);
 
-  const authData = localStorage.getItem("authData") ?? "";
-  const router = useRouter();
-  const {
-    data: similarVehicles,
-    isError,
-    error,
-    isLoading,
-  } = useSimilarVehicles(vehicleId, !!authData);
-
-  if (!authData) return null;
-
-  if (isLoading)
-    return (
-      <div role="status">
-        <CircularProgress />
-      </div>
-    );
-  if (isError) return <ErrorMessage message={error.message} />;
-  if (!similarVehicles || similarVehicles.similar_vehicles.length === 0)
-    return null;
-  const redirectToCarPage = (vid: number) => {
-    router.push(`/cars/${vid}`);
-  };
   return (
     <>
       <h1 className={headings.carPageTitle}>Recommendations</h1>
       <div className={classes.cardContainer}>
-        {similarVehicles.similar_vehicles.map((vehicle) => {
+        {similarVehicles?.similar_vehicles.map((vehicle) => {
           const price = Number(vehicle.features.Price) || 0;
           const mileage = Number(vehicle.features.Mileage) || 0;
 

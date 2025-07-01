@@ -1,9 +1,9 @@
 "use client";
 
-import Hero from "./components/hero/hero";
-import PremiumBrands from "./components/premium-brands/premium-brands";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import HeroContainer from "./components/hero/hero-container";
+import PremiumBrands from "./components/premium-brands/premium-brands";
 import classes from "./page.module.css";
 
 const ExploreVehicles = dynamic(
@@ -29,7 +29,7 @@ const Footer = dynamic(() => import("./components/footer/footer"));
 export default function Home() {
   return (
     <div className={classes.container}>
-      <Hero />
+      <HeroContainer />
       <PremiumBrands />
 
       <Suspense fallback={<div>Loading...</div>}>

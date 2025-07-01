@@ -1,4 +1,4 @@
-import HandleLike from "../handle-like/handle-like";
+import HandleLikeContainer from "../handle-like/handle-like-container";
 import CarDetails from "./car-details/car-details";
 import CarImage from "./car-image/car-image";
 import classes from "./result-card.module.css";
@@ -7,7 +7,7 @@ export default function ResultCard({ vehicle, carImg }: ResultCardProps) {
   return (
     <div className={classes.container}>
       <CarImage src={carImg}>
-        <HandleLike vehicle={vehicle} />
+        <HandleLikeContainer vehicle={vehicle} />
       </CarImage>
       <CarDetails
         id={vehicle.id}

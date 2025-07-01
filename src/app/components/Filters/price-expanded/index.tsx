@@ -1,1 +1,1 @@
-export * from "./price-expanded";
+export * from "./price-expanded-container";

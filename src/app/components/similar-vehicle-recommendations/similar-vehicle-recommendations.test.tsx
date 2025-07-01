@@ -1,109 +1,135 @@
-import { screen, fireEvent, waitFor } from "@testing-library/react";
-import { renderWithClient } from "@/test-utils/render-with-client";
 import useSimilarVehicles from "@/hooks/useSimilarVehicles";
+import { render, screen } from "@testing-library/react";
 import { useParams, useRouter } from "next/navigation";
-import SimilarVehicleRecommendations from "./similar-vehicle-recommendations";
+import SimilarVehicleRecommendationsContainer from "./similar-vehicle-recommendations-container";
 
-jest.mock("@/hooks/useSimilarVehicles", () => jest.fn());
+jest.mock("@/hooks/useSimilarVehicles");
 jest.mock("next/navigation", () => ({
   useParams: jest.fn(),
   useRouter: jest.fn(),
 }));
+jest.mock("@mui/material", () => ({
+  CircularProgress: () => <div data-testid="spinner" />,
+}));
 
-beforeEach(() => {
-  jest.clearAllMocks();
-  (useParams as jest.Mock).mockReturnValue({ id: 1 });
-  Storage.prototype.getItem = jest.fn(() => JSON.stringify({ token: "abc" }));
-});
+jest.mock("../error-message/error-message", () => ({
+  __esModule: true,
+  default: ({ message }: { message: string }) => (
+    <div data-testid="error-message">{message}</div>
+  ),
+}));
 
-describe("VehicleRecommendations", () => {
-  it("returns null if authData is missing", () => {
-    (localStorage.getItem as jest.Mock).mockReturnValue(null);
+const mockRecommendations = jest.fn();
+jest.mock("./similar-vehicle-recommendations", () => ({
+  __esModule: true,
+  default: (props: Record<string, unknown>) => {
+    mockRecommendations(props);
+    return <div data-testid="recommendations">Recommendations</div>;
+  },
+}));
 
-    (useSimilarVehicles as jest.Mock).mockReturnValue({
-      data: null,
-      isError: false,
-      error: null,
-      isLoading: false,
-    });
+describe("SimilarVehicleRecommendationsContainer", () => {
+  const mockUseSimilarVehicles = useSimilarVehicles as jest.Mock;
+  const mockUseParams = useParams as jest.Mock;
+  const mockPush = jest.fn();
 
-    const { container } = renderWithClient(<SimilarVehicleRecommendations />);
-    expect(container).toBeEmptyDOMElement();
-  });
-
-  it("shows loading spinner when loading", () => {
-    (useSimilarVehicles as jest.Mock).mockReturnValue({
-      data: null,
-      isError: false,
-      error: null,
-      isLoading: true,
-    });
-
-    renderWithClient(<SimilarVehicleRecommendations />);
-    expect(screen.getByRole("status")).toBeInTheDocument();
-  });
-
-  it("shows error message if request fails", () => {
-    (useSimilarVehicles as jest.Mock).mockReturnValue({
-      data: null,
-      isError: true,
-      error: { message: "Failed to load" },
-      isLoading: false,
-    });
-
-    renderWithClient(<SimilarVehicleRecommendations />);
-    expect(screen.getByText("Failed to load")).toBeInTheDocument();
-  });
-
-  it("returns null if no recommendations", () => {
-    (useSimilarVehicles as jest.Mock).mockReturnValue({
-      data: { similar_vehicles: [] },
-      isError: false,
-      error: null,
-      isLoading: false,
-    });
-
-    const { container } = renderWithClient(<SimilarVehicleRecommendations />);
-    expect(container).toBeEmptyDOMElement();
-  });
-
-  it("renders recommendations and navigates on card click", async () => {
-    const mockPush = jest.fn();
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockUseParams.mockReturnValue({ id: "42" });
     (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
+  });
+  it("returns null if no authData", () => {
+    Storage.prototype.getItem = jest.fn(() => null);
 
-    (useSimilarVehicles as jest.Mock).mockReturnValue({
-      data: {
-        similar_vehicles: [
-          {
-            vehicle_id: 101,
-            similarity_score: 0.871,
-            features: {
-              Make: "BMW",
-              Model: "X5",
-              Year: 2022,
-              Price: "55000",
-              Mileage: "22000",
-            },
-          },
-        ],
-      },
+    mockUseSimilarVehicles.mockReturnValue({
+      data: null,
       isError: false,
-      error: null,
       isLoading: false,
+      error: null,
     });
 
-    renderWithClient(<SimilarVehicleRecommendations />);
+    const { container } = render(<SimilarVehicleRecommendationsContainer />);
+    expect(container.firstChild).toBeNull();
+  });
 
-    expect(screen.getByText("Recommendations")).toBeInTheDocument();
-    expect(screen.getByText(/2022 BMW X5/)).toBeInTheDocument();
-    expect(screen.getByText(/55,000/)).toBeInTheDocument();
-    expect(screen.getByText(/Mileage 22,000/)).toBeInTheDocument();
-
-    const card = screen.getByText(/2022 BMW X5/).closest("div");
-    fireEvent.click(card!);
-
-    await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith("/cars/101");
+  it("shows loading spinner while data is loading", () => {
+    Storage.prototype.getItem = jest.fn(() => "auth");
+    mockUseSimilarVehicles.mockReturnValue({
+      isLoading: true,
+      isError: false,
+      data: null,
     });
+
+    render(<SimilarVehicleRecommendationsContainer />);
+    expect(screen.getByTestId("spinner")).toBeInTheDocument();
+  });
+
+  it("shows error message when error occurs", () => {
+    Storage.prototype.getItem = jest.fn(() => "auth");
+    mockUseSimilarVehicles.mockReturnValue({
+      isLoading: false,
+      isError: true,
+      error: { message: "Something went wrong" },
+    });
+
+    render(<SimilarVehicleRecommendationsContainer />);
+    expect(screen.getByTestId("error-message")).toHaveTextContent(
+      "Something went wrong"
+    );
+  });
+
+  it("returns null if similarVehicles list is empty", () => {
+    Storage.prototype.getItem = jest.fn(() => "auth");
+    mockUseSimilarVehicles.mockReturnValue({
+      isLoading: false,
+      isError: false,
+      data: { similar_vehicles: [] },
+    });
+
+    const { container } = render(<SimilarVehicleRecommendationsContainer />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("renders SimilarVehicleRecommendations with correct props", () => {
+    Storage.prototype.getItem = jest.fn(() => "auth");
+    mockUseSimilarVehicles.mockReturnValue({
+      isLoading: false,
+      isError: false,
+      data: {
+        similar_vehicles: [{ id: 1, vin: "XYZ" }],
+      },
+    });
+
+    render(<SimilarVehicleRecommendationsContainer />);
+
+    expect(screen.getByTestId("recommendations")).toBeInTheDocument();
+    expect(mockRecommendations).toHaveBeenCalledWith(
+      expect.objectContaining({
+        authData: "auth",
+        vehicleId: 42,
+        redirectToCarPage: expect.any(Function),
+      })
+    );
+  });
+
+  it("redirects correctly on click via redirectToCarPage", () => {
+    Storage.prototype.getItem = jest.fn(() => "auth");
+    mockUseSimilarVehicles.mockReturnValue({
+      isLoading: false,
+      isError: false,
+      data: {
+        similar_vehicles: [{ id: 1, vin: "XYZ" }],
+      },
+    });
+
+    let capturedRedirect: (id: number) => void = () => {};
+    mockRecommendations.mockImplementation(({ redirectToCarPage }) => {
+      capturedRedirect = redirectToCarPage;
+      return <div data-testid="recommendations">Recommendations</div>;
+    });
+
+    render(<SimilarVehicleRecommendationsContainer />);
+    capturedRedirect(99);
+    expect(mockPush).toHaveBeenCalledWith("/cars/99");
   });
 });

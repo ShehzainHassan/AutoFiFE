@@ -1,1 +1,1 @@
-export * from "./similar-vehicle-recommendations";
+export * from "./similar-vehicle-recommendations-container";

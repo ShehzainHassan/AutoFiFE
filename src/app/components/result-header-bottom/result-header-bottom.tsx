@@ -1,9 +1,9 @@
-import useVehicleCount from "@/hooks/useVehicleCount";
-import classes from "./result-header-bottom.module.css";
-import Image from "next/image";
-import { ResultHeaderBottomProps } from "./result-header-bottom.types";
 import LocationIcon from "@/assets/images/icons/location.png";
-import SortBy from "../sort-by/sort-by";
+import useVehicleCount from "@/hooks/useVehicleCount";
+import Image from "next/image";
+import SortByContainer from "../sort-by/sort-by-container";
+import classes from "./result-header-bottom.module.css";
+import { ResultHeaderBottomProps } from "./result-header-bottom.types";
 
 export default function ResultHeaderBottom({
   filters,
@@ -31,7 +31,7 @@ export default function ResultHeaderBottom({
   return (
     <div className={classes.resultHeaderBottom}>
       <NoOfLoadResultText />
-      <SortBy />
+      <SortByContainer />
     </div>
   );
 }
