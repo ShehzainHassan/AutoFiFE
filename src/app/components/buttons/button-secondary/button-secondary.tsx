@@ -20,7 +20,9 @@ export default function ButtonSecondary({
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
-      <button className={`${headings.modelText} ${classes.btn}`}>
+      <button
+        aria-label={btnText}
+        className={`${headings.modelText} ${classes.btn}`}>
         {btnText}
       </button>
       <Image

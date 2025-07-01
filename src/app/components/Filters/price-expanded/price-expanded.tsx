@@ -24,7 +24,10 @@ export default function PriceExpanded({
           step={1000}
           valueLabelDisplay="off"
         />
-        <button onClick={handleClear} className={classes.clearBtn}>
+        <button
+          aria-label="Clear"
+          onClick={handleClear}
+          className={classes.clearBtn}>
           Clear
         </button>
       </Box>

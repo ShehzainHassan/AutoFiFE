@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Navbar from "./navbar";
 import { NavbarContainerProps } from "./navbar.types";
+import { trackError } from "@/utilities/error-tracking";
 
 export default function NavbarContainer({
   backgroundColor = "transparent",
@@ -73,6 +74,7 @@ export default function NavbarContainer({
         setUserName(parsed?.userName ?? null);
       } catch (err) {
         console.error("Error parsing authData:", err);
+        trackError(err as Error, { source: "authData useEffect" });
       }
     }
   }, []);

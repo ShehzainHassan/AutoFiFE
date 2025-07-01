@@ -5,6 +5,7 @@ import axios from "axios";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { toast } from "react-toastify";
 import { PriceRange } from "./utilities.types";
+import { trackError } from "./error-tracking";
 
 export function getModelOptions(make: string): Options[] {
   const isAnyMake = !make || make === "Any_Makes";
@@ -181,7 +182,8 @@ export function getUserIdFromLocalStorage(): number | null {
     if (!authData) return null;
     const parsed = JSON.parse(authData);
     return parsed.userId ?? null;
-  } catch {
+  } catch (err) {
+    trackError(err as Error, { source: "getUserIdFromLocalStorage" });
     return null;
   }
 }
@@ -191,7 +193,8 @@ export function getUserEmailFromLocalStorage(): string {
     if (!authData) return "";
     const parsed = JSON.parse(authData);
     return parsed.userEmail ?? null;
-  } catch {
+  } catch (err) {
+    trackError(err as Error, { source: "getUserEmailFromLocalStorage" });
     return "";
   }
 }
@@ -211,7 +214,8 @@ export function getNameFromLocalStorage(): {
     const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
 
     return { firstName, lastName };
-  } catch {
+  } catch (err) {
+    trackError(err as Error, { source: "getNameFromLocalStorage" });
     return { firstName: "", lastName: "" };
   }
 }
@@ -258,7 +262,8 @@ export function getTokenFromLocalStorage(): string | null {
     if (!authData) return null;
     const parsed = JSON.parse(authData);
     return parsed.token ?? null;
-  } catch {
+  } catch (err) {
+    trackError(err as Error, { source: "getTokenFromLocalStorage" });
     return null;
   }
 }

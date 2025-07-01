@@ -66,6 +66,7 @@ export default function ContactFormView({
         </div>
       ) : (
         <button
+          aria-label="Send Message"
           disabled={!canSendMessage()}
           className={`${classes.marginTop} ${classes.submitBtn}`}
           type="submit">

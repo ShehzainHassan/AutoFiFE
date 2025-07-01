@@ -28,6 +28,7 @@ export default function HorizontalTabs({
       {tabs.map((tab) => (
         <button
           key={tab}
+          aria-label={tab}
           onClick={() => onTabChange(tab)}
           className={`${classes.tab} ${headings.tabText}`}
           style={{

@@ -22,7 +22,10 @@ export default function TopSection({
       </div>
       <div className={classes.buttonRight}>
         <div>{textRight}</div>
-        <button className={classes.loginBtn} onClick={onClick}>
+        <button
+          aria-label={btnText}
+          className={classes.loginBtn}
+          onClick={onClick}>
           {btnText}
         </button>
       </div>

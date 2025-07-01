@@ -5,13 +5,17 @@ import classes from "../contact-info-form.module.css";
 import { useContactFormContext } from "../../../../contexts/contact-form-context/contact-form-context";
 
 const DropdownOptions = () => {
-  const { selected, setSelected } = useContactFormContext();
+  const { values, setValues } = useContactFormContext();
+
   return (
     <Dropdown
       className={classes.dropdown}
-      value={selected}
+      value={values.selected}
       onChange={(value) => {
-        setSelected(value);
+        setValues((prev) => ({
+          ...prev,
+          selected: value,
+        }));
       }}>
       <Dropdown.Select
         options={VEHICLE_OPTIONS}

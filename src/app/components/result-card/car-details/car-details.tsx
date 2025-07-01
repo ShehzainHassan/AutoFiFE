@@ -47,6 +47,7 @@ const CarDetails = ({ id, carTitle, miles, price }: CarDetailsProps) => {
           <div className={classes.modalHeader}>
             <h2>Request information</h2>
             <button
+              aria-label="Close"
               className={classes.closeBtn}
               onClick={() => setIsModalOpen(false)}>
               X

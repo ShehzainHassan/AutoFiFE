@@ -15,11 +15,12 @@
   justify-content: flex-start !important;
   margin: 32px 0 21px;
   color: var(--color-black500) !important;
-  padding: 13px 3px !important;
+  padding: 15px 15px 15px 5px !important;
   transition: none !important;
   background: none !important;
 }
 .addComment:hover {
+  background-color: var(--color-white200) !important;
   transition: none !important;
 }
 .text {

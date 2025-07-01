@@ -101,7 +101,9 @@ export default function HorizontalCarCard({
               headings.priceText
             }>{`${CURRENCY}${price.toLocaleString()}`}</h2>
           <div className={classes.btnContainer}>
-            <button className={classes.btn}>{btnText}</button>
+            <button aria-label={btnText} className={classes.btn}>
+              {btnText}
+            </button>
             <Image
               src={ArrowBlueIcon}
               alt="arrow"

@@ -36,6 +36,7 @@ export default function AuthInputField({
       />
       {isPassword && (
         <button
+          aria-label={showPassword ? "Hide password" : "Show password"}
           type="button"
           onClick={toggleShowPassword}
           className={classes.toggleButton}>

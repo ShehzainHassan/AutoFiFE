@@ -10,7 +10,9 @@ const SaveSearchButton = ({
   return (
     <div className={classes.saveBtnContainer} onClick={handleSaveSearch}>
       {isSaved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-      <button className={classes.saveBtn}>Save Search</button>
+      <button aria-label="Save Search" className={classes.saveBtn}>
+        Save Search
+      </button>
     </div>
   );
 };

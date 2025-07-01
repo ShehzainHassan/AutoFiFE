@@ -12,19 +12,24 @@ export default function ContactFormContainer({
   className,
 }: ContactInfoFormProps) {
   const {
+    values,
+    errors,
+    setEmailNotifications,
+    emailNotifications,
+    resetForm,
+  } = useContactFormContext();
+
+  const {
     fname,
     lname,
     email,
     postCode,
     phone,
     preferredContact,
-    emailNotifications,
     selected,
     commentText,
-    errors,
-    setEmailNotifications,
-    resetForm,
-  } = useContactFormContext();
+  } = values;
+
   const params = useParams();
   const idParam = params.id;
   const id = idParam ? Number(idParam) : carId;
@@ -43,15 +48,16 @@ export default function ContactFormContainer({
 
   const canSendMessage = () => {
     return (
-      fname !== "" &&
-      lname !== "" &&
-      email !== "" &&
-      postCode !== "" &&
-      phone !== "" &&
-      preferredContact !== "" &&
+      fname.trim() !== "" &&
+      lname.trim() !== "" &&
+      email.trim() !== "" &&
+      postCode.trim() !== "" &&
+      phone.trim() !== "" &&
+      preferredContact.trim() !== "" &&
       Object.values(errors).every((err) => err === "")
     );
   };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

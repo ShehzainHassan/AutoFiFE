@@ -77,7 +77,9 @@ export default function VerticalCard({
             {`${CURRENCY}${price.toLocaleString()}`}
           </h2>
           <div className={classes.btnContainer}>
-            <button className={classes.btn}>View Details</button>
+            <button aria-label="View Details" className={classes.btn}>
+              View Details
+            </button>
             <Image src={ArrowBlue} alt="arrow" width={14} height={14} />
           </div>
         </div>

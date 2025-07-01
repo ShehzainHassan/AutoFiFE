@@ -25,7 +25,10 @@ export default function MileageExpanded({
           step={MILEAGE_SLIDER_STEP}
           valueLabelDisplay="off"
         />
-        <button onClick={handleClear} className={classes.clearBtn}>
+        <button
+          aria-label="Clear"
+          onClick={handleClear}
+          className={classes.clearBtn}>
           Clear
         </button>
       </Box>

@@ -50,6 +50,7 @@ export default function ButtonPrimary({
         <Image src={imgSrc} alt="icon" width={15} height={15} loading="lazy" />
       )}
       <button
+        aria-label={btnText}
         type={type}
         className={classes.btn}
         style={{ color: textColor || themeValues?.textColor }}>

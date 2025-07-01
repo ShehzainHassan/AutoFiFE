@@ -13,3 +13,14 @@ export interface AuthData {
   userId: number;
   userName: string;
 }
+
+export interface ContactFormFields {
+  fname: string;
+  lname: string;
+  selected: string;
+  postCode: string;
+  email: string;
+  phone: string;
+  preferredContact: string;
+  commentText: string;
+}

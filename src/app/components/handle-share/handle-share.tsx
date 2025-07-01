@@ -48,6 +48,7 @@ export default function HandleShare() {
         overlayClassName={classes.overlay}
         ariaHideApp={false}>
         <button
+          aria-label="Close"
           className={classes.closeButton}
           onClick={() => setIsModalOpen(false)}>
           <CloseIcon />

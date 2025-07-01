@@ -3,7 +3,6 @@ import ContactFormContainer from "@/app/components/contact-info-form/contact-for
 import EmptyState from "@/app/components/empty-state/empty-state";
 import Footer from "@/app/components/footer/footer";
 import NavbarContainer from "@/app/components/navbar/navbar-container";
-import Wrapper from "@/app/components/wrapper/wrapper";
 import { ContactFormProvider } from "@/contexts/contact-form-context/contact-form-context";
 import useVehiclesById from "@/hooks/useVehicleById";
 import useVehicleFeatures from "@/hooks/useVehicleFeatures";
@@ -49,36 +48,34 @@ export default function CarDetails() {
   return (
     <>
       <NavbarContainer backgroundColor="var(--color-gray600)" />
-      <Wrapper padding="24px 240px">
-        <div className={classes.container}>
-          <div className={classes.vehicleFeatures}>
-            <Suspense fallback={<CircularProgress />}>
-              <CarImageGallery vehicle={vehicle} />
-            </Suspense>
-            <Suspense fallback={<CircularProgress />}>
-              <VehicleFeatures
-                vehicle={vehicle}
-                vehicleFeatures={vehicleFeatures}
-              />
-            </Suspense>
-          </div>
-
-          <div className={classes.vehicleFeatures}>
-            <Suspense fallback={<CircularProgress />}>
-              <VehicleHighlightInfo vehicle={vehicle} />
-            </Suspense>
-            <ContactFormProvider>
-              <ContactFormContainer />
-            </ContactFormProvider>
-          </div>
-
-          <div className={classes.vehicleFeatures}>
-            <Suspense fallback={<CircularProgress />}>
-              <SimilarVehicleRecommendationsContainer />
-            </Suspense>
-          </div>
+      <div className={classes.container}>
+        <div>
+          <Suspense fallback={<CircularProgress />}>
+            <CarImageGallery vehicle={vehicle} />
+          </Suspense>
+          <Suspense fallback={<CircularProgress />}>
+            <VehicleFeatures
+              vehicle={vehicle}
+              vehicleFeatures={vehicleFeatures}
+            />
+          </Suspense>
         </div>
-      </Wrapper>
+
+        <div>
+          <Suspense fallback={<CircularProgress />}>
+            <VehicleHighlightInfo vehicle={vehicle} />
+          </Suspense>
+          <ContactFormProvider>
+            <ContactFormContainer />
+          </ContactFormProvider>
+        </div>
+      </div>
+      <div>
+        <Suspense fallback={<CircularProgress />}>
+          <SimilarVehicleRecommendationsContainer />
+        </Suspense>
+      </div>
+
       <ToastContainer />
       <Footer />
     </>

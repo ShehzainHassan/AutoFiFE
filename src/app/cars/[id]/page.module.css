@@ -1,7 +1,10 @@
 .container {
   display: grid;
-  grid-template-columns: 7.6375fr 4.3625fr;
-  gap: 24px;
+  grid-template-columns: 6fr 6fr;
+  max-width: 1440px;
+  margin: 0 auto;
+  column-gap: 20px;
+  padding: 100px 75px;
 }
 
 .circle {
@@ -45,8 +48,4 @@
   line-height: 24px;
   letter-spacing: 0.2px;
   color: var(--color-black500);
-}
-
-.vehicleFeatures {
-  padding: 40px 75px;
 }

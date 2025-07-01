@@ -23,7 +23,7 @@ export default function ErrorSummary({ errors }: ErrorSummaryProps) {
       <div className={classes.errorText}>
         {errors.fname && <p>{errors.fname}</p>}
         {errors.lname && <p>{errors.lname}</p>}
-        {errors.postcode && <p>{errors.postcode}</p>}
+        {errors.postCode && <p>{errors.postCode}</p>}
         {errors.email && <p>{errors.email}</p>}
         {errors.phone && <p>{errors.phone}</p>}
       </div>

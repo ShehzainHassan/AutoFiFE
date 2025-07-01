@@ -2,13 +2,19 @@ import { useState } from "react";
 import ButtonPrimary from "../../buttons/button-primary/button-primary";
 import classes from "../contact-info-form.module.css";
 import { useContactFormContext } from "../../../../contexts/contact-form-context/contact-form-context";
+
 const AddComment = () => {
-  const { commentText, setCommentText } = useContactFormContext();
+  const { values, setValues } = useContactFormContext();
+  const [showComment, setShowComment] = useState(!!values.commentText);
+
   const handleCancelComment = () => {
     setShowComment(false);
-    setCommentText("");
+    setValues((prev) => ({ ...prev, commentText: "" }));
   };
-  const [showComment, setShowComment] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValues((prev) => ({ ...prev, commentText: e.target.value }));
+  };
 
   return (
     <div>
@@ -26,8 +32,8 @@ const AddComment = () => {
             placeholder="Enter comment"
             rows={10}
             cols={5}
-            value={commentText}
-            onChange={(e) => setCommentText(e.target.value)}
+            value={values.commentText}
+            onChange={handleChange}
           />
           <ButtonPrimary
             className={classes.cancelCommentBtn}
@@ -39,4 +45,5 @@ const AddComment = () => {
     </div>
   );
 };
+
 export default AddComment;
