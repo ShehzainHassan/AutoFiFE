@@ -90,7 +90,7 @@ const vehicleAPI = {
     gearbox?: string | null,
     selectedColors?: string | null
   ) => {
-    const response = await axios.get<Vehicle>(
+    const response = await axios.get<Vehicle[]>(
       `${API_BASE_URL}/Vehicle/search-vehicles`,
       {
         params: {

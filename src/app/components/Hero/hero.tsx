@@ -6,9 +6,9 @@ import { ThemeProvider } from "@/theme/themeContext";
 import FeaturedIcon from "../featured-icons/featured-icons";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
 import NavbarContainer from "../navbar/navbar-container";
-import SearchFormContainer from "../search-form/search-form-container";
 import classes from "./hero.module.css";
 import { HeroProps } from "./hero.types";
+import { SearchFormContainer } from "../search-form";
 
 export default function Hero({
   tabs,

@@ -2,13 +2,13 @@
 
 import Footer from "../components/footer/footer";
 import LoadResults from "../components/load-results/load-results";
+import VirtualizedList from "../components/load-virtualized-results/load-virutalized-results";
 import NavbarContainer from "../components/navbar/navbar-container";
 import Pagination from "../components/pagination/pagination";
 import ResultHeaderBottom from "../components/result-header-bottom/result-header-bottom";
 import ResultHeader from "../components/result-header/result-header";
 import SidebarContainer from "../components/sidebar/sidebar-container";
 import VehicleInfoTabs from "../components/vehicle-info/vehicle-info";
-import Wrapper from "../components/wrapper/wrapper";
 import classes from "./page.module.css";
 import { useSearchPage } from "./useSearchPage";
 
@@ -21,11 +21,10 @@ export default function Search() {
     setSubmittedParams,
     vehicleCount,
   } = useSearchPage();
-
   return (
     <>
       <NavbarContainer backgroundColor="var(--color-gray600)" />
-      <Wrapper padding="63px 240px">
+      <div className={classes.mainContainer}>
         <div className={classes.container}>
           <SidebarContainer
             setSubmittedParams={setSubmittedParams}
@@ -39,9 +38,10 @@ export default function Search() {
             </div>
             <Pagination totalCount={vehicleCount ?? 0} />
           </div>
+          <VirtualizedList />
         </div>
         <VehicleInfoTabs submittedParams={submittedParams} />
-      </Wrapper>
+      </div>
       <Footer />
     </>
   );

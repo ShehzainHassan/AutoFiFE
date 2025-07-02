@@ -1,1 +1,1 @@
-export * from "./search-form-container";
+export { default as SearchFormContainer } from "./search-form-container";
