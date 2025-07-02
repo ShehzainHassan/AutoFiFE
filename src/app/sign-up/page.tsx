@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthButton from "../components/auth-button/auth-button";
 import AuthHeader from "../components/auth-header/auth-header";
 import AuthImage from "../components/auth-image/auth-image";
 import AuthInputField from "../components/auth-input/auth-input";
@@ -19,6 +18,7 @@ import TopSection from "../components/auth-top-section/auth-top-section";
 import contactInfoClasses from "../components/contact-info-form/contact-info-form.module.css";
 import NeedHelp from "../components/need-help/need-help";
 import classes from "./sign-up.module.css";
+import { AuthButton } from "../components/auth-button";
 
 export default function SignUp() {
   const [name, setName] = useState("");

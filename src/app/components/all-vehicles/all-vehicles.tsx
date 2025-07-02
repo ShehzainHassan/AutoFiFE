@@ -1,4 +1,4 @@
-import AllVehiclesSwiper from "../all-vehicle-swiper/all-vehicle-swiper";
+import { AllVehiclesSwiper } from "../all-vehicle-swiper";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
 import SectionTitle from "../section-title/section-title";
 import { AllVehiclesViewProps } from "./all-vehicle.types";

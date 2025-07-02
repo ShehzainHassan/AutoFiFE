@@ -1,1 +1,1 @@
-export * from "./auth-button";
+export { default as AuthButton } from "./auth-button";

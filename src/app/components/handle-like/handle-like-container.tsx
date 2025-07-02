@@ -16,7 +16,6 @@ export default function HandleLikeContainer({
   const addLikeMutation = useAddUserLike();
   const deleteLikeMutation = useDeleteUserLike();
   const addInteraction = useTracking();
-
   const isLiked = userLikes?.includes(vehicle.vin);
 
   const handleLike = () => {

@@ -5,10 +5,8 @@ import { Suspense } from "react";
 import HeroContainer from "./components/hero/hero-container";
 import PremiumBrands from "./components/premium-brands/premium-brands";
 import classes from "./page.module.css";
+import { AllVehicles } from "./components/all-vehicles";
 
-const ExploreVehicles = dynamic(
-  () => import("./components/all-vehicles/all-vehicles.container")
-);
 const CarVideo = dynamic(() => import("./components/car-video/car-video"));
 const Statistics = dynamic(() => import("./components/statistics/statistics"));
 const WhyChooseUs = dynamic(
@@ -33,7 +31,7 @@ export default function Home() {
       <PremiumBrands />
 
       <Suspense fallback={<div>Loading...</div>}>
-        <ExploreVehicles />
+        <AllVehicles />
         <CarVideo />
         <Statistics />
         <WhyChooseUs />

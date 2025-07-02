@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import ContactFormView from "./contact-form";
 import { ContactInfoFormProps } from "./contact-info-form.types";
 import { useContactFormContext } from "../../../contexts/contact-form-context/contact-form-context";
+import { toast } from "react-toastify";
 
 export default function ContactFormContainer({
   carId,
@@ -38,6 +39,7 @@ export default function ContactFormContainer({
   const make = vehicle?.make ?? "";
   const model = vehicle?.model ?? "";
   const year = vehicle?.year ?? "";
+  const authData = localStorage.getItem("authData") ?? "";
 
   const { mutate: submitInfo, isPending } = useSubmitInfo();
   const addInteraction = useTracking();
@@ -60,6 +62,11 @@ export default function ContactFormContainer({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!authData) {
+      toast.error("Please sign in to send message");
+      return;
+    }
 
     const formData = {
       fname,

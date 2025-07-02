@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AllVehiclesView from "./all-vehicles";
 
-export default function ExploreVehiclesContainer() {
+export default function AllVehicles() {
   const TABS = ["In Stock", "New Cars", "Used Cars"];
   const [selectedTab, setSelectedTab] = useState<string>(TABS[0]);
   const router = useRouter();
