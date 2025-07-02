@@ -1,1 +1,1 @@
-export * from "./button-navigate";
+export { default } from "./button-navigate";

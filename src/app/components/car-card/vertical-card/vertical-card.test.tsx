@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import VerticalCard from "./vertical-card";
+import { VerticalCard } from "@/app/components";
 import { useRouter } from "next/navigation";
 import useTracking from "@/hooks/useTracking";
 import { CURRENCY } from "@/constants";
@@ -8,7 +8,6 @@ import { CURRENCY } from "@/constants";
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
-
 
 describe("VerticalCard", () => {
   const mockPush = jest.fn();

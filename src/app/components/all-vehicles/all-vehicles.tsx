@@ -1,8 +1,8 @@
-import { AllVehiclesSwiper } from "../all-vehicle-swiper";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
 import SectionTitle from "../section-title/section-title";
 import { AllVehiclesViewProps } from "./all-vehicle.types";
 import classes from "./all-vehicles.module.css";
+import { AllVehicleSwiper } from "@/app/components";
 
 export default function AllVehiclesView({
   tabs,
@@ -26,7 +26,7 @@ export default function AllVehiclesView({
         />
       </div>
       <div className={classes.vehicleSwiperContainer}>
-        <AllVehiclesSwiper
+        <AllVehicleSwiper
           vehicleStatus={
             selectedTab === "In Stock"
               ? null

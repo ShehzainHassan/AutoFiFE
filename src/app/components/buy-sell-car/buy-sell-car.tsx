@@ -2,7 +2,7 @@ import headings from "@/styles/typography.module.css";
 import classes from "./buy-sell-car.module.css";
 import Image from "next/image";
 import { CarCardProps } from "./buy-sell-car.types";
-import ButtonSecondary from "../buttons/button-secondary/button-secondary";
+import { ButtonSecondary } from "@/app/components";
 
 export default function BuySellCard({
   title,

@@ -1,1 +1,1 @@
-export * from "../input-amount";
+export { default } from "./input-amount";

@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import HorizontalCarCard from "./horizontal-card";
+import { HorizontalCarCard } from "@/app/components";
 import { useRouter } from "next/navigation";
 import useTracking from "@/hooks/useTracking";
 import { CURRENCY } from "@/constants";

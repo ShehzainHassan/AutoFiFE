@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import carFinanceLogo from "@/assets/images/logos/CarFinance.png";
 import classes from "../vehicle-features.module.css";
-import ButtonPrimary from "../../buttons/button-primary/button-primary";
+import { ButtonPrimary } from "@/app/components";
 import { CarFinanceProps } from "../vehicle-features.types";
 const CarFinance = ({ vehicle }: CarFinanceProps) => {
   const router = useRouter();

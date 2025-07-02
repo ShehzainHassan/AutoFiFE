@@ -1,1 +1,1 @@
-export * from "./auth-input";
+export { default } from "./auth-input";

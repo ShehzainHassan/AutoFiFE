@@ -9,7 +9,7 @@ import { isLeapYear } from "@/utilities/utilities";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMemo } from "react";
-import ButtonPrimary from "../../buttons/button-primary/button-primary";
+import { ButtonPrimary } from "@/app/components";
 import { Dropdown } from "../../dropdown";
 import { DOBProps } from "./dob-types";
 import classes from "./dob.module.css";

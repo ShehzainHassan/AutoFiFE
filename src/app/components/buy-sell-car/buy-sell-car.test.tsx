@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import BuySellCard from "./buy-sell-car";
-
+import { BuySellCard } from "@/app/components";
 describe("BuySellCard", () => {
   it("renders title, description, and button", () => {
     render(

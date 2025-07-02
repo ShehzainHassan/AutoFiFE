@@ -11,14 +11,16 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthHeader from "../components/auth-header/auth-header";
-import AuthImage from "../components/auth-image/auth-image";
-import AuthInputField from "../components/auth-input/auth-input";
-import TopSection from "../components/auth-top-section/auth-top-section";
 import contactInfoClasses from "../components/contact-info-form/contact-info-form.module.css";
 import NeedHelp from "../components/need-help/need-help";
 import classes from "./sign-up.module.css";
-import { AuthButton } from "../components/auth-button";
+import {
+  AuthButton,
+  AuthHeader,
+  AuthImage,
+  AuthInput,
+  AuthTopSection,
+} from "@/app/components";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -119,7 +121,7 @@ export default function SignUp() {
     <div className={classes.container}>
       <AuthImage />
       <div className={classes.signUpContainer}>
-        <TopSection
+        <AuthTopSection
           textRight="Already a Member?"
           btnText="LOG IN NOW"
           onClick={redirectToLogin}
@@ -131,7 +133,7 @@ export default function SignUp() {
           />
           <div className={classes.fields}>
             <div className={classes.inputContainer}>
-              <AuthInputField
+              <AuthInput
                 iconImg="/images/icon-user.png"
                 value={name}
                 placeholder="Johnson Doe"
@@ -142,7 +144,7 @@ export default function SignUp() {
             </div>
 
             <div className={classes.inputContainer}>
-              <AuthInputField
+              <AuthInput
                 iconImg="/images/message.png"
                 value={email}
                 placeholder="example@email.com"
@@ -153,7 +155,7 @@ export default function SignUp() {
             </div>
 
             <div className={classes.inputContainer}>
-              <AuthInputField
+              <AuthInput
                 iconImg="/images/password.png"
                 value={password}
                 placeholder="Password"

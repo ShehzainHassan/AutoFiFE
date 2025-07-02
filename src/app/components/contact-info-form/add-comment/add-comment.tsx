@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ButtonPrimary from "../../buttons/button-primary/button-primary";
+import { ButtonPrimary } from "@/app/components";
 import classes from "../contact-info-form.module.css";
 import { useContactFormContext } from "../../../../contexts/contact-form-context/contact-form-context";
 

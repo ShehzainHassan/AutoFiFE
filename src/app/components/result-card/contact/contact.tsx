@@ -1,4 +1,4 @@
-import ButtonPrimary from "@/app/components/buttons/button-primary/button-primary";
+import { ButtonPrimary } from "@/app/components";
 import { WHITE_THEME } from "@/constants/button-primary-themes";
 import { ThemeProvider } from "@/theme/themeContext";
 import headings from "@/styles/typography.module.css";

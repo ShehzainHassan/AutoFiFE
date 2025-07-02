@@ -4,7 +4,6 @@ import AddComment from "./add-comment/add-comment";
 import classes from "./contact-info-form.module.css";
 import { ContactFormViewProps } from "./contact-info-form.types";
 import DropdownOptions from "./dropdown-options/dropdown-options";
-import InputEmail from "./input-email/input-email";
 import InputFirstName from "./input-firstname/firstname";
 import InputLastName from "./input-lastname/input-lastname";
 import InputPhone from "./input-phone/input-phone";
@@ -12,6 +11,7 @@ import InputPostCode from "./input-postcode/input-postcode";
 import PreferredChoice from "./preferred-choice/preferred-choice";
 import PrivacyAgreementText from "./privacy-agreement-text/privacy-agreement-text";
 import { useContactFormContext } from "../../../contexts/contact-form-context/contact-form-context";
+import InputEmail from "./input-email/input-email";
 export default function ContactFormView({
   className,
   handleSubmit,

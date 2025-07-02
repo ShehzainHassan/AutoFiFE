@@ -4,9 +4,8 @@ import CarImage from "../result-card/car-image/car-image";
 import classes from "./car-image-gallery.module.css";
 import { CarImageGalleryProps } from "./car-image-gallery.types";
 
-const ButtonNavigate = dynamic(
-  () => import("../buttons/button-navigate/button-navigate")
-);
+import { ButtonNavigate } from "@/app/components";
+
 const CarImages = dynamic(() => import("../car-images/car-images"));
 
 const HandleShare = dynamic(() => import("../handle-share/handle-share"));

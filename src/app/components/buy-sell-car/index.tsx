@@ -1,1 +1,1 @@
-export * from "./buy-sell-car";
+export { default } from "./buy-sell-car";

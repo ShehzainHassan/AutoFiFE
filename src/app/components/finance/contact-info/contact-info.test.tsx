@@ -1,8 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import ContactInfo from "./contact-info";
 import { toast } from "react-toastify";
+import ContactInfo from "./contact-info";
 
-// Mocks
 const mockMutate = jest.fn();
 const mockPush = jest.fn();
 const mockSetFormData = jest.fn();

@@ -1,1 +1,1 @@
-export * from "./marital-status";
+export { default } from "./marital-status";

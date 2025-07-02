@@ -1,1 +1,1 @@
-export * from "./auth-image";
+export { default } from "./auth-image";

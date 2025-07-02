@@ -1,1 +1,1 @@
-export * from "./borrow";
+export { default } from "./borrow";

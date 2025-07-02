@@ -1,7 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ButtonSecondary from "./button-secondary";
-
+import { ButtonSecondary } from "@/app/components";
 describe("ButtonSecondary", () => {
   it("renders button with text", () => {
     render(<ButtonSecondary btnText="Explore More" onClick={jest.fn()} />);

@@ -1,9 +1,9 @@
 import { useQuestionnaire } from "@/contexts/questionnaire-context";
 import classes from "./borrow.module.css";
-import InputAmount from "../input-amount/input-amount";
 import { Checkbox, FormControlLabel } from "@mui/material";
-import ButtonPrimary from "../../buttons/button-primary/button-primary";
+import { ButtonPrimary } from "@/app/components";
 import { BorrowProps } from "./borrow.types";
+import InputAmount from "../input-amount";
 const Borrow = ({ nextStep, vehiclePrice }: BorrowProps) => {
   const { formData, setFormData } = useQuestionnaire();
 

@@ -1,6 +1,6 @@
 import useTranslation from "@/i18n";
-import BlogCard from "../blog-card/blog-card";
-import BuySellCard from "../buy-sell-car/buy-sell-car";
+import { BlogCard } from "@/app/components";
+import { BuySellCard } from "@/app/components";
 import EmptyState from "../empty-state/empty-state";
 import SectionTitle from "../section-title/section-title";
 import classes from "./latest.blog.module.css";

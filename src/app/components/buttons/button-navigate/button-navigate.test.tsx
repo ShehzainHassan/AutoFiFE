@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ButtonNavigate from "./button-navigate";
+import { ButtonNavigate } from "@/app/components";
 
 describe("ButtonNavigate", () => {
   it("renders the default next button", () => {
@@ -13,7 +13,10 @@ describe("ButtonNavigate", () => {
   it("renders the white button image when whiteButton is true", () => {
     render(<ButtonNavigate type="next" onClick={jest.fn()} whiteButton />);
     const image = screen.getByAltText("next");
-    expect(image).toHaveAttribute("src", expect.stringContaining("next-white.png"));
+    expect(image).toHaveAttribute(
+      "src",
+      expect.stringContaining("next-white.png")
+    );
   });
 
   it("applies the 'prev' class when type is 'prev'", () => {

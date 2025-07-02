@@ -1,7 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import AuthButton from "./auth-button";
-
+import { AuthButton } from "@/app/components";
 describe("AuthButton", () => {
   it("renders the button with text", () => {
     render(<AuthButton btnText="Proceed to my Account" onClick={jest.fn()} />);

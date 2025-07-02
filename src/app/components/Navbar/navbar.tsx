@@ -3,7 +3,7 @@ import ExpandIcon from "@/assets/images/icons/expand.png";
 import Logo from "@/assets/images/logos/logo.png";
 import headings from "@/styles/typography.module.css";
 import Image from "next/image";
-import ButtonPrimary from "../buttons/button-primary/button-primary";
+import { ButtonPrimary } from "@/app/components";
 import { NavbarProps } from "./navbar.types";
 import classes from "./navbar.module.css";
 import useTranslation from "@/i18n";

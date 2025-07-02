@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import AuthImage from "./auth-image";
-
+import { AuthImage } from "@/app/components";
 describe("AuthImage", () => {
   it("renders background, logos, title, and description", () => {
     render(<AuthImage />);

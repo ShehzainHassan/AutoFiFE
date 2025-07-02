@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classes from "../car-video.module.css";
 import headings from "@/styles/typography.module.css";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import ButtonSecondary from "../../buttons/button-secondary/button-secondary";
+import { ButtonSecondary } from "@/app/components";
 import { VideoDescriptionProps } from "./video-description.types";
 
 const VideoDescription = ({

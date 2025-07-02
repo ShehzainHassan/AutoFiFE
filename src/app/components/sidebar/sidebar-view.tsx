@@ -3,7 +3,7 @@ import { BLUE_THEME } from "@/constants/button-primary-themes";
 import classes from "./sidebar.module.css";
 import { SidebarViewProps } from "./sidebar.types";
 import { Dropdown } from "../dropdown";
-import ButtonPrimary from "../buttons/button-primary/button-primary";
+import { ButtonPrimary } from "@/app/components";
 import Filters from "../filters/filters";
 
 export default function SidebarView({

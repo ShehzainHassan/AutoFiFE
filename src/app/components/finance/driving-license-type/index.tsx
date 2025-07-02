@@ -1,1 +1,1 @@
-export * from "./driving-license-type";
+export { default } from "./driving-license-type";

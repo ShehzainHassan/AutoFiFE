@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import BookmarkIcon from "./bookmark-icon";
+import { BookmarkIcon } from "@/app/components";
 
 describe("BookmarkIcon", () => {
   it("renders bookmark icon", () => {

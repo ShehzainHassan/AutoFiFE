@@ -5,7 +5,7 @@ import { CURRENCY } from "@/constants";
 import { TagLabel } from "../../tag-label";
 import { useRouter } from "next/navigation";
 import { HorizontalCardProps } from "./horizontal-card.types";
-import BookmarkIcon from "../../bookmark-icon/bookmark-icon";
+import { BookmarkIcon} from "@/app/components"
 import useTracking from "@/hooks/useTracking";
 import SpeedometerIcon from "@/assets/images/icons/speedometer-white.png";
 import FuelIcon from "@/assets/images/icons/fuel-white.png";

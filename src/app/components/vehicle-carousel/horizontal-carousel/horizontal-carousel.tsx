@@ -3,9 +3,8 @@ import type { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import classes from "./horizontal-carousel.module.css";
 import { VehicleCarouselProps } from "./horizontal-carousel.types";
-import HorizontalCarCard from "../../car-card/horizontal-card/horizontal-card";
-import ButtonNavigate from "../../buttons/button-navigate/button-navigate";
-
+import { HorizontalCarCard } from "@/app/components";
+import { ButtonNavigate } from "@/app/components";
 
 export default function HorizontalCarousel({
   vehicleListResult,

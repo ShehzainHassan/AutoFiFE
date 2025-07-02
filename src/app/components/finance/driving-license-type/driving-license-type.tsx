@@ -1,5 +1,5 @@
 import { useQuestionnaire } from "@/contexts/questionnaire-context";
-import ButtonPrimary from "../../buttons/button-primary/button-primary";
+import { ButtonPrimary } from "@/app/components";
 import classes from "./driving-license-type.module.css";
 import { DrivingLicenseTypeProps } from "./driving-license-type.types";
 const DrivingLicenseType = ({ nextStep }: DrivingLicenseTypeProps) => {

@@ -6,10 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthButton from "../components/auth-button/auth-button";
-import AuthHeader from "../components/auth-header/auth-header";
-import AuthImage from "../components/auth-image/auth-image";
-import AuthInputField from "../components/auth-input/auth-input";
+import { AuthButton, AuthHeader, AuthImage, AuthInput } from "@/app/components";
 import TopSection from "../components/auth-top-section/auth-top-section";
 import contactInfoClasses from "../components/contact-info-form/contact-info-form.module.css";
 import NeedHelp from "../components/need-help/need-help";
@@ -97,7 +94,7 @@ export default function SignIn() {
           <AuthHeader title="Welcome Back" subTitle="Login to continue" />
           <div className={classes.fields}>
             <div className={signUpClasses.inputContainer}>
-              <AuthInputField
+              <AuthInput
                 iconImg="/images/message.png"
                 value={email}
                 placeholder="example@email.com"
@@ -109,7 +106,7 @@ export default function SignIn() {
               )}
             </div>
             <div className={signUpClasses.inputContainer}>
-              <AuthInputField
+              <AuthInput
                 iconImg="/images/password.png"
                 value={password}
                 type="password"

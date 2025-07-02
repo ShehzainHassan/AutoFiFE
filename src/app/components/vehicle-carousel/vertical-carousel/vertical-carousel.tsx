@@ -3,8 +3,7 @@ import type { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import classes from "./vertical-carousel.module.css";
 import { VehicleCarouselProps } from "./vertical-carousel.types";
-import VerticalCard from "../../car-card/vertical-card/vertical-card";
-import ButtonNavigate from "../../buttons/button-navigate/button-navigate";
+import { ButtonNavigate, VerticalCard } from "@/app/components";
 
 export default function VerticalCarousel({
   vehicleListResult,

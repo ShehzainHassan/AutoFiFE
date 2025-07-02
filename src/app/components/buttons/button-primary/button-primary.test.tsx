@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ButtonPrimary from "./button-primary";
+import { ButtonPrimary } from "@/app/components";
 import { ThemeProvider } from "@/theme/themeContext";
 
 const mockTheme = {

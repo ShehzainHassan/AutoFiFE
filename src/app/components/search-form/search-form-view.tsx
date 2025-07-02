@@ -1,7 +1,7 @@
 import { Dropdown } from "../dropdown";
 import CustomDropdownIndicator from "../dropdown-indicator/dropdown-indicator";
 import { customSelectStyles } from "@/styles/custom-select";
-import ButtonPrimary from "../buttons/button-primary/button-primary";
+import { ButtonPrimary } from "@/app/components";
 import { ThemeProvider } from "@/theme/themeContext";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
 import classes from "./search-form.module.css";

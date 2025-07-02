@@ -1,1 +1,1 @@
-export * from "./dob";
+export { default } from "./dob";

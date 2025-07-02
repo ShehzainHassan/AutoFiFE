@@ -2,14 +2,14 @@ import { useQuestionnaire } from "@/contexts/questionnaire-context";
 import useSaveQuestionnaire from "@/hooks/useSaveQuestionnaire";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { toast } from "react-toastify";
-import ButtonPrimary from "../../buttons/button-primary/button-primary";
+import { ButtonPrimary } from "@/app/components";
 import ErrorSummary from "../../error-summary/error-summary";
-import InputEmail from "../input-email/input-email";
 import InputPhone from "../input-phone/input-phone";
 import { ContactInfoProps } from "./contact-info.types";
 import classes from "./contact-info.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import InputEmail from "../input-email";
 const ContactInfo = ({ id }: ContactInfoProps) => {
   const [isAgreed, setIsAgreed] = useState(false);
   const { formData, setFormData } = useQuestionnaire();

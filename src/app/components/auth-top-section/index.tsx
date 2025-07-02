@@ -1,1 +1,1 @@
-export * from "./auth-top-section";
+export { default } from "./auth-top-section";

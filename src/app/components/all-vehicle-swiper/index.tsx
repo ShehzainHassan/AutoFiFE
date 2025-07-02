@@ -1,1 +1,1 @@
-export { default as AllVehiclesSwiper } from "./all-vehicle-swiper";
+export { default } from "./all-vehicle-swiper";

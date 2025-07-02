@@ -1,1 +1,1 @@
-export * from "./vertical-card";
+export { default } from "./vertical-card";

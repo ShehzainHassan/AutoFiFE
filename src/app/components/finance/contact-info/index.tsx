@@ -1,1 +1,1 @@
-export * from "./contact-info";
+export { default } from "./contact-info";

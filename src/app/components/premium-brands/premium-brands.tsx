@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import classes from "./premium-brands.module.css";
 import { useState, useMemo } from "react";
 import { BrandData } from "./premium-brands.types";
-import BrandCard from "../brand-card/brand-card";
+import { BrandCard } from "@/app/components";
 import SectionTitle from "../section-title/section-title";
 
 const PLACEHOLDER_IMG = "/images/brands/placeholder.png";

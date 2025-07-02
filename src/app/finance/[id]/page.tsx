@@ -1,19 +1,22 @@
 "use client";
 import ErrorMessage from "@/app/components/error-message/error-message";
-import Borrow from "@/app/components/finance/borrow/borrow";
-import ContactInfo from "@/app/components/finance/contact-info/contact-info";
-import DOB from "@/app/components/finance/dob/dob";
-import DrivingLicenseType from "@/app/components/finance/driving-license-type/driving-license-type";
-import EmploymentStatus from "@/app/components/finance/employment-status/employment-status";
-import GetFinanceQuote from "@/app/components/finance/get-finance-quote/get-finance-quote";
-import Header from "@/app/components/finance/header/header";
-import MaritalStatus from "@/app/components/finance/marital-status/marital-status";
 import NavbarContainer from "@/app/components/navbar/navbar-container";
 import useVehiclesById from "@/hooks/useVehicleById";
 import { CircularProgress } from "@mui/material";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import classes from "./page.module.css";
+import Footer from "@/app/components/footer/footer";
+import {
+  Borrow,
+  ContactInfo,
+  DOB,
+  DrivingLicenseType,
+  EmploymentStatus,
+  GetFinanceQuote,
+  Header,
+  MaritalStatus,
+} from "@/app/components";
 export default function FinancePage() {
   const params = useParams();
   const idParam = params.id;
@@ -70,6 +73,7 @@ export default function FinancePage() {
         )}
         {step === 7 && <ContactInfo id={vehicle.id} />}
       </div>
+      <Footer />
     </div>
   );
 }

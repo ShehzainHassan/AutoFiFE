@@ -2,7 +2,7 @@ import { ThemeProvider } from "@/theme/themeContext";
 import classes from "./email-box.module.css";
 import headings from "@/styles/typography.module.css";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
-import ButtonPrimary from "../buttons/button-primary/button-primary";
+import { ButtonPrimary } from "@/app/components";
 
 export default function EmailBox() {
   return (

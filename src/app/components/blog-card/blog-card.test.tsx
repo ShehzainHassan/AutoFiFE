@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import BlogCard from "./blog-card";
-
+import { BlogCard } from "@/app/components";
 describe("BlogCard", () => {
   const mockProps = {
     imgSrc: "/images/customer.png",

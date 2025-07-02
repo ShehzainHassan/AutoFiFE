@@ -1,5 +1,5 @@
 import { useQuestionnaire } from "@/contexts/questionnaire-context";
-import ButtonPrimary from "../../buttons/button-primary/button-primary";
+import { ButtonPrimary } from "@/app/components";
 import classes from "./marital-status.module.css";
 import { MaritalStatusProps } from "./marital-status.types";
 const MaritalStatus = ({ nextStep }: MaritalStatusProps) => {
