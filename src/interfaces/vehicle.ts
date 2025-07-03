@@ -75,7 +75,7 @@ export interface VehicleFilter {
   status: string | null;
 }
 
-export interface VehicleFeatures {
+export interface PrioritizedFeatures {
   Make: string;
   Model: string;
   Year: string;
@@ -97,7 +97,7 @@ export interface VehicleFeatures {
 export interface VehicleRecommendation {
   vehicle_id: number;
   score: number;
-  features: VehicleFeatures;
+  features: PrioritizedFeatures;
 }
 
 export interface RecommendationsResponse {
@@ -108,10 +108,23 @@ export interface RecommendationsResponse {
 export interface SimilarVehicle {
   vehicle_id: number;
   similarity_score: number;
-  features: VehicleFeatures;
+  features: PrioritizedFeatures;
 }
 
 export interface SimilarVehicleResponse {
   vehicle_id: number;
   similar_vehicles: SimilarVehicle[];
+}
+
+export interface VehicleOptions {
+  make: string;
+  model: string;
+  year: number;
+}
+
+export interface CompareVehicle {
+  show: boolean;
+  make: string;
+  model: string;
+  year: string;
 }

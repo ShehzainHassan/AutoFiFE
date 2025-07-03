@@ -6,6 +6,7 @@ import {
   VehicleFeatures,
   VehicleFilter,
   VehicleListResult,
+  VehicleOptions,
 } from "@/interfaces/vehicle";
 import axios from "axios";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -131,6 +132,12 @@ const vehicleAPI = {
   getRecommendations: async (userId: number) => {
     const response = await axios.get<RecommendationsResponse>(
       `http://localhost:8000/api/recommendations/user/${userId}`
+    );
+    return response.data;
+  },
+  getVehicleOptions: async () => {
+    const response = await axios.get<VehicleOptions>(
+      `http://localhost:5011/Vehicle/get-vehicle-options`
     );
     return response.data;
   },
