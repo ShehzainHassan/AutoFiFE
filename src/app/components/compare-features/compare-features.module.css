@@ -1,6 +1,6 @@
 .container {
-  min-width: 1000px;
   max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
   padding: 24px;
   display: flex;
@@ -20,14 +20,14 @@
 }
 
 .section h2 {
-  font-size: 1.5rem;
+  font-size: 24px;
   text-transform: uppercase;
   color: var(--color-green600);
   margin: 0;
 }
 
 .toggle {
-  font-size: 2rem;
+  font-size: 32px;
   font-weight: bold;
   user-select: none;
   color: var(--color-black100);
@@ -39,7 +39,7 @@
   margin-bottom: 8px;
   font-weight: bold;
   color: var(--color-black100);
-  font-size: 1.1rem;
+  font-size: 16px;
 }
 
 .row {
@@ -57,13 +57,13 @@
   text-align: left;
 }
 .tick {
-  color: #4caf50;
-  font-size: 1.2rem;
+  color: var(--color-green600);
+  font-size: 18px;
   font-weight: bold;
 }
 
 .cross {
-  color: #f44336;
-  font-size: 1.2rem;
+  color: var(--color-red500);
+  font-size: 18px;
   font-weight: bold;
 }

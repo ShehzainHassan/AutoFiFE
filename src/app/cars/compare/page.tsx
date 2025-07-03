@@ -1,11 +1,16 @@
 "use client";
-import { ButtonPrimary, CompareFeatures } from "@/app/components";
-import { VehicleSelector } from "@/app/components";
+import {
+  ButtonPrimary,
+  CompareFeatures,
+  VehicleSelector,
+} from "@/app/components";
+import NavbarContainer from "@/app/components/navbar/navbar-container";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
 import { CompareVehicle } from "@/interfaces/vehicle";
 import { ThemeProvider } from "@/theme/themeContext";
 import { useState } from "react";
 import classes from "./page.module.css";
+import Footer from "@/app/components/footer/footer";
 
 export default function CompareVehiclesPage() {
   const [vehicles, setVehicles] = useState<CompareVehicle[]>([
@@ -37,28 +42,32 @@ export default function CompareVehiclesPage() {
   );
 
   return (
-    <div className={classes.container}>
-      <div className={classes.vehicleContainer}>
-        {vehicles.map((v, i) => (
-          <VehicleSelector
-            key={i}
-            vehicle={v}
-            onChange={(val) => updateVehicle(i, val)}
-            onRemove={() => removeVehicle(i)}
+    <>
+      <NavbarContainer backgroundColor="var(--color-gray600)" />
+      <div className={classes.container}>
+        <div className={classes.vehicleContainer}>
+          {vehicles.map((v, i) => (
+            <VehicleSelector
+              key={i}
+              vehicle={v}
+              onChange={(val) => updateVehicle(i, val)}
+              onRemove={() => removeVehicle(i)}
+            />
+          ))}
+        </div>
+        <ThemeProvider value={BLUE_THEME}>
+          <ButtonPrimary
+            isDisabled={!allFilled}
+            onClick={() => setCompare(true)}
+            btnText="Compare"
           />
-        ))}
-      </div>
-      <ThemeProvider value={BLUE_THEME}>
-        <ButtonPrimary
-          isDisabled={!allFilled}
-          onClick={() => setCompare(true)}
-          btnText="Compare"
-        />
-      </ThemeProvider>
+        </ThemeProvider>
 
-      {compare && (
-        <CompareFeatures vehicle1={vehicles[0]} vehicle2={vehicles[1]} />
-      )}
-    </div>
+        {compare && (
+          <CompareFeatures vehicle1={vehicles[0]} vehicle2={vehicles[1]} />
+        )}
+      </div>
+      <Footer />
+    </>
   );
 }
