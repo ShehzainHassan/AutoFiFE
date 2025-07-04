@@ -53,3 +53,34 @@ export const RED_THEME: ThemeContextType = {
     border: "none",
   },
 };
+export const WHITE_WITH_BORDER: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-white100)",
+    borderRadius: "6px",
+    textColor: "var(--color-black100)",
+    padding: "10px 25px",
+    hoverColor: "var(--color-white200)",
+    border: "1px solid var(--color-gray540)",
+  },
+};
+export const BLUE_WITH_BORDER: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-blue700)",
+    borderRadius: "6px",
+    textColor: "var(--color-white100)",
+    padding: "10px 25px",
+    hoverColor: "var(--color-blue300)",
+    border: "1px solid var(--color-gray540)",
+  },
+};
+export const WHITE_WITH_BLUE_BORDER: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-white100)",
+    borderRadius: "8px",
+    textColor: "var(--color-blue700)",
+    padding: "12px 30px",
+    hoverColor: "var(--color-blue500)",
+    hoverTextColor: "var(--color-white100)",
+    border: "2px solid var(--color-blue700)",
+  },
+};

@@ -53,7 +53,10 @@
   --color-purple600: #24243e;
 
   --color-red100: #ffe5e6;
+  --color-red150: #fff5f5;
+  --color-red400: #ff4444;
   --color-red500: #ef4444;
+  --color-red550: #e53e3e;
   --color-red600: #cc0000;
   --color-red800: #831b1b;
 }

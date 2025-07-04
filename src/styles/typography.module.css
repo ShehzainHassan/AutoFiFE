@@ -166,6 +166,19 @@
   line-height: 29.95px;
 }
 
+.auctionVehiclePrice {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 20.8px;
+  line-height: 33.28px;
+}
+.auctionVehicleTitle {
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  font-size: 17.6px;
+  line-height: 28.16px;
+}
+
 .userName {
   font-family: Inter, sans-serif;
   font-weight: 600;
@@ -192,6 +205,13 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
+}
+
+.auctionCardTimer {
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 14.4px;
+  line-height: 23.04px;
 }
 
 .smallText {
