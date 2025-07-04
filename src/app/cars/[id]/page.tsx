@@ -12,6 +12,7 @@ import { lazy, Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./page.module.css";
+import { RoundedContainer } from "@/app/components";
 
 const CarImageGallery = lazy(
   () => import("@/app/components/car-image-gallery/car-image-gallery")
@@ -77,6 +78,7 @@ export default function CarDetails() {
       </div>
 
       <ToastContainer />
+      <RoundedContainer />
       <Footer />
     </>
   );

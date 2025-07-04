@@ -2,6 +2,7 @@
 import {
   ButtonPrimary,
   CompareFeatures,
+  RoundedContainer,
   VehicleSelector,
 } from "@/app/components";
 import NavbarContainer from "@/app/components/navbar/navbar-container";
@@ -67,6 +68,7 @@ export default function CompareVehiclesPage() {
           <CompareFeatures vehicle1={vehicles[0]} vehicle2={vehicles[1]} />
         )}
       </div>
+      <RoundedContainer />
       <Footer />
     </>
   );

@@ -16,6 +16,7 @@ import {
   GetFinanceQuote,
   Header,
   MaritalStatus,
+  RoundedContainer,
 } from "@/app/components";
 export default function FinancePage() {
   const params = useParams();
@@ -73,6 +74,7 @@ export default function FinancePage() {
         )}
         {step === 7 && <ContactInfo id={vehicle.id} />}
       </div>
+      <RoundedContainer />
       <Footer />
     </div>
   );

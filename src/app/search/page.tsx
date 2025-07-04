@@ -11,6 +11,7 @@ import SidebarContainer from "../components/sidebar/sidebar-container";
 import VehicleInfoTabs from "../components/vehicle-info/vehicle-info";
 import classes from "./page.module.css";
 import { useSearchPage } from "./useSearchPage";
+import { RoundedContainer } from "@/app/components";
 
 export default function Search() {
   const {
@@ -42,6 +43,7 @@ export default function Search() {
         </div>
         <VehicleInfoTabs submittedParams={submittedParams} />
       </div>
+      <RoundedContainer />
       <Footer />
     </>
   );

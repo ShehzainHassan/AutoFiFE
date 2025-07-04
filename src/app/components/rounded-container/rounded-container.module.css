@@ -1,0 +1,10 @@
+.container {
+  background-color: var(--color-black100);
+}
+.subContainer {
+  width: 100%;
+  height: 80px;
+  border-bottom-left-radius: 80px;
+  border-bottom-right-radius: 80px;
+  background-color: var(--color-white100);
+}

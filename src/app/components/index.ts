@@ -29,3 +29,4 @@ export { default as OverviewSection } from "./compare-features/overview-section"
 export { default as VehicleHeader } from "./compare-features/vehicle-header";
 export { default as CompareFeatures } from "./compare-features/compare-features-container";
 export { default as VehicleSelector } from "./vehicle-selector/vehicle-selector-container";
+export { default as RoundedContainer } from "./rounded-container/rounded-container";
