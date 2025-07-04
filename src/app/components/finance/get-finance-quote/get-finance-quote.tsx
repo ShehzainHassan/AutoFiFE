@@ -5,6 +5,8 @@ import { GetFinanceQuoteProps } from "./get-finance-quote.types";
 import CarImage from "@/assets/images/cars/Bentley-Arnage4.4.png";
 import Policy from "../policy";
 import VehicleDetails from "../vehicle-details";
+import { ThemeProvider } from "@/theme/themeContext";
+import { BLUE_THEME } from "@/constants/button-primary-themes";
 const GetFinanceQuote = ({ vehicle, nextStep }: GetFinanceQuoteProps) => {
   return (
     <div className={classes.container}>
@@ -18,13 +20,14 @@ const GetFinanceQuote = ({ vehicle, nextStep }: GetFinanceQuoteProps) => {
         placeholder="blur"
       />
       <VehicleDetails vehicle={vehicle} />
-      <ButtonPrimary
-        btnText="Continue"
-        onClick={nextStep}
-        className={classes.button}
-        textColor="var(--color-white100)"
-        imgSrc="/images/arrow-right.png"
-      />
+      <ThemeProvider value={BLUE_THEME}>
+        <ButtonPrimary
+          btnText="Continue"
+          onClick={nextStep}
+          className={classes.button}
+          imgSrc="/images/arrow-right.png"
+        />
+      </ThemeProvider>
       <Policy />
     </div>
   );

@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import InputEmail from "../input-email";
 import DOMPurify from "isomorphic-dompurify";
+import { ThemeProvider } from "@/theme/themeContext";
 const ContactInfo = ({ id }: ContactInfoProps) => {
   const [isAgreed, setIsAgreed] = useState(false);
   const { formData, setFormData } = useQuestionnaire();
@@ -82,20 +83,21 @@ const ContactInfo = ({ id }: ContactInfoProps) => {
         />
       </div>
       <ErrorSummary errors={errors} />
-      <ButtonPrimary
-        btnText="Get my quote"
-        onClick={handleSubmit}
-        className={`${classes.button} ${classes.quoteBtn}`}
-        isDisabled={
-          !formData.email ||
-          !formData.phone ||
-          errors?.email?.length > 0 ||
-          errors?.phone?.length > 0 ||
-          !isAgreed
-        }
-        textColor="var(--color-white100)"
-        imgSrc="/images/arrow-right.png"
-      />
+      <ThemeProvider>
+        <ButtonPrimary
+          btnText="Get my quote"
+          onClick={handleSubmit}
+          className={`${classes.button} ${classes.quoteBtn}`}
+          isDisabled={
+            !formData.email ||
+            !formData.phone ||
+            errors?.email?.length > 0 ||
+            errors?.phone?.length > 0 ||
+            !isAgreed
+          }
+          imgSrc="/images/arrow-right.png"
+        />
+      </ThemeProvider>
       <p className={classes.policyText}>
         The personal information we have collected from you will be shared with
         fraud prevention agencies who will use it to prevent fraud and money

@@ -53,7 +53,11 @@ export default function ButtonPrimary({
         aria-label={btnText}
         type={type}
         className={classes.btn}
-        style={{ color: textColor || themeValues?.textColor }}>
+        style={{
+          color: isHovered
+            ? themeValues?.hoverTextColor || textColor || themeValues?.textColor
+            : textColor || themeValues?.textColor,
+        }}>
         {btnText}
       </button>
     </div>

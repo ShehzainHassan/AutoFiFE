@@ -6,6 +6,7 @@ export type ButtonPrimaryProps = {
   textColor?: string;
   padding?: string;
   hoverColor?: string;
+  hoverTextColor?: string;
   border?: string;
   className?: string;
   isDisabled?: boolean;

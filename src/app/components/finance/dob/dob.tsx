@@ -13,6 +13,8 @@ import { ButtonPrimary } from "@/app/components";
 import { Dropdown } from "../../dropdown";
 import { DOBProps } from "./dob-types";
 import classes from "./dob.module.css";
+import { ThemeProvider } from "@/theme/themeContext";
+import { BLUE_THEME } from "@/constants/button-primary-themes";
 const DOB = ({ nextStep }: DOBProps) => {
   const { formData, setFormData } = useQuestionnaire();
   const isValid = formData.dob.day && formData.dob.month && formData.dob.year;
@@ -157,14 +159,15 @@ const DOB = ({ nextStep }: DOBProps) => {
         </Dropdown>
       </div>
 
-      <ButtonPrimary
-        btnText="Continue"
-        onClick={nextStep}
-        isDisabled={!isValid}
-        className={classes.button}
-        textColor="var(--color-white100)"
-        imgSrc="/images/arrow-right.png"
-      />
+      <ThemeProvider value={BLUE_THEME}>
+        <ButtonPrimary
+          btnText="Continue"
+          onClick={nextStep}
+          isDisabled={!isValid}
+          className={classes.button}
+          imgSrc="/images/arrow-right.png"
+        />
+      </ThemeProvider>
     </div>
   );
 };

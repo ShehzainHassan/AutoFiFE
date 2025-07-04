@@ -6,6 +6,7 @@ type ButtonPrimaryTheme = {
   textColor: string;
   padding: string;
   hoverColor: string;
+  hoverTextColor?: string;
   border: string;
 };
 type HorizontalTabsTheme = {

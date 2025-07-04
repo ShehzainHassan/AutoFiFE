@@ -4,6 +4,8 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 import { ButtonPrimary } from "@/app/components";
 import { BorrowProps } from "./borrow.types";
 import InputAmount from "../input-amount";
+import { ThemeProvider } from "@/theme/themeContext";
+import { BLUE_THEME } from "@/constants/button-primary-themes";
 const Borrow = ({ nextStep, vehiclePrice }: BorrowProps) => {
   const { formData, setFormData } = useQuestionnaire();
 
@@ -34,14 +36,15 @@ const Borrow = ({ nextStep, vehiclePrice }: BorrowProps) => {
           }
           label="I'm not sure"
         />
-        <ButtonPrimary
-          btnText="Continue"
-          onClick={nextStep}
-          className={classes.button}
-          isDisabled={!formData.borrowAmount || formData.borrowAmount === 0}
-          textColor="var(--color-white100)"
-          imgSrc="/images/arrow-right.png"
-        />
+        <ThemeProvider value={BLUE_THEME}>
+          <ButtonPrimary
+            btnText="Continue"
+            onClick={nextStep}
+            className={classes.button}
+            isDisabled={!formData.borrowAmount || formData.borrowAmount === 0}
+            imgSrc="/images/arrow-right.png"
+          />
+        </ThemeProvider>
       </div>
     </div>
   );

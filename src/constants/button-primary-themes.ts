@@ -20,3 +20,15 @@ export const WHITE_THEME: ThemeContextType = {
     hoverColor: "var(--color-white200)",
   },
 };
+
+export const WHITE_BLUE_THEME: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-white500)",
+    borderRadius: "60px",
+    textColor: "var(--color-blue500)",
+    padding: "12px 30px",
+    hoverColor: "var(--color-blue600)",
+    hoverTextColor: "var(--color-white100)",
+    border: "none",
+  },
+};
