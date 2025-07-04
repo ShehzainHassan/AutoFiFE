@@ -9,16 +9,13 @@ export default function SimilarVehicleRecommendationsContainer() {
   const idParam = params.id;
   const vehicleId = idParam ? Number(idParam) : -1;
 
-  const authData = localStorage.getItem("authData") ?? "";
   const router = useRouter();
   const {
     data: similarVehicles,
     isError,
     error,
     isLoading,
-  } = useSimilarVehicles(vehicleId, !!authData);
-
-  if (!authData) return null;
+  } = useSimilarVehicles(vehicleId, true);
 
   if (isLoading)
     return (
@@ -34,7 +31,6 @@ export default function SimilarVehicleRecommendationsContainer() {
   };
   return (
     <SimilarVehicleRecommendations
-      authData={authData}
       redirectToCarPage={redirectToCarPage}
       vehicleId={vehicleId}
     />

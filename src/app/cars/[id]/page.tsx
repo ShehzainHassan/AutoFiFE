@@ -70,7 +70,7 @@ export default function CarDetails() {
           </ContactFormProvider>
         </div>
       </div>
-      <div>
+      <div className={classes.vehicleRecommendations}>
         <Suspense fallback={<CircularProgress />}>
           <SimilarVehicleRecommendationsContainer />
         </Suspense>

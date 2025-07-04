@@ -7,10 +7,9 @@ import { SimilarVehicleRecommendationsProps } from "./similar-vehicle-recommenda
 
 export default function SimilarVehicleRecommendations({
   vehicleId,
-  authData,
   redirectToCarPage,
 }: SimilarVehicleRecommendationsProps) {
-  const { data: similarVehicles } = useSimilarVehicles(vehicleId, !!authData);
+  const { data: similarVehicles } = useSimilarVehicles(vehicleId, true);
 
   return (
     <>
@@ -27,7 +26,7 @@ export default function SimilarVehicleRecommendations({
               className={classes.recommendationCard}>
               <CarImage src="/images/glc_2023.png" width={306} height={172}>
                 <div className={classes.favorite}>
-                  {vehicle.similarity_score.toFixed(3)}
+                  {`${(vehicle.similarity_score * 100).toFixed(1)}%`}
                 </div>
               </CarImage>
               <div>
