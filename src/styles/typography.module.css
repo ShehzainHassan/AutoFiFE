@@ -146,7 +146,24 @@
 }
 
 /**************          Inter Font          *****************/
-
+.vehiclePrice {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 51.2px;
+}
+.featuredTitle {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 38.4px;
+}
+.vehicleTitle {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 18.7px;
+  line-height: 29.95px;
+}
 .carTitle {
   font-family: Inter, sans-serif;
   font-weight: 500;

@@ -1,6 +1,6 @@
 export type ButtonPrimaryProps = {
   imgSrc?: string;
-  btnText: string;
+  btnText: string | React.ReactNode;
   backgroundColor?: string;
   borderRadius?: string;
   textColor?: string;

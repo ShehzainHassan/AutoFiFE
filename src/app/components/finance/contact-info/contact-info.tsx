@@ -1,3 +1,4 @@
+"use client";
 import { useQuestionnaire } from "@/contexts/questionnaire-context";
 import useSaveQuestionnaire from "@/hooks/useSaveQuestionnaire";
 import { Checkbox, FormControlLabel } from "@mui/material";

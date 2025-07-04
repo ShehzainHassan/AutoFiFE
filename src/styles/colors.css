@@ -4,6 +4,7 @@
   --color-white100_opaque_11: rgba(255, 255, 255, 0.11);
   --color-white100_opaque_13: rgba(255, 255, 255, 0.13);
   --color-white100_opaque_18: rgba(255, 255, 255, 0.18);
+  --color-white100_opaque_20: rgba(255, 255, 255, 0.2);
   --color-white200: #e3e3e3;
   --color-white300: #f9fbfc;
 
@@ -38,6 +39,8 @@
   --color-blue400: #0763d3;
   --color-blue500: #405ff2;
   --color-blue600: #293a91;
+  --color-blue700: #1976d2;
+  --color-blue800: #1565c0;
 
   --color-green600: #3d923a;
   --color-green700: #005128;

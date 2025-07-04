@@ -1,3 +1,4 @@
+"use client";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classes from "./auth-top-section.module.css";

@@ -32,3 +32,24 @@ export const WHITE_BLUE_THEME: ThemeContextType = {
     border: "none",
   },
 };
+
+export const WHITE_TRANSPARENT: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-white100_opaque_20)",
+    borderRadius: "12px",
+    textColor: "var(--color-white100)",
+    padding: "16px",
+    hoverColor: "var(--color-blue600)",
+    border: "none",
+  },
+};
+export const RED_THEME: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-red500)",
+    borderRadius: "12px",
+    textColor: "var(--color-white100)",
+    padding: "16px",
+    hoverColor: "var(--color-red800)",
+    border: "none",
+  },
+};

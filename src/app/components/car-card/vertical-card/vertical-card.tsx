@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import classes from "./vertical-card.module.css";
 import headings from "@/styles/typography.module.css";

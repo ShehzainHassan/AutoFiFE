@@ -1,3 +1,4 @@
+"use client";
 import useVehicleFeatures from "@/hooks/useVehicleFeatures";
 import { useState } from "react";
 import { CompareFeaturesContainerProps } from "./compare-features.types";
