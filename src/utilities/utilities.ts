@@ -6,6 +6,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { toast } from "react-toastify";
 import { PriceRange } from "./utilities.types";
 import { trackError } from "./error-tracking";
+import DOMPurify from "isomorphic-dompurify";
 
 export function getModelOptions(make: string): Options[] {
   const isAnyMake = !make || make === "Any_Makes";
@@ -310,4 +311,18 @@ export function getImage(title: string) {
     default:
       return "/images/mileage.png";
   }
+}
+
+type FormValues = Record<string, string | boolean>;
+
+export function sanitizeFormData(data: FormValues): FormValues {
+  const sanitized: FormValues = {};
+
+  for (const key in data) {
+    const value = data[key];
+    sanitized[key] =
+      typeof value === "string" ? DOMPurify.sanitize(value) : value;
+  }
+
+  return sanitized;
 }

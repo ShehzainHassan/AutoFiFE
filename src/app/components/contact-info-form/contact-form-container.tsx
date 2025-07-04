@@ -7,7 +7,8 @@ import ContactFormView from "./contact-form";
 import { ContactInfoFormProps } from "./contact-info-form.types";
 import { useContactFormContext } from "../../../contexts/contact-form-context/contact-form-context";
 import { toast } from "react-toastify";
-
+import { sanitizeFormData } from "@/utilities/utilities";
+import { ContactFormData } from "@/interfaces/contact-info";
 export default function ContactFormContainer({
   carId,
   className,
@@ -80,8 +81,10 @@ export default function ContactFormContainer({
       commentText,
       emailNotifs: emailNotifications,
     };
-
-    submitInfo(formData);
+    const sanitizedFormData = sanitizeFormData(
+      formData
+    ) as unknown as ContactFormData;
+    submitInfo(sanitizedFormData);
     addInteraction.mutate({
       vehicleId: (id ?? carId) as number,
       interactionType: "contacted-seller",

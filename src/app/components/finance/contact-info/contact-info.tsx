@@ -10,6 +10,7 @@ import classes from "./contact-info.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import InputEmail from "../input-email";
+import DOMPurify from "isomorphic-dompurify";
 const ContactInfo = ({ id }: ContactInfoProps) => {
   const [isAgreed, setIsAgreed] = useState(false);
   const { formData, setFormData } = useQuestionnaire();
@@ -17,20 +18,21 @@ const ContactInfo = ({ id }: ContactInfoProps) => {
 
   const router = useRouter();
   const { mutate } = useSaveQuestionnaire();
+  const sanitizeInput = (input: string) => DOMPurify.sanitize(input);
   const handleSubmit = () => {
     const dobString = `${formData.dob.year}-${String(
       new Date(`${formData.dob.month} 1`).getMonth() + 1
     ).padStart(2, "0")}-${formData.dob.day.padStart(2, "0")}`;
 
     const questionnaire = {
-      drivingLicense: formData.drivingLicense,
-      maritalStatus: formData.maritalStatus,
-      dob: dobString,
-      employmentStatus: formData.employmentStatus,
+      drivingLicense: sanitizeInput(formData.drivingLicense),
+      maritalStatus: sanitizeInput(formData.maritalStatus),
+      dob: sanitizeInput(dobString),
+      employmentStatus: sanitizeInput(formData.employmentStatus),
       borrowAmount: formData.borrowAmount ?? 0,
       notSure: formData.notSure,
-      email: formData.email,
-      phone: formData.phone,
+      email: sanitizeInput(formData.email),
+      phone: sanitizeInput(formData.phone),
     };
 
     mutate(
