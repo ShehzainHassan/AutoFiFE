@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background-color: var(--color-white100);
+  border-radius: 16px;
+  padding: 24px;
+}
+.bidContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

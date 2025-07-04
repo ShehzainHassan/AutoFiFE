@@ -155,6 +155,7 @@
 .featuredTitle {
   font-family: Inter, sans-serif;
   font-weight: 700;
+
   font-size: 24px;
   line-height: 38.4px;
 }
@@ -164,6 +165,14 @@
   font-size: 18.7px;
   line-height: 29.95px;
 }
+
+.userName {
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 25.6px;
+}
+
 .carTitle {
   font-family: Inter, sans-serif;
   font-weight: 500;

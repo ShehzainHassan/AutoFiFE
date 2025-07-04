@@ -43,7 +43,9 @@ export default function FeaturedAuction() {
           <ButtonPrimary
             btnText={
               <span className={classes.btnContainer}>
-                {remainingTime > 0 && <span className={classes.redDot}></span>}
+                {remainingTime > 0 && (
+                  <span className={classes.redDot}>🔴</span>
+                )}
                 {timerText}
               </span>
             }

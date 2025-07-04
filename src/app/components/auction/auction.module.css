@@ -3,5 +3,10 @@
   flex-direction: column;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 40px 240px;
+  padding: 40px 0px;
+}
+.featureGrid {
+  display: grid;
+  grid-template-columns: 6fr 3fr 3fr;
+  gap: 32px;
 }

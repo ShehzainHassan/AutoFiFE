@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: var(--color-white800);
+  border-left: 3px solid var(--color-blue700);
+}
+.currencyContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--color-blue200);
+  color: var(--color-blue700);
+  font-weight: 600;
+}
+.subContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 6.5px;
+}
+.bidDetails {
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 14.4px;
+  line-height: 23.04px;
+  color: var(--color-gray580);
+}
+.black {
+  color: var(--color-black100);
+}

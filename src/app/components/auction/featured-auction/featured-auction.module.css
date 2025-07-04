@@ -40,10 +40,6 @@
 }
 
 .redDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: var(--color-red600);
   animation: pulse 1.2s ease-in-out infinite;
 }
 .btnContainer {
