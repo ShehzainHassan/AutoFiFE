@@ -1,7 +1,7 @@
 "use client";
+import { Loading } from "@/app/components";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
-import { CircularProgress } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EmptyState from "../empty-state/empty-state";
@@ -20,8 +20,8 @@ export default function LoadResults() {
 
   if (isLoading)
     return (
-      <div role="status" className={classes.loadingContainer}>
-        <CircularProgress />
+      <div role="status">
+        <Loading />
       </div>
     );
   if (isError) return <ErrorMessage message={error.message} />;

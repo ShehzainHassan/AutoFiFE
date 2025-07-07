@@ -1,9 +1,8 @@
+import { Loading } from "@/app/components";
 import useSimilarVehicles from "@/hooks/useSimilarVehicles";
-import { CircularProgress } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
 import ErrorMessage from "../error-message/error-message";
 import SimilarVehicleRecommendations from "./similar-vehicle-recommendations";
-
 export default function SimilarVehicleRecommendationsContainer() {
   const params = useParams();
   const idParam = params.id;
@@ -20,7 +19,7 @@ export default function SimilarVehicleRecommendationsContainer() {
   if (isLoading)
     return (
       <div role="status">
-        <CircularProgress />
+        <Loading />
       </div>
     );
   if (isError) return <ErrorMessage message={error.message} />;

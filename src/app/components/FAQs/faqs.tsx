@@ -1,3 +1,4 @@
+import { Loading } from "@/app/components";
 import { CURRENCY } from "@/constants";
 import { useSearch } from "@/contexts/car-search-context";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
@@ -8,7 +9,6 @@ import {
   getUniqueFuelTypes,
   getVehicleText,
 } from "@/utilities/utilities";
-import { CircularProgress } from "@mui/material";
 import EmptyState from "../empty-state/empty-state";
 import ErrorMessage from "../error-message/error-message";
 import classes from "./faqs.module.css";
@@ -18,12 +18,7 @@ export default function FAQs({ searchParams }: FAQProps) {
   const { mainSearch } = useSearch();
 
   const { data, isLoading, error } = useSearchVehicles(searchParams);
-  if (isLoading)
-    return (
-      <div className={classes.loadingContainer}>
-        <CircularProgress />;
-      </div>
-    );
+  if (isLoading) return <Loading />;
 
   if (error) return <ErrorMessage message={error.message} />;
   if (!data || (Array.isArray(data) && data.length === 0)) {

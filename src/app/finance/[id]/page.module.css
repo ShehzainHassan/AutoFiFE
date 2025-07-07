@@ -24,13 +24,3 @@
   background-color: var(--color-black100);
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.loadingContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 850px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 45px 0px 145px 0;
-  height: 100%;
-}

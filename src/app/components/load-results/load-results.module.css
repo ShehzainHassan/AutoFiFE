@@ -3,9 +3,3 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
 }
-.loadingContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}

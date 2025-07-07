@@ -1,4 +1,12 @@
 "use client";
+import {
+  AuthButton,
+  AuthHeader,
+  AuthImage,
+  AuthInput,
+  AuthTopSection,
+  Loading,
+} from "@/app/components";
 import useLoginUser from "@/hooks/useLoginUser";
 import useSaveUser from "@/hooks/useSaveUser";
 import {
@@ -6,21 +14,12 @@ import {
   validateName,
   validatePassword,
 } from "@/utilities/utilities";
-import { CircularProgress } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import contactInfoClasses from "../components/contact-info-form/contact-info-form.module.css";
 import NeedHelp from "../components/need-help/need-help";
 import classes from "./sign-up.module.css";
-import {
-  AuthButton,
-  AuthHeader,
-  AuthImage,
-  AuthInput,
-  AuthTopSection,
-} from "@/app/components";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -172,11 +171,7 @@ export default function SignUp() {
               onClick={handleSignUp}
               disabled={isPending || isButtonDisabled}
             />
-            {(isPending || loginLoading) && (
-              <div>
-                <CircularProgress className={contactInfoClasses.loading} />
-              </div>
-            )}
+            {(isPending || loginLoading) && <Loading />}
             <ToastContainer />
           </div>
         </div>

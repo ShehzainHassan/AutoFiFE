@@ -1,17 +1,17 @@
 "use client";
 import useVehiclesByMake from "@/hooks/useVehiclesByMake";
-import { CircularProgress } from "@mui/material";
 import "swiper/css";
 import EmptyState from "../empty-state/empty-state";
 import ErrorMessage from "../error-message/error-message";
 import HorizontalCarousel from "../vehicle-carousel/horizontal-carousel/horizontal-carousel";
 import { CarSwiperProps } from "./popular-makes.swiper.types";
+import { Loading } from "@/app/components";
 
 export default function PopularMakesSwiper({ make }: CarSwiperProps) {
   const { data, isLoading, isError, error, fetchNextPage, hasNextPage } =
     useVehiclesByMake(make);
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <Loading />;
   if (!data)
     return (
       <EmptyState message="No vehicles found" color="var(--color-white100)" />

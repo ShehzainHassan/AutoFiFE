@@ -51,9 +51,3 @@
   justify-content: space-between;
   align-items: center;
 }
-.loadingContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
-}

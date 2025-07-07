@@ -1,12 +1,4 @@
 "use client";
-import ErrorMessage from "@/app/components/error-message/error-message";
-import NavbarContainer from "@/app/components/navbar/navbar-container";
-import useVehiclesById from "@/hooks/useVehicleById";
-import { CircularProgress } from "@mui/material";
-import { useParams } from "next/navigation";
-import { useState } from "react";
-import classes from "./page.module.css";
-import Footer from "@/app/components/footer/footer";
 import {
   Borrow,
   ContactInfo,
@@ -15,9 +7,17 @@ import {
   EmploymentStatus,
   GetFinanceQuote,
   Header,
+  Loading,
   MaritalStatus,
   RoundedContainer,
 } from "@/app/components";
+import ErrorMessage from "@/app/components/error-message/error-message";
+import Footer from "@/app/components/footer/footer";
+import NavbarContainer from "@/app/components/navbar/navbar-container";
+import useVehiclesById from "@/hooks/useVehicleById";
+import { useParams } from "next/navigation";
+import { useState } from "react";
+import classes from "./page.module.css";
 export default function FinancePage() {
   const params = useParams();
   const idParam = params.id;
@@ -33,11 +33,7 @@ export default function FinancePage() {
   } = useVehiclesById(id as number);
 
   if (isLoading) {
-    return (
-      <div className={classes.loadingContainer}>
-        <CircularProgress />;
-      </div>
-    );
+    return <Loading />;
   }
   if (!vehicle) return <div>Vehicle not found</div>;
   if (isError) {

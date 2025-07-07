@@ -1,12 +1,11 @@
 "use client";
 import useAllVehicles from "@/hooks/useAllVehicles";
-import CircularProgress from "@mui/material/CircularProgress";
 import "swiper/css";
 import EmptyState from "../empty-state/empty-state";
 import ErrorMessage from "../error-message/error-message";
 import VerticalCarousel from "../vehicle-carousel/vertical-carousel/vertical-carousel";
 import { AllVehicleSwiperProps } from "./all-vehicle-swiper.types";
-import classes from "./all-vehicle-swiper.module.css";
+import { Loading } from "@/app/components";
 export default function AllVehiclesSwiper({
   vehicleStatus,
 }: AllVehicleSwiperProps) {
@@ -14,11 +13,7 @@ export default function AllVehiclesSwiper({
     useAllVehicles(vehicleStatus);
 
   if (isLoading) {
-    return (
-      <div role="status" className={classes.loading}>
-        <CircularProgress />
-      </div>
-    );
+    return <Loading />;
   }
   if (!data) return <EmptyState message="No vehicles found" />;
   if (isError) return <ErrorMessage message={error.message} />;

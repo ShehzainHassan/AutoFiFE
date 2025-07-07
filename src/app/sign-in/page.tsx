@@ -1,14 +1,18 @@
 "use client";
+import {
+  AuthButton,
+  AuthHeader,
+  AuthImage,
+  AuthInput,
+  Loading,
+} from "@/app/components";
 import useLoginUser from "@/hooks/useLoginUser";
 import { validateEmail, validatePassword } from "@/utilities/utilities";
-import { CircularProgress } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AuthButton, AuthHeader, AuthImage, AuthInput } from "@/app/components";
 import TopSection from "../components/auth-top-section/auth-top-section";
-import contactInfoClasses from "../components/contact-info-form/contact-info-form.module.css";
 import NeedHelp from "../components/need-help/need-help";
 import signUpClasses from "../sign-up/sign-up.module.css";
 import classes from "./sign-in.module.css";
@@ -127,11 +131,7 @@ export default function SignIn() {
             />
             <ToastContainer />
           </div>
-          {isPending && (
-            <div>
-              <CircularProgress className={contactInfoClasses.loading} />
-            </div>
-          )}
+          {isPending && <Loading />}
         </div>
         <NeedHelp />
       </div>

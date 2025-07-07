@@ -1,4 +1,9 @@
 "use client";
+import {
+  Loading,
+  RoundedContainer,
+  VehicleImageGallery,
+} from "@/app/components";
 import ContactFormContainer from "@/app/components/contact-info-form/contact-form-container";
 import EmptyState from "@/app/components/empty-state/empty-state";
 import Footer from "@/app/components/footer/footer";
@@ -6,13 +11,11 @@ import NavbarContainer from "@/app/components/navbar/navbar-container";
 import { ContactFormProvider } from "@/contexts/contact-form-context/contact-form-context";
 import useVehiclesById from "@/hooks/useVehicleById";
 import useVehicleFeatures from "@/hooks/useVehicleFeatures";
-import { CircularProgress } from "@mui/material";
 import { useParams } from "next/navigation";
 import { lazy, Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./page.module.css";
-import { RoundedContainer, VehicleImageGallery } from "@/app/components";
 
 const VehicleFeatures = lazy(
   () => import("@/app/components/vehicle-features/vehicle-features")
@@ -39,12 +42,7 @@ export default function CarDetails() {
   const { data: vehicleFeatures, isLoading: featureLoading } =
     useVehicleFeatures(make, model, !!make && !!model);
 
-  if (vehicleLoading || featureLoading)
-    return (
-      <div className={classes.loadingContainer}>
-        <CircularProgress />;
-      </div>
-    );
+  if (vehicleLoading || featureLoading) return <Loading />;
   if (!vehicle || !vehicleFeatures)
     return <EmptyState message="Vehicle not found" />;
 
@@ -53,10 +51,10 @@ export default function CarDetails() {
       <NavbarContainer backgroundColor="var(--color-gray600)" />
       <div className={classes.container}>
         <div>
-          <Suspense fallback={<CircularProgress />}>
+          <Suspense fallback={<Loading />}>
             <VehicleImageGallery vehicle={vehicle} />
           </Suspense>
-          <Suspense fallback={<CircularProgress />}>
+          <Suspense fallback={<Loading />}>
             <VehicleFeatures
               vehicle={vehicle}
               vehicleFeatures={vehicleFeatures}
@@ -65,7 +63,7 @@ export default function CarDetails() {
         </div>
 
         <div>
-          <Suspense fallback={<CircularProgress />}>
+          <Suspense fallback={<Loading />}>
             <VehicleHighlightInfo vehicle={vehicle} />
           </Suspense>
           <ContactFormProvider>
@@ -74,7 +72,7 @@ export default function CarDetails() {
         </div>
       </div>
       <div className={classes.vehicleRecommendations}>
-        <Suspense fallback={<CircularProgress />}>
+        <Suspense fallback={<Loading />}>
           <SimilarVehicleRecommendationsContainer />
         </Suspense>
       </div>

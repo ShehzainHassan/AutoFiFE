@@ -34,3 +34,4 @@ export { default as Auction } from "./auction/index";
 export { default as VehicleFeatureContainer } from "./vehicle-feature-container/vehicle-feature";
 export { default as VehicleImageGallery } from "./vehicle-image-gallery/vehicle-image-gallery";
 export { default as Dropdown } from "./dropdown/index";
+export { default as Loading } from "./loading/index";
