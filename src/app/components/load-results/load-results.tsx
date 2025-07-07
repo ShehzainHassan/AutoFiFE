@@ -20,7 +20,7 @@ export default function LoadResults() {
 
   if (isLoading)
     return (
-      <div role="status">
+      <div role="status" className={classes.loadingContainer}>
         <CircularProgress />
       </div>
     );

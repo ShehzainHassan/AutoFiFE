@@ -1,6 +1,6 @@
 import Image from "next/image";
-import classes from "./car-feature.module.css";
-import { CarFeatureProps } from "./car-feature.types";
+import classes from "./vehicle-feature.module.css";
+import { CarFeatureProps } from "./vehicle-feature.types";
 import { getImage } from "@/utilities/utilities";
 
 export default function CarFeature({ title, value }: CarFeatureProps) {

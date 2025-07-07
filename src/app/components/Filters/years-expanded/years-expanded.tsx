@@ -3,7 +3,7 @@ import { MAX_YEAR, MIN_YEAR } from "@/constants/years";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import { generateYearOptions } from "@/utilities/utilities";
 import classes from "./years-expanded.module.css";
-import { Dropdown } from "../../dropdown";
+import { Dropdown } from "@/app/components/";
 
 export default function YearsExpanded() {
   const { stagedSearch, setStagedSearch } = useSearch();

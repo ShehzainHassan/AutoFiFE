@@ -33,7 +33,11 @@ export default function FinancePage() {
   } = useVehiclesById(id as number);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return (
+      <div className={classes.loadingContainer}>
+        <CircularProgress />;
+      </div>
+    );
   }
   if (!vehicle) return <div>Vehicle not found</div>;
   if (isError) {

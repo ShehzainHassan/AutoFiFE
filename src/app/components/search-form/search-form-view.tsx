@@ -1,4 +1,4 @@
-import { Dropdown } from "../dropdown";
+import { Dropdown } from "@/app/components/";
 import CustomDropdownIndicator from "../dropdown-indicator/dropdown-indicator";
 import { customSelectStyles } from "@/styles/custom-select";
 import { ButtonPrimary } from "@/app/components";

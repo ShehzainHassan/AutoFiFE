@@ -1,8 +1,8 @@
 "use client";
 
 import { Add, Close } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
-import { Dropdown } from "@/app/components/dropdown";
+import { CircularProgress, IconButton } from "@mui/material";
+import { Dropdown } from "@/app/components/";
 import styles from "./vehicle-selector.module.css";
 import { VehicleSelectorUIProps } from "./vehicle-selector.types";
 
@@ -16,6 +16,7 @@ export default function VehicleSelector({
   makeOptions,
   modelOptions,
   yearOptions,
+  isLoading,
 }: VehicleSelectorUIProps) {
   return (
     <div className={styles.wrapper}>
@@ -55,6 +56,10 @@ export default function VehicleSelector({
               </Dropdown>
             </div>
           </>
+        ) : isLoading ? (
+          <div className={styles.loadingContainer}>
+            <CircularProgress size={24} />
+          </div>
         ) : (
           <div
             className={styles.addIconContainer}

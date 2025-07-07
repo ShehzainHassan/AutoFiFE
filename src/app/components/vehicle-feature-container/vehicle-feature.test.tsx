@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import CarFeature from "./car-feature";
+import { VehicleFeatureContainer } from "..";
 
 const getExpectedImage = (title: string) => {
   switch (title) {
@@ -40,7 +40,7 @@ describe("CarFeature", () => {
   it.each(features)(
     "renders feature for %s with correct image and value",
     ({ title, value }) => {
-      render(<CarFeature title={title} value={value} />);
+      render(<VehicleFeatureContainer title={title} value={value} />);
 
       expect(screen.getByText(title)).toBeInTheDocument();
       expect(screen.getByText(value)).toBeInTheDocument();
@@ -51,7 +51,7 @@ describe("CarFeature", () => {
   );
 
   it("falls back to default image for unknown title", () => {
-    render(<CarFeature title="Unknown feature" value="123" />);
+    render(<VehicleFeatureContainer title="Unknown feature" value="123" />);
     const img = screen.getByAltText("icon") as HTMLImageElement;
     expect(img.src).toContain("/images/mileage.png");
   });

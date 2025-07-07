@@ -12,11 +12,8 @@ import { lazy, Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./page.module.css";
-import { RoundedContainer } from "@/app/components";
+import { RoundedContainer, VehicleImageGallery } from "@/app/components";
 
-const CarImageGallery = lazy(
-  () => import("@/app/components/car-image-gallery/car-image-gallery")
-);
 const VehicleFeatures = lazy(
   () => import("@/app/components/vehicle-features/vehicle-features")
 );
@@ -42,7 +39,12 @@ export default function CarDetails() {
   const { data: vehicleFeatures, isLoading: featureLoading } =
     useVehicleFeatures(make, model, !!make && !!model);
 
-  if (vehicleLoading || featureLoading) return <CircularProgress />;
+  if (vehicleLoading || featureLoading)
+    return (
+      <div className={classes.loadingContainer}>
+        <CircularProgress />;
+      </div>
+    );
   if (!vehicle || !vehicleFeatures)
     return <EmptyState message="Vehicle not found" />;
 
@@ -52,7 +54,7 @@ export default function CarDetails() {
       <div className={classes.container}>
         <div>
           <Suspense fallback={<CircularProgress />}>
-            <CarImageGallery vehicle={vehicle} />
+            <VehicleImageGallery vehicle={vehicle} />
           </Suspense>
           <Suspense fallback={<CircularProgress />}>
             <VehicleFeatures

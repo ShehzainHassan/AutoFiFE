@@ -30,3 +30,7 @@ export { default as VehicleHeader } from "./compare-features/vehicle-header";
 export { default as CompareFeatures } from "./compare-features/compare-features-container";
 export { default as VehicleSelector } from "./vehicle-selector/vehicle-selector-container";
 export { default as RoundedContainer } from "./rounded-container/rounded-container";
+export { default as Auction } from "./auction/index";
+export { default as VehicleFeatureContainer } from "./vehicle-feature-container/vehicle-feature";
+export { default as VehicleImageGallery } from "./vehicle-image-gallery/vehicle-image-gallery";
+export { default as Dropdown } from "./dropdown/index";

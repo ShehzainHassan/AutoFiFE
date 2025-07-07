@@ -1,7 +1,6 @@
 "use client";
 
 import useVehicleOptions from "@/hooks/useVehicleOptions";
-import { CircularProgress } from "@mui/material";
 import { useMemo } from "react";
 import VehicleSelector from "./vehicle-selector";
 import { VehicleSelectorProps } from "./vehicle-selector.types";
@@ -61,14 +60,13 @@ export default function VehicleSelectorContainer(props: VehicleSelectorProps) {
     props.onChange({ ...props.vehicle, year: value });
   };
 
-  if (isLoading) return <CircularProgress />;
-
   return (
     <VehicleSelector
       {...props}
       makeOptions={makeOptions}
       modelOptions={modelOptions}
       yearOptions={yearOptions}
+      isLoading={isLoading}
       onMakeChange={handleMakeChange}
       onModelChange={handleModelChange}
       onYearChange={handleYearChange}

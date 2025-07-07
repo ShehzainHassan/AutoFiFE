@@ -1,8 +1,10 @@
+"use client";
+
 import dynamic from "next/dynamic";
 import { Suspense, useState } from "react";
 import CarImage from "../result-card/car-image/car-image";
-import classes from "./car-image-gallery.module.css";
-import { CarImageGalleryProps } from "./car-image-gallery.types";
+import classes from "./vehicle-image-gallery.module.css";
+import { CarImageGalleryProps } from "./vehicle-image-gallery.types";
 
 import { ButtonNavigate } from "@/app/components";
 

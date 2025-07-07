@@ -1,9 +1,8 @@
-import { RoundedContainer } from "@/app/components";
+import { Auction, RoundedContainer } from "@/app/components";
 
 import Footer from "../components/footer/footer";
 import NavbarContainer from "../components/navbar/navbar-container";
 import classes from "./page.module.css";
-import Auction from "../components/auction";
 export default function AuctionPage() {
   const auctionData = [
     {

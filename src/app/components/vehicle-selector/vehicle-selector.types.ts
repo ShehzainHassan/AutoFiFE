@@ -17,6 +17,7 @@ export interface VehicleSelectorUIProps extends VehicleSelectorProps {
   makeOptions: Options[];
   modelOptions: Options[];
   yearOptions: Options[];
+  isLoading?: boolean;
   onMakeChange: (value: string) => void;
   onModelChange: (value: string) => void;
   onYearChange: (value: string) => void;

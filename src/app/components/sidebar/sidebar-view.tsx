@@ -2,7 +2,7 @@ import { ThemeProvider } from "@/theme/themeContext";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
 import classes from "./sidebar.module.css";
 import { SidebarViewProps } from "./sidebar.types";
-import { Dropdown } from "../dropdown";
+import { Dropdown } from "@/app/components/";
 import { ButtonPrimary } from "@/app/components";
 import Filters from "../filters/filters";
 

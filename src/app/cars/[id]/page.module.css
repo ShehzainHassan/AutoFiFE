@@ -56,3 +56,10 @@
   margin: 0 auto;
   padding: 0 75px 100px 75px;
 }
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 24px;
+}

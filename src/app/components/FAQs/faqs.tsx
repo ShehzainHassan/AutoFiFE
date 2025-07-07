@@ -18,7 +18,13 @@ export default function FAQs({ searchParams }: FAQProps) {
   const { mainSearch } = useSearch();
 
   const { data, isLoading, error } = useSearchVehicles(searchParams);
-  if (isLoading) return <CircularProgress />;
+  if (isLoading)
+    return (
+      <div className={classes.loadingContainer}>
+        <CircularProgress />;
+      </div>
+    );
+
   if (error) return <ErrorMessage message={error.message} />;
   if (!data || (Array.isArray(data) && data.length === 0)) {
     return <EmptyState message="No FAQs found" />;

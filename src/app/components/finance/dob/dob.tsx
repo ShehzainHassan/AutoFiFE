@@ -10,7 +10,7 @@ import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMemo } from "react";
 import { ButtonPrimary } from "@/app/components";
-import { Dropdown } from "../../dropdown";
+import {Dropdown} from "@/app/components/"
 import { DOBProps } from "./dob-types";
 import classes from "./dob.module.css";
 import { ThemeProvider } from "@/theme/themeContext";

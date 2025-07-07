@@ -1,7 +1,7 @@
 import headings from "@/styles/typography.module.css";
-import CarFeature from "../../car-feature/car-feature";
 import classes from "../vehicle-features.module.css";
 import { FeaturesProps } from "../vehicle-features.types";
+import { VehicleFeatureContainer } from "@/app/components";
 const Features = ({ vehicle, vehicleFeatures }: FeaturesProps) => {
   const featureList = [
     {
@@ -39,7 +39,11 @@ const Features = ({ vehicle, vehicleFeatures }: FeaturesProps) => {
       <h1 className={headings.carPageTitle}>Features</h1>
       <div className={classes.features}>
         {featureList.map((feature, index) => (
-          <CarFeature key={index} title={feature.title} value={feature.value} />
+          <VehicleFeatureContainer
+            key={index}
+            title={feature.title}
+            value={feature.value}
+          />
         ))}
       </div>
     </div>
