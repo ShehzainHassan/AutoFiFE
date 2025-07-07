@@ -1,0 +1,8 @@
+.swiperWrapper {
+  width: 100%;
+  overflow: hidden;
+}
+.auctionSlide {
+  min-width: 325px;
+  width: auto;
+}

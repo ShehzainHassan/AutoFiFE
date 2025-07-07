@@ -12,7 +12,7 @@ import Image from "next/image";
 import ButtonPrimary from "../../buttons/button-primary";
 import classes from "./featured-auction.module.css";
 import useCountdown from "@/hooks/useCountdown";
-export default function FeaturedAuction() {
+const FeaturedAuction = () => {
   const remainingTime = useCountdown(9300);
   const timerText =
     remainingTime > 0
@@ -58,4 +58,5 @@ export default function FeaturedAuction() {
       </div>
     </div>
   );
-}
+};
+export default FeaturedAuction;

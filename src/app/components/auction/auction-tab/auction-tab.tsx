@@ -8,7 +8,7 @@ import {
   BLUE_WITH_BORDER,
   WHITE_WITH_BORDER,
 } from "@/constants/button-primary-themes";
-export default function AuctionTabs() {
+const AuctionTabs = () => {
   const [search, setSearch] = useState("");
   const [selectedButton, setSelectedButton] = useState("All");
   const [isGridView, setIsGridView] = useState<boolean>(false);
@@ -52,4 +52,6 @@ export default function AuctionTabs() {
       </div>
     </div>
   );
-}
+};
+
+export default AuctionTabs;

@@ -1,7 +1,7 @@
 import headings from "@/styles/typography.module.css";
-import { BidContainer } from "@/app/components";
 import classes from "./live-activity.module.css";
-export default function LiveActivity() {
+import BidContainer from "./bid-container";
+const LiveActivity = () => {
   return (
     <div className={classes.container}>
       <h2 className={`${headings.mileageText}`}>⚡Live Activity</h2>
@@ -21,4 +21,5 @@ export default function LiveActivity() {
       </div>
     </div>
   );
-}
+};
+export default LiveActivity;

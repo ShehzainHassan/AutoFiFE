@@ -1,7 +1,7 @@
 import classes from "./auction-stats.module.css";
 import headings from "@/styles/typography.module.css";
 
-export default function AuctionStats() {
+const AuctionStats = () => {
   return (
     <div className={classes.container}>
       <h2>📊 Auction Stats</h2>
@@ -21,4 +21,6 @@ export default function AuctionStats() {
       </div>
     </div>
   );
-}
+};
+
+export default AuctionStats;

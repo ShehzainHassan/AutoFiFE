@@ -12,12 +12,12 @@ import useCountdown from "@/hooks/useCountdown";
 import { formatTime } from "@/utilities/utilities";
 import { AuctionCardProps } from "./auction-card.types";
 
-export default function AuctionCard({
+const AuctionCard = ({
   vehicleDetails,
   price,
   endTimerSeconds,
   tag,
-}: AuctionCardProps) {
+}: AuctionCardProps) => {
   const remainingTime = useCountdown(endTimerSeconds);
   const timerText =
     remainingTime > 0 ? `Ends in: ${formatTime(remainingTime)}` : "ENDED";
@@ -58,4 +58,5 @@ export default function AuctionCard({
       </div>
     </div>
   );
-}
+};
+export default AuctionCard;
