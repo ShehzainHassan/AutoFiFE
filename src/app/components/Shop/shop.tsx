@@ -15,12 +15,14 @@ export default function Shop() {
 
   return (
     <div className={classes.container}>
-      <SectionTitle title="Shop BoxCar Your Way" buttonText="View More" />
-      <HorizontalTabs
-        tabs={tabs}
-        selectedTab={selectedTab}
-        onTabChange={(tab) => setSelectedTab(tab)}
-      />
+      <div className={classes.shopHeader}>
+        <SectionTitle title="Shop BoxCar Your Way" buttonText="View More" />
+        <HorizontalTabs
+          tabs={tabs}
+          selectedTab={selectedTab}
+          onTabChange={(tab) => setSelectedTab(tab)}
+        />
+      </div>
       <VehicleList />
     </div>
   );

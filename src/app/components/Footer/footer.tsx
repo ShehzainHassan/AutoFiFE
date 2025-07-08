@@ -5,6 +5,7 @@ import headings from "@/styles/typography.module.css";
 import Image from "next/image";
 import EmailBox from "../email-box/email-box";
 import classes from "./footer.module.css";
+import { ToastContainer } from "react-toastify";
 const footerData = [
   {
     title: "Company",
@@ -130,6 +131,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

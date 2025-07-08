@@ -50,25 +50,25 @@ export default function PopularMakes() {
   };
   return (
     <div className={classes.container}>
-      <SectionTitle
-        title="Popular Makes"
-        buttonText="View All"
-        onClick={handleViewAll}
-        backgroundColor="var(--color-black100)"
-        color="var(--color-white100)"
-      />
-      <ThemeProvider value={WHITE_THEME}>
-        <HorizontalTabs
-          tabs={tabs}
-          selectedTab={selectedTab}
-          onTabChange={(tab) => {
-            setSelectedTab(tab);
-          }}
+      <div className={classes.popularMakesHeader}>
+        <SectionTitle
+          title="Popular Makes"
+          buttonText="View All"
+          onClick={handleViewAll}
+          backgroundColor="var(--color-black100)"
+          color="var(--color-white100)"
         />
-      </ThemeProvider>
-      <div className={classes.popularMakesSwiperContainer}>
-        <PopularMakesSwiper make={selectedTab} />
+        <ThemeProvider value={WHITE_THEME}>
+          <HorizontalTabs
+            tabs={tabs}
+            selectedTab={selectedTab}
+            onTabChange={(tab) => {
+              setSelectedTab(tab);
+            }}
+          />
+        </ThemeProvider>
       </div>
+      <PopularMakesSwiper make={selectedTab} />
     </div>
   );
 }

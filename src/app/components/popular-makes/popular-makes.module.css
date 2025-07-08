@@ -2,6 +2,9 @@
   background-color: var(--color-black100);
   padding: 115px 260px;
 }
-.popularMakesSwiperContainer {
-  margin-right: -260px;
+
+.popularMakesHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
 }
