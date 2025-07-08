@@ -1,9 +1,10 @@
+import AndroidIcon from "@/assets/images/icons/android.svg";
+import AppleIcon from "@/assets/images/icons/apple.png";
+import useHandleBrandClick from "@/hooks/useHandleBrandClick";
 import headings from "@/styles/typography.module.css";
-import classes from "./footer.module.css";
 import Image from "next/image";
 import EmailBox from "../email-box/email-box";
-import AppleIcon from "@/assets/images/icons/apple.png";
-import AndroidIcon from "@/assets/images/icons/android.svg";
+import classes from "./footer.module.css";
 const footerData = [
   {
     title: "Company",
@@ -30,8 +31,8 @@ const footerData = [
     ],
   },
 ];
-
 export default function Footer() {
+  const handleBrandClick = useHandleBrandClick();
   return (
     <div className={classes.footer}>
       <div className={classes.subContainer}>
@@ -50,13 +51,17 @@ export default function Footer() {
         {footerData.map((column, index) => (
           <div key={index} className={classes.subList}>
             <h4 className={headings.footerTitle}>{column.title}</h4>
-            {column.items.map((item, i) => (
-              <p
-                key={i}
-                className={`${headings.criteriaText} ${classes.footerText}`}>
-                {item}
-              </p>
-            ))}
+            {column.items.map((item, i) => {
+              const isBrandColumn = column.title === "Our Brands";
+              return (
+                <p
+                  key={i}
+                  className={`${headings.criteriaText} ${classes.footerText} `}
+                  onClick={() => isBrandColumn && handleBrandClick(item)}>
+                  {item}
+                </p>
+              );
+            })}
           </div>
         ))}
 

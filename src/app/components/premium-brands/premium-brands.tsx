@@ -1,52 +1,21 @@
 "use client";
-import { BRAND_IMAGES, PREMIUM_BRANDS } from "@/constants";
-import { useSearch } from "@/contexts/car-search-context/car-search-context";
-import useGetAllMakes from "@/hooks/useGetAllMakes";
-import { useRouter } from "next/navigation";
-import classes from "./premium-brands.module.css";
-import { useState, useMemo } from "react";
-import { BrandData } from "./premium-brands.types";
 import { BrandCard } from "@/app/components";
+import { BRAND_IMAGES, PREMIUM_BRANDS } from "@/constants";
+import useGetAllMakes from "@/hooks/useGetAllMakes";
+import useHandleBrandClick from "@/hooks/useHandleBrandClick";
+import { useMemo, useState } from "react";
 import SectionTitle from "../section-title/section-title";
+import classes from "./premium-brands.module.css";
+import { BrandData } from "./premium-brands.types";
 
 const PLACEHOLDER_IMG = "/images/brands/placeholder.png";
 
 export default function PremiumBrands() {
-  const router = useRouter();
-  const {
-    mainSearch,
-    stagedSearch,
-    searchParams,
-    setMainSearch,
-    setStagedSearch,
-    setSearchParams,
-  } = useSearch();
-
   const [showAllBrands, setShowAllBrands] = useState(false);
   const { data: allMakes, isLoading, refetch } = useGetAllMakes();
 
-  const handleBrandClick = (make: string) => {
-    setMainSearch({
-      ...mainSearch,
-      make,
-      model: "Any_Models",
-      startPrice: null,
-      endPrice: null,
-    });
-    setStagedSearch({
-      ...stagedSearch,
-      stagedMake: make,
-      stagedModel: "Any_Models",
-      stagedStartPrice: null,
-      stagedEndPrice: null,
-    });
-    setSearchParams({
-      ...searchParams,
-      make,
-      model: null,
-    });
-    router.push(`/search?make=${make}`);
-  };
+  const handleBrandClick = useHandleBrandClick();
+
   const brandsToShow: BrandData[] = useMemo(() => {
     if (!showAllBrands || !allMakes) return PREMIUM_BRANDS;
 
