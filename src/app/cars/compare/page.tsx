@@ -2,16 +2,15 @@
 import {
   ButtonPrimary,
   CompareFeatures,
-  RoundedContainer,
   VehicleSelector,
 } from "@/app/components";
+import Footer from "@/app/components/footer/footer";
 import NavbarContainer from "@/app/components/navbar/navbar-container";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
 import { CompareVehicle } from "@/interfaces/vehicle";
 import { ThemeProvider } from "@/theme/themeContext";
 import { useState } from "react";
 import classes from "./page.module.css";
-import Footer from "@/app/components/footer/footer";
 
 export default function CompareVehiclesPage() {
   const [vehicles, setVehicles] = useState<CompareVehicle[]>([
@@ -68,7 +67,6 @@ export default function CompareVehiclesPage() {
           <CompareFeatures vehicle1={vehicles[0]} vehicle2={vehicles[1]} />
         )}
       </div>
-      <RoundedContainer />
       <Footer />
     </>
   );

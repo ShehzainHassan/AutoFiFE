@@ -2,11 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import { AllVehicles } from "./components";
 import HeroContainer from "./components/hero/hero-container";
 import PremiumBrands from "./components/premium-brands/premium-brands";
 import classes from "./page.module.css";
-import { AllVehicles } from "./components";
-import { RoundedContainer } from "@/app/components";
 
 const CarVideo = dynamic(() => import("./components/car-video/car-video"));
 const Statistics = dynamic(() => import("./components/statistics/statistics"));
@@ -40,7 +39,6 @@ export default function Home() {
         <Shop />
         <Customers />
         <LatestBlog />
-        <RoundedContainer />
         <Footer />
       </Suspense>
     </div>

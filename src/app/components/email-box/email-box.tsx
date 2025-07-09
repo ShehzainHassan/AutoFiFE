@@ -1,3 +1,4 @@
+"use client";
 import { ButtonPrimary } from "@/app/components";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
 import useNewsLetter from "@/hooks/useNewsLetter";

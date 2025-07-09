@@ -1,9 +1,5 @@
 "use client";
-import {
-  Loading,
-  RoundedContainer,
-  VehicleImageGallery,
-} from "@/app/components";
+import { Loading, VehicleImageGallery } from "@/app/components";
 import ContactFormContainer from "@/app/components/contact-info-form/contact-form-container";
 import EmptyState from "@/app/components/empty-state/empty-state";
 import Footer from "@/app/components/footer/footer";
@@ -78,7 +74,6 @@ export default function CarDetails() {
       </div>
 
       <ToastContainer />
-      <RoundedContainer />
       <Footer />
     </>
   );

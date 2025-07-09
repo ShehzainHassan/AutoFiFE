@@ -4,7 +4,7 @@
   gap: 35px;
   max-width: 850px;
   margin: 0 auto;
-  padding: 45px 0px 145px 0;
+  padding: 45px 0px 0px 0px;
 }
 .button {
   flex-direction: row-reverse;

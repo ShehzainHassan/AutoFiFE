@@ -9,7 +9,6 @@ import {
   Header,
   Loading,
   MaritalStatus,
-  RoundedContainer,
 } from "@/app/components";
 import ErrorMessage from "@/app/components/error-message/error-message";
 import Footer from "@/app/components/footer/footer";
@@ -74,7 +73,6 @@ export default function FinancePage() {
         )}
         {step === 7 && <ContactInfo id={vehicle.id} />}
       </div>
-      <RoundedContainer />
       <Footer />
     </div>
   );

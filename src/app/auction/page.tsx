@@ -1,4 +1,4 @@
-import { Auction, RoundedContainer } from "@/app/components";
+import { Auction } from "@/app/components";
 
 import Footer from "../components/footer/footer";
 import NavbarContainer from "../components/navbar/navbar-container";
@@ -55,7 +55,6 @@ export default function AuctionPage() {
         <Auction.AuctionCardCarousel auctionData={auctionData} />
       </Auction.Root>
 
-      <RoundedContainer />
       <Footer />
     </div>
   );
