@@ -1,10 +1,20 @@
-import VehicleInfoCard from "../../car-card/info-card";
-import VehicleAuctionInfo from "./vehicle-auction-info";
-import classes from "./live-activity.module.css";
-import headings from "@/styles/typography.module.css";
+"use client";
 import { DropdownFilter } from "@/app/components";
+import headings from "@/styles/typography.module.css";
+import VehicleInfoCard from "../../car-card/info-card";
+import classes from "./live-activity.module.css";
+import { LiveActivityProps } from "./live-activity.types";
+import VehicleAuctionInfo from "./vehicle-auction-info";
+import { useRouter } from "next/navigation";
 
-const LiveActivity = () => {
+const LiveActivity = ({
+  dropdownFilters,
+  vehicleAuctionData,
+}: LiveActivityProps) => {
+  const router = useRouter();
+  const redirectToAuctionDetails = () => {
+    router.push("/auction/1");
+  };
   return (
     <div className={classes.container}>
       <div className={classes.titleContainer}>
@@ -13,32 +23,22 @@ const LiveActivity = () => {
           Bid on premium vehicles from trusted dealers
         </p>
       </div>
-      <div className={classes.filterContainer}>
-        <DropdownFilter filter="Status" />
-        <DropdownFilter filter="Make" />
-        <DropdownFilter filter="Price" />
-        <DropdownFilter filter="Sort" />
-      </div>
-      <div className={classes.auctionContainer}>
-        <VehicleInfoCard>
-          <VehicleAuctionInfo
-            vehicleName="2020 BMW 328i Sports Package"
-            currentBid={25000}
-            bidCount={12}
-            timeLeft="2d 12h"
-          />
-        </VehicleInfoCard>
 
-        <VehicleInfoCard>
-          <VehicleAuctionInfo
-            vehicleName="2020 BMW 328i Sports Package"
-            currentBid={25000}
-            bidCount={12}
-            timeLeft="2d 12h"
-          />
-        </VehicleInfoCard>
+      <div className={classes.filterContainer}>
+        {dropdownFilters.map((filter) => (
+          <DropdownFilter key={filter} filter={filter} />
+        ))}
+      </div>
+
+      <div className={classes.auctionContainer}>
+        {vehicleAuctionData.map((vehicle, index) => (
+          <VehicleInfoCard onClick={redirectToAuctionDetails} key={index}>
+            <VehicleAuctionInfo {...vehicle} />
+          </VehicleInfoCard>
+        ))}
       </div>
     </div>
   );
 };
+
 export default LiveActivity;

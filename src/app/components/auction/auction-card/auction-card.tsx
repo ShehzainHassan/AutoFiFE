@@ -1,15 +1,14 @@
 "use client";
-import Image from "next/image";
-import classes from "./auction-card.module.css";
-import featuredClasses from "../featured-auction/featured-auction.module.css";
 import vehicleImg from "@/assets/images/cars/Bentley-Arnage4.4.png";
 import { CURRENCY } from "@/constants";
-import ButtonPrimary from "../../buttons/button-primary";
-import { ThemeProvider } from "@/theme/themeContext";
 import { WHITE_WITH_BLUE_BORDER } from "@/constants/button-primary-themes";
-import headings from "@/styles/typography.module.css";
 import useCountdown from "@/hooks/useCountdown";
+import headings from "@/styles/typography.module.css";
+import { ThemeProvider } from "@/theme/themeContext";
 import { formatTime } from "@/utilities/utilities";
+import Image from "next/image";
+import ButtonPrimary from "../../buttons/button-primary";
+import classes from "./auction-card.module.css";
 import { AuctionCardProps } from "./auction-card.types";
 
 const AuctionCard = ({
@@ -25,7 +24,7 @@ const AuctionCard = ({
     <div className={classes.container}>
       {tag && (
         <div className={classes.tag}>
-          <span className={featuredClasses.redDot}>🔴</span>LIVE
+          <span className={classes.redDot}>🔴</span>LIVE
         </div>
       )}
       <div>
@@ -46,9 +45,7 @@ const AuctionCard = ({
             {price.toLocaleString()}
           </h2>
           <div className={`${headings.auctionCardTimer} ${classes.endTimer}`}>
-            {remainingTime > 0 && (
-              <span className={featuredClasses.redDot}>🔴</span>
-            )}
+            {remainingTime > 0 && <span className={classes.redDot}>🔴</span>}
             {timerText}
           </div>
           <ThemeProvider value={WHITE_WITH_BLUE_BORDER}>

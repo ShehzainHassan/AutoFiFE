@@ -23,6 +23,7 @@ function Field({
   onBlur,
   onChange,
   className,
+  onKeyDown,
 }: InputFieldProps) {
   return (
     <input
@@ -31,6 +32,7 @@ function Field({
       value={value ?? ""}
       onChange={onChange}
       onBlur={onBlur}
+      onKeyDown={onKeyDown}
       className={`${classes.input} ${className}`}
     />
   );

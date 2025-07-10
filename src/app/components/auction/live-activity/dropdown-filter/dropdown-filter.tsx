@@ -10,8 +10,8 @@ export default function DropdownFilter({ filter }: DropdownFilterProps) {
         src={Dropdown}
         alt="dropdown"
         loading="lazy"
-        width={20}
-        height={20}
+        width={15}
+        height={15}
         className={classes.dropdown}
         placeholder="blur"
       />

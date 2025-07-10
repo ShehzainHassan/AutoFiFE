@@ -50,3 +50,16 @@
   gap: 4px;
   z-index: 1;
 }
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+}
+
+.redDot {
+  animation: pulse 1.2s ease-in-out infinite;
+}

@@ -1,11 +1,7 @@
 .mainContainer {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(
-    to bottom,
-    var(--color-white100),
-    var(--color-gray300)
-  );
+  background-color: var(--color-white800);
 }
 .header {
   display: flex;

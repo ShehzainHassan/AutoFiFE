@@ -6,6 +6,7 @@ export type InputFieldProps = {
   value?: string | number;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
 };
 

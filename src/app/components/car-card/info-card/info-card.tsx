@@ -5,9 +5,12 @@ import classes from "./info-card.module.css";
 export default function VehicleInfoCard({
   similarity_score,
   children,
+  onClick,
 }: InfoCardProps) {
   return (
-    <div className={`${classes.recommendationCard} ${classes.card} `}>
+    <div
+      onClick={onClick}
+      className={`${classes.recommendationCard} ${classes.card} `}>
       <CarImage src="/images/glc_2023.png">
         {similarity_score && (
           <div className={classes.favorite}>
