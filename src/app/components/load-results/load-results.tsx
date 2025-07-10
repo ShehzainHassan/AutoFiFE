@@ -32,10 +32,7 @@ export default function LoadResults() {
       {Array.isArray(vehicleList) &&
         vehicleList.map((vehicle) => (
           <div key={vehicle.id}>
-            <ResultCard
-              vehicle={vehicle}
-              carImg="/images/Bentley-Arnage4.4.png"
-            />
+            <ResultCard vehicle={vehicle} carImg="/images/glc_2023.png" />
           </div>
         ))}
       <ToastContainer />

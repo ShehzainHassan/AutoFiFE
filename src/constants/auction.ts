@@ -101,16 +101,4 @@ export const mockVehicleData: VehicleAuctionData[] = [
     bidCount: 20,
     timeLeft: "3d 2h",
   },
-  {
-    vehicleName: "2021 Tesla Model 3",
-    currentBid: 42000,
-    bidCount: 20,
-    timeLeft: "3d 2h",
-  },
-  {
-    vehicleName: "2021 Tesla Model 3",
-    currentBid: 42000,
-    bidCount: 20,
-    timeLeft: "3d 2h",
-  },
 ];
