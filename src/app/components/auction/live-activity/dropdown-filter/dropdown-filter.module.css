@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 5.5px 8px 5.5px 16px;
+  border-radius: 8px;
+  width: fit-content;
+  background-color: var(--color-gray560);
+}
+.dropdown {
+  transform: rotate(90deg);
+}

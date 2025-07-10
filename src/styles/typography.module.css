@@ -155,15 +155,8 @@
 .featuredTitle {
   font-family: Inter, sans-serif;
   font-weight: 700;
-
   font-size: 24px;
   line-height: 38.4px;
-}
-.vehicleTitle {
-  font-family: Inter, sans-serif;
-  font-weight: 700;
-  font-size: 18.7px;
-  line-height: 29.95px;
 }
 
 .auctionVehiclePrice {
@@ -172,6 +165,20 @@
   font-size: 20.8px;
   line-height: 33.28px;
 }
+.vehicleTitle {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 18.7px;
+  line-height: 29.95px;
+}
+
+.auctionEndText {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 21px;
+}
+
 .auctionVehicleTitle {
   font-family: Inter, sans-serif;
   font-weight: 600;
@@ -212,6 +219,13 @@
   font-weight: 400;
   font-size: 14.4px;
   line-height: 23.04px;
+}
+
+.bidDetails {
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
 }
 
 .smallText {

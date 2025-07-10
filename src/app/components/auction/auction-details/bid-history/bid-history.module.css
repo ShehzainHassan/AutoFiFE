@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  gap: 8px;
+}
+.currencyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 40px;
+}
+.bidDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.line {
+  width: 2px;
+  height: 32px;
+  background-color: var(--color-gray300);
+}
+.bidAmount {
+  color: var(--color-blue250);
+}

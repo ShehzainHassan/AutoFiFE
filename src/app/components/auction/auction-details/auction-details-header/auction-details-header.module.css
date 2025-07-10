@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 20.5px 24px;
+  justify-content: space-between;
+  width: 100%;
+}
+.textContainer {
+  padding: 5px !important;
+}
+.textContainer:hover {
+  background-color: var(--color-gray500);
+}
+.inputContainer {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.notification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-gray300);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.notification:hover {
+  background-color: var(--color-gray500);
+}
+.profilePic {
+  background: none;
+}
+.notificationContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

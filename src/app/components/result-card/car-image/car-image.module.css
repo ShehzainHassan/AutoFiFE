@@ -1,5 +1,7 @@
 .carImg {
   position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
 }
 .car {
   border-top-left-radius: 12px;

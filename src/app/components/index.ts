@@ -45,3 +45,6 @@ export { default as HandleShare } from "./handle-share";
 export { default as Footer } from "./footer";
 export { default as SimilarVehicleRecommendations } from "./similar-vehicle-recommendations/similar-vehicle-recommendations";
 export { default as VerticalCarousel } from "./vehicle-carousel/vertical-carousel";
+export { default as VehicleInfoCard } from "./car-card/info-card/info-card";
+export { default as VehicleAuctionInfo } from "./auction/live-activity/vehicle-auction-info";
+export { default as DropdownFilter } from "./auction/live-activity/dropdown-filter";

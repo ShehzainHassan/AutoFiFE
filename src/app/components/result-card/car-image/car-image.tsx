@@ -2,19 +2,13 @@ import Image from "next/image";
 import classes from "./car-image.module.css";
 import { CarImageProps } from "./car-image.types";
 
-const CarImage = ({
-  src,
-  width = 360,
-  height = 200,
-  children,
-}: CarImageProps) => {
+const CarImage = ({ src, children }: CarImageProps) => {
   return (
     <div className={classes.carImg}>
       <Image
         src={src}
         alt="car-img"
-        width={width}
-        height={height}
+        fill
         className={classes.car}
         loading="lazy"
       />

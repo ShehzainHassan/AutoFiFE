@@ -4,14 +4,6 @@
   margin-top: 20px;
 }
 
-.recommendationCard {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
 .vehicleInfoText {
   font-family: "Roboto", sans-serif;
   font-size: 18.5px;
@@ -28,16 +20,11 @@
   letter-spacing: 0.7px;
   color: var(--color-black500);
 }
-
-.favorite {
+.recommendationCard {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 22px;
-  padding: 13px;
-  background-color: var(--color-white100);
-  font-size: 13px;
-  font-weight: 700;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 305px;
 }

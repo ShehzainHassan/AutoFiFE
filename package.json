@@ -65,7 +65,7 @@
     "jest": "^30.0.4",
     "jest-environment-jsdom": "^30.0.2",
     "jest-transform-css": "^6.0.3",
-    "next": "^15.3.4",
+    "next": "^15.3.5",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
