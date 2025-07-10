@@ -1,11 +1,13 @@
 "use client";
 import useAllVehicles from "@/hooks/useAllVehicles";
 import "swiper/css";
-import EmptyState from "../empty-state/empty-state";
-import ErrorMessage from "../error-message/error-message";
-import VerticalCarousel from "../vehicle-carousel/vertical-carousel/vertical-carousel";
 import { AllVehicleSwiperProps } from "./all-vehicle-swiper.types";
-import { Loading } from "@/app/components";
+import {
+  Loading,
+  EmptyState,
+  ErrorMessage,
+  VerticalCarousel,
+} from "@/app/components";
 export default function AllVehiclesSwiper({
   vehicleStatus,
 }: AllVehicleSwiperProps) {
@@ -13,10 +15,14 @@ export default function AllVehiclesSwiper({
     useAllVehicles(vehicleStatus);
 
   if (isLoading) {
-    return <Loading />;
+    return (
+      <div role="status">
+        <Loading />;
+      </div>
+    );
   }
-  if (!data) return <EmptyState message="No vehicles found" />;
   if (isError) return <ErrorMessage message={error.message} />;
+  if (!data) return <EmptyState message="No vehicles found" />;
   const allVehicles = data.pages.flatMap((page) => page.vehicles) || [];
 
   return (

@@ -44,3 +44,4 @@ export { default as Filters } from "./filters";
 export { default as HandleShare } from "./handle-share";
 export { default as Footer } from "./footer";
 export { default as SimilarVehicleRecommendations } from "./similar-vehicle-recommendations/similar-vehicle-recommendations";
+export { default as VerticalCarousel } from "./vehicle-carousel/vertical-carousel";
