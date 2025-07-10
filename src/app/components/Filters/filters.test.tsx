@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Filters from "./filters";
+import { Filters} from "@/app/components";
 import { CarSearchProvider } from "@/contexts/car-search-context/car-search-context";
 
 jest.mock("next/navigation", () => ({

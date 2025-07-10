@@ -17,6 +17,8 @@ import useVehiclesById from "@/hooks/useVehicleById";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import classes from "./page.module.css";
+import { maritalStatusOptions } from "@/constants/marital-status-options";
+import { employmentStatusOptions } from "@/constants/employment-status-options";
 export default function FinancePage() {
   const params = useParams();
   const idParam = params.id;
@@ -65,9 +67,16 @@ export default function FinancePage() {
           <GetFinanceQuote vehicle={vehicle} nextStep={nextStep} />
         )}
         {step === 2 && <DrivingLicenseType nextStep={nextStep} />}
-        {step === 3 && <MaritalStatus nextStep={nextStep} />}
+        {step === 3 && (
+          <MaritalStatus options={maritalStatusOptions} nextStep={nextStep} />
+        )}
         {step === 4 && <DOB nextStep={nextStep} />}
-        {step === 5 && <EmploymentStatus nextStep={nextStep} />}
+        {step === 5 && (
+          <EmploymentStatus
+            options={employmentStatusOptions}
+            nextStep={nextStep}
+          />
+        )}
         {step === 6 && (
           <Borrow nextStep={nextStep} vehiclePrice={vehicle.price} />
         )}

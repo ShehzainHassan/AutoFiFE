@@ -1,12 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ErrorSummary from "./error-summary";
-
+import { ErrorSummary } from "@/app/components";
 describe("ErrorSummary", () => {
   const errorMessages = {
     fname: "First name is required",
     lname: "Last name is required",
-    postcode: "Postcode is invalid",
+    postCode: "Postcode is invalid",
     email: "Email is not valid",
     phone: "Phone number is required",
   };
@@ -15,7 +14,7 @@ describe("ErrorSummary", () => {
     const emptyErrors = {
       fname: "",
       lname: "",
-      postcode: "",
+      postCode: "",
       email: "",
       phone: "",
     };
@@ -39,7 +38,7 @@ describe("ErrorSummary", () => {
     const partialErrors = {
       fname: "First name is required",
       lname: "",
-      postcode: "",
+      postCode: "",
       email: "Invalid email",
       phone: "",
     };

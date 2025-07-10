@@ -1,1 +1,1 @@
-export * from "./error-summary";
+export { default } from "./error-summary";

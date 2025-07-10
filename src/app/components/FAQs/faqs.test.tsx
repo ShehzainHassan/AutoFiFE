@@ -1,125 +1,123 @@
 import { useSearch } from "@/contexts/car-search-context";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
+import { screen } from "@testing-library/react";
+import FAQs from "../faqs";
 import { renderWithClient } from "@/test-utils/render-with-client";
-import "@testing-library/jest-dom";
-import { screen, waitFor } from "@testing-library/react";
-import { act } from "react";
-import FAQs from "./faqs";
 
-jest.mock("@/hooks/useSearchVehicles");
-jest.mock("@/contexts/car-search-context");
+jest.mock("@/contexts/car-search-context", () => ({
+  useSearch: jest.fn(),
+}));
 
-const mockedUseSearchVehicles = useSearchVehicles as jest.Mock;
-const mockedUseSearch = useSearch as jest.Mock;
+jest.mock("@/hooks/useSearchVehicles", () => jest.fn());
 
-const mockSearchParams = {
-  pageSize: 10,
-  offset: 0,
-  make: "Toyota",
-  model: "Corolla",
-  startPrice: 0,
-  endPrice: 100000,
-  status: "",
-  mileage: 0,
-  startYear: 2000,
-  endYear: 2025,
-  sortOrder: "asc",
-  gearbox: "",
-  selectedColor: "",
-};
+jest.mock("@/utilities/utilities", () => ({
+  getAveragePrice: jest.fn(() => "$22,000"),
+  getFAQTitle: jest.fn(() => "Toyota Corolla"),
+  getRange: jest.fn(() => ({ min: 15000, max: 29000 })),
+  getUniqueFuelTypes: jest.fn(() => ["Petrol", "Hybrid"]),
+  getVehicleText: jest.fn(() => "Toyota Corolla"),
+}));
 
-const mockVehicles = [
-  {
-    id: 1,
+describe("FAQs Component", () => {
+  const searchParams = {
+    pageSize: 10,
+    offset: 0,
     make: "Toyota",
     model: "Corolla",
-    price: 15000,
-    fuelType: "Petrol",
-    year: 2020,
+    startPrice: 15000,
+    endPrice: 29000,
+    status: "NEW",
     mileage: 10000,
-  },
-  {
-    id: 2,
-    make: "Toyota",
-    model: "Corolla",
-    price: 17000,
-    fuelType: "Diesel",
-    year: 2021,
-    mileage: 8000,
-  },
-];
+    startYear: 2022,
+    endYear: 2023,
+    sortOrder: "year_asc",
+    selectedColor: "White",
+    gearbox: "Automatic",
+  };
 
-describe("FAQs component", () => {
   beforeEach(() => {
-    mockedUseSearch.mockReturnValue({
+    (useSearch as jest.Mock).mockReturnValue({
       mainSearch: { make: "Toyota", model: "Corolla" },
     });
   });
 
-  it("shows loading spinner when loading", async () => {
-    mockedUseSearchVehicles.mockReturnValue({
+  it("renders loading state", () => {
+    (useSearchVehicles as jest.Mock).mockReturnValue({
       isLoading: true,
       error: null,
       data: null,
     });
 
-    await act(async () => {
-      renderWithClient(<FAQs searchParams={mockSearchParams} />);
-    });
-
-    expect(screen.getByRole("progressbar")).toBeInTheDocument();
+    renderWithClient(<FAQs searchParams={searchParams} />);
+    expect(screen.getByRole("status")).toBeInTheDocument();
   });
 
-  it("shows error message on error", async () => {
-    mockedUseSearchVehicles.mockReturnValue({
+  it("renders error state", () => {
+    (useSearchVehicles as jest.Mock).mockReturnValue({
       isLoading: false,
       error: { message: "Something went wrong" },
       data: null,
     });
 
-    await act(async () => {
-      renderWithClient(<FAQs searchParams={mockSearchParams} />);
-    });
-
+    renderWithClient(<FAQs searchParams={searchParams} />);
     expect(screen.getByText(/something went wrong/i)).toBeInTheDocument();
   });
 
-  it("shows empty state when no data", async () => {
-    mockedUseSearchVehicles.mockReturnValue({
+  it("renders empty state when no data", () => {
+    (useSearchVehicles as jest.Mock).mockReturnValue({
       isLoading: false,
       error: null,
       data: [],
     });
 
-    await act(async () => {
-      renderWithClient(<FAQs searchParams={mockSearchParams} />);
-    });
-
-    expect(screen.getByText(/no faqs found/i)).toBeInTheDocument();
+    renderWithClient(<FAQs searchParams={searchParams} />);
+    expect(screen.getByText("No FAQs found")).toBeInTheDocument();
   });
 
-  it("renders FAQ content when data is available", async () => {
-    mockedUseSearchVehicles.mockReturnValue({
+  it("renders FAQs with multiple data items", () => {
+    const mockData = [
+      { id: 1, fuelType: "Petrol", price: 20000 },
+      { id: 2, fuelType: "Hybrid", price: 22000 },
+    ];
+
+    (useSearchVehicles as jest.Mock).mockReturnValue({
       isLoading: false,
       error: null,
-      data: mockVehicles,
+      data: mockData,
     });
 
-    await act(async () => {
-      renderWithClient(<FAQs searchParams={mockSearchParams} />);
+    renderWithClient(<FAQs searchParams={searchParams} />);
+
+    expect(screen.getByText(/Toyota Corolla FAQs/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/how much does the Toyota Corolla cost/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/The average Toyota Corolla costs about \$22,000/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /16 out of 16 for sale have no reported accidents or damage/i
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Petrol, Hybrid are available/i)
+    ).toBeInTheDocument();
+  });
+
+  it("renders 'is available' for single item", () => {
+    const mockData = [{ id: 1, fuelType: "Hybrid", price: 21000 }];
+
+    (useSearchVehicles as jest.Mock).mockReturnValue({
+      isLoading: false,
+      error: null,
+      data: mockData,
     });
 
-    await waitFor(() => {
-      expect(screen.getByText("Toyota Corolla FAQs")).toBeInTheDocument();
-      expect(
-        screen.getByText(/how much does the toyota corolla cost/i)
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(/what fuel types are available/i)
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(/petrol, diesel are available/i)
-      ).toBeInTheDocument();
-    });
+    renderWithClient(<FAQs searchParams={searchParams} />);
+
+    expect(
+      screen.getByText(/Petrol, Hybrid is available/i)
+    ).toBeInTheDocument();
   });
 });

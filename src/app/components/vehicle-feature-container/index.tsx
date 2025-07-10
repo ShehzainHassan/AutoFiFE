@@ -1,1 +1,1 @@
-export * from "./vehicle-feature";
+export { default } from "./vehicle-feature";

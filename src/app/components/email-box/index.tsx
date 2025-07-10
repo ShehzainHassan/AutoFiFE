@@ -1,1 +1,1 @@
-export * from "./email-box";
+export { default } from "./email-box";

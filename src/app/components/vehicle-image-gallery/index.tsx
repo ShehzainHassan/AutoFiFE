@@ -1,1 +1,1 @@
-export * from "./vehicle-image-gallery";
+export { default } from "./vehicle-image-gallery";

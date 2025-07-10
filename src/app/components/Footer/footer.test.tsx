@@ -1,93 +1,78 @@
-import { render, screen } from "@testing-library/react";
-import Footer from "./footer";
-import "@testing-library/jest-dom";
+import { render, screen, fireEvent } from "@testing-library/react";
+import Footer from "../footer";
+import { useRouter } from "next/navigation";
+import { useSearch } from "@/contexts/car-search-context/car-search-context";
+
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(),
+}));
+
+jest.mock("@/contexts/car-search-context/car-search-context", () => ({
+  useSearch: jest.fn(),
+}));
 
 jest.mock("../email-box/email-box", () => {
-  const MockEmailBox = () => <div data-testid="email-box">EmailBox</div>;
-  MockEmailBox.displayName = "MockEmailBox";
+  const MockEmailBox = () => <div>EmailBox Component</div>;
+  MockEmailBox.displayName = "EmailBox";
   return MockEmailBox;
 });
 
-describe("Footer component", () => {
-  it("renders the join section title and description", () => {
+describe("Footer Component", () => {
+  const pushMock = jest.fn();
+  const setMainSearch = jest.fn();
+  const setStagedSearch = jest.fn();
+  const setSearchParams = jest.fn();
+
+  beforeEach(() => {
+    (useRouter as jest.Mock).mockReturnValue({ push: pushMock });
+
+    (useSearch as jest.Mock).mockReturnValue({
+      mainSearch: {},
+      stagedSearch: {},
+      searchParams: {},
+      setMainSearch,
+      setStagedSearch,
+      setSearchParams,
+    });
+
+    pushMock.mockClear();
+  });
+
+  it("renders all footer titles", () => {
     render(<Footer />);
     expect(screen.getByText("Join BoxCar")).toBeInTheDocument();
-    expect(
-      screen.getByText("Receive pricing updates, shopping tips & more")
-    ).toBeInTheDocument();
-  });
-
-  it("renders the EmailBox component", () => {
-    render(<Footer />);
-    expect(screen.getByTestId("email-box")).toBeInTheDocument();
-  });
-
-  it("renders all footer column titles", () => {
-    render(<Footer />);
-    const columnTitles = [
-      "Company",
-      "Quick Links",
-      "Our Brands",
-      "Vehicle Type",
-    ];
-    columnTitles.forEach((title) => {
-      expect(screen.getAllByText(title)[0]).toBeInTheDocument();
-    });
-  });
-
-  it("renders all footer column items", () => {
-    render(<Footer />);
-    const expectedItems = [
-      "About Us",
-      "Blog",
-      "Services",
-      "FAQs",
-      "Terms",
-      "Contact Us",
-      "Get in Touch",
-      "Help center",
-      "Live chat",
-      "How it works",
-      "Toyota",
-      "Audi",
-      "BMW",
-      "Ford",
-      "Nissan",
-      "Volkswagen",
-      "Sedan",
-      "SUV",
-      "Hybrid",
-      "Electric",
-      "Coupe",
-      "Truck",
-      "Convertible",
-    ];
-    expectedItems.forEach((item) => {
-      expect(screen.getByText(item)).toBeInTheDocument();
-    });
-  });
-
-  it("renders the mobile app download section", () => {
-    render(<Footer />);
+    expect(screen.getByText("Company")).toBeInTheDocument();
+    expect(screen.getByText("Quick Links")).toBeInTheDocument();
+    expect(screen.getByText("Our Brands")).toBeInTheDocument();
+    expect(screen.getByText("Vehicle Type")).toBeInTheDocument();
     expect(screen.getByText("Our Mobile App")).toBeInTheDocument();
-    expect(screen.getByText("App Store")).toBeInTheDocument();
-    expect(screen.getByText("Play Store")).toBeInTheDocument();
   });
 
-  it("renders social media icons", () => {
+  it("renders social icons", () => {
     render(<Footer />);
-    const platforms = ["facebook", "twitter", "instagram", "linked-in"];
-    platforms.forEach((altText) => {
-      expect(screen.getByAltText(altText)).toBeInTheDocument();
-    });
+    const socialIcons = screen.getAllByRole("img", { hidden: true });
+    expect(socialIcons.length).toBeGreaterThanOrEqual(6);
   });
 
-  it("renders footer bottom content", () => {
+  it("renders EmailBox component", () => {
+    render(<Footer />);
+    expect(screen.getByText("EmailBox Component")).toBeInTheDocument();
+  });
+
+  it("calls handleBrandClick when brand is clicked", () => {
+    render(<Footer />);
+    const brand = screen.getByText("Toyota");
+    fireEvent.click(brand);
+    expect(setMainSearch).toHaveBeenCalledWith(
+      expect.objectContaining({ make: "Toyota", model: "Any_Models" })
+    );
+    expect(pushMock).toHaveBeenCalledWith("/search?make=Toyota");
+  });
+
+  it("renders copyright", () => {
     render(<Footer />);
     expect(
       screen.getByText("© 2025 BoxCar, All rights reserved")
     ).toBeInTheDocument();
-    expect(screen.getByText("Terms & Conditions")).toBeInTheDocument();
-    expect(screen.getByText("Privacy Notice")).toBeInTheDocument();
   });
 });

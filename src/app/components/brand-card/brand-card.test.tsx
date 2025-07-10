@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { BrandCard } from "@/app/components";
+import BrandCard from "./brand-card";
 
 describe("BrandCard", () => {
   it("renders brand image and name", () => {

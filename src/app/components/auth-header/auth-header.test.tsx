@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { AuthHeader } from "@/app/components"
+import AuthHeader from "./auth-header";
 
 describe("AuthHeader", () => {
   it("renders title and subtitle correctly", () => {

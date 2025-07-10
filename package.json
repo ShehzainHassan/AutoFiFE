@@ -38,9 +38,12 @@
     "react-spinners": "^0.17.0",
     "react-toastify": "^11.0.5",
     "react-window": "^1.8.11",
-    "swiper": "^11.2.6"
+    "swiper": "^11.2.10"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/preset-typescript": "^7.27.1",
     "@eslint/eslintrc": "^3",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -55,12 +58,15 @@
     "@types/react-modal": "^3.16.3",
     "@types/react-native": "^0.72.8",
     "@types/react-window": "^1.8.8",
+    "babel-jest": "^30.0.4",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^30.0.3",
+    "jest": "^30.0.4",
     "jest-environment-jsdom": "^30.0.2",
+    "jest-transform-css": "^6.0.3",
     "next": "^15.3.4",
+    "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }

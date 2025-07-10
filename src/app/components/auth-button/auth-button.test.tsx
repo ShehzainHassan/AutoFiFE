@@ -1,30 +1,37 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { AuthButton } from "@/app/components";
+import AuthButton from "./auth-button";
+
+jest.mock("@/assets/images/icons/arrow-white.png", () => "arrow-white.png");
+
 describe("AuthButton", () => {
-  it("renders the button with text", () => {
-    render(<AuthButton btnText="Proceed to my Account" onClick={jest.fn()} />);
-    expect(screen.getByText("Proceed to my Account")).toBeInTheDocument();
+  it("renders the button text", () => {
+    render(<AuthButton btnText="Continue" onClick={() => {}} />);
+    expect(screen.getByText("Continue")).toBeInTheDocument();
   });
 
-  it("calls onClick when not disabled", () => {
-    const mockFn = jest.fn();
-    render(<AuthButton btnText="Proceed to my Account" onClick={mockFn} />);
-    fireEvent.click(screen.getByText("Proceed to my Account"));
-    expect(mockFn).toHaveBeenCalled();
-  });
-
-  it("does not call onClick when disabled", () => {
-    const mockFn = jest.fn();
-    render(
-      <AuthButton btnText="Proceed to my Account" onClick={mockFn} disabled />
-    );
-    fireEvent.click(screen.getByText("Proceed to my Account"));
-    expect(mockFn).not.toHaveBeenCalled();
-  });
-
-  it("renders arrow image", () => {
-    render(<AuthButton btnText="Proceed to my Account" onClick={jest.fn()} />);
+  it("renders the arrow icon", () => {
+    render(<AuthButton btnText="Continue" onClick={() => {}} />);
     expect(screen.getByAltText("arrow")).toBeInTheDocument();
+  });
+
+  it("calls onClick when clicked and not disabled", () => {
+    const mockClick = jest.fn();
+    render(<AuthButton btnText="Continue" onClick={mockClick} />);
+    fireEvent.click(screen.getByText("Continue"));
+    expect(mockClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("does NOT call onClick when disabled", () => {
+    const mockClick = jest.fn();
+    render(<AuthButton btnText="Continue" onClick={mockClick} disabled />);
+    fireEvent.click(screen.getByText("Continue"));
+    expect(mockClick).not.toHaveBeenCalled();
+  });
+
+  it("applies disabled styles when disabled", () => {
+    const { container } = render(
+      <AuthButton btnText="Disabled" onClick={() => {}} disabled />
+    );
+    expect(container.firstChild).toHaveClass("disabled");
   });
 });
