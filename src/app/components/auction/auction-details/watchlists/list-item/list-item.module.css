@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  background-color: var(--color-white800);
+  padding: 12px 16px;
+}
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-gray560);
+  border-radius: 8px;
+}
+.vehicleContainer {
+  display: flex;
+  flex-direction: column;
+}
+.vehicleInfo {
+  display: flex;
+  align-items: center;
+  color: var(--color-blue250);
+}

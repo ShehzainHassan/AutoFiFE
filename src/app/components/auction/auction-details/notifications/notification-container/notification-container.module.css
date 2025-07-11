@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  height: 160px;
+  justify-content: space-between;
+}
+.notificationDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.notificationDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.imageWrapper {
+  flex: 0 0 355px;
+  height: 160px;
+}

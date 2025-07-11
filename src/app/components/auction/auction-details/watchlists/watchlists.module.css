@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  background-color: var(--color-white100);
+  gap: 12px;
+  margin: 24px 0;
+}
+.listItems {
+  display: flex;
+  flex-direction: column;
+}

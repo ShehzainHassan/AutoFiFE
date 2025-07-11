@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1280px;
+  padding: 12px 16px;
+  background-color: var(--color-white100);
+}
+.subContainer {
+  margin: 0 auto;
+  max-width: 960px;
+  width: 100%;
+}
+.viewTypeButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: var(--color-black100);
+  padding: 4px;
+  border-radius: 12px;
+  color: var(--color-white100);
+  cursor: pointer;
+  margin: 12px 0;
+}
+.viewType {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-black100);
+  width: 100%;
+  border-radius: 12px;
+  padding: 4px 8px;
+  color: var(--color-white100);
+}
+.selected {
+  color: var(--color-black100);
+  background-color: var(--color-white100);
+}
+.vehicles {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+.vehicleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.imgWrapper {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}

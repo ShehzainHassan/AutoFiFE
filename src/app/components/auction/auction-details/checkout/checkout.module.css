@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+}
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.gap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.security {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.title {
+  padding: 12px 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 8.1375fr 3.8625fr;
+  padding: 20px 24px;
+}
+.bid {
+  padding: 12px 16px;
+}
+.bidInfoContainer {
+  display: flex;
+  align-items: center;
+}
+.bidInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.imgWrapper {
+  width: 100%;
+  height: 70px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+.text {
+  width: 200px;
+}
+.price {
+  font-weight: 700;
+}
+.fees {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+.total {
+  display: flex;
+  justify-content: space-between;
+}
+.paymentInfo {
+  display: flex;
+  margin: 16px 0;
+}

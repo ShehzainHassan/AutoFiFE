@@ -8,6 +8,7 @@
   flex-direction: column;
   margin: 0 auto;
   max-width: 1280px;
+  width: 100%;
 }
 .detailsContainer {
   display: grid;

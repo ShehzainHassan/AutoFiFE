@@ -6,12 +6,13 @@ export default function VehicleInfoCard({
   similarity_score,
   children,
   onClick,
+  imageSrc,
 }: InfoCardProps) {
   return (
     <div
       onClick={onClick}
       className={`${classes.recommendationCard} ${classes.card} `}>
-      <CarImage src="/images/glc_2023.png">
+      <CarImage src={imageSrc ?? "/images/glc_2023.png"}>
         {similarity_score && (
           <div className={classes.favorite}>
             {`${(similarity_score * 100).toFixed(1)}%`}
