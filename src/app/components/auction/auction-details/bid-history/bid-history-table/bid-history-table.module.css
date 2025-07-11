@@ -1,0 +1,30 @@
+.table {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--color-gray300);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.headerContainer {
+  display: contents;
+}
+
+.rowContainer {
+  display: contents;
+}
+
+.cell {
+  padding: 16px;
+  border-bottom: 1px solid var(--color-gray300);
+  display: flex;
+  align-items: center;
+}
+
+.amount {
+  color: var(--color-blue250);
+}
+
+.time {
+  color: var(--color-blue250);
+}

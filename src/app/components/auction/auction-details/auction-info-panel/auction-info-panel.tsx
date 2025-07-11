@@ -1,14 +1,15 @@
 "use client";
-import { useState } from "react";
 import ButtonPrimary from "@/app/components/buttons/button-primary";
 import { Input } from "@/app/components/input-field";
 import { CURRENCY } from "@/constants";
 import { BLUE_WITH_BORDER } from "@/constants/button-primary-themes";
+import { SECONDARY_CONTAINER } from "@/styles/text-container";
+import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
+import { useState } from "react";
 import StatItem from "../stat-item/stat-item";
 import TextContainer from "../text-container/text-container";
 import classes from "./auction-info-panel.module.css";
-import headings from "@/styles/typography.module.css";
 
 export default function AuctionInfoPanel() {
   const [bid, setBid] = useState("");
@@ -41,15 +42,21 @@ export default function AuctionInfoPanel() {
 
       <div className={classes.timerContainer}>
         <div className={classes.textContainer}>
-          <TextContainer value={2} />
+          <ThemeProvider>
+            <TextContainer value={2} />
+          </ThemeProvider>
           <p>Hours</p>
         </div>
         <div className={classes.textContainer}>
-          <TextContainer value={15} />
+          <ThemeProvider>
+            <TextContainer value={15} />
+          </ThemeProvider>
           <p>Minutes</p>
         </div>
         <div className={classes.textContainer}>
-          <TextContainer value={43} />
+          <ThemeProvider>
+            <TextContainer value={43} />
+          </ThemeProvider>
           <p>Seconds</p>
         </div>
       </div>
@@ -76,28 +83,32 @@ export default function AuctionInfoPanel() {
 
       <div className={classes.bidAmounts}>
         <div className={classes.bidAmountContainer}>
-          <TextContainer
-            value="+50"
-            className={classes.amount}
-            onClick={() => increaseBid(50)}
-          />
-          <TextContainer
-            value="+100"
-            className={classes.amount}
-            onClick={() => increaseBid(100)}
-          />
+          <ThemeProvider value={SECONDARY_CONTAINER}>
+            <TextContainer
+              value="+50"
+              className={classes.amount}
+              onClick={() => increaseBid(50)}
+            />
+            <TextContainer
+              value="+100"
+              className={classes.amount}
+              onClick={() => increaseBid(100)}
+            />
+          </ThemeProvider>
         </div>
         <div className={classes.bidAmountContainer}>
-          <TextContainer
-            value="+250"
-            className={classes.amount}
-            onClick={() => increaseBid(250)}
-          />
-          <TextContainer
-            value="+500"
-            className={classes.amount}
-            onClick={() => increaseBid(500)}
-          />
+          <ThemeProvider value={SECONDARY_CONTAINER}>
+            <TextContainer
+              value="+250"
+              className={classes.amount}
+              onClick={() => increaseBid(250)}
+            />
+            <TextContainer
+              value="+500"
+              className={classes.amount}
+              onClick={() => increaseBid(500)}
+            />
+          </ThemeProvider>
         </div>
       </div>
 

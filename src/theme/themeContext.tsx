@@ -15,10 +15,18 @@ type HorizontalTabsTheme = {
   selectedTabBorderColor: string;
   borderColor: string;
 };
+type TextContainerTheme = {
+  padding: string;
+  width: string;
+  borderRadius: string;
+  fontWeight: number;
+  fontSize: string;
+};
 
 export interface ThemeContextType {
   horizontalTabs?: HorizontalTabsTheme;
   buttonPrimary?: ButtonPrimaryTheme;
+  textContainer?: TextContainerTheme;
 }
 
 const defaultTheme: ThemeContextType = {
@@ -35,6 +43,13 @@ const defaultTheme: ThemeContextType = {
     padding: "10px 25px",
     hoverColor: "var(--color-white200)",
     border: "none",
+  },
+  textContainer: {
+    padding: "14px 24px",
+    width: "100px",
+    borderRadius: "12px",
+    fontWeight: 500,
+    fontSize: "18px",
   },
 };
 

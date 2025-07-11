@@ -3,13 +3,6 @@
   flex-direction: column;
   background-color: var(--color-white800);
 }
-.header {
-  display: flex;
-  margin: 0 auto;
-  max-width: 1280px;
-  width: 100%;
-  padding: 30px 0px 0px 0px;
-}
 .container {
   display: flex;
   flex-direction: column;

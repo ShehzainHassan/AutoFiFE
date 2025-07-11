@@ -24,3 +24,12 @@ export const BLACK_THEME = {
     borderColor: "transparent",
   },
 };
+
+export const LIGHT_BLUE_BLACK_THEME = {
+  horizontalTabs: {
+    tabColor: "var(--color-blue250)",
+    selectedTabColor: "var(--color-black480)",
+    selectedTabBorderColor: "var(--color-black480)",
+    borderColor: "var(--color-gray300)",
+  },
+};

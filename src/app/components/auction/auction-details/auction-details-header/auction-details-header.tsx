@@ -43,7 +43,9 @@ export default function AuctionDetailsHeader() {
         </div>
 
         <div className={classes.notificationContainer}>
-          <TextContainer value="Help" className={classes.textContainer} />
+          <ThemeProvider>
+            <TextContainer value="Help" className={classes.textContainer} />
+          </ThemeProvider>
 
           <div className={classes.notification}>
             <Image
