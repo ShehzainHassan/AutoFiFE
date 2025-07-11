@@ -1,3 +1,4 @@
+"use client";
 import AuctionInfoPanel from "./auction-info-panel/auction-info-panel";
 import classes from "./auction-details.module.css";
 import ImageContainer from "./image-container/image-container";
@@ -7,8 +8,13 @@ import AuctionStarted from "./bid-history/auction-started/auction-started";
 import AuctionCardCarousel from "../auction-card-carousel/auction-card-carousel";
 import { auctionData } from "@/constants/auction";
 import AuctionDetailsHeader from "./auction-details-header/auction-details-header";
+import { useRouter } from "next/navigation";
 
 export default function AuctionDetails() {
+  const router = useRouter();
+  const redirectToLiveAuctions = () => {
+    router.push("/auction");
+  };
   return (
     <div className={classes.mainContainer}>
       <div className={classes.header}>
@@ -18,7 +24,12 @@ export default function AuctionDetails() {
         <div className={classes.detailsContainer}>
           <div className={classes.details}>
             <div>
-              <p className={classes.back}>Auctions / 2018 Honda Civic</p>
+              <p>
+                <span onClick={redirectToLiveAuctions} className={classes.back}>
+                  Auctions /
+                </span>{" "}
+                2018 Honda Civic
+              </p>
               <h1 className={classes.vehicle}>2018 Honda Civic</h1>
             </div>
             <ImageContainer />

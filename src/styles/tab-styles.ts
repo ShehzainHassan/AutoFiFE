@@ -15,3 +15,12 @@ export const GRAY_BLUE_THEME = {
     borderColor: "var(--color-gray400)",
   },
 };
+
+export const BLACK_THEME = {
+  horizontalTabs: {
+    tabColor: "var(--color-black480)",
+    selectedTabColor: "var(--color-black1000)",
+    selectedTabBorderColor: "var(--color-black1000)",
+    borderColor: "transparent",
+  },
+};
