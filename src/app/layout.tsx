@@ -8,6 +8,7 @@ import { Metadata } from "next";
 import { DM_Sans, Inter, Roboto } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
+import { PanelProvider } from "@/contexts/panel-context/panel-context";
 const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
@@ -46,10 +47,12 @@ export default function RootLayout({
               <AuthProvider>
                 <UserFavoritesProvider>
                   <QuestionnaireProvider>
-                    <body
-                      className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
-                      {children}
-                    </body>
+                    <PanelProvider>
+                      <body
+                        className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
+                        {children}
+                      </body>
+                    </PanelProvider>
                   </QuestionnaireProvider>
                 </UserFavoritesProvider>
               </AuthProvider>

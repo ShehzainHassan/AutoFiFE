@@ -16,3 +16,12 @@ export const ROW_BUTTON = {
     fontSize: "14px",
   },
 };
+export const PAY_BUTTON = {
+  textContainer: {
+    padding: "10px 16px",
+    width: "fit-content",
+    borderRadius: "12px",
+    fontWeight: 700,
+    fontSize: "14px",
+  },
+};

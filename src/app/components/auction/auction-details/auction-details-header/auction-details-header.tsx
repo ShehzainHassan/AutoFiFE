@@ -4,25 +4,22 @@ import NotificationBell from "@/assets/images/icons/notification.png";
 import ProfilePic from "@/assets/images/icons/profile-pic.png";
 import { ThemeProvider } from "@/theme/themeContext";
 import Image from "next/image";
-import { useState } from "react";
 import SearchField from "../../auction-search-field/auction-search-field";
-import AuctionNotificationSettings from "../notifications/notification";
-import SavedVehicles from "../saved-vehicles/saved-vehicles";
 import TextContainer from "../text-container/text-container";
 import classes from "./auction-details-header.module.css";
-type Panel = "none" | "watchlist" | "notification";
+import { usePanel } from "@/contexts/panel-context/panel-context";
 
 export default function AuctionDetailsHeader() {
-  const [panel, setPanel] = useState<Panel>("none");
-
-  const togglePanel = (target: Panel) =>
-    setPanel((prev) => (prev === target ? "none" : target));
-
+  const { panel, togglePanel } = usePanel();
   return (
     <div
-      className={`${classes.container} ${
-        panel !== "none" ? classes.column : ""
-      }`}>
+      className={[
+        classes.container,
+        panel !== "none" && classes.column,
+        panel !== "none" && classes.panelOpen,
+      ]
+        .filter(Boolean)
+        .join(" ")}>
       <div className={classes.topBar}>
         <div>
           <div className={classes.tabs}>
@@ -75,9 +72,6 @@ export default function AuctionDetailsHeader() {
           </div>
         </div>
       </div>
-
-      {panel === "watchlist" && <SavedVehicles />}
-      {panel === "notification" && <AuctionNotificationSettings />}
     </div>
   );
 }

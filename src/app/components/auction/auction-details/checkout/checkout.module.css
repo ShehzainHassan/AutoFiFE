@@ -4,6 +4,7 @@
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
+  padding: 120px 0;
 }
 .inputContainer {
   display: flex;
@@ -39,6 +40,7 @@
 .bidInfoContainer {
   display: flex;
   align-items: center;
+  margin-bottom: 32px;
 }
 .bidInfo {
   display: flex;
@@ -59,15 +61,28 @@
   font-weight: 700;
 }
 .fees {
-  display: flex;
+  display: grid;
+  grid-template-columns: 4fr 8fr;
   gap: 24px;
   align-items: center;
 }
 .total {
   display: flex;
   justify-content: space-between;
+  margin-top: 40px;
 }
 .paymentInfo {
   display: flex;
   margin: 16px 0;
+}
+.pay {
+  display: flex;
+  gap: 6.5px;
+  height: 40px;
+  cursor: pointer;
+}
+.paymentToggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
