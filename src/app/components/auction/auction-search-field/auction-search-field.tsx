@@ -1,13 +1,13 @@
-"use client";
 import MaginfyIcon from "@/assets/images/icons/magnify.png";
-import { useState } from "react";
 import { Input } from "../../input-field";
 import classes from "./auction-search-field.module.css";
 import { SearchFieldProps } from "./auction-search-field.types";
 import Image from "next/image";
-export default function SearchField({ width = "120px" }: SearchFieldProps) {
-  const [search, setSearch] = useState("");
-
+export default function SearchField({
+  width = "120px",
+  search,
+  setSearch,
+}: SearchFieldProps) {
   return (
     <div className={classes.searchFieldContainer}>
       <div className={classes.magnify}>

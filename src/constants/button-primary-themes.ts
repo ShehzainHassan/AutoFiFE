@@ -84,3 +84,14 @@ export const WHITE_WITH_BLUE_BORDER: ThemeContextType = {
     border: "2px solid var(--color-blue700)",
   },
 };
+export const BLACK_THEME: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-black100)",
+    borderRadius: "8px",
+    textColor: "var(--color-white100)",
+    padding: "12px 24px 12px 16px",
+    hoverColor: "var(--color-gray600)",
+    hoverTextColor: "var(--color-white100)",
+    border: "none",
+  },
+};

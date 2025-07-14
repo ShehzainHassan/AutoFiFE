@@ -7,13 +7,25 @@
   margin: 0 auto;
   padding: 40px 16px;
 }
+
 .vehicleCard {
   display: flex;
   gap: 16px;
 }
+
+.imageWrapper {
+  flex: 0 0 464px;
+  height: 256px;
+  position: relative;
+}
+
 .vehicleInfo {
   display: flex;
   flex-direction: column;
   gap: 4px;
   padding: 16px 0;
+}
+.bidBtn {
+  width: fit-content;
+  align-self: flex-end;
 }

@@ -1,4 +1,5 @@
 "use client";
+import AuctionIcon from "@/assets/images/icons/auction.png";
 import NotificationBell from "@/assets/images/icons/notification.png";
 import ProfilePic from "@/assets/images/icons/profile-pic.png";
 import { ThemeProvider } from "@/theme/themeContext";
@@ -9,7 +10,6 @@ import AuctionNotificationSettings from "../notifications/notification";
 import SavedVehicles from "../saved-vehicles/saved-vehicles";
 import TextContainer from "../text-container/text-container";
 import classes from "./auction-details-header.module.css";
-import AuctionIcon from "@/assets/images/icons/auction.png";
 type Panel = "none" | "watchlist" | "notification";
 
 export default function AuctionDetailsHeader() {
@@ -45,13 +45,6 @@ export default function AuctionDetailsHeader() {
             </div>
           </div>
         </div>
-        {/* <ThemeProvider value={BLACK_THEME}>
-          <HorizontalTabs
-            tabs={["Buy", "Sell", "Finance", "How it works"]}
-            selectedTab={selectedTab}
-            onTabChange={setSelectedTab}
-          />
-        </ThemeProvider> */}
 
         <div className={classes.inputContainer}>
           <SearchField />

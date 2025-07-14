@@ -22,7 +22,6 @@
 
 .inputContainer {
   display: flex;
-  align-items: center;
   gap: 32px;
 }
 
@@ -35,6 +34,7 @@
 .textContainer {
   cursor: pointer;
   padding: 5px !important;
+  height: 40px;
 }
 
 .textContainer:hover {

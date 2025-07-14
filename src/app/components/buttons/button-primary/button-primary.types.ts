@@ -1,5 +1,7 @@
+import { StaticImageData } from "next/image";
+
 export type ButtonPrimaryProps = {
-  imgSrc?: string;
+  imgSrc?: string | StaticImageData;
   btnText: string | React.ReactNode;
   backgroundColor?: string;
   borderRadius?: string;
