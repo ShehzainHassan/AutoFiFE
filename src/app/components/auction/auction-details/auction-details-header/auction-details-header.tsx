@@ -8,9 +8,14 @@ import SearchField from "../../auction-search-field/auction-search-field";
 import TextContainer from "../text-container/text-container";
 import classes from "./auction-details-header.module.css";
 import { usePanel } from "@/contexts/panel-context/panel-context";
+import { useRouter } from "next/navigation";
 
 export default function AuctionDetailsHeader() {
   const { panel, togglePanel } = usePanel();
+  const router = useRouter();
+  const redictToAuction = () => {
+    router.push("/auction");
+  };
   return (
     <div
       className={[
@@ -23,7 +28,7 @@ export default function AuctionDetailsHeader() {
       <div className={classes.topBar}>
         <div>
           <div className={classes.tabs}>
-            <div className={classes.tabMain}>
+            <div className={classes.tabMain} onClick={redictToAuction}>
               <Image
                 src={AuctionIcon}
                 alt="auction-icon"
