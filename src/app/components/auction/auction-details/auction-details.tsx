@@ -20,7 +20,6 @@ export default function AuctionDetails() {
     <div className={classes.mainContainer}>
       <div className={classes.container}>
         <AuctionDetailsHeader />
-
         <>
           <div className={classes.detailsContainer}>
             <div className={classes.details}>
@@ -29,7 +28,7 @@ export default function AuctionDetails() {
                   <span
                     onClick={redirectToLiveAuctions}
                     className={classes.back}>
-                    Auctions /
+                    Auctions /{" "}
                   </span>
                   2018 Honda Civic
                 </p>

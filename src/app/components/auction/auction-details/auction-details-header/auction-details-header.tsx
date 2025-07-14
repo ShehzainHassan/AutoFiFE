@@ -1,23 +1,18 @@
 "use client";
-import HorizontalTabs from "@/app/components/horizontal-tabs/horizontal-tabs";
-import { Input } from "@/app/components/input-field";
-import MaginfyIcon from "@/assets/images/icons/magnify.png";
 import NotificationBell from "@/assets/images/icons/notification.png";
 import ProfilePic from "@/assets/images/icons/profile-pic.png";
-import { BLACK_THEME } from "@/styles/tab-styles";
 import { ThemeProvider } from "@/theme/themeContext";
 import Image from "next/image";
 import { useState } from "react";
-import TextContainer from "../text-container/text-container";
-import SavedVehicles from "../saved-vehicles/saved-vehicles";
+import SearchField from "../../auction-search-field/auction-search-field";
 import AuctionNotificationSettings from "../notifications/notification";
+import SavedVehicles from "../saved-vehicles/saved-vehicles";
+import TextContainer from "../text-container/text-container";
 import classes from "./auction-details-header.module.css";
-
+import AuctionIcon from "@/assets/images/icons/auction.png";
 type Panel = "none" | "watchlist" | "notification";
 
 export default function AuctionDetailsHeader() {
-  const [selectedTab, setSelectedTab] = useState("Buy");
-  const [search, setSearch] = useState("");
   const [panel, setPanel] = useState<Panel>("none");
 
   const togglePanel = (target: Panel) =>
@@ -29,34 +24,37 @@ export default function AuctionDetailsHeader() {
         panel !== "none" ? classes.column : ""
       }`}>
       <div className={classes.topBar}>
-        <ThemeProvider value={BLACK_THEME}>
+        <div>
+          <div className={classes.tabs}>
+            <div className={classes.tabMain}>
+              <Image
+                src={AuctionIcon}
+                alt="auction-icon"
+                width={16}
+                height={16}
+                placeholder="blur"
+                loading="lazy"
+              />
+              <h3>Auction</h3>
+            </div>
+            <div className={classes.tabItems}>
+              <p className={classes.tabItem}>Buy</p>
+              <p className={classes.tabItem}>Sell</p>
+              <p className={classes.tabItem}>Finance</p>
+              <p className={classes.tabItem}>How it works</p>
+            </div>
+          </div>
+        </div>
+        {/* <ThemeProvider value={BLACK_THEME}>
           <HorizontalTabs
             tabs={["Buy", "Sell", "Finance", "How it works"]}
             selectedTab={selectedTab}
             onTabChange={setSelectedTab}
           />
-        </ThemeProvider>
+        </ThemeProvider> */}
 
         <div className={classes.inputContainer}>
-          <div className={classes.searchFieldContainer}>
-            <div className={classes.magnify}>
-              <Image
-                src={MaginfyIcon}
-                alt="magify-icon"
-                width={24}
-                height={24}
-              />
-            </div>
-            <Input width="120px">
-              <Input.Field
-                type="text"
-                placeholder="Search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className={classes.searchField}
-              />
-            </Input>
-          </div>
+          <SearchField />
 
           <div className={classes.notificationContainer}>
             <ThemeProvider>

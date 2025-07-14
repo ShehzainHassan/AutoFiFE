@@ -1,23 +1,13 @@
-"use client";
-import { useState } from "react";
-import { Input } from "../../input-field";
-import Image from "next/image";
 import VehicleImage from "@/assets/images/cars/Bentley-Arnage4.4.png";
 import { CURRENCY } from "@/constants";
+import Image from "next/image";
+import SearchField from "../auction-search-field/auction-search-field";
 import classes from "./search-auction.module.css";
 export default function SearchAuction() {
-  const [search, setSearch] = useState("");
   return (
     <div className={classes.container}>
       <h2>Auctions</h2>
-      <Input width="100%">
-        <Input.Field
-          type="text"
-          placeholder="Search"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </Input>
+      <SearchField width="100%" />
       <div className={classes.vehicleCard}>
         <Image
           src={VehicleImage}
