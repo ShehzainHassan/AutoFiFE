@@ -24,6 +24,7 @@ function Field({
   onChange,
   className,
   onKeyDown,
+  isDisabled = false,
 }: InputFieldProps) {
   return (
     <input
@@ -33,7 +34,10 @@ function Field({
       onChange={onChange}
       onBlur={onBlur}
       onKeyDown={onKeyDown}
-      className={`${classes.input} ${className}`}
+      disabled={isDisabled}
+      className={`${classes.input} ${className} ${
+        isDisabled ? classes.disabled : ""
+      }`}
     />
   );
 }

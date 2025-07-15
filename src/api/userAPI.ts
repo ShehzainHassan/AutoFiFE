@@ -21,6 +21,10 @@ const userAPI = {
     });
     return response.data;
   },
+  getUserById: async (id: number) => {
+    const response = await axios.get(`${API_BASE_URL}/user/${id}`);
+    return response.data;
+  },
   getUserSearches: async (userId: number) => {
     const response = await axios.get(
       `${API_BASE_URL}/user/get-user-saved-searches/${userId}`

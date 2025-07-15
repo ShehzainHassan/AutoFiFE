@@ -25,3 +25,15 @@
   gap: 8px;
   margin: 16px 0;
 }
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.fixedHeight {
+  height: 200px !important;
+  aspect-ratio: auto !important;
+}

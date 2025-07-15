@@ -2,7 +2,7 @@ export type AuctionCardCarouselProps = {
   auctionData: {
     vehicleDetails: string;
     price: number;
-    endTimerSeconds: number;
+    endUTC: string;
     tag: string;
   }[];
 };

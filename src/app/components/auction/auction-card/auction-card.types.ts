@@ -1,6 +1,6 @@
 export type AuctionCardProps = {
   vehicleDetails: string;
   price: number;
-  endTimerSeconds: number;
+  endUTC: string;
   tag?: string;
 };

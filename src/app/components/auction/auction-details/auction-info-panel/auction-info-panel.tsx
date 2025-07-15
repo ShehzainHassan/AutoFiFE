@@ -3,17 +3,28 @@ import ButtonPrimary from "@/app/components/buttons/button-primary";
 import { Input } from "@/app/components/input-field";
 import { CURRENCY } from "@/constants";
 import { BLUE_WITH_BORDER } from "@/constants/button-primary-themes";
+import useCountdown from "@/hooks/useCountdown";
 import { SECONDARY_CONTAINER } from "@/styles/text-container";
 import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
 import { useState } from "react";
-import StatItem from "../stat-item/stat-item";
 import TextContainer from "../text-container/text-container";
 import classes from "./auction-info-panel.module.css";
+import { AuctionInfoPanelProps } from "./auction-info-panel.types";
+import AuctionStats from "./auction-stats/auction-stats";
+import YourStats from "./your-stats/your-stats";
+import usePlaceBid from "@/hooks/usePlaceBid";
+import { useParams } from "next/navigation";
+import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 
-export default function AuctionInfoPanel() {
+export default function AuctionInfoPanel({
+  price,
+  endUtc,
+  startingPrice,
+  currentBid,
+}: AuctionInfoPanelProps) {
   const [bid, setBid] = useState("");
-
+  const { hours, minutes, seconds } = useCountdown(endUtc);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (value === "" || /^\d+$/.test(value)) {
@@ -25,15 +36,26 @@ export default function AuctionInfoPanel() {
     const currentBid = bid === "" ? 0 : parseInt(bid, 10);
     setBid((currentBid + amount).toString());
   };
+  const authData = localStorage.getItem("authData") ?? "";
+  const params = useParams();
+  const id = params.id ? Number(params.id) : -1;
 
+  const { mutate: placeBid } = usePlaceBid(
+    id,
+    Number(bid),
+    getUserIdFromLocalStorage() ?? -1
+  );
+  const handlePlaceBid = () => {
+    placeBid();
+  };
   return (
     <div className={classes.container}>
-      <h1 className={classes.price}>{CURRENCY}24,500</h1>
+      <h1 className={classes.price}>
+        {CURRENCY}
+        {price.toLocaleString()}
+      </h1>
 
-      <div className={classes.statItemContainer}>
-        <StatItem label="Bids" value={12} />
-        <StatItem label="Watchers" value={45} />
-      </div>
+      <AuctionStats />
 
       <p
         className={`${classes.center} ${classes.text} ${headings.auctionEndText}`}>
@@ -43,27 +65,33 @@ export default function AuctionInfoPanel() {
       <div className={classes.timerContainer}>
         <div className={classes.textContainer}>
           <ThemeProvider>
-            <TextContainer value={2} />
+            <TextContainer value={hours} />
           </ThemeProvider>
           <p>Hours</p>
         </div>
         <div className={classes.textContainer}>
           <ThemeProvider>
-            <TextContainer value={15} />
+            <TextContainer value={minutes.toString().padStart(2, "0")} />
           </ThemeProvider>
           <p>Minutes</p>
         </div>
         <div className={classes.textContainer}>
           <ThemeProvider>
-            <TextContainer value={43} />
+            <TextContainer value={seconds.toString().padStart(2, "0")} />
           </ThemeProvider>
           <p>Seconds</p>
         </div>
       </div>
 
+      <p>
+        Starting Price: {CURRENCY}
+        {startingPrice.toLocaleString()}
+      </p>
+
       <div className={classes.bidInput}>
         <Input width="100%">
           <Input.Field
+            isDisabled={!authData}
             type="text"
             placeholder="Enter bid"
             value={bid}
@@ -81,48 +109,61 @@ export default function AuctionInfoPanel() {
         </Input>
       </div>
 
-      <div className={classes.bidAmounts}>
-        <div className={classes.bidAmountContainer}>
-          <ThemeProvider value={SECONDARY_CONTAINER}>
-            <TextContainer
-              value="+50"
-              className={classes.amount}
-              onClick={() => increaseBid(50)}
-            />
-            <TextContainer
-              value="+100"
-              className={classes.amount}
-              onClick={() => increaseBid(100)}
+      {authData && (
+        <div className={classes.bidAmounts}>
+          <div className={classes.bidAmountContainer}>
+            <ThemeProvider value={SECONDARY_CONTAINER}>
+              <TextContainer
+                value="+50"
+                className={classes.amount}
+                onClick={() => increaseBid(50)}
+              />
+              <TextContainer
+                value="+100"
+                className={classes.amount}
+                onClick={() => increaseBid(100)}
+              />
+            </ThemeProvider>
+          </div>
+          <div className={classes.bidAmountContainer}>
+            <ThemeProvider value={SECONDARY_CONTAINER}>
+              <TextContainer
+                value="+250"
+                className={classes.amount}
+                onClick={() => increaseBid(250)}
+              />
+              <TextContainer
+                value="+500"
+                className={classes.amount}
+                onClick={() => increaseBid(500)}
+              />
+            </ThemeProvider>
+          </div>
+        </div>
+      )}
+
+      {bid && Number(currentBid) > 0 && Number(bid) <= currentBid && (
+        <p>The current highest bid is ${currentBid.toLocaleString()}</p>
+      )}
+      {bid && Number(currentBid) === 0 && Number(bid) < startingPrice && (
+        <p>Bid must be greater than ${startingPrice.toLocaleString()}</p>
+      )}
+      {!authData ? (
+        <p>Please sign in to place bid</p>
+      ) : (
+        <div className={classes.buttonContainer}>
+          <ThemeProvider value={BLUE_WITH_BORDER}>
+            <ButtonPrimary
+              btnText="Place bid"
+              className={classes.button}
+              onClick={handlePlaceBid}
+              isDisabled={!bid || Number(bid) < startingPrice || !authData}
             />
           </ThemeProvider>
         </div>
-        <div className={classes.bidAmountContainer}>
-          <ThemeProvider value={SECONDARY_CONTAINER}>
-            <TextContainer
-              value="+250"
-              className={classes.amount}
-              onClick={() => increaseBid(250)}
-            />
-            <TextContainer
-              value="+500"
-              className={classes.amount}
-              onClick={() => increaseBid(500)}
-            />
-          </ThemeProvider>
-        </div>
-      </div>
+      )}
 
-      <div className={classes.buttonContainer}>
-        <ThemeProvider value={BLUE_WITH_BORDER}>
-          <ButtonPrimary btnText="Place bid" className={classes.button} />
-        </ThemeProvider>
-        <p className={`${classes.center} ${classes.text}`}>Your stats</p>
-      </div>
-
-      <div className={classes.statItemContainer}>
-        <StatItem label="Bids" value={5} />
-        <StatItem label="Watchlists" value={3} />
-      </div>
+      <YourStats />
     </div>
   );
 }

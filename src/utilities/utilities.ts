@@ -7,6 +7,9 @@ import { toast } from "react-toastify";
 import { PriceRange } from "./utilities.types";
 import { trackError } from "./error-tracking";
 import DOMPurify from "isomorphic-dompurify";
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+dayjs.extend(duration);
 
 export function getModelOptions(make: string): Options[] {
   const isAnyMake = !make || make === "Any_Makes";
@@ -338,4 +341,31 @@ export function formatTime(seconds: number) {
     .toString()
     .padStart(2, "0");
   return `${h}:${m}:${s}`;
+}
+export function getTimeLeft(endUtc: string) {
+  const now = dayjs();
+  const end = dayjs(endUtc);
+  const diffInSeconds = end.diff(now, "second");
+
+  if (diffInSeconds <= 0) return "Ended";
+
+  const d = dayjs.duration(diffInSeconds, "second");
+  const days = Math.floor(d.asDays());
+  const hours = d.hours();
+  const minutes = d.minutes();
+
+  return `${days}d ${hours}h ${minutes}m`;
+}
+
+export function formatTimeAMPM(dateString: string) {
+  const date = new Date(dateString);
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? " PM" : " AM";
+
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  const minutesStr = minutes < 10 ? `0${minutes}` : minutes;
+
+  return `${hours}:${minutesStr}${ampm}`;
 }

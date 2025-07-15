@@ -1,6 +1,10 @@
 "use client";
 import { auctionData } from "@/constants/auction";
-import { useRouter } from "next/navigation";
+import { usePanel } from "@/contexts/panel-context/panel-context";
+import useAuctionById from "@/hooks/useAuctionById";
+import { useParams, useRouter } from "next/navigation";
+import ErrorMessage from "../../error-message";
+import Loading from "../../loading";
 import AuctionCardCarousel from "../auction-card-carousel/auction-card-carousel";
 import AuctionDetailsHeader from "./auction-details-header/auction-details-header";
 import classes from "./auction-details.module.css";
@@ -8,9 +12,8 @@ import AuctionInfoPanel from "./auction-info-panel/auction-info-panel";
 import BidHistory from "./bid-history/bid-history";
 import ImageContainer from "./image-container/image-container";
 import InfoTabs from "./info-tabs/info-tabs";
-import { usePanel } from "@/contexts/panel-context/panel-context";
-import SavedVehicles from "./saved-vehicles/saved-vehicles";
 import AuctionNotificationSettings from "./notifications/notification";
+import SavedVehicles from "./saved-vehicles/saved-vehicles";
 
 export default function AuctionDetails() {
   const router = useRouter();
@@ -18,7 +21,12 @@ export default function AuctionDetails() {
   const redirectToLiveAuctions = () => {
     router.push("/auction");
   };
-
+  const params = useParams();
+  const id = params.id ? Number(params.id) : -1;
+  const { data: auction, isLoading, isError, error } = useAuctionById(id);
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorMessage message={error.message} />;
+  if (!auction) return <p>No auction found.</p>;
   return (
     <div className={classes.mainContainer}>
       <div className={classes.container}>
@@ -36,15 +44,24 @@ export default function AuctionDetails() {
                       className={classes.back}>
                       Auctions /{" "}
                     </span>
-                    2018 Honda Civic
+                    {auction.vehicle.year} {auction.vehicle.make}{" "}
+                    {auction.vehicle.model}
                   </p>
-                  <h1 className={classes.vehicle}>2018 Honda Civic</h1>
+                  <h1 className={classes.vehicle}>
+                    {auction.vehicle.year} {auction.vehicle.make}{" "}
+                    {auction.vehicle.model}
+                  </h1>
                 </div>
                 <ImageContainer />
                 <InfoTabs />
-                <BidHistory />
+                <BidHistory auctionId={auction.auctionId} />
               </div>
-              <AuctionInfoPanel />
+              <AuctionInfoPanel
+                price={auction.vehicle.price}
+                endUtc={auction.endUtc}
+                startingPrice={auction.startingPrice}
+                currentBid={auction.currentPrice}
+              />
             </div>
 
             <div className={classes.auctionCarousel}>

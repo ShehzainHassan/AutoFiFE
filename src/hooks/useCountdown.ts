@@ -1,17 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
-export default function useCountdown(initialSeconds: number) {
-  const [remainingTime, setRemainingTime] = useState(initialSeconds);
+export type Countdown = {
+  hours: number;
+  minutes: number;
+  seconds: number;
+  totalSeconds: number;
+};
+
+export default function useCountdown(
+  target: Date | string | number
+): Countdown {
+  const targetMs = useRef(new Date(target).getTime());
+
+  const diffInSeconds = useCallback(() => {
+    return Math.max(Math.floor((targetMs.current - Date.now()) / 1000), 0);
+  }, []);
+
+  const [totalSeconds, setTotalSeconds] = useState<number>(diffInSeconds);
 
   useEffect(() => {
-    if (remainingTime <= 0) return;
+    if (totalSeconds === 0) return;
 
-    const interval = setInterval(() => {
-      setRemainingTime((prev) => prev - 1);
-    }, 1000);
+    const id = setInterval(() => setTotalSeconds(diffInSeconds), 1000);
+    return () => clearInterval(id);
+  }, [totalSeconds, diffInSeconds]);
 
-    return () => clearInterval(interval);
-  }, [remainingTime]);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
 
-  return remainingTime;
+  return { hours, minutes, seconds, totalSeconds };
 }

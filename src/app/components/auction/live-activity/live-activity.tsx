@@ -1,20 +1,31 @@
 "use client";
-import { DropdownFilter } from "@/app/components";
+
+import { DropdownFilter, ErrorMessage, Loading } from "@/app/components";
+import useGetAllAuctions from "@/hooks/useGetAllAuctions";
 import headings from "@/styles/typography.module.css";
-import VehicleInfoCard from "../../car-card/info-card";
+import { useRouter } from "next/navigation";
 import classes from "./live-activity.module.css";
 import { LiveActivityProps } from "./live-activity.types";
 import VehicleAuctionInfo from "./vehicle-auction-info";
-import { useRouter } from "next/navigation";
 
-const LiveActivity = ({
-  dropdownFilters,
-  vehicleAuctionData,
-}: LiveActivityProps) => {
+import { getTimeLeft } from "@/utilities/utilities";
+import CarImage from "../../result-card/car-image/car-image";
+
+const LiveActivity = ({ dropdownFilters }: LiveActivityProps) => {
   const router = useRouter();
-  const redirectToAuctionDetails = () => {
-    router.push("/auction/1");
+  const {
+    data: vehicleAuctionData = [],
+    isLoading,
+    isError,
+    error,
+  } = useGetAllAuctions();
+
+  const redirectToAuctionDetails = (auctionId: number) => {
+    router.push(`/auction/${auctionId}`);
   };
+  if (isError) return <ErrorMessage message={error.message} />;
+  if (isLoading) return <Loading />;
+  if (!vehicleAuctionData) return null;
   return (
     <div className={classes.container}>
       <div className={classes.titleContainer}>
@@ -31,10 +42,20 @@ const LiveActivity = ({
       </div>
 
       <div className={classes.auctionContainer}>
-        {vehicleAuctionData.map((vehicle, index) => (
-          <VehicleInfoCard onClick={redirectToAuctionDetails} key={index}>
-            <VehicleAuctionInfo {...vehicle} />
-          </VehicleInfoCard>
+        {vehicleAuctionData.map((auction) => (
+          <div key={auction.auctionId} className={classes.cardWrapper}>
+            <CarImage
+              onClick={() => redirectToAuctionDetails(auction.auctionId)}
+              className={classes.fixedHeight}
+            />
+
+            <VehicleAuctionInfo
+              vehicleName={`${auction.vehicle.year} ${auction.vehicle.make} ${auction.vehicle.model}`}
+              currentBid={auction.currentPrice}
+              bidCount={auction.bids.length ?? 0}
+              timeLeft={getTimeLeft(auction.endUtc)}
+            />
+          </div>
         ))}
       </div>
     </div>

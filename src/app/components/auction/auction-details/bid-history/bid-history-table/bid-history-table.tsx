@@ -1,25 +1,49 @@
 import { CURRENCY } from "@/constants";
+import { ROW_BUTTON } from "@/styles/text-container";
+import { ThemeProvider } from "@/theme/themeContext";
 import TextContainer from "../../text-container/text-container";
 import classes from "./bid-history-table.module.css";
-import { ThemeProvider } from "@/theme/themeContext";
-import { ROW_BUTTON } from "@/styles/text-container";
+import { BidHistoryTableProps } from "./bid-history-table.types";
+import { formatTimeAMPM } from "@/utilities/utilities";
 
-export default function BidHistoryTable() {
+export default function BidHistoryTable({
+  bids,
+  userMap,
+}: BidHistoryTableProps) {
+  const latestBids = [...bids]
+    .sort(
+      (a, b) => new Date(b.placedAt).getTime() - new Date(a.placedAt).getTime()
+    )
+    .slice(0, 5);
+
   return (
     <div className={classes.table}>
-      <p className={classes.cell}>Bidder</p>
-      <p className={classes.cell}>Amount</p>
-      <p className={classes.cell}>Time</p>
-      <p className={classes.cell}>Type</p>
-
-      <p className={classes.cell}>Bidder 1</p>
-      <p className={`${classes.cell} ${classes.amount}`}>{CURRENCY}37,500</p>
-      <p className={`${classes.cell} ${classes.time}`}>10:15 AM</p>
-      <div className={classes.cell}>
-        <ThemeProvider value={ROW_BUTTON}>
-          <TextContainer value="Auto" />
-        </ThemeProvider>
+      <div className={classes.row}>
+        <p className={classes.cell}>Bidder</p>
+        <p className={classes.cell}>Amount</p>
+        <p className={classes.cell}>Time</p>
+        <p className={classes.cell}>Type</p>
       </div>
+
+      {latestBids.map((bid, index) => (
+        <div key={bid.bidId} className={classes.row}>
+          <p className={classes.cell}>
+            {userMap.get(bid.userId) ?? `Bidder ${index + 1}`}
+          </p>
+          <p className={`${classes.cell} ${classes.amount}`}>
+            {CURRENCY}
+            {bid.amount.toLocaleString()}
+          </p>
+          <p className={`${classes.cell} ${classes.time}`}>
+            {formatTimeAMPM(bid.placedAt)}
+          </p>
+          <div className={classes.cell}>
+            <ThemeProvider value={ROW_BUTTON}>
+              <TextContainer value={bid.isAuto ? "Auto" : "Manual"} />
+            </ThemeProvider>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

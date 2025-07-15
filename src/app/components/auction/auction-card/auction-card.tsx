@@ -5,7 +5,6 @@ import { WHITE_WITH_BLUE_BORDER } from "@/constants/button-primary-themes";
 import useCountdown from "@/hooks/useCountdown";
 import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
-import { formatTime } from "@/utilities/utilities";
 import Image from "next/image";
 import ButtonPrimary from "../../buttons/button-primary";
 import classes from "./auction-card.module.css";
@@ -14,12 +13,18 @@ import { AuctionCardProps } from "./auction-card.types";
 const AuctionCard = ({
   vehicleDetails,
   price,
-  endTimerSeconds,
+  endUTC,
   tag,
 }: AuctionCardProps) => {
-  const remainingTime = useCountdown(endTimerSeconds);
+  const { hours, minutes, seconds, totalSeconds } = useCountdown(endUTC);
+
   const timerText =
-    remainingTime > 0 ? `Ends in: ${formatTime(remainingTime)}` : "ENDED";
+    totalSeconds > 0
+      ? `Ends in: ${hours}h ${minutes.toString().padStart(2, "0")}m ${seconds
+          .toString()
+          .padStart(2, "0")}s`
+      : "ENDED";
+
   return (
     <div className={classes.container}>
       {tag && (
@@ -27,7 +32,9 @@ const AuctionCard = ({
           <span className={classes.redDot}>🔴</span>LIVE
         </div>
       )}
+
       <div>
+        {/* Vehicle image */}
         <div className={classes.imageWrapper}>
           <Image
             src={vehicleImg}
@@ -36,18 +43,23 @@ const AuctionCard = ({
             className={classes.image}
           />
         </div>
+
+        {/* Details */}
         <div className={classes.subContainer}>
-          <h2 className={`${headings.auctionVehicleTitle}`}>
-            {vehicleDetails}
-          </h2>
+          <h2 className={headings.auctionVehicleTitle}>{vehicleDetails}</h2>
+
           <h2 className={`${headings.auctionVehiclePrice} ${classes.blue}`}>
             {CURRENCY}
             {price.toLocaleString()}
           </h2>
+
+          {/* Countdown */}
           <div className={`${headings.auctionCardTimer} ${classes.endTimer}`}>
-            {remainingTime > 0 && <span className={classes.redDot}>🔴</span>}
+            {totalSeconds > 0 && <span className={classes.redDot}>🔴</span>}
             {timerText}
           </div>
+
+          {/* Quick‑bid button */}
           <ThemeProvider value={WHITE_WITH_BLUE_BORDER}>
             <ButtonPrimary btnText="Quick Bid" />
           </ThemeProvider>
@@ -56,4 +68,5 @@ const AuctionCard = ({
     </div>
   );
 };
+
 export default AuctionCard;

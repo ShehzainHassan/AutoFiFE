@@ -15,7 +15,7 @@ const AuctionCardCarousel = ({ auctionData }: AuctionCardCarouselProps) => {
             <AuctionCard
               vehicleDetails={auction.vehicleDetails}
               price={auction.price}
-              endTimerSeconds={auction.endTimerSeconds}
+              endUTC={auction.endUTC}
               tag={auction.tag}
             />
           </SwiperSlide>

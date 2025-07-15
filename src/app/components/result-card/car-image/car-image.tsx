@@ -1,12 +1,13 @@
 import Image from "next/image";
+import clsx from "clsx";
 import classes from "./car-image.module.css";
 import { CarImageProps } from "./car-image.types";
 
-const CarImage = ({ src, children }: CarImageProps) => {
+const CarImage = ({ src, children, onClick, className }: CarImageProps) => {
   return (
-    <div className={classes.carImg}>
+    <div className={clsx(classes.carImg, className)} onClick={onClick}>
       <Image
-        src={src}
+        src={src ?? "/images/glc_2023.png"}
         alt="car-img"
         fill
         className={classes.car}

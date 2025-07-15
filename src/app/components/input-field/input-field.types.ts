@@ -8,6 +8,7 @@ export type InputFieldProps = {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
+  isDisabled?: boolean;
 };
 
 export type InputProps = {
