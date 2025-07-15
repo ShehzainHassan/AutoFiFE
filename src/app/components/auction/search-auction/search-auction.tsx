@@ -1,26 +1,42 @@
 "use client";
-import ImageSrc from "@/assets/images/cars/Bentley-Arnage4.4.png";
-import BidIcon from "@/assets/images/icons/bid.png";
-import { CURRENCY } from "@/constants";
-import { mockVehicleData } from "@/constants/auction";
 import { useMemo, useState } from "react";
-import ButtonPrimary from "../../buttons/button-primary";
-import CarImage from "../../result-card/car-image/car-image";
-import SearchField from "../auction-search-field/auction-search-field";
-import classes from "./search-auction.module.css";
-import { ThemeProvider } from "@/theme/themeContext";
+import BidIcon from "@/assets/images/icons/bid.png";
 import { BLACK_THEME } from "@/constants/button-primary-themes";
+import useGetAllAuctions from "@/hooks/useGetAllAuctions";
+import { ThemeProvider } from "@/theme/themeContext";
+import ButtonPrimary from "../../buttons/button-primary";
+import ErrorMessage from "../../error-message";
+import Loading from "../../loading";
+import SearchField from "../auction-search-field/auction-search-field";
+import SearchCard from "./auction-card/auction-card";
+import classes from "./search-auction.module.css";
 
 export default function SearchAuction() {
   const [search, setSearch] = useState("");
 
-  const results = useMemo(() => {
-    if (search.trim() === "") return mockVehicleData.slice(0, 3);
-    const q = search.toLowerCase();
-    return mockVehicleData.filter((v) =>
-      v.vehicleName.toLowerCase().includes(q)
-    );
-  }, [search]);
+  const {
+    data: auctions = [],
+    isLoading,
+    isError,
+    error,
+  } = useGetAllAuctions();
+
+  const filteredAuctions = useMemo(() => {
+    const query = search.trim().toLowerCase();
+
+    if (!query) {
+      return auctions.slice(0, 3);
+    }
+
+    return auctions.filter(({ vehicle }) => {
+      const { make, model, year } = vehicle;
+      const haystack = `${year} ${make} ${model}`.toLowerCase();
+      return haystack.includes(query);
+    });
+  }, [search, auctions]);
+
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorMessage message={error.message} />;
 
   return (
     <div className={classes.container}>
@@ -28,25 +44,14 @@ export default function SearchAuction() {
 
       <SearchField width="100%" search={search} setSearch={setSearch} />
 
-      {results.length ? (
-        results.map(({ vehicleName, currentBid, timeLeft }) => (
-          <div key={vehicleName + timeLeft} className={classes.vehicleCard}>
-            <div className={classes.imageWrapper}>
-              <CarImage src={ImageSrc} />
-            </div>
-            <div className={classes.vehicleInfo}>
-              <h2>{vehicleName}</h2>
-              <p>Time left: {timeLeft}</p>
-              <p>
-                Current bid: {CURRENCY}
-                {currentBid.toLocaleString()}
-              </p>
-            </div>
-          </div>
-        ))
+      {filteredAuctions.length === 0 ? (
+        <p>No auctions match “{search}”.</p>
       ) : (
-        <p>No vehicles found</p>
+        filteredAuctions.map((auction) => (
+          <SearchCard key={auction.auctionId} auction={auction} />
+        ))
       )}
+
       <ThemeProvider value={BLACK_THEME}>
         <ButtonPrimary
           className={classes.bidBtn}
