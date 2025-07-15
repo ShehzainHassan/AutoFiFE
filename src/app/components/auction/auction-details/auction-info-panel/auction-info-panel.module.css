@@ -53,3 +53,16 @@
 .amount:hover {
   background-color: var(--color-gray500);
 }
+.button {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadingButtonWrapper {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

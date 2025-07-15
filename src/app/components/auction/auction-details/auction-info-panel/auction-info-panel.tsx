@@ -16,6 +16,7 @@ import YourStats from "./your-stats/your-stats";
 import usePlaceBid from "@/hooks/usePlaceBid";
 import { useParams } from "next/navigation";
 import { getUserIdFromLocalStorage } from "@/utilities/utilities";
+import Loading from "@/app/components/loading";
 
 export default function AuctionInfoPanel({
   price,
@@ -40,7 +41,7 @@ export default function AuctionInfoPanel({
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
 
-  const { mutate: placeBid } = usePlaceBid(
+  const { mutate: placeBid, isPending } = usePlaceBid(
     id,
     Number(bid),
     getUserIdFromLocalStorage() ?? -1
@@ -91,7 +92,7 @@ export default function AuctionInfoPanel({
       <div className={classes.bidInput}>
         <Input width="100%">
           <Input.Field
-            isDisabled={!authData}
+            isDisabled={!authData || isPending}
             type="text"
             placeholder="Enter bid"
             value={bid}
@@ -152,14 +153,22 @@ export default function AuctionInfoPanel({
         <p>Please sign in to place bid</p>
       ) : (
         <div className={classes.buttonContainer}>
-          <ThemeProvider value={BLUE_WITH_BORDER}>
-            <ButtonPrimary
-              btnText="Place bid"
-              className={classes.button}
-              onClick={handlePlaceBid}
-              isDisabled={!bid || Number(bid) < startingPrice || !authData}
-            />
-          </ThemeProvider>
+          {!isPending ? (
+            <ThemeProvider value={BLUE_WITH_BORDER}>
+              <ButtonPrimary
+                btnText="Place bid"
+                className={classes.button}
+                isDisabled={
+                  !bid || Number(bid) < Math.max(startingPrice, currentBid)
+                }
+                onClick={handlePlaceBid}
+              />
+            </ThemeProvider>
+          ) : (
+            <div className={classes.loadingButtonWrapper}>
+              <Loading />
+            </div>
+          )}
         </div>
       )}
 
