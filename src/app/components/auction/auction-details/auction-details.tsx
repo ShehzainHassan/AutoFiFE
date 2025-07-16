@@ -14,6 +14,7 @@ import ImageContainer from "./image-container/image-container";
 import InfoTabs from "./info-tabs/info-tabs";
 import AuctionNotificationSettings from "./notifications/notification";
 import SavedVehicles from "./saved-vehicles/saved-vehicles";
+import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 
 export default function AuctionDetails() {
   const router = useRouter();
@@ -28,9 +29,12 @@ export default function AuctionDetails() {
   if (isError) return <ErrorMessage message={error.message} />;
   if (!auction) return <p>No auction found.</p>;
   return (
-    <div className={classes.mainContainer}>
-      <div className={classes.container}>
-        <AuctionDetailsHeader />
+    <div
+      className={`${classes.mainContainer} ${
+        panel !== "none" ? classes.white : ""
+      }`}>
+      <AuctionDetailsHeader />
+      <div className={`${classes.container}`}>
         {panel === "watchlist" && <SavedVehicles />}
         {panel === "notification" && <AuctionNotificationSettings />}
         {panel === "none" && (
@@ -52,7 +56,10 @@ export default function AuctionDetails() {
                     {auction.vehicle.model}
                   </h1>
                 </div>
-                <ImageContainer />
+                <ImageContainer
+                  auctionId={id}
+                  userId={getUserIdFromLocalStorage() ?? -1}
+                />
                 <InfoTabs />
                 <BidHistory auctionId={auction.auctionId} />
               </div>

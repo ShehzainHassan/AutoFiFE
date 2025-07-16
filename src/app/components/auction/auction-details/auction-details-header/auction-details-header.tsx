@@ -55,13 +55,17 @@ export default function AuctionDetailsHeader() {
             <ThemeProvider>
               <TextContainer
                 value="Watchlist"
-                className={classes.textContainer}
+                className={`${classes.textContainer} ${
+                  panel === "watchlist" ? classes.selected : ""
+                } `}
                 onClick={() => togglePanel("watchlist")}
               />
             </ThemeProvider>
 
             <div
-              className={classes.notification}
+              className={`${classes.notification} ${
+                panel === "notification" ? classes.selected : ""
+              }`}
               onClick={() => togglePanel("notification")}>
               <Image
                 src={NotificationBell}

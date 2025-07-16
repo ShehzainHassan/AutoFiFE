@@ -6,7 +6,7 @@ export default function CheckoutPage() {
   return (
     <div className={classes.container}>
       <NavbarContainer backgroundColor="var(--color-gray600)" />
-      <AuctionCheckout />;
+      <AuctionCheckout />
       <Footer />
     </div>
   );

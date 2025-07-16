@@ -47,6 +47,18 @@ const auctionAPI = {
     );
     return response.data;
   },
+  addAuctionToWatchlist: async (auctionId: number, userId: number) => {
+    const response = await apiClient.post(
+      `${API_BASE_URL}/auction/${auctionId}/watch?userId=${userId}`
+    );
+    return response.data;
+  },
+  removeFromWatchlist: async (auctionId: number, userId: number) => {
+    const response = await apiClient.delete(
+      `${API_BASE_URL}/auction/${auctionId}/watch?userId=${userId}`
+    );
+    return response.data;
+  },
 };
 
 export default auctionAPI;
