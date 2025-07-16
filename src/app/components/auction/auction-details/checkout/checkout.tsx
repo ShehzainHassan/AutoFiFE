@@ -3,24 +3,19 @@ import { Input } from "@/app/components/input-field";
 import CarImage from "@/app/components/result-card/car-image/car-image";
 import { CURRENCY } from "@/constants";
 import { usePanel } from "@/contexts/panel-context/panel-context";
+import { PAY_BUTTON } from "@/styles/text-container";
+import { ThemeProvider } from "@/theme/themeContext";
 import { useState } from "react";
 import AuctionDetailsHeader from "../auction-details-header/auction-details-header";
+import AuctionNotificationSettings from "../notifications/notification";
 import SavedVehicles from "../saved-vehicles/saved-vehicles";
 import StatItem from "../stat-item/stat-item";
-import classes from "./checkout.module.css";
-import AuctionNotificationSettings from "../notifications/notification";
 import TextContainer from "../text-container/text-container";
-import { ThemeProvider } from "@/theme/themeContext";
-import { PAY_BUTTON } from "@/styles/text-container";
-import { FormControlLabel, Switch } from "@mui/material";
+import classes from "./checkout.module.css";
+import { IOSSwitch } from "@/app/components/buttons/toggle-button/toggle-button";
 export default function AuctionCheckout() {
   const [creditCardNumber, setCreditCardNumber] = useState("");
   const { panel } = usePanel();
-  const [checked, setChecked] = useState(false);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-  };
   return (
     <div className={classes.container}>
       <AuctionDetailsHeader />
@@ -126,27 +121,7 @@ export default function AuctionCheckout() {
                 </div>
                 <div className={classes.paymentToggle}>
                   <p>Save payment information for future purchases</p>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={checked}
-                        onChange={handleChange}
-                        sx={{
-                          "& .MuiSwitch-switchBase.Mui-checked": {
-                            color: "var(--color-green600)",
-                          },
-                          "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
-                            {
-                              backgroundColor: "var(--color-green600)",
-                            },
-                          "& .MuiSwitch-thumb": {
-                            boxShadow: "0 0 2px rgba(0,0,0,0.2)",
-                          },
-                        }}
-                      />
-                    }
-                    label=""
-                  />
+                  <IOSSwitch />
                 </div>
                 <div className={classes.security}>
                   <h3>Security</h3>

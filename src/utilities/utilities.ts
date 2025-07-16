@@ -342,20 +342,6 @@ export function formatTime(seconds: number) {
     .padStart(2, "0");
   return `${h}:${m}:${s}`;
 }
-export function getTimeLeft(endUtc: string) {
-  const now = dayjs();
-  const end = dayjs(endUtc);
-  const diffInSeconds = end.diff(now, "second");
-
-  if (diffInSeconds <= 0) return "Ended";
-
-  const d = dayjs.duration(diffInSeconds, "second");
-  const days = Math.floor(d.asDays());
-  const hours = d.hours();
-  const minutes = d.minutes();
-
-  return `${days}d ${hours}h ${minutes}m`;
-}
 
 export function formatTimeAMPM(dateString: string) {
   const date = new Date(dateString);

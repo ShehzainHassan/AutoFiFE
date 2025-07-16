@@ -17,6 +17,7 @@ import usePlaceBid from "@/hooks/usePlaceBid";
 import { useParams } from "next/navigation";
 import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import Loading from "@/app/components/loading";
+import { ToastContainer } from "react-toastify";
 
 export default function AuctionInfoPanel({
   price,
@@ -26,6 +27,7 @@ export default function AuctionInfoPanel({
 }: AuctionInfoPanelProps) {
   const [bid, setBid] = useState("");
   const { hours, minutes, seconds } = useCountdown(endUtc);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (value === "" || /^\d+$/.test(value)) {
@@ -34,21 +36,32 @@ export default function AuctionInfoPanel({
   };
 
   const increaseBid = (amount: number) => {
-    const currentBid = bid === "" ? 0 : parseInt(bid, 10);
-    setBid((currentBid + amount).toString());
+    const current = bid === "" ? 0 : parseInt(bid, 10);
+    setBid((current + amount).toString());
   };
+
   const authData = localStorage.getItem("authData") ?? "";
+  const userId = getUserIdFromLocalStorage() ?? -1;
+
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
 
-  const { mutate: placeBid, isPending } = usePlaceBid(
-    id,
-    Number(bid),
-    getUserIdFromLocalStorage() ?? -1
-  );
+  const { mutate: placeBid, isPending } = usePlaceBid();
   const handlePlaceBid = () => {
-    placeBid();
+    placeBid(
+      {
+        auctionId: id,
+        amount: Number(bid),
+        userId,
+      },
+      {
+        onSuccess: () => {
+          setBid("");
+        },
+      }
+    );
   };
+
   return (
     <div className={classes.container}>
       <h1 className={classes.price}>
@@ -83,11 +96,21 @@ export default function AuctionInfoPanel({
           <p>Seconds</p>
         </div>
       </div>
-
-      <p>
-        Starting Price: {CURRENCY}
-        {startingPrice.toLocaleString()}
-      </p>
+      {currentBid === 0 ? (
+        <p>
+          Starting Price: {CURRENCY}
+          {startingPrice.toLocaleString()}
+        </p>
+      ) : (
+        <>
+          {bid && Number(currentBid) > 0 && Number(bid) <= currentBid && (
+            <p>The current highest bid is ${currentBid.toLocaleString()}</p>
+          )}
+          {bid && Number(currentBid) === 0 && Number(bid) < startingPrice && (
+            <p>Bid must be greater than ${startingPrice.toLocaleString()}</p>
+          )}
+        </>
+      )}
 
       <div className={classes.bidInput}>
         <Input width="100%">
@@ -98,12 +121,11 @@ export default function AuctionInfoPanel({
             value={bid}
             onChange={handleInputChange}
             onKeyDown={(e) => {
+              const current = bid === "" ? 0 : parseInt(bid, 10);
               if (e.key === "ArrowUp") {
-                const currentBid = bid === "" ? 0 : parseInt(bid, 10);
-                setBid((currentBid + 1).toString());
+                setBid((current + 1).toString());
               } else if (e.key === "ArrowDown") {
-                const currentBid = bid === "" ? 0 : parseInt(bid, 10);
-                setBid(Math.max(currentBid - 1, 0).toString());
+                setBid(Math.max(current - 1, 0).toString());
               }
             }}
           />
@@ -143,12 +165,6 @@ export default function AuctionInfoPanel({
         </div>
       )}
 
-      {bid && Number(currentBid) > 0 && Number(bid) <= currentBid && (
-        <p>The current highest bid is ${currentBid.toLocaleString()}</p>
-      )}
-      {bid && Number(currentBid) === 0 && Number(bid) < startingPrice && (
-        <p>Bid must be greater than ${startingPrice.toLocaleString()}</p>
-      )}
       {!authData ? (
         <p>Please sign in to place bid</p>
       ) : (
@@ -173,6 +189,7 @@ export default function AuctionInfoPanel({
       )}
 
       <YourStats />
+      <ToastContainer />
     </div>
   );
 }

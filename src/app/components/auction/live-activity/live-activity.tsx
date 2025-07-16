@@ -8,7 +8,6 @@ import classes from "./live-activity.module.css";
 import { LiveActivityProps } from "./live-activity.types";
 import VehicleAuctionInfo from "./vehicle-auction-info";
 
-import { getTimeLeft } from "@/utilities/utilities";
 import CarImage from "../../result-card/car-image/car-image";
 
 const LiveActivity = ({ dropdownFilters }: LiveActivityProps) => {
@@ -53,7 +52,7 @@ const LiveActivity = ({ dropdownFilters }: LiveActivityProps) => {
               vehicleName={`${auction.vehicle.year} ${auction.vehicle.make} ${auction.vehicle.model}`}
               currentBid={auction.currentPrice}
               bidCount={auction.bids.length ?? 0}
-              timeLeft={getTimeLeft(auction.endUtc)}
+              timeLeft={auction.endUtc}
             />
           </div>
         ))}
