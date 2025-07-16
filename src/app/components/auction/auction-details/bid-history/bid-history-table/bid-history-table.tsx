@@ -10,12 +10,6 @@ export default function BidHistoryTable({
   bids,
   userMap,
 }: BidHistoryTableProps) {
-  const latestBids = [...bids]
-    .sort(
-      (a, b) => new Date(b.placedAt).getTime() - new Date(a.placedAt).getTime()
-    )
-    .slice(0, 5);
-
   return (
     <div className={classes.table}>
       <div className={classes.row}>
@@ -25,7 +19,7 @@ export default function BidHistoryTable({
         <p className={classes.cell}>Type</p>
       </div>
 
-      {latestBids.map((bid, index) => (
+      {bids.map((bid, index) => (
         <div key={bid.bidId} className={classes.row}>
           <p className={classes.cell}>
             {userMap.get(bid.userId) ?? `Bidder ${index + 1}`}

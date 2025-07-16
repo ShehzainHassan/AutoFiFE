@@ -175,7 +175,9 @@ export default function AuctionInfoPanel({
                 btnText="Place bid"
                 className={classes.button}
                 isDisabled={
-                  !bid || Number(bid) < Math.max(startingPrice, currentBid)
+                  !bid ||
+                  Number(bid) < startingPrice ||
+                  Number(bid) <= currentBid
                 }
                 onClick={handlePlaceBid}
               />

@@ -11,7 +11,6 @@ export default function VehicleAuctionInfo({
   timeLeft,
 }: VehicleAuctionInfoProps) {
   const { hours, minutes, seconds } = useCountdown(timeLeft);
-  console.log(timeLeft);
   return (
     <div className={classes.container}>
       <h2 className={`${classes.title} ${headings.carTitle}`}>{vehicleName}</h2>
