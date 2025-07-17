@@ -11,9 +11,10 @@ import ErrorMessage from "@/app/components/error-message";
 import WatchLists from "../../watchlists/watchlists";
 import { useRouter } from "next/navigation";
 import { CURRENCY } from "@/constants";
+import { usePanel } from "@/contexts/panel-context/panel-context";
 export default function SavedVehiclesList() {
   const userId = getUserIdFromLocalStorage() ?? -1;
-
+  const { togglePanel } = usePanel();
   const {
     data: watchlist,
     isLoading: watchLoading,
@@ -43,6 +44,7 @@ export default function SavedVehiclesList() {
   if (auctionsError)
     return <ErrorMessage message={(auctionsError.error as Error).message} />;
   const redirectToAuction = (auctionId: number) => {
+    togglePanel("none");
     router.push(`/auction/${auctionId}`);
   };
   return (

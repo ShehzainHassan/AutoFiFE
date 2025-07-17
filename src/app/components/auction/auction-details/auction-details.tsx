@@ -2,6 +2,7 @@
 import { auctionData } from "@/constants/auction";
 import { usePanel } from "@/contexts/panel-context/panel-context";
 import useAuctionById from "@/hooks/useAuctionById";
+import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import { useParams, useRouter } from "next/navigation";
 import ErrorMessage from "../../error-message";
 import Loading from "../../loading";
@@ -14,7 +15,6 @@ import ImageContainer from "./image-container/image-container";
 import InfoTabs from "./info-tabs/info-tabs";
 import AuctionNotificationSettings from "./notifications/notification";
 import SavedVehicles from "./saved-vehicles/saved-vehicles";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 
 export default function AuctionDetails() {
   const router = useRouter();
@@ -25,9 +25,11 @@ export default function AuctionDetails() {
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
   const { data: auction, isLoading, isError, error } = useAuctionById(id);
+
   if (isLoading) return <Loading />;
   if (isError) return <ErrorMessage message={error.message} />;
   if (!auction) return <p>No auction found.</p>;
+
   return (
     <div
       className={`${classes.mainContainer} ${

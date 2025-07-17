@@ -1,5 +1,6 @@
 import { AuthProvider } from "@/contexts/auth-context";
 import { CarSearchProvider } from "@/contexts/car-search-context/car-search-context";
+import { PanelProvider } from "@/contexts/panel-context/panel-context";
 import { QuestionnaireProvider } from "@/contexts/questionnaire-context";
 import { UserFavoritesProvider } from "@/contexts/user-favorites-context/user-favorites-context";
 import ReactQueryProvider from "@/providers/react-query-provider";
@@ -8,7 +9,6 @@ import { Metadata } from "next";
 import { DM_Sans, Inter, Roboto } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
-import { PanelProvider } from "@/contexts/panel-context/panel-context";
 const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
