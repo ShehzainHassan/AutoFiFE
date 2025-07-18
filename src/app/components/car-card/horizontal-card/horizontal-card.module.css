@@ -71,7 +71,7 @@
   font-family: DM Sans, sans-serif;
   font-weight: 500;
   font-size: 15px;
-  color: var(--color-blue500);
+  color: var(--color-white100);
 }
 .btn:hover {
   cursor: pointer;

@@ -10,6 +10,7 @@ import {
 } from "@/interfaces/vehicle";
 import axios from "axios";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const SECOND_API_BASE_URL = process.env.NEXT_PUBLIC_SECOND_API_BASE_URL;
 
 const vehicleAPI = {
   getAllVehicles: async (
@@ -125,19 +126,19 @@ const vehicleAPI = {
   },
   getSimilarVehicles: async (vehicleId: number) => {
     const response = await axios.get<SimilarVehicleResponse>(
-      `http://localhost:8000/api/recommendations/similar/${vehicleId}`
+      `${SECOND_API_BASE_URL}/api/recommendations/similar/${vehicleId}`
     );
     return response.data;
   },
   getRecommendations: async (userId: number) => {
     const response = await axios.get<RecommendationsResponse>(
-      `http://localhost:8000/api/recommendations/user/${userId}`
+      `${SECOND_API_BASE_URL}/api/recommendations/user/${userId}`
     );
     return response.data;
   },
   getVehicleOptions: async () => {
     const response = await axios.get<VehicleOptions>(
-      `http://localhost:5011/Vehicle/get-vehicle-options`
+      `${API_BASE_URL}/Vehicle/get-vehicle-options`
     );
     return response.data;
   },

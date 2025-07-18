@@ -11,7 +11,7 @@ import useTracking from "@/hooks/useTracking";
 import SpeedometerIcon from "@/assets/images/icons/speedometer-white.png";
 import FuelIcon from "@/assets/images/icons/fuel-white.png";
 import GearboxIcon from "@/assets/images/icons/gear-white.png";
-import ArrowBlueIcon from "@/assets/images/icons/arrow-blue.png";
+import ArrowWhiteIcon from "@/assets/images/icons/arrow-white.png";
 export default function HorizontalCarCard({
   id,
   imgSrc,
@@ -106,7 +106,7 @@ export default function HorizontalCarCard({
               {btnText}
             </button>
             <Image
-              src={ArrowBlueIcon}
+              src={ArrowWhiteIcon}
               alt="arrow"
               width={14}
               height={14}
