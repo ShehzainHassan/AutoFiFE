@@ -1,7 +1,7 @@
 import headings from "@/styles/typography.module.css";
 import classes from "./statistics.module.css";
 import useTranslation from "@/i18n";
-import Wrapper from "../wrapper/wrapper";
+import Wrapper from '../Wrapper/wrapper';
 
 export default function Statistics() {
   const { t } = useTranslation();

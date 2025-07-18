@@ -1,7 +1,7 @@
 import Thumbnail from "@/assets/images/general/thumbnail.jpg";
 import PlayIcon from "@/assets/images/icons/play.png";
 import Image from "next/image";
-import Wrapper from "../wrapper/wrapper";
+import Wrapper from '../Wrapper/wrapper';
 import classes from "./car-video.module.css";
 import VideoDescription from "./video-description/video-description";
 export default function CarVideo() {

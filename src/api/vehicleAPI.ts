@@ -10,6 +10,7 @@ import {
 } from "@/interfaces/vehicle";
 import axios from "axios";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const RECOMMENDER_SYSTEM_BASE_URL = process.env.NEXT_PUBLIC_RECOMMENDER_SYSTEM;
 
 const vehicleAPI = {
   getAllVehicles: async (
@@ -20,7 +21,7 @@ const vehicleAPI = {
     const response = await axios.get<VehicleListResult>(
       `${API_BASE_URL}/Vehicle`,
       {
-        params: { pageView: pageSize, offset, status },
+        params: { pageView: pageSize, offset, status }
       }
     );
     return response.data;
@@ -33,7 +34,7 @@ const vehicleAPI = {
     const response = await axios.get<VehicleListResult>(
       `${API_BASE_URL}/Vehicle/by-make`,
       {
-        params: { pageView: pageSize, offset, make },
+        params: { pageView: pageSize, offset, make }
       }
     );
     return response.data;
@@ -50,7 +51,7 @@ const vehicleAPI = {
     const response = await axios.get<VehicleFeatures>(
       `${API_BASE_URL}/Vehicle/features`,
       {
-        params: { make, model },
+        params: { make, model }
       }
     );
     return response.data;
@@ -59,20 +60,20 @@ const vehicleAPI = {
     const response = await axios.get<number>(
       `${API_BASE_URL}/Vehicle/total-vehicle-count`,
       {
-        params: { ...filters },
+        params: { ...filters }
       }
     );
     return response.data;
   },
   getGearboxCount: async (filters: VehicleFilter) => {
     const response = await axios.get(`${API_BASE_URL}/Vehicle/gearbox-count`, {
-      params: { ...filters },
+      params: { ...filters }
     });
     return response.data;
   },
   getColorsCount: async (filters: VehicleFilter) => {
     const response = await axios.get(`${API_BASE_URL}/Vehicle/colors-count`, {
-      params: { ...filters },
+      params: { ...filters }
     });
     return response.data;
   },
@@ -107,8 +108,8 @@ const vehicleAPI = {
           endYear,
           sortOrder,
           gearbox,
-          selectedColors,
-        },
+          selectedColors
+        }
       }
     );
     return response.data;
@@ -125,22 +126,22 @@ const vehicleAPI = {
   },
   getSimilarVehicles: async (vehicleId: number) => {
     const response = await axios.get<SimilarVehicleResponse>(
-      `http://localhost:8000/api/recommendations/similar/${vehicleId}`
+      `${RECOMMENDER_SYSTEM_BASE_URL}/api/recommendations/similar/${vehicleId}`
     );
     return response.data;
   },
   getRecommendations: async (userId: number) => {
     const response = await axios.get<RecommendationsResponse>(
-      `http://localhost:8000/api/recommendations/user/${userId}`
+      `${RECOMMENDER_SYSTEM_BASE_URL}/api/recommendations/user/${userId}`
     );
     return response.data;
   },
   getVehicleOptions: async () => {
     const response = await axios.get<VehicleOptions>(
-      `http://localhost:5011/Vehicle/get-vehicle-options`
+      `${API_BASE_URL}/Vehicle/get-vehicle-options`
     );
     return response.data;
-  },
+  }
 };
 
 export default vehicleAPI;
