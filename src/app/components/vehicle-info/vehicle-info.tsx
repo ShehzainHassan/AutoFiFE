@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FAQs from "../faqs/faqs";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
-import Wrapper from "../wrapper/wrapper";
+import Wrapper from '../Wrapper/wrapper';
 import { VehicleInfoProps } from "./vehicle-info.types";
 
 const VehicleInfoTabs = ({ submittedParams }: VehicleInfoProps) => {

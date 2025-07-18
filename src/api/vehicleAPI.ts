@@ -10,7 +10,7 @@ import {
 } from "@/interfaces/vehicle";
 import axios from "axios";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const SECOND_API_BASE_URL = process.env.NEXT_PUBLIC_SECOND_API_BASE_URL;
+const RECOMMENDER_SYSTEM_BASE_URL = process.env.NEXT_PUBLIC_RECOMMENDER_SYSTEM;
 
 const vehicleAPI = {
   getAllVehicles: async (
@@ -126,13 +126,13 @@ const vehicleAPI = {
   },
   getSimilarVehicles: async (vehicleId: number) => {
     const response = await axios.get<SimilarVehicleResponse>(
-      `${SECOND_API_BASE_URL}/api/recommendations/similar/${vehicleId}`
+      `${RECOMMENDER_SYSTEM_BASE_URL}/api/recommendations/similar/${vehicleId}`
     );
     return response.data;
   },
   getRecommendations: async (userId: number) => {
     const response = await axios.get<RecommendationsResponse>(
-      `${SECOND_API_BASE_URL}/api/recommendations/user/${userId}`
+      `${RECOMMENDER_SYSTEM_BASE_URL}/api/recommendations/user/${userId}`
     );
     return response.data;
   },

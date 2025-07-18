@@ -18,7 +18,7 @@ export default function SearchField({
           type="text"
           placeholder="Search"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={e => setSearch?.(e.target.value)}
           className={classes.searchField}
         />
       </Input>
