@@ -3,11 +3,11 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { AllVehicles } from "./components";
-import HeroContainer from "./components/hero/hero-container";
-import PremiumBrands from "./components/premium-brands/premium-brands";
-import classes from "./page.module.css";
+import HeroContainer from './components/hero-Component/hero-container';
+import PremiumBrands from './components/premium-brands/premium-brands';
+import classes from './page.module.css';
 
-const CarVideo = dynamic(() => import("./components/car-video/car-video"));
+const CarVideo = dynamic(() => import('./components/car-video/car-video'));
 const Statistics = dynamic(
   () => import('./components/Statistics-Component/statistics')
 );
@@ -17,7 +17,7 @@ const WhyChooseUs = dynamic(
 const PopularMakes = dynamic(
   () => import('./components/popular-makes/popular-makes')
 );
-const Shop = dynamic(() => import('./components/shop/shop'));
+const Shop = dynamic(() => import('./components/shop-Component/shop'));
 const Customers = dynamic(
   () => import('./components/what-our-customers-say/what-our-customers-say')
 );

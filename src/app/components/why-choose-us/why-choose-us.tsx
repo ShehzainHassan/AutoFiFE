@@ -1,6 +1,6 @@
-import Item from "../item/item";
-import SectionTitle from "../section-title/section-title";
-import classes from "./why-choose.us.module.css";
+import Item from '../item-Component/item';
+import SectionTitle from '../section-title/section-title';
+import classes from './why-choose.us.module.css';
 export default function WhyChooseUs() {
   return (
     <div className={classes.container}>
