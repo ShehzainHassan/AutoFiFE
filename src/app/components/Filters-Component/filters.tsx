@@ -1,5 +1,5 @@
 import Expandable from "../expandable-dropdown/expandable-dropdown";
-import classes from "./filters.module.css";
+import classes from "./filters-style.module.css";
 export default function Filters() {
   return (
     <div className={`${classes.filters} `}>

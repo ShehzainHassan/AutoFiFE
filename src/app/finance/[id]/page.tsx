@@ -11,7 +11,7 @@ import {
   MaritalStatus,
 } from "@/app/components";
 import ErrorMessage from "@/app/components/error-message/error-message";
-import Footer from '@/app/components/footer';
+import Footer from '@/app/components/Footer-Component';
 import NavbarContainer from '@/app/components/navbar';
 import useVehiclesById from "@/hooks/useVehicleById";
 import { useParams } from "next/navigation";

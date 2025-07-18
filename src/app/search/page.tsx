@@ -1,6 +1,6 @@
 "use client";
 
-import Footer from "../components/footer/footer";
+import Footer from '../components/Footer-Component/footer';
 import LoadResults from "../components/load-results/load-results";
 import VirtualizedList from "../components/load-virtualized-results/load-virutalized-results";
 import NavbarContainer from "../components/navbar/navbar-container";

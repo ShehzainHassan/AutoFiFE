@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FAQs from "../faqs/faqs";
+import FAQs from '../FAQs-Component/faqs';
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
 import Wrapper from '../Wrapper/wrapper';
 import { VehicleInfoProps } from "./vehicle-info.types";
