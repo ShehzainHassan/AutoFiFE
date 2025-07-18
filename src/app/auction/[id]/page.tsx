@@ -1,5 +1,5 @@
 import { Footer } from "@/app/components";
-import NavbarContainer from "@/app/components/navbar/navbar-container";
+import NavbarContainer from '@/app/components/navbar';
 import AuctionDetails from "@/app/components/auction/auction-details/auction-details";
 import classes from "./page.module.css";
 export default function AuctionDetailsPage() {

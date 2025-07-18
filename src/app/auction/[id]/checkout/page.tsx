@@ -1,6 +1,6 @@
 import { Footer } from "@/app/components";
 import AuctionCheckout from "@/app/components/auction/auction-details/checkout/checkout";
-import NavbarContainer from "@/app/components/navbar/navbar-container";
+import NavbarContainer from '@/app/components/navbar';
 import classes from "./page.module.css";
 export default function CheckoutPage() {
   return (

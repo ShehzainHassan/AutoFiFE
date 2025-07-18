@@ -4,8 +4,8 @@ import {
   CompareFeatures,
   VehicleSelector,
 } from "@/app/components";
-import Footer from "@/app/components/footer/footer";
-import NavbarContainer from "@/app/components/navbar/navbar-container";
+import Footer from '@/app/components/footer';
+import NavbarContainer from '@/app/components/navbar';
 import { BLUE_THEME } from "@/constants/button-primary-themes";
 import { CompareVehicle } from "@/interfaces/vehicle";
 import { ThemeProvider } from "@/theme/themeContext";

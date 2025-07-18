@@ -2,8 +2,8 @@
 import { Loading, VehicleImageGallery } from "@/app/components";
 import ContactFormContainer from "@/app/components/contact-info-form/contact-form-container";
 import EmptyState from "@/app/components/empty-state/empty-state";
-import Footer from "@/app/components/footer/footer";
-import NavbarContainer from "@/app/components/navbar/navbar-container";
+import Footer from '@/app/components/footer';
+import NavbarContainer from '@/app/components/navbar';
 import { ContactFormProvider } from "@/contexts/contact-form-context/contact-form-context";
 import useVehiclesById from "@/hooks/useVehicleById";
 import useVehicleFeatures from "@/hooks/useVehicleFeatures";
