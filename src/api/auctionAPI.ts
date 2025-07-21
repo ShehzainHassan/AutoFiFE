@@ -1,4 +1,10 @@
-import { Auction, Bid, Watchlist } from "@/interfaces/auction";
+import {
+  Auction,
+  AutoBid,
+  Bid,
+  UpdateAutoBid,
+  Watchlist,
+} from "@/interfaces/auction";
 import axios from "axios";
 import apiClient from "./apiClient";
 
@@ -59,6 +65,45 @@ const auctionAPI = {
     );
     return response.data;
   },
+  getUserAutoBid: async (userId: number, auctionId: number) => {
+    const response = await axios.get<AutoBid>(
+      `${API_BASE_URL}/api/autobid/${auctionId}/user/${userId}`
+    );
+    return response.data;
+  },
+  placeAutoBid: async (autoBid: AutoBid) => {
+    const response = await apiClient.post(`${API_BASE_URL}/api/autobid`, {
+      auctionId: autoBid.auctionId,
+      maxBidAmount: autoBid.maxBidAmount,
+      userId: autoBid.userId,
+      bidStrategyType: autoBid.bidStrategyType,
+      isActive: true,
+      bidDelaySeconds: autoBid.bidDelaySeconds,
+      maxBidsPerMinute: autoBid.maxBidsPerMinute,
+      preferredBidTiming: autoBid.preferredBidTiming,
+    });
+    return response.data;
+  },
+  isAutoBidSet: async (auctionId: number, userId: number) => {
+    const response = await axios.get(
+      `${API_BASE_URL}/api/autobid/auction/${auctionId}/user/${userId}`
+    );
+    return response.data;
+  },
+  updateAutoBid: async (
+    auctionId: number,
+    userId: number,
+    updateAutoBid: UpdateAutoBid
+  ) => {
+    const response = await apiClient.put(
+      `${API_BASE_URL}/api/autobid/update/auction/${auctionId}/user/${userId}`,
+      {
+        maxBidAmount: updateAutoBid.maxBidAmount,
+        bidStrategyType: updateAutoBid.bidStrategyType,
+        isActive: updateAutoBid.isActive,
+      }
+    );
+    return response.data;
+  },
 };
-
 export default auctionAPI;

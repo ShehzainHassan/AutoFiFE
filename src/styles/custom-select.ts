@@ -40,3 +40,25 @@ export const contactDropdownStyle: StylesConfig<Options, false> = {
     padding: 0,
   }),
 };
+
+export const grayedField: StylesConfig<Options, false> = {
+  control: (base) => ({
+    ...base,
+    border: "1px solid var(--color-gray525)",
+    boxShadow: "none",
+    cursor: "pointer",
+    width: "100%",
+    color: "var(--color-blue250)",
+    backgroundColor: "var(--color-gray560)",
+  }),
+  menu: (base) => ({
+    ...base,
+    marginTop: 0,
+    border: "1px solid var(--color-gray525)",
+    boxShadow: "none",
+  }),
+  menuList: (base) => ({
+    ...base,
+    padding: 0,
+  }),
+};

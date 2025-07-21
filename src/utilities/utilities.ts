@@ -355,3 +355,54 @@ export function formatTimeAMPM(dateString: string) {
 
   return `${hours}:${minutesStr}${ampm}`;
 }
+
+export function formatBidStrategyType(strategy: string) {
+  switch (strategy) {
+    case "Conservative":
+      return 0;
+    case "Aggressive":
+      return 1;
+    case "Incremental":
+      return 2;
+    default:
+      return 0;
+  }
+}
+
+export function formatBidTiming(preferredTiming: string) {
+  switch (preferredTiming) {
+    case "Immediate":
+      return 0;
+    case "LastMinute":
+      return 1;
+    case "SpreadEvenly":
+      return 2;
+    default:
+      return 0;
+  }
+}
+
+export function formatBidStrategyTypeReverse(value: number): string {
+  switch (value) {
+    case 0:
+      return "Conservative";
+    case 1:
+      return "Aggressive";
+    case 2:
+      return "Incremental";
+    default:
+      return "Conservative";
+  }
+}
+export function formatBidTimingReverse(value: number): string {
+  switch (value) {
+    case 0:
+      return "Immediate";
+    case 1:
+      return "LastMinute";
+    case 2:
+      return "SpreadEvenly";
+    default:
+      return "Immediate";
+  }
+}

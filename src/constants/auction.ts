@@ -102,3 +102,15 @@ export const mockVehicleData: VehicleAuctionData[] = [
     timeLeft: "3d 2h",
   },
 ];
+
+export const BidStrategyOptions = [
+  { label: "Conservative", value: "Conservative" },
+  { label: "Aggressive", value: "Aggressive" },
+  { label: "Incremental", value: "Incremental" },
+];
+
+export const TimingPreferenceOptions = [
+  { label: "Immediate", value: "Immediate" },
+  { label: "Last Minute", value: "LastMinute" },
+  { label: "Spread", value: "SpreadEvenly" },
+];

@@ -51,6 +51,7 @@ function SelectComponent({
   styles,
   components,
   showDropdownIndicator = true,
+  isDisabled = false,
 }: SelectComponentProps) {
   const context = useContext(DropdownContext);
   if (!context) {
@@ -67,6 +68,7 @@ function SelectComponent({
       placeholder={selectPlaceholder}
       value={options.find((opt) => opt.value === value)}
       onChange={(option) => onChange(option?.value || "")}
+      isDisabled={isDisabled}
       styles={styles}
       components={{
         ...components,

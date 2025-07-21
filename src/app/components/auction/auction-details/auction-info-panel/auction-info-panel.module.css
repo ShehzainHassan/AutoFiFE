@@ -66,3 +66,30 @@
   align-items: center;
   justify-content: center;
 }
+.bidTypeContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px;
+  border-radius: 12px;
+  background-color: var(--color-blue450);
+  margin-bottom: 10px;
+}
+.bidType {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  width: 100%;
+  padding: 15px;
+  cursor: pointer;
+  color: var(--color-white100);
+}
+.selected {
+  color: var(--color-blue450);
+  background-color: var(--color-white100);
+}
+.statusContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

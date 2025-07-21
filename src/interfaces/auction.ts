@@ -33,3 +33,20 @@ export interface Watchlist {
   auctionId: number;
   createdUtc: string;
 }
+
+export interface AutoBid {
+  userId: number;
+  auctionId: number;
+  maxBidAmount: number;
+  bidStrategyType: number;
+  bidDelaySeconds: number | null;
+  maxBidsPerMinute: number | null;
+  preferredBidTiming: number;
+  isActive: boolean;
+}
+
+export interface UpdateAutoBid {
+  maxBidAmount: number;
+  bidStrategyType: number;
+  isActive: boolean;
+}
