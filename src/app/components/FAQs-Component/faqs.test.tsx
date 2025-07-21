@@ -1,7 +1,7 @@
 import { useSearch } from "@/contexts/car-search-context";
 import useSearchVehicles from "@/hooks/useSearchVehicles";
 import { screen } from "@testing-library/react";
-import FAQs from "../faqs";
+import FAQs from ".";
 import { renderWithClient } from "@/test-utils/render-with-client";
 
 jest.mock("@/contexts/car-search-context", () => ({

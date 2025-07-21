@@ -3,26 +3,28 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { AllVehicles } from "./components";
-import HeroContainer from "./components/hero/hero-container";
-import PremiumBrands from "./components/premium-brands/premium-brands";
-import classes from "./page.module.css";
+import HeroContainer from './components/hero-Component/hero-container';
+import PremiumBrands from './components/premium-brands/premium-brands';
+import classes from './page.module.css';
 
-const CarVideo = dynamic(() => import("./components/car-video/car-video"));
-const Statistics = dynamic(() => import("./components/statistics/statistics"));
+const CarVideo = dynamic(() => import('./components/car-video/car-video'));
+const Statistics = dynamic(
+  () => import('./components/Statistics-Component/statistics')
+);
 const WhyChooseUs = dynamic(
-  () => import("./components/why-choose-us/why-choose-us")
+  () => import('./components/why-choose-us/why-choose-us')
 );
 const PopularMakes = dynamic(
-  () => import("./components/popular-makes/popular-makes")
+  () => import('./components/popular-makes/popular-makes')
 );
-const Shop = dynamic(() => import("./components/shop/shop"));
+const Shop = dynamic(() => import('./components/shop-Component/shop'));
 const Customers = dynamic(
-  () => import("./components/what-our-customers-say/what-our-customers-say")
+  () => import('./components/what-our-customers-say/what-our-customers-say')
 );
 const LatestBlog = dynamic(
-  () => import("./components/latest-blog/latest-blog")
+  () => import('./components/latest-blog/latest-blog')
 );
-const Footer = dynamic(() => import("./components/footer/footer"));
+const Footer = dynamic(() => import('./components/Footer-Component/footer'));
 
 export default function Home() {
   return (

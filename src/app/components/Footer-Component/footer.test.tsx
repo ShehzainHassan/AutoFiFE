@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import Footer from "../footer";
+import Footer from ".";
 import { useRouter } from "next/navigation";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
 

@@ -4,7 +4,7 @@ import classes from "./sidebar.module.css";
 import { SidebarViewProps } from "./sidebar.types";
 import { Dropdown } from "@/app/components/";
 import { ButtonPrimary } from "@/app/components";
-import Filters from "../filters/filters";
+import Filters from '../Filters-Component/filters';
 
 export default function SidebarView({
   makeOptions,
