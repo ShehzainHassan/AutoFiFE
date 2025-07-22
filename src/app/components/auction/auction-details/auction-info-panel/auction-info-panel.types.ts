@@ -1,8 +1,8 @@
+import { Auction } from "@/interfaces/auction";
+
 export type AuctionInfoPanelProps = {
-  price: number;
-  endUtc: string;
-  startingPrice: number;
-  currentBid: number;
+  auction: Auction;
+  vehiclePrice: number;
 };
 
 export type AutoBidTypeProps = {

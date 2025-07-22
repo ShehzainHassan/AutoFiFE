@@ -7,4 +7,5 @@ export type CarImageProps = {
   children?: React.ReactNode;
   className?: string;
   onClick?(): void;
+  status?: string;
 };

@@ -66,10 +66,8 @@ export default function AuctionDetails() {
                 <BidHistory auctionId={auction.auctionId} />
               </div>
               <AuctionInfoPanel
-                price={auction.vehicle.price}
-                endUtc={auction.endUtc}
-                startingPrice={auction.startingPrice}
-                currentBid={auction.currentPrice}
+                vehiclePrice={auction.vehicle.price}
+                auction={auction}
               />
             </div>
 

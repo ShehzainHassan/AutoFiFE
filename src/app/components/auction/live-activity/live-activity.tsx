@@ -44,6 +44,7 @@ const LiveActivity = ({ dropdownFilters }: LiveActivityProps) => {
         {vehicleAuctionData.map((auction) => (
           <div key={auction.auctionId} className={classes.cardWrapper}>
             <CarImage
+              status={auction.status}
               onClick={() => redirectToAuctionDetails(auction.auctionId)}
               className={classes.fixedHeight}
             />

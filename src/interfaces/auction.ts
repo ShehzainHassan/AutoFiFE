@@ -22,6 +22,8 @@ export interface Auction {
   status: string;
   startUtc: string;
   endUtc: string;
+  scheduledStartTime: string | null;
+  previewStartTime: string | null;
   updatedUtc: string;
   vehicle: Vehicle;
   bids: Bid[];

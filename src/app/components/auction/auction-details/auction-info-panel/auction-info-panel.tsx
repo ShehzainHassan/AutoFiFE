@@ -15,23 +15,25 @@ import ManualBid from "./manual-bid-container/manual-bid-container";
 import YourStats from "./your-stats/your-stats";
 
 export default function AuctionInfoPanel({
-  price,
-  endUtc,
-  startingPrice,
-  currentBid,
+  auction,
+  vehiclePrice,
 }: AuctionInfoPanelProps) {
   const [bid, setBid] = useState("");
-  const { hours, minutes, seconds } = useCountdown(endUtc);
+  const { hours, minutes, seconds } = useCountdown(auction.endUtc);
+  const {
+    hours: startHours,
+    minutes: startMinutes,
+    seconds: startSeconds,
+  } = useCountdown(auction.startUtc);
   const [bidType, setBidType] = useState("Manual");
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
   const isEnded = hours === 0 && minutes === 0 && seconds === 0;
-  console.log(isEnded);
   return (
     <div className={classes.container}>
       <h1 className={classes.price}>
         {CURRENCY}
-        {price.toLocaleString()}
+        {vehiclePrice.toLocaleString()}
       </h1>
 
       <AuctionStats />
@@ -40,61 +42,87 @@ export default function AuctionInfoPanel({
         <p>Auction has ended</p>
       ) : (
         <>
-          <p
-            className={`${classes.center} ${classes.text} ${headings.auctionEndText}`}>
-            Auction ends in
-          </p>
+          {auction.status === "PreviewMode" ? (
+            <p
+              className={`${classes.center} ${classes.text} ${headings.auctionEndText}`}>
+              Auction starts in
+            </p>
+          ) : (
+            <p
+              className={`${classes.center} ${classes.text} ${headings.auctionEndText}`}>
+              Auction ends in
+            </p>
+          )}
+
           <div className={classes.timerContainer}>
             <div className={classes.textContainer}>
               <ThemeProvider>
-                <TextContainer value={hours} />
+                <TextContainer
+                  value={auction.status === "PreviewMode" ? startHours : hours}
+                />
               </ThemeProvider>
               <p>Hours</p>
             </div>
             <div className={classes.textContainer}>
               <ThemeProvider>
-                <TextContainer value={minutes.toString().padStart(2, "0")} />
+                <TextContainer
+                  value={
+                    auction.status === "PreviewMode"
+                      ? startMinutes.toString().padStart(2, "0")
+                      : minutes.toString().padStart(2, "0")
+                  }
+                />
               </ThemeProvider>
               <p>Minutes</p>
             </div>
             <div className={classes.textContainer}>
               <ThemeProvider>
-                <TextContainer value={seconds.toString().padStart(2, "0")} />
+                <TextContainer
+                  value={
+                    auction.status === "PreviewMode"
+                      ? startSeconds.toString().padStart(2, "0")
+                      : seconds.toString().padStart(2, "0")
+                  }
+                />
               </ThemeProvider>
               <p>Seconds</p>
             </div>
           </div>
 
-          <div className={classes.bidTypeContainer}>
-            <div
-              onClick={() => setBidType("Manual")}
-              className={`${classes.bidType} ${
-                bidType === "Manual" ? classes.selected : ""
-              }`}>
-              Manual Bid
-            </div>
-            <div
-              onClick={() => setBidType("Auto")}
-              className={`${classes.bidType} ${
-                bidType === "Auto" ? classes.selected : ""
-              }`}>
-              Auto Bid
-            </div>
-          </div>
+          {auction.status === "Active" && (
+            <>
+              <div className={classes.bidTypeContainer}>
+                <div
+                  onClick={() => setBidType("Manual")}
+                  className={`${classes.bidType} ${
+                    bidType === "Manual" ? classes.selected : ""
+                  }`}>
+                  Manual Bid
+                </div>
+                <div
+                  onClick={() => setBidType("Auto")}
+                  className={`${classes.bidType} ${
+                    bidType === "Auto" ? classes.selected : ""
+                  }`}>
+                  Auto Bid
+                </div>
+              </div>
 
-          {bidType === "Manual" ? (
-            <ManualBid
-              bid={bid}
-              setBid={setBid}
-              currentBid={currentBid}
-              startingPrice={startingPrice}
-            />
-          ) : (
-            <AutoPlaceBid
-              auctionId={id}
-              currentBid={currentBid}
-              startingPrice={startingPrice}
-            />
+              {bidType === "Manual" ? (
+                <ManualBid
+                  bid={bid}
+                  setBid={setBid}
+                  currentBid={auction.currentPrice}
+                  startingPrice={auction.startingPrice}
+                />
+              ) : (
+                <AutoPlaceBid
+                  auctionId={id}
+                  currentBid={auction.currentPrice}
+                  startingPrice={auction.startingPrice}
+                />
+              )}
+            </>
           )}
         </>
       )}

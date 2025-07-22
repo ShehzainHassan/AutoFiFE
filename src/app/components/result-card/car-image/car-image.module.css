@@ -16,3 +16,12 @@
   display: flex;
   gap: 8px;
 }
+.statusLabel {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: var(--color-blue400);
+  color: var(--color-white100);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
