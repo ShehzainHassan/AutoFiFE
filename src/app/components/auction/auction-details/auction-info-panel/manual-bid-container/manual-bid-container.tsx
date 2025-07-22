@@ -11,6 +11,9 @@ import TextContainer from "../../text-container/text-container";
 import classes from "../auction-info-panel.module.css";
 import { ManualBidProps } from "../auction-info-panel.types";
 import { CURRENCY } from "@/constants";
+import useHighestBidderId from "@/hooks/useGetHighestBidderId";
+import { useBidUpdates } from "@/hooks/useBidUpdates";
+import { useQueryClient } from "@tanstack/react-query";
 export default function ManualBid({
   bid,
   setBid,
@@ -19,12 +22,13 @@ export default function ManualBid({
 }: ManualBidProps) {
   const authData = localStorage.getItem("authData") ?? "";
   const userId = getUserIdFromLocalStorage() ?? -1;
+  const queryClient = useQueryClient();
 
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
 
   const { mutate: placeBid, isPending } = usePlaceBid();
-
+  const { data: highestId, isLoading } = useHighestBidderId(id);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (value === "" || /^\d+$/.test(value)) {
@@ -51,9 +55,20 @@ export default function ManualBid({
       }
     );
   };
+  useBidUpdates(id, () => {
+    queryClient.invalidateQueries({
+      queryKey: ["highest-bidder", id],
+      refetchType: "active",
+    });
+  });
+  if (isLoading) return <Loading />;
+  if (!highestId) return;
+
   return (
     <>
-      {currentBid === 0 ? (
+      {highestId === userId ? (
+        <p>You are already the highest bidder</p>
+      ) : currentBid === 0 ? (
         <p>
           Starting Price: {CURRENCY}
           {startingPrice.toLocaleString()}
@@ -61,13 +76,20 @@ export default function ManualBid({
       ) : (
         <>
           {bid && Number(currentBid) > 0 && Number(bid) <= currentBid && (
-            <p>The current highest bid is ${currentBid.toLocaleString()}</p>
+            <p>
+              The current highest bid is {CURRENCY}
+              {currentBid.toLocaleString()}
+            </p>
           )}
           {bid && Number(currentBid) === 0 && Number(bid) < startingPrice && (
-            <p>Bid must be greater than ${startingPrice.toLocaleString()}</p>
+            <p>
+              Bid must be greater than {CURRENCY}
+              {startingPrice.toLocaleString()}
+            </p>
           )}
         </>
       )}
+
       <div className={classes.bidInput}>
         <Input width="100%">
           <Input.Field
@@ -132,6 +154,7 @@ export default function ManualBid({
                 className={classes.button}
                 isDisabled={
                   !bid ||
+                  highestId == userId ||
                   Number(bid) < startingPrice ||
                   Number(bid) <= currentBid
                 }

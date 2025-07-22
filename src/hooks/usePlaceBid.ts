@@ -94,9 +94,10 @@ const usePlaceBid = () => {
       queryClient.invalidateQueries({
         queryKey: ["placeBid", auctionId],
       });
-      // queryClient.invalidateQueries({
-      //   queryKey: ["auctionById", auctionId],
-      // });
+      queryClient.invalidateQueries({
+        queryKey: ["highest-bidder", auctionId],
+      });
+
       queryClient.invalidateQueries({
         queryKey: ["userBids", userId],
       });

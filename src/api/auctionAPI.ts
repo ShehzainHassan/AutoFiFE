@@ -31,6 +31,12 @@ const auctionAPI = {
     );
     return response.data;
   },
+  getHighestBidderId: async (id: number) => {
+    const response = await axios.get<number>(
+      `${API_BASE_URL}/auction/highest-bidder/${id}`
+    );
+    return response.data;
+  },
   getUserWatchList: async (id: number) => {
     const response = await axios.get<Watchlist[]>(
       `${API_BASE_URL}/auction/user/${id}/watchlist`
