@@ -62,7 +62,6 @@ export default function ManualBid({
     });
   });
   if (isLoading) return <Loading />;
-  if (!highestId) return;
 
   return (
     <>
@@ -150,10 +149,12 @@ export default function ManualBid({
           {!isPending ? (
             <ThemeProvider value={BLUE_WITH_BORDER}>
               <ButtonPrimary
+                type="button"
                 btnText="Place Manual Bid"
                 className={classes.button}
                 isDisabled={
                   !bid ||
+                  isPending ||
                   highestId == userId ||
                   Number(bid) < startingPrice ||
                   Number(bid) <= currentBid

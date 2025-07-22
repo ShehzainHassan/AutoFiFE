@@ -23,19 +23,30 @@ export default function ButtonPrimary({
   const theme = useTheme();
   const themeValues = theme.buttonPrimary;
 
+  const currentBackground = isHovered
+    ? hoverColor || themeValues?.hoverColor
+    : backgroundColor || themeValues?.backgroundColor;
+
+  const currentTextColor = isHovered
+    ? themeValues?.hoverTextColor || textColor || themeValues?.textColor
+    : textColor || themeValues?.textColor;
+
   return (
-    <div
+    <button
+      type={type}
+      aria-label={typeof btnText === "string" ? btnText : undefined}
       className={`${classes.btnContainer} ${className}`}
       style={{
-        backgroundColor: isHovered
-          ? hoverColor || themeValues?.hoverColor
-          : backgroundColor || themeValues?.backgroundColor,
+        backgroundColor: currentBackground,
         borderRadius: borderRadius || themeValues?.borderRadius,
         padding: padding || themeValues?.padding,
         border: border || themeValues?.border,
         opacity: isDisabled ? 0.6 : 1,
         pointerEvents: isDisabled ? "none" : "auto",
         cursor: isDisabled ? "not-allowed" : "pointer",
+        display: "flex",
+        alignItems: "center",
+        gap: "6px",
       }}
       onClick={(e) => {
         if (isDisabled) {
@@ -49,17 +60,13 @@ export default function ButtonPrimary({
       {imgSrc && (
         <Image src={imgSrc} alt="icon" width={15} height={15} loading="lazy" />
       )}
-      <button
-        aria-label={typeof btnText === "string" ? btnText : undefined}
-        type={type}
+      <span
         className={classes.btn}
         style={{
-          color: isHovered
-            ? themeValues?.hoverTextColor || textColor || themeValues?.textColor
-            : textColor || themeValues?.textColor,
+          color: currentTextColor,
         }}>
         {btnText}
-      </button>
-    </div>
+      </span>
+    </button>
   );
 }

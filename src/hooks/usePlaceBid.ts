@@ -5,6 +5,7 @@ import {
   handleApiError,
 } from "@/utilities/utilities";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
@@ -74,13 +75,22 @@ const usePlaceBid = () => {
       return { previousAuction };
     },
 
-    onError: (error, { auctionId }, context) => {
+    onError: (error: unknown, { auctionId }, context) => {
       if (context?.previousAuction) {
         queryClient.setQueryData<AuctionDetails>(
           ["placeBid", auctionId],
           context.previousAuction
         );
       }
+
+      const axiosError = error as AxiosError<{ error: string }>;
+      const apiError = axiosError.response?.data?.error;
+      const fallbackError = axiosError.message;
+      const errorMessage =
+        apiError || fallbackError || "An unexpected error occurred";
+
+      toast.error(errorMessage);
+
       handleApiError(error, router);
     },
 

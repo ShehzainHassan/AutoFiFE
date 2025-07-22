@@ -65,10 +65,7 @@ export default function AuctionDetails() {
                 <InfoTabs />
                 <BidHistory auctionId={auction.auctionId} />
               </div>
-              <AuctionInfoPanel
-                vehiclePrice={auction.vehicle.price}
-                auction={auction}
-              />
+              <AuctionInfoPanel vehiclePrice={auction.vehicle.price} />
             </div>
 
             <div className={classes.auctionCarousel}>

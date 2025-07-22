@@ -1,7 +1,4 @@
-import { Auction } from "@/interfaces/auction";
-
 export type AuctionInfoPanelProps = {
-  auction: Auction;
   vehiclePrice: number;
 };
 

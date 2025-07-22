@@ -1,5 +1,7 @@
 "use client";
+import Loading from "@/app/components/loading";
 import { CURRENCY } from "@/constants";
+import useAuctionById from "@/hooks/useAuctionById";
 import useCountdown from "@/hooks/useCountdown";
 import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
@@ -15,20 +17,22 @@ import ManualBid from "./manual-bid-container/manual-bid-container";
 import YourStats from "./your-stats/your-stats";
 
 export default function AuctionInfoPanel({
-  auction,
   vehiclePrice,
 }: AuctionInfoPanelProps) {
   const [bid, setBid] = useState("");
-  const { hours, minutes, seconds } = useCountdown(auction.endUtc);
+  const [bidType, setBidType] = useState("Manual");
+  const params = useParams();
+  const id = params.id ? Number(params.id) : -1;
+  const { data: auction, isLoading } = useAuctionById(id);
+  const { hours, minutes, seconds } = useCountdown(auction?.endUtc ?? "");
   const {
     hours: startHours,
     minutes: startMinutes,
     seconds: startSeconds,
-  } = useCountdown(auction.startUtc);
-  const [bidType, setBidType] = useState("Manual");
-  const params = useParams();
-  const id = params.id ? Number(params.id) : -1;
+  } = useCountdown(auction?.startUtc ?? "");
   const isEnded = hours === 0 && minutes === 0 && seconds === 0;
+  if (isLoading) return <Loading />;
+  if (!auction) return;
   return (
     <div className={classes.container}>
       <h1 className={classes.price}>
