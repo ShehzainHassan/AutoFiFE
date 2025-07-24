@@ -6,7 +6,6 @@ import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import { useParams, useRouter } from "next/navigation";
 import ErrorMessage from "../../error-message";
 import Loading from "../../loading";
-import AuctionCardCarousel from "../auction-card-carousel/auction-card-carousel";
 import AuctionDetailsHeader from "./auction-details-header/auction-details-header";
 import classes from "./auction-details.module.css";
 import AuctionInfoPanel from "./auction-info-panel/auction-info-panel";
@@ -15,7 +14,7 @@ import ImageContainer from "./image-container/image-container";
 import InfoTabs from "./info-tabs/info-tabs";
 import AuctionNotificationSettings from "./notifications/notification";
 import SavedVehicles from "./saved-vehicles/saved-vehicles";
-
+import { AuctionCardCarousel } from "@/app/components";
 export default function AuctionDetails() {
   const router = useRouter();
   const { panel } = usePanel();

@@ -1,6 +1,6 @@
 "use client";
+import { AuctionCard} from "@/app/components"
 import { Swiper, SwiperSlide } from "swiper/react";
-import AuctionCard from "../auction-card/auction-card";
 import classes from "./auction-card-carousel.module.css";
 import { AuctionCardCarouselProps } from "./auction-card-carousel.types";
 const AuctionCardCarousel = ({ auctionData }: AuctionCardCarouselProps) => {

@@ -87,6 +87,7 @@ const auctionAPI = {
       bidDelaySeconds: autoBid.bidDelaySeconds,
       maxBidsPerMinute: autoBid.maxBidsPerMinute,
       preferredBidTiming: autoBid.preferredBidTiming,
+      maxSpreadBids: autoBid.maxSpreadBids,
     });
     return response.data;
   },

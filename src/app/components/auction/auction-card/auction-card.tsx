@@ -34,7 +34,6 @@ const AuctionCard = ({
       )}
 
       <div>
-        {/* Vehicle image */}
         <div className={classes.imageWrapper}>
           <Image
             src={vehicleImg}
@@ -44,7 +43,6 @@ const AuctionCard = ({
           />
         </div>
 
-        {/* Details */}
         <div className={classes.subContainer}>
           <h2 className={headings.auctionVehicleTitle}>{vehicleDetails}</h2>
 
@@ -53,13 +51,11 @@ const AuctionCard = ({
             {price.toLocaleString()}
           </h2>
 
-          {/* Countdown */}
           <div className={`${headings.auctionCardTimer} ${classes.endTimer}`}>
             {totalSeconds > 0 && <span className={classes.redDot}>🔴</span>}
             {timerText}
           </div>
 
-          {/* Quick‑bid button */}
           <ThemeProvider value={WHITE_WITH_BLUE_BORDER}>
             <ButtonPrimary btnText="Quick Bid" />
           </ThemeProvider>

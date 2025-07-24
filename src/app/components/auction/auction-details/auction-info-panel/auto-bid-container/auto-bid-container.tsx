@@ -41,6 +41,7 @@ export default function AutoPlaceBid({
   const [timingPreference, setTimingPreference] = useState("");
   const [bidDelaySeconds, setBidDelaySeconds] = useState<string>("");
   const [maxBidsPerMinute, setMaxBidsPerMinute] = useState("");
+  const [totalBids, setTotalBids] = useState("");
   const [isActive, setIsActive] = useState<boolean | null>(null);
   const userId = getUserIdFromLocalStorage() ?? -1;
   const authData = localStorage.getItem("authData") ?? "";
@@ -73,6 +74,7 @@ export default function AutoPlaceBid({
       maxBidsPerMinute:
         maxBidsPerMinute === "" ? null : Number(maxBidsPerMinute),
       preferredBidTiming: formatBidTiming(timingPreference),
+      maxSpreadBids: totalBids === "" ? null : Number(totalBids),
       isActive: true,
     };
     placeAutoBid(autoBid);
@@ -92,6 +94,16 @@ export default function AutoPlaceBid({
     { label: "20 seconds", value: "20" },
     { label: "30 seconds", value: "30" },
     { label: "60 seconds", value: "60" },
+  ];
+  const totalBidsOptions = [
+    { label: "5", value: "5" },
+    { label: "10", value: "10" },
+    { label: "15", value: "15" },
+    { label: "20", value: "20" },
+    { label: "30", value: "30" },
+    { label: "40", value: "40" },
+    { label: "50", value: "50" },
+    { label: "60", value: "60" },
   ];
 
   const {
@@ -116,6 +128,7 @@ export default function AutoPlaceBid({
       setTimingPreference("");
       setBidDelaySeconds("");
       setMaxBidsPerMinute("");
+      setTotalBids("");
       setIsActive(null);
       setIsInitialized(false);
     }
@@ -139,7 +152,11 @@ export default function AutoPlaceBid({
           ? userAutoBid.maxBidsPerMinute.toString()
           : ""
       );
-
+      setTotalBids(
+        userAutoBid.maxSpreadBids !== null
+          ? userAutoBid.maxSpreadBids.toString()
+          : ""
+      );
       setIsActive(userAutoBid.isActive);
 
       setIsInitialized(true);
@@ -218,8 +235,7 @@ export default function AutoPlaceBid({
           options={TimingPreferenceOptions}
         />
       </Dropdown>
-
-      {timingPreference && timingPreference !== "LastMinute" && (
+      {timingPreference === "Immediate" && (
         <>
           <Dropdown
             value={bidDelaySeconds}
@@ -244,6 +260,20 @@ export default function AutoPlaceBid({
           </Dropdown>
         </>
       )}
+
+      {timingPreference === "SpreadEvenly" && (
+        <Dropdown
+          value={totalBids}
+          onChange={setTotalBids}
+          placeholder="Max Spread Bids">
+          <Dropdown.Select
+            isDisabled={isAutoBidSet}
+            styles={userAutoBid ? grayedField : undefined}
+            options={totalBidsOptions}
+          />
+        </Dropdown>
+      )}
+
       {isAutoBidSet && isActive !== null && (
         <div className={inputClass.statusContainer}>
           <p>Status</p>
@@ -278,7 +308,7 @@ export default function AutoPlaceBid({
                   !timingPreference ||
                   ((timingPreference === "Immediate" ||
                     timingPreference === "SpreadEvenly") &&
-                    (!bidDelaySeconds || !maxBidsPerMinute))
+                    !totalBids)
                 }
               />
             </ThemeProvider>

@@ -9,7 +9,7 @@ export function useBidUpdates(auctionId: number, onNewBid?: () => void) {
 
     const handleNewBid = (id: number) => {
       if (id === auctionId) {
-        console.log("📩 Received new bid:", id);
+        console.log("Received new bid:", id);
         onNewBid?.();
       }
     };

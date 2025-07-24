@@ -43,6 +43,7 @@ export interface AutoBid {
   bidStrategyType: number;
   bidDelaySeconds: number | null;
   maxBidsPerMinute: number | null;
+  maxSpreadBids: number | null;
   preferredBidTiming: number;
   isActive: boolean;
 }
