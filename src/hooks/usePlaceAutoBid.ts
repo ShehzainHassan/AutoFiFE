@@ -3,6 +3,7 @@ import auctionAPI from "@/api/auctionAPI";
 import { AutoBid } from "@/interfaces/auction";
 import { handleApiError } from "@/utilities/utilities";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
@@ -15,8 +16,17 @@ const usePlaceAutoBid = () => {
       return await auctionAPI.placeAutoBid(autoBid);
     },
 
-    onError: (error) => {
-      handleApiError(error, router);
+    onError: (error: AxiosError) => {
+      const status = error.response?.status;
+
+      if (status === 401 || status === 403) {
+        handleApiError(error, router);
+      } else {
+        const message =
+          (error.response?.data as { error?: string })?.error ||
+          "Failed to place auto bid. Please try again.";
+        toast.error(message);
+      }
     },
 
     onSuccess: (_data, variables) => {

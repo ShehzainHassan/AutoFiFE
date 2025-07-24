@@ -4,33 +4,33 @@ import { CURRENCY } from "@/constants";
 import useAuctionById from "@/hooks/useAuctionById";
 import useCountdown from "@/hooks/useCountdown";
 import headings from "@/styles/typography.module.css";
-import { ThemeProvider } from "@/theme/themeContext";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import TextContainer from "../text-container/text-container";
 import classes from "./auction-info-panel.module.css";
 import { AuctionInfoPanelProps } from "./auction-info-panel.types";
 import AuctionStats from "./auction-stats/auction-stats";
+import AuctionTimer from "./auction-timer/auction-timer";
 import AutoPlaceBid from "./auto-bid-container/auto-bid-container";
 import ManualBid from "./manual-bid-container/manual-bid-container";
 import YourStats from "./your-stats/your-stats";
+import { useBidUpdates } from "@/hooks/useBidUpdates";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function AuctionInfoPanel({
   vehiclePrice,
 }: AuctionInfoPanelProps) {
   const [bid, setBid] = useState("");
   const [bidType, setBidType] = useState("Manual");
+  const queryClient = useQueryClient();
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
   const { data: auction, isLoading } = useAuctionById(id);
   const { hours, minutes, seconds } = useCountdown(auction?.endUtc ?? "");
-  const {
-    hours: startHours,
-    minutes: startMinutes,
-    seconds: startSeconds,
-  } = useCountdown(auction?.startUtc ?? "");
   const isEnded = hours === 0 && minutes === 0 && seconds === 0;
+  useBidUpdates(id, () => {
+    queryClient.invalidateQueries({ queryKey: ["auctionById", id] });
+  });
   if (isLoading) return <Loading />;
   if (!auction) return;
   return (
@@ -57,41 +57,7 @@ export default function AuctionInfoPanel({
               Auction ends in
             </p>
           )}
-
-          <div className={classes.timerContainer}>
-            <div className={classes.textContainer}>
-              <ThemeProvider>
-                <TextContainer
-                  value={auction.status === "PreviewMode" ? startHours : hours}
-                />
-              </ThemeProvider>
-              <p>Hours</p>
-            </div>
-            <div className={classes.textContainer}>
-              <ThemeProvider>
-                <TextContainer
-                  value={
-                    auction.status === "PreviewMode"
-                      ? startMinutes.toString().padStart(2, "0")
-                      : minutes.toString().padStart(2, "0")
-                  }
-                />
-              </ThemeProvider>
-              <p>Minutes</p>
-            </div>
-            <div className={classes.textContainer}>
-              <ThemeProvider>
-                <TextContainer
-                  value={
-                    auction.status === "PreviewMode"
-                      ? startSeconds.toString().padStart(2, "0")
-                      : seconds.toString().padStart(2, "0")
-                  }
-                />
-              </ThemeProvider>
-              <p>Seconds</p>
-            </div>
-          </div>
+          <AuctionTimer key={auction.endUtc} auction={auction} />
 
           {auction.status === "Active" && (
             <>

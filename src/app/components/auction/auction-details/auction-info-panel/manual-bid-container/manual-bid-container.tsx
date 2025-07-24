@@ -1,7 +1,9 @@
 import ButtonPrimary from "@/app/components/buttons/button-primary";
 import { Input } from "@/app/components/input-field";
 import Loading from "@/app/components/loading";
+import { CURRENCY } from "@/constants";
 import { BLUE_WITH_BORDER } from "@/constants/button-primary-themes";
+import useHighestBidderId from "@/hooks/useGetHighestBidderId";
 import usePlaceBid from "@/hooks/usePlaceBid";
 import { SECONDARY_CONTAINER } from "@/styles/text-container";
 import { ThemeProvider } from "@/theme/themeContext";
@@ -10,8 +12,6 @@ import { useParams } from "next/navigation";
 import TextContainer from "../../text-container/text-container";
 import classes from "../auction-info-panel.module.css";
 import { ManualBidProps } from "../auction-info-panel.types";
-import { CURRENCY } from "@/constants";
-import useHighestBidderId from "@/hooks/useGetHighestBidderId";
 import { useBidUpdates } from "@/hooks/useBidUpdates";
 import { useQueryClient } from "@tanstack/react-query";
 export default function ManualBid({
@@ -23,7 +23,6 @@ export default function ManualBid({
   const authData = localStorage.getItem("authData") ?? "";
   const userId = getUserIdFromLocalStorage() ?? -1;
   const queryClient = useQueryClient();
-
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
 
@@ -55,12 +54,11 @@ export default function ManualBid({
       }
     );
   };
+
   useBidUpdates(id, () => {
-    queryClient.invalidateQueries({
-      queryKey: ["highest-bidder", id],
-      refetchType: "active",
-    });
+    queryClient.invalidateQueries({ queryKey: ["highest-bidder", id] });
   });
+
   if (isLoading) return <Loading />;
 
   return (

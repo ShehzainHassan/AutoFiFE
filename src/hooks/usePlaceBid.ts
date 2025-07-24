@@ -83,15 +83,26 @@ const usePlaceBid = () => {
         );
       }
 
-      const axiosError = error as AxiosError<{ error: string }>;
-      const apiError = axiosError.response?.data?.error;
-      const fallbackError = axiosError.message;
-      const errorMessage =
-        apiError || fallbackError || "An unexpected error occurred";
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "isAxiosError" in error &&
+        (error as AxiosError).isAxiosError
+      ) {
+        const axiosError = error as AxiosError<{ error?: string }>;
 
-      toast.error(errorMessage);
-
-      handleApiError(error, router);
+        const status = axiosError.response?.status;
+        if (status === 401 || status === 403) {
+          handleApiError(axiosError, router);
+        } else {
+          const message =
+            axiosError.response?.data?.error ||
+            "Failed to place bid. Please try again.";
+          toast.error(message);
+        }
+      } else {
+        toast.error("An unknown error occurred.");
+      }
     },
 
     onSettled: (_, __, { auctionId }) => {
