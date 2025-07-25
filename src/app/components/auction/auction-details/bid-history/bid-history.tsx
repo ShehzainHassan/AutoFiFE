@@ -6,8 +6,8 @@ import { useMemo } from "react";
 import BidHistoryTable from "./bid-history-table/bid-history-table";
 import classes from "./bid-history.module.css";
 import { BidHistoryProps } from "./bid-history.types";
-import { useBidUpdates } from "@/hooks/useBidUpdates";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSignalNotifications } from "@/hooks/useSignalNotications";
 
 export default function BidHistory({ auctionId }: BidHistoryProps) {
   const { data: bids, isError, error, isLoading } = useBidHistory(auctionId);
@@ -24,9 +24,10 @@ export default function BidHistory({ auctionId }: BidHistoryProps) {
     error: usersErr,
   } = useUsersMap(userIds);
 
-  useBidUpdates(auctionId, () => {
+  useSignalNotifications(auctionId, () => {
     queryClient.invalidateQueries({ queryKey: ["bidHistory", auctionId] });
   });
+
   if (isLoading) return <Loading />;
   if (isError) return <ErrorMessage message={error.message} />;
   if (!bids || bids.length === 0) return null;

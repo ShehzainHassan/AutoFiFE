@@ -1,11 +1,15 @@
+import useCountdown from "@/hooks/useCountdown";
+import headings from "@/styles/typography.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
 import TextContainer from "../../text-container/text-container";
 import classes from "../auction-info-panel.module.css";
-import useCountdown from "@/hooks/useCountdown";
 import { AuctionTimerProps } from "./auction-timer.types";
-import headings from "@/styles/typography.module.css";
+import { useEffect } from "react";
 
-export default function AuctionTimer({ auction }: AuctionTimerProps) {
+export default function AuctionTimer({
+  auction,
+  onTimerEnd,
+}: AuctionTimerProps) {
   const {
     hours: endHours,
     minutes: endMinutes,
@@ -16,11 +20,15 @@ export default function AuctionTimer({ auction }: AuctionTimerProps) {
     minutes: startMinutes,
     seconds: startSeconds,
   } = useCountdown(auction?.startUtc ?? "");
-
   const isEnded = endHours === 0 && endMinutes === 0 && endSeconds === 0;
 
+  useEffect(() => {
+    if (isEnded) {
+      onTimerEnd();
+    }
+  }, [isEnded, onTimerEnd]);
   if (isEnded) {
-    return <p className={classes.center}>Auction has ended</p>;
+    return <p className={classes.auctionEndedText}>Auction has ended</p>;
   }
 
   const isPreview = auction.status === "PreviewMode";

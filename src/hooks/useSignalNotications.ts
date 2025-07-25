@@ -1,7 +1,11 @@
 import { getAuctionConnection } from "@/utilities/signalRManager";
 import { useEffect } from "react";
 
-export function useBidUpdates(auctionId: number, onNewBid?: () => void) {
+export function useSignalNotifications(
+  auctionId: number,
+  onNewBid?: () => void,
+  onAuctionEnd?: () => void
+) {
   useEffect(() => {
     if (auctionId <= 0) return;
 
@@ -13,8 +17,15 @@ export function useBidUpdates(auctionId: number, onNewBid?: () => void) {
         onNewBid?.();
       }
     };
+    const handleAuctionEnd = (id: number) => {
+      if (id === auctionId) {
+        console.log("Auction ended:", id);
+        onAuctionEnd?.();
+      }
+    };
 
     connection.on("ReceiveNewBid", handleNewBid);
+    connection.on("AuctionEnded", handleAuctionEnd);
 
     if (connection.state === "Disconnected") {
       connection
@@ -28,5 +39,5 @@ export function useBidUpdates(auctionId: number, onNewBid?: () => void) {
     return () => {
       connection.off("ReceiveNewBid", handleNewBid);
     };
-  }, [auctionId, onNewBid]);
+  }, [auctionId, onNewBid, onAuctionEnd]);
 }

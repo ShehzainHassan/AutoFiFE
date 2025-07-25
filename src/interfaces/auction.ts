@@ -53,3 +53,12 @@ export interface UpdateAutoBid {
   bidStrategyType: number;
   isActive: boolean;
 }
+
+export interface AuctionResult {
+  isReserveMet: boolean;
+  isSold: boolean;
+  userId: number | null;
+  userName: string | null;
+  winningBid: number | null;
+  bidCount: number;
+}

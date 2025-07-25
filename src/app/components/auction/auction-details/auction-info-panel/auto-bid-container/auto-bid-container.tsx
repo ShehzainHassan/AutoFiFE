@@ -306,9 +306,9 @@ export default function AutoPlaceBid({
                     : Number(maxBidAmount) <= currentBid) ||
                   !biddingStrategy ||
                   !timingPreference ||
-                  ((timingPreference === "Immediate" ||
-                    timingPreference === "SpreadEvenly") &&
-                    !totalBids)
+                  (timingPreference === "Immediate" &&
+                    (!maxBidsPerMinute || !bidDelaySeconds)) ||
+                  (timingPreference === "SpreadEvenly" && !totalBids)
                 }
               />
             </ThemeProvider>

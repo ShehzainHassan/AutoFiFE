@@ -12,8 +12,8 @@ import { useParams } from "next/navigation";
 import TextContainer from "../../text-container/text-container";
 import classes from "../auction-info-panel.module.css";
 import { ManualBidProps } from "../auction-info-panel.types";
-import { useBidUpdates } from "@/hooks/useBidUpdates";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSignalNotifications } from "@/hooks/useSignalNotications";
 export default function ManualBid({
   bid,
   setBid,
@@ -55,7 +55,7 @@ export default function ManualBid({
     );
   };
 
-  useBidUpdates(id, () => {
+  useSignalNotifications(id, () => {
     queryClient.invalidateQueries({ queryKey: ["highest-bidder", id] });
   });
 

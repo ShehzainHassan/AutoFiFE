@@ -1,5 +1,6 @@
 import {
   Auction,
+  AuctionResult,
   AutoBid,
   Bid,
   UpdateAutoBid,
@@ -89,6 +90,12 @@ const auctionAPI = {
       preferredBidTiming: autoBid.preferredBidTiming,
       maxSpreadBids: autoBid.maxSpreadBids,
     });
+    return response.data;
+  },
+  processAuctionResult: async (auctionId: number) => {
+    const response = await axios.get<AuctionResult>(
+      `${API_BASE_URL}/auction/${auctionId}/result`
+    );
     return response.data;
   },
   isAutoBidSet: async (auctionId: number, userId: number) => {
