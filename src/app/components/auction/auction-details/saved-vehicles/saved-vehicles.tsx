@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import SavedVehiclesList from "./saved-vehicles-list/saved-vehicles-list";
 import classes from "./saved-vehicles.module.css";
+import SavedVehiclesContainer from "./saved-vehicles-list/saved-vehicles-list-container";
 
 export default function SavedVehicles() {
   const [selected, setSelected] = useState<"Grid" | "List">("Grid");
@@ -28,7 +28,7 @@ export default function SavedVehicles() {
           </p>
         </div>
 
-        <SavedVehiclesList />
+        <SavedVehiclesContainer />
       </div>
     </div>
   );

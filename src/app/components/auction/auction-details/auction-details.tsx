@@ -6,15 +6,17 @@ import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import { useParams, useRouter } from "next/navigation";
 import ErrorMessage from "../../error-message";
 import Loading from "../../loading";
-import AuctionDetailsHeader from "./auction-details-header/auction-details-header";
 import classes from "./auction-details.module.css";
 import AuctionInfoPanel from "./auction-info-panel/auction-info-panel";
-import BidHistory from "./bid-history/bid-history";
-import ImageContainer from "./image-container/image-container";
 import InfoTabs from "./info-tabs/info-tabs";
 import AuctionNotificationSettings from "./notifications/notification";
 import SavedVehicles from "./saved-vehicles/saved-vehicles";
-import { AuctionCardCarousel } from "@/app/components";
+import {
+  AuctionCardCarousel,
+  AuctionDetailsHeader,
+  WatchListCard,
+} from "@/app/components";
+import BidHistoryContainer from "./bid-history/bid-history-container";
 export default function AuctionDetails() {
   const router = useRouter();
   const { panel } = usePanel();
@@ -57,12 +59,12 @@ export default function AuctionDetails() {
                     {auction.vehicle.model}
                   </h1>
                 </div>
-                <ImageContainer
+                <WatchListCard
                   auctionId={id}
                   userId={getUserIdFromLocalStorage() ?? -1}
                 />
                 <InfoTabs />
-                <BidHistory auctionId={auction.auctionId} />
+                <BidHistoryContainer auctionId={auction.auctionId} />
               </div>
               <AuctionInfoPanel vehiclePrice={auction.vehicle.price} />
             </div>

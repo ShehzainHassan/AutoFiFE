@@ -1,21 +1,29 @@
 "use client";
-import { IOSSwitch } from "@/app/components/buttons/toggle-button/toggle-button";
+import { useFormValidation } from "@/hooks/useFormValidation";
 import { Input } from "@/app/components/input-field";
+import { IOSSwitch } from "@/app/components/buttons/toggle-button/toggle-button";
+import TextContainer from "../text-container/text-container";
 import CarImage from "@/app/components/result-card/car-image/car-image";
+import StatItem from "../stat-item/stat-item";
+import SavedVehicles from "../saved-vehicles/saved-vehicles";
+import AuctionNotificationSettings from "../notifications/notification";
 import { CURRENCY } from "@/constants";
 import { usePanel } from "@/contexts/panel-context/panel-context";
-import { PAY_BUTTON } from "@/styles/text-container";
 import { ThemeProvider } from "@/theme/themeContext";
+import { PAY_BUTTON } from "@/styles/text-container";
+import { initialFormValues, validationRules } from "./checkout-validation";
 import { useState } from "react";
-import AuctionDetailsHeader from "../auction-details-header/auction-details-header";
-import AuctionNotificationSettings from "../notifications/notification";
-import SavedVehicles from "../saved-vehicles/saved-vehicles";
-import StatItem from "../stat-item/stat-item";
-import TextContainer from "../text-container/text-container";
 import classes from "./checkout.module.css";
+import { AuctionDetailsHeader } from "@/app/components";
+
 export default function AuctionCheckout() {
-  const [creditCardNumber, setCreditCardNumber] = useState("");
   const { panel } = usePanel();
+  const [savePayment, setSavePayment] = useState(false);
+
+  const { values, errors, handleChange } = useFormValidation(
+    initialFormValues,
+    validationRules
+  );
 
   return (
     <div className={classes.mainContainer}>
@@ -36,31 +44,38 @@ export default function AuctionCheckout() {
                     <Input.Label>Credit Card Number</Input.Label>
                     <Input.Field
                       type="text"
-                      placeholder="Enter your credit card number"
-                      value={creditCardNumber}
-                      onChange={(e) => setCreditCardNumber(e.target.value)}
+                      value={values.cardNumber}
+                      placeholder="1234 5678 9012 3456"
+                      onChange={handleChange("cardNumber")}
                     />
+                    {errors.cardNumber && <span>{errors.cardNumber}</span>}
                   </Input>
                 </div>
-                <div>
-                  <Input width="220px">
-                    <Input.Label>Credit Card Number</Input.Label>
-                    <div className={classes.gap}>
-                      <Input.Field
-                        type="text"
-                        placeholder="Enter your credit card number"
-                        value={creditCardNumber}
-                        onChange={(e) => setCreditCardNumber(e.target.value)}
-                      />
-                      <Input.Field
-                        type="text"
-                        placeholder="Enter your credit card number"
-                        value={creditCardNumber}
-                        onChange={(e) => setCreditCardNumber(e.target.value)}
-                      />
-                    </div>
+
+                <div className={classes.gap}>
+                  <Input width="100px">
+                    <Input.Label>Expiry</Input.Label>
+                    <Input.Field
+                      type="text"
+                      value={values.expiryDate}
+                      placeholder="MM/YY"
+                      onChange={handleChange("expiryDate")}
+                    />
+                    {errors.expiryDate && <span>{errors.expiryDate}</span>}
+                  </Input>
+
+                  <Input width="100px">
+                    <Input.Label>CVV</Input.Label>
+                    <Input.Field
+                      type="text"
+                      value={values.cvv}
+                      placeholder="123"
+                      onChange={handleChange("cvv")}
+                    />
+                    {errors.cvv && <span>{errors.cvv}</span>}
                   </Input>
                 </div>
+
                 <div className={classes.pay}>
                   <ThemeProvider value={PAY_BUTTON}>
                     <TextContainer value="PayPal" />
@@ -68,63 +83,70 @@ export default function AuctionCheckout() {
                     <TextContainer value="Apple Pay" />
                   </ThemeProvider>
                 </div>
+
                 <div className={classes.inputContainer}>
                   <h3>Billing Address</h3>
                   <Input width="220px">
                     <Input.Label>Address</Input.Label>
                     <Input.Field
                       type="text"
-                      placeholder="Enter your credit card number"
-                      value={creditCardNumber}
-                      onChange={(e) => setCreditCardNumber(e.target.value)}
+                      value={values.address}
+                      placeholder="123 Main St"
+                      onChange={handleChange("address")}
                     />
+                    {errors.address && <span>{errors.address}</span>}
                   </Input>
+
                   <Input width="400px">
-                    <Input.Label>
-                      Apt, suite, unit, building, floor, etc. (optional)
-                    </Input.Label>
+                    <Input.Label>Optional Line</Input.Label>
                     <Input.Field
                       type="text"
-                      placeholder="Enter your credit card number"
-                      value={creditCardNumber}
-                      onChange={(e) => setCreditCardNumber(e.target.value)}
+                      value={values.addressOptional}
+                      placeholder="Apt / Suite"
+                      onChange={handleChange("addressOptional")}
                     />
                   </Input>
+
                   <div className={classes.gap}>
                     <Input width="220px">
                       <Input.Label>City</Input.Label>
                       <Input.Field
                         type="text"
-                        placeholder="Enter your credit card number"
-                        value={creditCardNumber}
-                        onChange={(e) => setCreditCardNumber(e.target.value)}
+                        value={values.city}
+                        onChange={handleChange("city")}
                       />
+                      {errors.city && <span>{errors.city}</span>}
                     </Input>
                     <Input width="220px">
                       <Input.Label>State</Input.Label>
                       <Input.Field
                         type="text"
-                        placeholder="Enter your credit card number"
-                        value={creditCardNumber}
-                        onChange={(e) => setCreditCardNumber(e.target.value)}
+                        value={values.state}
+                        onChange={handleChange("state")}
                       />
+                      {errors.state && <span>{errors.state}</span>}
                     </Input>
                   </div>
-                  <div>
-                    <Input width="220px">
-                      <Input.Label>Zip Code</Input.Label>
-                      <Input.Field
-                        type="text"
-                        placeholder="Enter your credit card number"
-                        value={creditCardNumber}
-                        onChange={(e) => setCreditCardNumber(e.target.value)}
-                      />
-                    </Input>
-                  </div>
+
+                  <Input width="220px">
+                    <Input.Label>Zip Code</Input.Label>
+                    <Input.Field
+                      type="text"
+                      value={values.zipCode}
+                      placeholder="00000"
+                      onChange={handleChange("zipCode")}
+                    />
+                    {errors.zipCode && <span>{errors.zipCode}</span>}
+                  </Input>
+
                   <div className={classes.paymentToggle}>
                     <p>Save payment information for future purchases</p>
-                    <IOSSwitch />
+                    <IOSSwitch
+                      checked={savePayment}
+                      onChange={(e) => setSavePayment(e.target.checked)}
+                    />
                   </div>
+
                   <div className={classes.security}>
                     <h3>Security</h3>
                     <p>
@@ -135,6 +157,7 @@ export default function AuctionCheckout() {
                 </div>
               </div>
             </div>
+
             <div className={classes.bid}>
               <div className={classes.bidInfoContainer}>
                 <div className={classes.bidInfo}>
@@ -148,15 +171,18 @@ export default function AuctionCheckout() {
                   <CarImage src="/images/glc_2023.png" />
                 </div>
               </div>
+
               <div className={classes.fees}>
                 <StatItem label="Auction Price" value={24000} />
                 <StatItem label="Fees" value={250} />
               </div>
               <StatItem label="Taxes" value={250} />
+
               <div className={classes.total}>
                 <p>Total</p>
                 <p>{CURRENCY}24,500</p>
               </div>
+
               <div className={classes.paymentInfo}>
                 <p>
                   Payment must be completed within 48 hours of winning the

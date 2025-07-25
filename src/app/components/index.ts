@@ -47,7 +47,15 @@ export { default as VerticalCarousel } from "./vehicle-carousel/vertical-carouse
 export { default as VehicleInfoCard } from "./car-card/info-card/info-card";
 export { default as VehicleAuctionInfo } from "./auction/live-activity/vehicle-auction-info";
 export { default as DropdownFilter } from "./auction/live-activity/dropdown-filter";
-export { default as LiveActivity } from "./auction/live-activity";
+export { default as LiveActivity } from "./auction/live-activity/live-activity-container";
 export { default as Navbar } from "./navbar/navbar-container";
 export { default as AuctionCard } from "./auction/auction-card";
 export { default as AuctionCardCarousel } from "./auction/auction-card-carousel";
+export { default as AuctionSearchField } from "./auction/auction-search-field";
+export { default as AuctionDetailsHeader } from "./auction/auction-details/auction-details-header";
+export { default as AuctionStats } from "./auction/auction-details/auction-info-panel/auction-stats/auction-stats.container";
+export { default as MyAuctionStats } from "./auction/auction-details/auction-info-panel/your-stats/your-stats.container";
+export { default as AuctionTimer } from "./auction/auction-details/auction-info-panel/auction-timer";
+export { default as AutoBidContainer } from "./auction/auction-details/auction-info-panel/auto-bid-container";
+export { default as ManualBidContainer } from "./auction/auction-details/auction-info-panel/manual-bid-container";
+export { default as WatchListCard } from "./auction/auction-details/watchlist-image-card";

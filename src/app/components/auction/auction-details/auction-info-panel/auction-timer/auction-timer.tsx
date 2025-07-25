@@ -1,42 +1,35 @@
+"use client";
+
 import useCountdown from "@/hooks/useCountdown";
 import headings from "@/styles/typography.module.css";
-import { ThemeProvider } from "@/theme/themeContext";
-import TextContainer from "../../text-container/text-container";
 import classes from "../auction-info-panel.module.css";
 import { AuctionTimerProps } from "./auction-timer.types";
 import { useEffect } from "react";
+import TimerUnit from "./timer-unit";
 
 export default function AuctionTimer({
   auction,
   onTimerEnd,
 }: AuctionTimerProps) {
-  const {
-    hours: endHours,
-    minutes: endMinutes,
-    seconds: endSeconds,
-  } = useCountdown(auction?.endUtc ?? "");
-  const {
-    hours: startHours,
-    minutes: startMinutes,
-    seconds: startSeconds,
-  } = useCountdown(auction?.startUtc ?? "");
-  const isEnded = endHours === 0 && endMinutes === 0 && endSeconds === 0;
+  const isPreview = auction.status === "PreviewMode";
+  const countdown = useCountdown(
+    isPreview ? auction?.startUtc ?? "" : auction?.endUtc ?? ""
+  );
+
+  const { hours, minutes, seconds } = countdown;
+  const isTimeUp = hours === 0 && minutes === 0 && seconds === 0;
 
   useEffect(() => {
-    if (isEnded) {
-      onTimerEnd();
+    if (isTimeUp) {
+      onTimerEnd?.();
     }
-  }, [isEnded, onTimerEnd]);
-  if (isEnded) {
+  }, [isTimeUp, onTimerEnd]);
+
+  if (isTimeUp && !isPreview) {
     return <p className={classes.auctionEndedText}>Auction has ended</p>;
   }
 
-  const isPreview = auction.status === "PreviewMode";
   const headingText = isPreview ? "Auction starts in" : "Auction ends in";
-
-  const hours = isPreview ? startHours : endHours;
-  const minutes = isPreview ? startMinutes : endMinutes;
-  const seconds = isPreview ? startSeconds : endSeconds;
 
   return (
     <>
@@ -45,24 +38,15 @@ export default function AuctionTimer({
         {headingText}
       </p>
       <div className={classes.timerContainer}>
-        <div className={classes.textContainer}>
-          <ThemeProvider>
-            <TextContainer value={hours} />
-          </ThemeProvider>
-          <p>Hours</p>
-        </div>
-        <div className={classes.textContainer}>
-          <ThemeProvider>
-            <TextContainer value={minutes.toString().padStart(2, "0")} />
-          </ThemeProvider>
-          <p>Minutes</p>
-        </div>
-        <div className={classes.textContainer}>
-          <ThemeProvider>
-            <TextContainer value={seconds.toString().padStart(2, "0")} />
-          </ThemeProvider>
-          <p>Seconds</p>
-        </div>
+        <TimerUnit label="Hours" value={hours} />
+        <TimerUnit
+          label="Minutes"
+          value={minutes.toString().padStart(2, "0")}
+        />
+        <TimerUnit
+          label="Seconds"
+          value={seconds.toString().padStart(2, "0")}
+        />
       </div>
     </>
   );

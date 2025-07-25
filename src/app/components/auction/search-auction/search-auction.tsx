@@ -1,13 +1,13 @@
 "use client";
-import { useMemo, useState } from "react";
+import { AuctionSearchField } from "@/app/components";
 import BidIcon from "@/assets/images/icons/bid.png";
 import { BLACK_THEME } from "@/constants/button-primary-themes";
 import useGetAllAuctions from "@/hooks/useGetAllAuctions";
 import { ThemeProvider } from "@/theme/themeContext";
+import { useMemo, useState } from "react";
 import ButtonPrimary from "../../buttons/button-primary";
 import ErrorMessage from "../../error-message";
 import Loading from "../../loading";
-import SearchField from "../auction-search-field/auction-search-field";
 import SearchCard from "./auction-card/auction-card";
 import classes from "./search-auction.module.css";
 
@@ -42,7 +42,7 @@ export default function SearchAuction() {
     <div className={classes.container}>
       <h2>Auctions</h2>
 
-      <SearchField width="100%" search={search} setSearch={setSearch} />
+      <AuctionSearchField width="100%" search={search} setSearch={setSearch} />
 
       {filteredAuctions.length === 0 ? (
         <p>No auctions match “{search}”.</p>

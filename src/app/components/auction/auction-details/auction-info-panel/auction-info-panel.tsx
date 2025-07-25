@@ -1,28 +1,24 @@
 "use client";
-import { useParams } from "next/navigation";
-import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { ToastContainer } from "react-toastify";
-
-import Loading from "@/app/components/loading";
+import {
+  AuctionStats,
+  AuctionTimer,
+  Loading,
+  MyAuctionStats,
+} from "@/app/components";
 import { CURRENCY } from "@/constants";
 import useAuctionById from "@/hooks/useAuctionById";
 import useGetAuctionResult from "@/hooks/useGetAuctionResult";
 import { useSignalNotifications } from "@/hooks/useSignalNotications";
-
-import AuctionStats from "./auction-stats/auction-stats";
-import AuctionTimer from "./auction-timer/auction-timer";
-import AutoPlaceBid from "./auto-bid-container/auto-bid-container";
-import ManualBid from "./manual-bid-container/manual-bid-container";
-import YourStats from "./your-stats/your-stats";
-
+import { useQueryClient } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import { useState } from "react";
+import { ToastContainer } from "react-toastify";
 import classes from "./auction-info-panel.module.css";
 import { AuctionInfoPanelProps } from "./auction-info-panel.types";
-
+import { AutoBidContainer, ManualBidContainer } from "@/app/components";
 export default function AuctionInfoPanel({
   vehiclePrice,
 }: AuctionInfoPanelProps) {
-  const [bid, setBid] = useState("");
   const [bidType, setBidType] = useState<"Manual" | "Auto">("Manual");
   const [hasLocallyEnded, setHasLocallyEnded] = useState(false);
 
@@ -36,11 +32,16 @@ export default function AuctionInfoPanel({
     !!auction && auction.status === "Ended"
   );
 
-  useSignalNotifications(id, undefined, () => {
-    queryClient.invalidateQueries({ queryKey: ["auctionById", id] });
-    queryClient.invalidateQueries({ queryKey: ["auctionResult", id] });
-  });
-
+  useSignalNotifications(
+    id,
+    () => {
+      queryClient.invalidateQueries({ queryKey: ["auctionById", id] });
+    },
+    () => {
+      queryClient.invalidateQueries({ queryKey: ["auctionById", id] });
+      queryClient.invalidateQueries({ queryKey: ["auctionResult", id] });
+    }
+  );
   if (isLoading || !auction) return <Loading />;
 
   const renderAuctionResult = () => {
@@ -100,14 +101,12 @@ export default function AuctionInfoPanel({
         </div>
 
         {bidType === "Manual" ? (
-          <ManualBid
-            bid={bid}
-            setBid={setBid}
+          <ManualBidContainer
             currentBid={auction.currentPrice}
             startingPrice={auction.startingPrice}
           />
         ) : (
-          <AutoPlaceBid
+          <AutoBidContainer
             auctionId={id}
             currentBid={auction.currentPrice}
             startingPrice={auction.startingPrice}
@@ -127,6 +126,7 @@ export default function AuctionInfoPanel({
       <AuctionStats />
 
       <AuctionTimer
+        key={auction.endUtc}
         auction={auction}
         onTimerEnd={() => setHasLocallyEnded(true)}
       />
@@ -134,7 +134,7 @@ export default function AuctionInfoPanel({
       {renderAuctionResult()}
       {renderBidSection()}
 
-      <YourStats />
+      <MyAuctionStats />
       <ToastContainer />
     </div>
   );

@@ -38,7 +38,6 @@ export const auctionData = [
     tag: "Live",
   },
 ];
-
 export const dropdownFilters = ["Status", "Make", "Price", "Sort"];
 export const mockVehicleData: VehicleAuctionData[] = [
   {
@@ -102,7 +101,6 @@ export const mockVehicleData: VehicleAuctionData[] = [
     timeLeft: "3d 2h",
   },
 ];
-
 export const BidStrategyOptions = [
   { label: "Conservative", value: "Conservative" },
   { label: "Aggressive", value: "Aggressive" },
@@ -113,4 +111,22 @@ export const TimingPreferenceOptions = [
   { label: "Immediate", value: "Immediate" },
   { label: "Last Minute", value: "LastMinute" },
   { label: "Spread", value: "SpreadEvenly" },
+];
+
+export const bidDelayOptions = [
+  { label: "5 seconds", value: "5" },
+  { label: "10 seconds", value: "10" },
+  { label: "20 seconds", value: "20" },
+  { label: "30 seconds", value: "30" },
+  { label: "60 seconds", value: "60" },
+];
+export const totalBidsOptions = [
+  { label: "5", value: "5" },
+  { label: "10", value: "10" },
+  { label: "15", value: "15" },
+  { label: "20", value: "20" },
+  { label: "30", value: "30" },
+  { label: "40", value: "40" },
+  { label: "50", value: "50" },
+  { label: "60", value: "60" },
 ];

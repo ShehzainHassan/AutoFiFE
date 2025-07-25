@@ -4,7 +4,7 @@ import NotificationBell from "@/assets/images/icons/notification.png";
 import ProfilePic from "@/assets/images/icons/profile-pic.png";
 import { ThemeProvider } from "@/theme/themeContext";
 import Image from "next/image";
-import SearchField from "../../auction-search-field/auction-search-field";
+import { AuctionSearchField } from "@/app/components";
 import TextContainer from "../text-container/text-container";
 import classes from "./auction-details-header.module.css";
 import { usePanel } from "@/contexts/panel-context/panel-context";
@@ -49,7 +49,7 @@ export default function AuctionDetailsHeader() {
         </div>
 
         <div className={classes.inputContainer}>
-          <SearchField />
+          <AuctionSearchField />
 
           <div className={classes.notificationContainer}>
             <ThemeProvider>

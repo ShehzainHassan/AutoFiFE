@@ -7,10 +7,3 @@ export type AutoBidTypeProps = {
   startingPrice: number;
   currentBid: number;
 };
-
-export type ManualBidProps = {
-  startingPrice: number;
-  currentBid: number;
-  bid: string;
-  setBid: (val: string) => void;
-};

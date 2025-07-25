@@ -1,1 +1,1 @@
-export { default } from "./live-activity";
+export { default } from "./live-activity-view";

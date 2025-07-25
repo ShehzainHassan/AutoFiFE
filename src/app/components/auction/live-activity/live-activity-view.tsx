@@ -1,30 +1,17 @@
 "use client";
 
-import { DropdownFilter, ErrorMessage, Loading } from "@/app/components";
-import useGetAllAuctions from "@/hooks/useGetAllAuctions";
-import headings from "@/styles/typography.module.css";
-import { useRouter } from "next/navigation";
-import classes from "./live-activity.module.css";
-import { LiveActivityProps } from "./live-activity.types";
-import VehicleAuctionInfo from "./vehicle-auction-info";
-
+import { DropdownFilter } from "@/app/components";
 import CarImage from "../../result-card/car-image/car-image";
+import VehicleAuctionInfo from "./vehicle-auction-info";
+import { LiveActivityViewProps } from "./live-activity.types";
+import classes from "./live-activity.module.css";
+import headings from "@/styles/typography.module.css";
 
-const LiveActivity = ({ dropdownFilters }: LiveActivityProps) => {
-  const router = useRouter();
-  const {
-    data: vehicleAuctionData = [],
-    isLoading,
-    isError,
-    error,
-  } = useGetAllAuctions();
-
-  const redirectToAuctionDetails = (auctionId: number) => {
-    router.push(`/auction/${auctionId}`);
-  };
-  if (isError) return <ErrorMessage message={error.message} />;
-  if (isLoading) return <Loading />;
-  if (!vehicleAuctionData) return null;
+export default function LiveActivityView({
+  auctions,
+  onAuctionClick,
+  dropdownFilters,
+}: LiveActivityViewProps) {
   return (
     <div className={classes.container}>
       <div className={classes.titleContainer}>
@@ -41,14 +28,13 @@ const LiveActivity = ({ dropdownFilters }: LiveActivityProps) => {
       </div>
 
       <div className={classes.auctionContainer}>
-        {vehicleAuctionData.map((auction) => (
+        {auctions.map((auction) => (
           <div key={auction.auctionId} className={classes.cardWrapper}>
             <CarImage
               status={auction.status}
-              onClick={() => redirectToAuctionDetails(auction.auctionId)}
+              onClick={() => onAuctionClick(auction.auctionId)}
               className={classes.fixedHeight}
             />
-
             <VehicleAuctionInfo
               vehicleName={`${auction.vehicle.year} ${auction.vehicle.make} ${auction.vehicle.model}`}
               currentBid={auction.currentPrice}
@@ -60,6 +46,4 @@ const LiveActivity = ({ dropdownFilters }: LiveActivityProps) => {
       </div>
     </div>
   );
-};
-
-export default LiveActivity;
+}
