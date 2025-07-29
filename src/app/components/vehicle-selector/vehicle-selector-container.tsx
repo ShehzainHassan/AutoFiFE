@@ -2,7 +2,7 @@
 
 import useVehicleOptions from "@/hooks/useVehicleOptions";
 import { useMemo } from "react";
-import VehicleSelector from "./vehicle-selector";
+import VehicleSelectorView from "./vehicle-selector-view";
 import { VehicleSelectorProps } from "./vehicle-selector.types";
 
 export default function VehicleSelectorContainer(props: VehicleSelectorProps) {
@@ -61,7 +61,7 @@ export default function VehicleSelectorContainer(props: VehicleSelectorProps) {
   };
 
   return (
-    <VehicleSelector
+    <VehicleSelectorView
       {...props}
       makeOptions={makeOptions}
       modelOptions={modelOptions}

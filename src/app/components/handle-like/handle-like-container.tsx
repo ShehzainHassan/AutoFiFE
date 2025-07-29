@@ -4,7 +4,7 @@ import useDeleteUserLike from "@/hooks/useDeleteUserLike";
 import useTracking from "@/hooks/useTracking";
 import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import { toast } from "react-toastify";
-import HandleLike from "./handle-like";
+import HandleLikeView from "./handle-like-view";
 import { HandleLikeContainerProps } from "./handle-like.types";
 
 export default function HandleLikeContainer({
@@ -51,5 +51,5 @@ export default function HandleLikeContainer({
     }
   };
 
-  return <HandleLike handleLike={handleLike} isLiked={isLiked} />;
+  return <HandleLikeView handleLike={handleLike} isLiked={isLiked} />;
 }

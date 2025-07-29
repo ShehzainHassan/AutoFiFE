@@ -4,7 +4,7 @@ import { Box, Slider, Typography } from "@mui/material";
 import { PriceExpandedProps } from "./price-exapnded.types";
 import classes from "./price-expanded.module.css";
 
-export default function PriceExpanded({
+export default function PriceExpandedView({
   localRange,
   getDisplayText,
   handleChange,

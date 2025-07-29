@@ -42,7 +42,7 @@ export { default as EmailBox } from "./email-box";
 export { default as Filters } from "./Filters-Component";
 export { default as HandleShare } from "./handle-share";
 export { default as Footer } from "./Footer-Component";
-export { default as SimilarVehicleRecommendations } from "./similar-vehicle-recommendations/similar-vehicle-recommendations";
+export { default as SimilarVehicleRecommendations } from "./similar-vehicle-recommendations/similar-vehicle-recommendations-view";
 export { default as VerticalCarousel } from "./vehicle-carousel/vertical-carousel";
 export { default as VehicleInfoCard } from "./car-card/info-card/info-card";
 export { default as VehicleAuctionInfo } from "./auction/live-activity/vehicle-auction-info";

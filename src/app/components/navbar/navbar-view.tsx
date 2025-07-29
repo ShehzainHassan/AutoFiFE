@@ -8,7 +8,7 @@ import { NavbarProps } from "./navbar.types";
 import classes from "./navbar.module.css";
 import useTranslation from "@/i18n";
 
-export default function Navbar({
+export default function NavbarView({
   menuOpen,
   setMenuOpen,
   redirectToHome,

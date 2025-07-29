@@ -4,7 +4,7 @@ import { useSearch } from "@/contexts/car-search-context";
 import { convertArrayToString, parseStatus } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import AllVehiclesView from "./all-vehicles";
+import AllVehiclesView from "./all-vehicles-view";
 
 export default function AllVehicles() {
   const TABS = ["In Stock", "New Cars", "Used Cars"];

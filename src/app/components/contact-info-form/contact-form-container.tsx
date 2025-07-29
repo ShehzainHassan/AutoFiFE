@@ -3,7 +3,7 @@ import useSubmitInfo from "@/hooks/useSubmitInfo";
 import useTracking from "@/hooks/useTracking";
 import useVehiclesById from "@/hooks/useVehicleById";
 import { useParams } from "next/navigation";
-import ContactFormView from "./contact-form";
+import ContactFormView from "./contact-form-view";
 import { ContactInfoFormProps } from "./contact-info-form.types";
 import { useContactFormContext } from "../../../contexts/contact-form-context/contact-form-context";
 import { toast } from "react-toastify";

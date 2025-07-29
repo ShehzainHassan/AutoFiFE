@@ -2,7 +2,7 @@
 import { MAX_PRICE, MIN_PRICE } from "@/constants";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import { useState } from "react";
-import PriceExpanded from "./price-expanded";
+import PriceExpandedView from "./price-expanded-view";
 
 export default function PriceExpandedContainer() {
   const { mainSearch, setStagedSearch, setMainSearch } = useSearch();
@@ -65,7 +65,7 @@ export default function PriceExpandedContainer() {
   };
 
   return (
-    <PriceExpanded
+    <PriceExpandedView
       localRange={localRange}
       handleChange={handleChange}
       handleChangeCommitted={handleChangeCommitted}

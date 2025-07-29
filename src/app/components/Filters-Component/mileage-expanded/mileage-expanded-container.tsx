@@ -2,7 +2,7 @@
 import { MAX_MILEAGE, MIN_MILEAGE } from "@/constants";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import { useState } from "react";
-import MileageExpanded from "./mileage-expanded";
+import MileageExpandedView from "./mileage-expanded-view";
 
 export default function MileageExpandedContainer() {
   const { stagedSearch, setStagedSearch } = useSearch();
@@ -45,7 +45,7 @@ export default function MileageExpandedContainer() {
   };
 
   return (
-    <MileageExpanded
+    <MileageExpandedView
       localMileage={localMileage}
       getDisplayText={getDisplayText}
       handleChange={handleChange}

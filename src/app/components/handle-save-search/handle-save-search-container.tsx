@@ -5,7 +5,7 @@ import useDeleteUserSearch from "@/hooks/useDeleteUserSearch";
 import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
-import SaveSearchButton from "./handle-save-search";
+import SaveSearchButtonView from "./handle-save-search-view";
 
 const SaveSearchButtonContainer = () => {
   const { userSearches } = useUserFavorites();
@@ -52,7 +52,10 @@ const SaveSearchButtonContainer = () => {
   };
 
   return (
-    <SaveSearchButton handleSaveSearch={handleSaveSearch} isSaved={isSaved} />
+    <SaveSearchButtonView
+      handleSaveSearch={handleSaveSearch}
+      isSaved={isSaved}
+    />
   );
 };
 

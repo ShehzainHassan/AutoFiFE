@@ -1,7 +1,7 @@
 import classes from "./sort-by.module.css";
 import { SortByProps } from "./sort-by.types";
 
-export default function SortBy({ handleChange }: SortByProps) {
+export default function SortByView({ handleChange }: SortByProps) {
   return (
     <div className={classes.sortBy}>
       <p>Sort by: </p>

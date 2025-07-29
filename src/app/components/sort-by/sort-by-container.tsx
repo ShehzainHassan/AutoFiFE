@@ -1,5 +1,5 @@
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
-import SortBy from "./sort-by";
+import SortByView from "./sort-by-view";
 
 export default function SortByContainer() {
   const { searchParams, setSearchParams } = useSearch();
@@ -40,5 +40,5 @@ export default function SortByContainer() {
     setSearchParams({ ...searchParams, sortOrder });
   };
 
-  return <SortBy handleChange={handleChange} />;
+  return <SortByView handleChange={handleChange} />;
 }

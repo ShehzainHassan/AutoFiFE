@@ -6,7 +6,7 @@ import { IconButton } from "@mui/material";
 import styles from "./vehicle-selector.module.css";
 import { VehicleSelectorUIProps } from "./vehicle-selector.types";
 
-export default function VehicleSelector({
+export default function VehicleSelectorView({
   vehicle,
   onRemove,
   onChange,

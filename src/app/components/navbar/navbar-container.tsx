@@ -1,12 +1,12 @@
 "use client";
 import { MAX_YEAR, MIN_YEAR, PAGE_SIZE } from "@/constants";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
+import { trackError } from "@/utilities/error-tracking";
 import { convertArrayToString } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Navbar from "./navbar";
+import NavbarView from "./navbar-view";
 import { NavbarContainerProps } from "./navbar.types";
-import { trackError } from "@/utilities/error-tracking";
 
 export default function NavbarContainer({
   backgroundColor = "transparent",
@@ -102,7 +102,7 @@ export default function NavbarContainer({
   };
   const [menuOpen, setMenuOpen] = useState(false);
   return (
-    <Navbar
+    <NavbarView
       backgroundColor={backgroundColor}
       handleLogout={handleLogout}
       handleSignInClick={handleSignInClick}

@@ -4,7 +4,7 @@ import { Box, Slider, Typography } from "@mui/material";
 import classes from "../price-expanded/price-expanded.module.css";
 import { MileageExpandedProps } from "./mileage-expanded.types";
 
-export default function MileageExpanded({
+export default function MileageExpandedView({
   localMileage,
   getDisplayText,
   handleChange,

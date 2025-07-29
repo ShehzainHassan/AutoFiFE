@@ -4,7 +4,7 @@ import headings from "@/styles/typography.module.css";
 import classes from "./similar-vehicle-recommendations.module.css";
 import { SimilarVehicleRecommendationsProps } from "./similar-vehicle-recommendations.types";
 import VehicleInfoDetails from "./vehicle-info-details";
-export default function SimilarVehicleRecommendations({
+export default function SimilarVehicleRecommendationsView({
   vehicleId,
   redirectToCarPage,
 }: SimilarVehicleRecommendationsProps) {

@@ -2,7 +2,7 @@ import { Loading } from "@/app/components";
 import useSimilarVehicles from "@/hooks/useSimilarVehicles";
 import { useParams, useRouter } from "next/navigation";
 import ErrorMessage from "../error-message/error-message";
-import SimilarVehicleRecommendations from "./similar-vehicle-recommendations";
+import SimilarVehicleRecommendationsView from "./similar-vehicle-recommendations-view";
 export default function SimilarVehicleRecommendationsContainer() {
   const params = useParams();
   const idParam = params.id;
@@ -29,7 +29,7 @@ export default function SimilarVehicleRecommendationsContainer() {
     router.push(`/cars/${vid}`);
   };
   return (
-    <SimilarVehicleRecommendations
+    <SimilarVehicleRecommendationsView
       redirectToCarPage={redirectToCarPage}
       vehicleId={vehicleId}
     />
