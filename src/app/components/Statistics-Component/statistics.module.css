@@ -2,6 +2,9 @@
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
+  max-width: 1440px;
+  width: 100%;
+  padding: 55px 0;
 }
 .statContainer {
   display: flex;
@@ -9,6 +12,5 @@
   gap: 1px;
 }
 .border {
-  margin: 55px -371px 0;
   border: 1px solid var(--color-gray200);
 }

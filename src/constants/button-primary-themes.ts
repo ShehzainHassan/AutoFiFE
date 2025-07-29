@@ -95,3 +95,26 @@ export const BLACK_THEME: ThemeContextType = {
     border: "none",
   },
 };
+export const BUY_CARD: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-blue500)",
+    borderRadius: "12px",
+    textColor: "var(--color-white100)",
+    padding: "20px 25px 30px 25px",
+    hoverColor: "var(--color-blue600)",
+    border: "1px solid var(--color-blue500)",
+    width: "160px",
+  },
+};
+
+export const SELL_CARD: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-black1000)",
+    borderRadius: "12px",
+    textColor: "var(--color-white100)",
+    padding: "20px 25px 30px 25px",
+    hoverColor: "var(--color-gray700)",
+    border: "none",
+    width: "160px",
+  },
+};

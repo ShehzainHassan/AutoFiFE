@@ -16,7 +16,38 @@ const usePlaceAutoBid = () => {
       return await auctionAPI.placeAutoBid(autoBid);
     },
 
-    onError: (error: AxiosError) => {
+    onMutate: async (autoBid) => {
+      await queryClient.cancelQueries({
+        queryKey: ["isAutoBidSet", autoBid.auctionId, autoBid.userId],
+      });
+      await queryClient.cancelQueries({
+        queryKey: ["userAutoBid", autoBid.userId, autoBid.auctionId],
+      });
+
+      const previousIsSet = queryClient.getQueryData([
+        "isAutoBidSet",
+        autoBid.auctionId,
+        autoBid.userId,
+      ]);
+      const previousUserAutoBid = queryClient.getQueryData([
+        "userAutoBid",
+        autoBid.userId,
+        autoBid.auctionId,
+      ]);
+
+      queryClient.setQueryData(
+        ["isAutoBidSet", autoBid.auctionId, autoBid.userId],
+        true
+      );
+      queryClient.setQueryData(
+        ["userAutoBid", autoBid.userId, autoBid.auctionId],
+        autoBid
+      );
+
+      return { previousIsSet, previousUserAutoBid };
+    },
+
+    onError: (error: AxiosError, _variables, context) => {
       const status = error.response?.status;
 
       if (status === 401 || status === 403) {
@@ -27,6 +58,17 @@ const usePlaceAutoBid = () => {
           "Failed to place auto bid. Please try again.";
         toast.error(message);
       }
+
+      if (context) {
+        queryClient.setQueryData(
+          ["isAutoBidSet", _variables.auctionId, _variables.userId],
+          context.previousIsSet
+        );
+        queryClient.setQueryData(
+          ["userAutoBid", _variables.userId, _variables.auctionId],
+          context.previousUserAutoBid
+        );
+      }
     },
 
     onSuccess: (_data, variables) => {
@@ -34,7 +76,6 @@ const usePlaceAutoBid = () => {
       queryClient.invalidateQueries({
         queryKey: ["isAutoBidSet", variables.auctionId, variables.userId],
       });
-
       queryClient.invalidateQueries({
         queryKey: ["userAutoBid", variables.userId, variables.auctionId],
       });

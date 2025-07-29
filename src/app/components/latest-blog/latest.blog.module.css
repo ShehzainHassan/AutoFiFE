@@ -1,3 +1,11 @@
+.blog {
+  display: flex;
+  flex-direction: column;
+  max-width: 1430px;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 115px;
+}
 .cardContainer {
   display: flex;
   gap: 30px;
@@ -5,16 +13,12 @@
 }
 .blogCards {
   display: flex;
-  gap: 30px;
   margin-top: 30px;
   margin-bottom: 75px;
   background-color: var(--color-white100);
+  justify-content: space-between;
 }
-.blog {
-  display: flex;
-  flex-direction: column;
-  padding: 115px 260px;
-}
+
 .round {
   border-bottom-left-radius: 80px;
   border-bottom-right-radius: 80px;

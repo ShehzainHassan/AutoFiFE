@@ -17,7 +17,9 @@ export default function ButtonPrimary({
   className,
   isDisabled,
   onClick,
+  width,
   type = "button",
+  imgPos = "left",
 }: ButtonPrimaryProps) {
   const [isHovered, setIsHovered] = useState(false);
   const theme = useTheme();
@@ -35,13 +37,14 @@ export default function ButtonPrimary({
     <button
       type={type}
       aria-label={typeof btnText === "string" ? btnText : undefined}
-      className={`${classes.btnContainer} ${className}`}
+      className={`${classes.btnContainer} ${className || ""}`}
       style={{
         backgroundColor: currentBackground,
         borderRadius: borderRadius || themeValues?.borderRadius,
         padding: padding || themeValues?.padding,
         border: border || themeValues?.border,
         opacity: isDisabled ? 0.6 : 1,
+        width: width || themeValues?.width,
         pointerEvents: isDisabled ? "none" : "auto",
         cursor: isDisabled ? "not-allowed" : "pointer",
         display: "flex",
@@ -57,7 +60,7 @@ export default function ButtonPrimary({
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
-      {imgSrc && (
+      {imgSrc && imgPos === "left" && (
         <Image src={imgSrc} alt="icon" width={15} height={15} loading="lazy" />
       )}
       <span
@@ -67,6 +70,9 @@ export default function ButtonPrimary({
         }}>
         {btnText}
       </span>
+      {imgSrc && imgPos === "right" && (
+        <Image src={imgSrc} alt="icon" width={15} height={15} loading="lazy" />
+      )}
     </button>
   );
 }

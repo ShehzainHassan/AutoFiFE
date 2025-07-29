@@ -42,7 +42,6 @@ export default function AutoPlaceBidView({
 
   return (
     <div>
-      {/* Error/Validation Messages */}
       {Number(maxBidAmount) < startingPrice && currentBid === 0 ? (
         <p>
           Starting Price: {CURRENCY}
@@ -62,37 +61,32 @@ export default function AutoPlaceBidView({
             )}
         </>
       )}
-
-      {/* Bid Amount Input */}
       <div className={inputClass.bidInput}>
         <Input width="100%">
           <Input.Field
-            type="number"
+            type="text"
             placeholder="Maximum Bid Amount"
             value={maxBidAmount}
             onChange={onInputChange}
             onKeyDown={(e) => {
               const current =
                 maxBidAmount === "" ? 0 : parseInt(maxBidAmount, 10);
-              const newValue =
-                e.key === "ArrowUp"
-                  ? (current + 1).toString()
-                  : Math.max(current - 1, 0).toString();
-
-              const input = document.createElement("input");
-              input.value = newValue;
-
-              const syntheticEvent = {
-                target: input,
-              } as React.ChangeEvent<HTMLInputElement>;
-
-              onInputChange(syntheticEvent);
+              if (e.key === "ArrowUp") {
+                onInputChange({
+                  target: { value: (current + 1).toString() },
+                } as React.ChangeEvent<HTMLInputElement>);
+                e.preventDefault();
+              } else if (e.key === "ArrowDown") {
+                onInputChange({
+                  target: { value: Math.max(current - 1, 0).toString() },
+                } as React.ChangeEvent<HTMLInputElement>);
+                e.preventDefault();
+              }
             }}
           />
         </Input>
       </div>
 
-      {/* Strategy Dropdowns */}
       <Dropdown
         value={biddingStrategy}
         onChange={onStrategyChange}

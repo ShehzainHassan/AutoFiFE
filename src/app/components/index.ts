@@ -19,7 +19,6 @@ export { default as BookmarkIcon } from "./bookmark-icon";
 export { default as BrandCard } from "./brand-card";
 export { default as ButtonNavigate } from "./buttons/button-navigate";
 export { default as ButtonPrimary } from "./buttons/button-primary";
-export { default as ButtonSecondary } from "./buttons/button-secondary";
 export { default as BuySellCard } from "./buy-sell-car";
 export { default as HorizontalCarCard } from "./car-card/horizontal-card";
 export { default as VerticalCard } from "./car-card/vertical-card";

@@ -1,9 +1,11 @@
+import { ButtonPrimary } from "@/app/components";
+import { BUY_CARD, SELL_CARD } from "@/constants/button-primary-themes";
 import headings from "@/styles/typography.module.css";
-import classes from "./buy-sell-car.module.css";
+import { ThemeProvider } from "@/theme/themeContext";
 import Image from "next/image";
+import classes from "./buy-sell-car.module.css";
 import { CarCardProps } from "./buy-sell-car.types";
-import { ButtonSecondary } from "@/app/components";
-
+import ArrowWhiteIcon from "@/assets/images/icons/arrow-white.png";
 export default function BuySellCard({
   title,
   description,
@@ -21,12 +23,24 @@ export default function BuySellCard({
       <p className={`${headings.criteriaText} ${classes.description}`}>
         {description}
       </p>
-      <ButtonSecondary
-        btnText="Get Started"
-        buttonColor={
-          type === "Buy" ? "var(--color-blue500)" : "var(--color-black100)"
-        }
-      />
+      {type === "Buy" ? (
+        <ThemeProvider value={BUY_CARD}>
+          <ButtonPrimary
+            btnText="Get started"
+            imgPos="right"
+            imgSrc={ArrowWhiteIcon}
+          />
+        </ThemeProvider>
+      ) : (
+        <ThemeProvider value={SELL_CARD}>
+          <ButtonPrimary
+            btnText="Get started"
+            imgPos="right"
+            imgSrc={ArrowWhiteIcon}
+          />
+        </ThemeProvider>
+      )}
+
       <Image
         src={imgSrc}
         className={classes.image}

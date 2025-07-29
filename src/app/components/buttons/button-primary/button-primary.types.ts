@@ -14,4 +14,6 @@ export type ButtonPrimaryProps = {
   isDisabled?: boolean;
   onClick?: () => void;
   type?: "button" | "submit" | "reset" | undefined;
+  width?: string;
+  imgPos?: "left" | "right";
 };

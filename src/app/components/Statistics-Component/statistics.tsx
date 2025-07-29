@@ -1,13 +1,12 @@
+import useTranslation from "@/i18n";
 import headings from "@/styles/typography.module.css";
 import classes from "./statistics.module.css";
-import useTranslation from "@/i18n";
-import Wrapper from '../Wrapper/wrapper';
 
 export default function Statistics() {
   const { t } = useTranslation();
   const statistics = t("statistics");
   return (
-    <Wrapper padding="55px 371px 0px">
+    <>
       <div className={classes.statsContainer}>
         {Array.isArray(statistics) &&
           statistics.length > 0 &&
@@ -24,6 +23,6 @@ export default function Statistics() {
           })}
       </div>
       <div className={classes.border} />
-    </Wrapper>
+    </>
   );
 }

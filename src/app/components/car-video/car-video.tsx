@@ -1,7 +1,6 @@
 import Thumbnail from "@/assets/images/general/thumbnail.jpg";
 import PlayIcon from "@/assets/images/icons/play.png";
 import Image from "next/image";
-import Wrapper from '../Wrapper/wrapper';
 import classes from "./car-video.module.css";
 import VideoDescription from "./video-description/video-description";
 export default function CarVideo() {
@@ -16,34 +15,32 @@ export default function CarVideo() {
   const buttonText = "Get Started";
 
   return (
-    <Wrapper padding="0px 110px 0px 120px">
-      <div className={classes.container}>
-        <div className={classes.imageWrapper}>
+    <div className={classes.container}>
+      <div className={classes.imageWrapper}>
+        <Image
+          src={Thumbnail}
+          loading="lazy"
+          placeholder="blur"
+          alt="thumbnail"
+          fill
+        />
+        <div className={classes.playButton}>
           <Image
-            src={Thumbnail}
+            src={PlayIcon}
             loading="lazy"
             placeholder="blur"
-            alt="thumbnail"
-            fill
+            alt="play"
+            width={22}
+            height={24}
           />
-          <div className={classes.playButton}>
-            <Image
-              src={PlayIcon}
-              loading="lazy"
-              placeholder="blur"
-              alt="play"
-              width={22}
-              height={24}
-            />
-          </div>
         </div>
-        <VideoDescription
-          title={title}
-          description={description}
-          benefits={benefits}
-          buttonText={buttonText}
-        />
       </div>
-    </Wrapper>
+      <VideoDescription
+        title={title}
+        description={description}
+        benefits={benefits}
+        buttonText={buttonText}
+      />
+    </div>
   );
 }
