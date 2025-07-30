@@ -9,6 +9,7 @@ import { trackError } from "./error-tracking";
 import DOMPurify from "isomorphic-dompurify";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import { AuctionFilters } from "@/interfaces/auction";
 dayjs.extend(duration);
 
 export function getModelOptions(make: string): Options[] {
@@ -406,3 +407,29 @@ export function formatBidTimingReverse(value: number): string {
       return "Immediate";
   }
 }
+
+export default function buildAuctionQuery(filters: AuctionFilters) {
+  const params = new URLSearchParams();
+
+  if (filters.status) params.append("status", filters.status);
+  if (filters.make) params.append("make", filters.make);
+  if (filters.minPrice !== undefined)
+    params.append("minPrice", filters.minPrice.toString());
+  if (filters.maxPrice !== undefined)
+    params.append("maxPrice", filters.maxPrice.toString());
+  if (filters.sortBy !== undefined) params.append("sortBy", filters.sortBy);
+  if (filters.descending !== undefined)
+    params.append("descending", filters.descending.toString());
+
+  return params.toString();
+}
+
+export const sortOptions = [
+  { label: "Any", sortBy: undefined, descending: undefined },
+  { label: "By Make (A to Z)", sortBy: "make", descending: false },
+  { label: "By Make (Z to A)", sortBy: "make", descending: true },
+  { label: "By Price (Low to High)", sortBy: "price", descending: false },
+  { label: "By Price (High to Low)", sortBy: "price", descending: true },
+  { label: "Ending Soon", sortBy: "endTime", descending: false },
+  { label: "Ending Late", sortBy: "endTime", descending: true },
+];

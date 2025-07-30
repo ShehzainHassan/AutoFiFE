@@ -2,29 +2,40 @@
 
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import { AllVehicles } from "./components";
-import HeroContainer from './components/hero-Component/hero-container';
-import PremiumBrands from './components/premium-brands/premium-brands';
-import classes from './page.module.css';
+import { AllVehicles, LazyComponent } from "@/app/components";
+import HeroContainer from "./components/hero-Component/hero-container";
+import PremiumBrands from "./components/premium-brands/premium-brands";
+import classes from "./page.module.css";
 
-const CarVideo = dynamic(() => import('./components/car-video/car-video'));
+const CarVideo = dynamic(() => import("./components/car-video/car-video"), {
+  ssr: false,
+});
 const Statistics = dynamic(
-  () => import('./components/Statistics-Component/statistics')
+  () => import("./components/Statistics-Component/statistics"),
+  { ssr: false }
 );
 const WhyChooseUs = dynamic(
-  () => import('./components/why-choose-us/why-choose-us')
+  () => import("./components/why-choose-us/why-choose-us"),
+  { ssr: false }
 );
 const PopularMakes = dynamic(
-  () => import('./components/popular-makes/popular-makes')
+  () => import("./components/popular-makes/popular-makes"),
+  { ssr: false }
 );
-const Shop = dynamic(() => import('./components/shop-Component/shop'));
+const Shop = dynamic(() => import("./components/shop-Component/shop"), {
+  ssr: false,
+});
 const Customers = dynamic(
-  () => import('./components/what-our-customers-say/what-our-customers-say')
+  () => import("./components/what-our-customers-say/what-our-customers-say"),
+  { ssr: false }
 );
 const LatestBlog = dynamic(
-  () => import('./components/latest-blog/latest-blog')
+  () => import("./components/latest-blog/latest-blog"),
+  { ssr: false }
 );
-const Footer = dynamic(() => import('./components/Footer-Component/footer'));
+const Footer = dynamic(() => import("./components/Footer-Component/footer"), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
@@ -33,15 +44,33 @@ export default function Home() {
       <PremiumBrands />
 
       <Suspense fallback={<div>Loading...</div>}>
-        <AllVehicles />
-        <CarVideo />
-        <Statistics />
-        <WhyChooseUs />
-        <PopularMakes />
-        <Shop />
-        <Customers />
-        <LatestBlog />
-        <Footer />
+        <LazyComponent>
+          <AllVehicles />
+        </LazyComponent>
+        <LazyComponent>
+          <CarVideo />
+        </LazyComponent>
+        <LazyComponent>
+          <Statistics />
+        </LazyComponent>
+        <LazyComponent>
+          <WhyChooseUs />
+        </LazyComponent>
+        <LazyComponent>
+          <PopularMakes />
+        </LazyComponent>
+        <LazyComponent>
+          <Shop />
+        </LazyComponent>
+        <LazyComponent>
+          <Customers />
+        </LazyComponent>
+        <LazyComponent>
+          <LatestBlog />
+        </LazyComponent>
+        <LazyComponent>
+          <Footer />
+        </LazyComponent>
       </Suspense>
     </div>
   );

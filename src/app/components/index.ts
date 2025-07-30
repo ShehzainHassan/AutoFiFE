@@ -58,3 +58,4 @@ export { default as AuctionTimer } from "./auction/auction-details/auction-info-
 export { default as AutoBidContainer } from "./auction/auction-details/auction-info-panel/auto-bid-container";
 export { default as ManualBidContainer } from "./auction/auction-details/auction-info-panel/manual-bid-container";
 export { default as WatchListCard } from "./auction/auction-details/watchlist-image-card";
+export { default as LazyComponent } from "./lazy-component";

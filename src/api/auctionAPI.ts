@@ -1,5 +1,6 @@
 import {
   Auction,
+  AuctionFilters,
   AuctionResult,
   AutoBid,
   Bid,
@@ -8,6 +9,7 @@ import {
 } from "@/interfaces/auction";
 import axios from "axios";
 import apiClient from "./apiClient";
+import buildAuctionQuery from "@/utilities/utilities";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -116,6 +118,13 @@ const auctionAPI = {
         bidStrategyType: updateAutoBid.bidStrategyType,
         isActive: updateAutoBid.isActive,
       }
+    );
+    return response.data;
+  },
+  getAuctionByFilters: async (filters: AuctionFilters) => {
+    const query = buildAuctionQuery(filters);
+    const response = await axios.get<Auction[]>(
+      `${API_BASE_URL}/auction${query ? `?${query}` : ""}`
     );
     return response.data;
   },

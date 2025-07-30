@@ -14,6 +14,7 @@ import {
   totalBidsOptions,
 } from "@/constants/auction";
 import { IOSSwitch } from "@/app/components/buttons/toggle-button/toggle-button";
+import { useMemo } from "react";
 
 export default function AutoPlaceBidView({
   maxBidAmount,
@@ -38,6 +39,15 @@ export default function AutoPlaceBidView({
   onStatusChange,
   onSubmit,
 }: AutoPlaceBidViewProps) {
+  const maxBidsOptions = useMemo(() => {
+    const delay = Number(bidDelaySeconds);
+    const max = delay >= 5 && delay <= 60 ? Math.floor(60 / delay) : 1;
+    return Array.from({ length: max }, (_, i) => ({
+      label: `${i + 1}`,
+      value: `${i + 1}`,
+    }));
+  }, [bidDelaySeconds]);
+
   if (isLoading) return <Loading />;
 
   return (
@@ -126,7 +136,7 @@ export default function AutoPlaceBidView({
             placeholder="Max Bids Per Minute">
             <Dropdown.Select
               styles={grayedField}
-              options={[]}
+              options={maxBidsOptions}
               isDisabled={isAutoBidSet}
             />
           </Dropdown>

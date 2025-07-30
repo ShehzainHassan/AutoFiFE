@@ -79,6 +79,9 @@ const usePlaceAutoBid = () => {
       queryClient.invalidateQueries({
         queryKey: ["userAutoBid", variables.userId, variables.auctionId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["highest-bidder", variables.auctionId],
+      });
     },
   });
 };

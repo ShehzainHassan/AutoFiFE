@@ -2,12 +2,44 @@
   display: flex;
   gap: 8px;
   align-items: center;
-  padding: 6 8px 6px 16px;
+  padding: 6px 8px 6px 16px;
   border-radius: 8px;
   width: fit-content;
   background-color: var(--color-gray560);
   cursor: pointer;
+  min-width: 120px;
+  position: relative;
+}
+.noRound {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 .dropdown {
   transform: rotate(90deg);
+}
+.selected {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.dropdownList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: var(--color-gray560);
+}
+
+.option {
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: var(--color-gray400);
 }

@@ -62,3 +62,12 @@ export interface AuctionResult {
   winningBid: number | null;
   bidCount: number;
 }
+
+export interface AuctionFilters {
+  status?: string;
+  make?: string;
+  maxPrice?: number;
+  minPrice?: number;
+  sortBy?: string;
+  descending?: boolean;
+}

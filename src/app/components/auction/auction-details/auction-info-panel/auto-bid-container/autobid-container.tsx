@@ -1,19 +1,21 @@
 "use client";
-import { useEffect, useState } from "react";
-import {
-  formatBidTiming,
-  formatBidStrategyType,
-  getUserIdFromLocalStorage,
-  formatBidStrategyTypeReverse,
-  formatBidTimingReverse,
-} from "@/utilities/utilities";
-import { AutoBid, UpdateAutoBid } from "@/interfaces/auction";
-import AutoPlaceBidView from "./auto-bid-view";
-import { AutoBidTypeProps } from "../auction-info-panel.types";
-import usePlaceAutoBid from "@/hooks/usePlaceAutoBid";
-import useUpdateAutoBid from "@/hooks/useUpdateAutoBid";
 import useIsAutoBidSet from "@/hooks/useIsAutoBidSet";
+import usePlaceAutoBid from "@/hooks/usePlaceAutoBid";
+import { useSignalNotifications } from "@/hooks/useSignalNotications";
+import useUpdateAutoBid from "@/hooks/useUpdateAutoBid";
 import useUserAutoBid from "@/hooks/useUserAutoBid";
+import { AutoBid, UpdateAutoBid } from "@/interfaces/auction";
+import {
+  formatBidStrategyType,
+  formatBidStrategyTypeReverse,
+  formatBidTiming,
+  formatBidTimingReverse,
+  getUserIdFromLocalStorage,
+} from "@/utilities/utilities";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { AutoBidTypeProps } from "../auction-info-panel.types";
+import AutoPlaceBidView from "./auto-bid-view";
 
 export default function AutoPlaceBidContainer({
   auctionId,
@@ -33,6 +35,11 @@ export default function AutoPlaceBidContainer({
 
   const { mutate: placeAutoBid, isPending: placing } = usePlaceAutoBid();
   const { mutate: updateAutoBid, isPending: updating } = useUpdateAutoBid();
+  const queryClient = useQueryClient();
+
+  useSignalNotifications(auctionId, () => {
+    queryClient.invalidateQueries({ queryKey: ["highest-bidder", auctionId] });
+  });
 
   const { data: isAutoBidSet = false, isLoading: isAutoBidLoading } =
     useIsAutoBidSet(auctionId, userId);

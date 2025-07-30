@@ -4,11 +4,8 @@ import { ErrorMessage, Loading } from "@/app/components";
 import useGetAllAuctions from "@/hooks/useGetAllAuctions";
 import { useRouter } from "next/navigation";
 import LiveActivityView from "./live-activity-view";
-import { LiveActivityProps } from "./live-activity.types";
 
-export default function LiveActivityContainer({
-  dropdownFilters,
-}: LiveActivityProps) {
+export default function LiveActivityContainer() {
   const router = useRouter();
   const {
     data: vehicleAuctionData = [],
@@ -28,7 +25,6 @@ export default function LiveActivityContainer({
   return (
     <LiveActivityView
       auctions={vehicleAuctionData}
-      dropdownFilters={dropdownFilters}
       onAuctionClick={redirectToAuctionDetails}
     />
   );

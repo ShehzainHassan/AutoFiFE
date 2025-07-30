@@ -130,3 +130,16 @@ export const totalBidsOptions = [
   { label: "50", value: "50" },
   { label: "60", value: "60" },
 ];
+
+export const priceOptions = [
+  { label: "Any", min: undefined, max: undefined },
+  { label: "No Current Bids", min: 0, max: 0 },
+  { label: "Bids < 1,000", max: 1000 },
+  { label: "Bids < 5,000", max: 5000 },
+  { label: "Bids < 10,000", max: 10000 },
+  { label: "Bids > 1,000", min: 1000 },
+  { label: "Bids > 5,000", min: 5000 },
+  { label: "Bids between 1,000 - 5,000", min: 1000, max: 5000 },
+  { label: "Bids between 5,000 - 10,000", min: 5000, max: 10000 },
+  { label: "Bids between 10,000 - 20,000", min: 10000, max: 20000 },
+];
