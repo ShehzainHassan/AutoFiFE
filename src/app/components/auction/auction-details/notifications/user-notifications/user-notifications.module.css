@@ -1,4 +1,4 @@
-.auctionWonContainer {
+.container {
   display: flex;
   gap: 20px;
   max-width: 960px;
@@ -17,4 +17,35 @@
 }
 .textContainer {
   cursor: pointer;
+}
+.unread {
+  font-weight: 700;
+}
+.read {
+  font-weight: normal;
+}
+.time {
+  margin-left: 10px;
+  font-size: 17px;
+}
+.icon {
+  font-size: 20px;
+  margin-left: 8px;
+  vertical-align: middle;
+  color: var(--color-blue260);
+  cursor: pointer;
+}
+.loadMoreBtn {
+  padding: 10px 20px;
+  background-color: var(--color-blue260);
+  color: var(--color-white100);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.loadMoreBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

@@ -5,6 +5,7 @@ export interface NotificationItem {
   isRead: boolean;
   createdAt: string;
   auctionId?: number;
+  id: number;
 }
 export interface Notification {
   items: NotificationItem[];

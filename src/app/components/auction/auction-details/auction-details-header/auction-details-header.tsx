@@ -9,6 +9,7 @@ import TextContainer from "../text-container/text-container";
 import classes from "./auction-details-header.module.css";
 import { usePanel } from "@/contexts/panel-context/panel-context";
 import { useRouter } from "next/navigation";
+import useGetUnreadCount from "@/hooks/useGetUnreadCount";
 
 export default function AuctionDetailsHeader() {
   const { panel, togglePanel } = usePanel();
@@ -16,6 +17,7 @@ export default function AuctionDetailsHeader() {
   const redictToAuction = () => {
     router.push("/auction");
   };
+  const { data: notificationCount } = useGetUnreadCount();
   return (
     <div
       className={[
@@ -73,6 +75,7 @@ export default function AuctionDetailsHeader() {
                 width={20}
                 height={20}
               />
+              <p className={classes.notificationCount}>{notificationCount}</p>
             </div>
           </div>
 

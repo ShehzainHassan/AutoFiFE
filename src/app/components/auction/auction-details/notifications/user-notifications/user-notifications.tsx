@@ -1,44 +1,105 @@
+"use client";
+
 import ErrorMessage from "@/app/components/error-message";
 import Loading from "@/app/components/loading";
 import CarImage from "@/app/components/result-card/car-image/car-image";
 import vehicleImg from "@/assets/images/cars/Bentley-Arnage4.4.png";
 import { usePanel } from "@/contexts/panel-context/panel-context";
-import useGetUserNotifications from "@/hooks/useGetUserNotifications";
+import useMarkAsRead from "@/hooks/useMarkAsRead";
+import { formatTimeAMPM } from "@/utilities/utilities";
+import MarkChatReadIcon from "@mui/icons-material/MarkChatRead";
 import { useRouter } from "next/navigation";
 import TextContainer from "../../text-container/text-container";
 import classes from "./user-notifications.module.css";
+import usePaginatedNotifications from "@/hooks/useGetUserNotifications";
+
 export default function UserNotifications() {
   const {
-    data: notifications,
+    data,
     isLoading,
     isError,
     error,
-  } = useGetUserNotifications();
-  const router = useRouter();
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = usePaginatedNotifications();
+
   const { togglePanel } = usePanel();
-  const authData = localStorage.getItem("authData");
-  if (!authData) return;
+  const router = useRouter();
+  const { mutate: markAsRead } = useMarkAsRead();
+  const authData =
+    typeof window !== "undefined" ? localStorage.getItem("authData") : null;
+
+  if (!authData) return null;
   if (isLoading) return <Loading />;
   if (isError) return <ErrorMessage message={error.message} />;
-  if (!notifications) return;
-  if (notifications.totalItems === 0) return <p>No new notifications</p>;
-  const redirectToCheckout = (id: number) => {
-    togglePanel("none");
-    router.push(`/auction/${id}/checkout`);
-  };
-  return notifications.items.map((notification) => (
-    <div className={classes.auctionWonContainer} key={notification.createdAt}>
-      <div className={classes.header}>
-        <h3>{notification.title}</h3>
-        <p className={classes.message}>{notification.message}</p>
 
-        <TextContainer
-          value="Checkout"
-          className={classes.textContainer}
-          onClick={() => redirectToCheckout(notification.auctionId ?? -1)}
-        />
-      </div>
-      <CarImage src={vehicleImg} />
-    </div>
-  ));
+  const notifications = data?.pages.flatMap((page) => page.items) ?? [];
+
+  const redirectToCheckout = (auctionId: number) => {
+    togglePanel("none");
+    router.push(`/auction/${auctionId}/checkout`);
+  };
+
+  return (
+    <>
+      {notifications.map((notification) => {
+        const isRead = notification.isRead;
+        const key = notification.id;
+
+        const content = (
+          <div className={classes.header}>
+            <h3 className={isRead ? classes.read : classes.unread}>
+              {notification.title}
+              <span className={classes.time}>
+                ({formatTimeAMPM(notification.createdAt)})
+              </span>
+              {!isRead && (
+                <span onClick={() => markAsRead(notification.id)}>
+                  <MarkChatReadIcon className={classes.icon} />
+                </span>
+              )}
+            </h3>
+            <p
+              className={`${classes.message} ${
+                isRead ? classes.read : classes.unread
+              }`}>
+              {notification.message}
+            </p>
+          </div>
+        );
+
+        return (
+          <div className={classes.container} key={key}>
+            <div className={classes.textContent}>
+              {content}
+              {notification.notificationType === 3 && (
+                <TextContainer
+                  value="Checkout"
+                  className={classes.textContainer}
+                  onClick={() =>
+                    redirectToCheckout(notification.auctionId ?? -1)
+                  }
+                />
+              )}
+            </div>
+            {notification.notificationType === 3 && (
+              <CarImage src={vehicleImg} />
+            )}
+          </div>
+        );
+      })}
+
+      {hasNextPage && (
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+          <button
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
+            className={classes.loadMoreBtn}>
+            {isFetchingNextPage ? "Loading..." : "Load More"}
+          </button>
+        </div>
+      )}
+    </>
+  );
 }

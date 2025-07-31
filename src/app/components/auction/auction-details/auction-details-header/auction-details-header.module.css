@@ -50,12 +50,25 @@
   background-color: var(--color-gray300);
   border-radius: 8px;
   cursor: pointer;
+  position: relative;
 }
 
 .notification:hover {
   background-color: var(--color-gray500);
 }
-
+.notificationCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: var(--color-red400);
+  color: var(--color-white100);
+  top: -5px;
+  right: -5px;
+}
 .profilePic {
   background: none;
 }

@@ -11,22 +11,16 @@ export function useSignalNotifications(
 
     const connection = getAuctionConnection(auctionId);
 
-    const handleNewBid = (id: number) => {
-      if (id === auctionId) {
-        console.log("Received new bid:", id);
-        onNewBid?.();
-      }
+    const handleNewBid = () => {
+      onNewBid?.();
     };
-    const handleAuctionEnd = (id: number) => {
-      if (id === auctionId) {
-        console.log("Auction ended:", id);
-        onAuctionEnd?.();
-      }
+
+    const handleAuctionEnd = () => {
+      onAuctionEnd?.();
     };
 
     connection.on("ReceiveNewBid", handleNewBid);
     connection.on("AuctionEnded", handleAuctionEnd);
-
     if (connection.state === "Disconnected") {
       connection
         .start()
@@ -38,6 +32,7 @@ export function useSignalNotifications(
 
     return () => {
       connection.off("ReceiveNewBid", handleNewBid);
+      connection.off("AuctionEnded", handleAuctionEnd);
     };
   }, [auctionId, onNewBid, onAuctionEnd]);
 }
