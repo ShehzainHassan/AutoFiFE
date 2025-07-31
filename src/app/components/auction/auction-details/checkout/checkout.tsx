@@ -1,30 +1,59 @@
 "use client";
-import { useFormValidation } from "@/hooks/useFormValidation";
-import { Input } from "@/app/components/input-field";
+import apiClient from "@/api/apiClient";
+import { AuctionDetailsHeader, Loading } from "@/app/components";
 import { IOSSwitch } from "@/app/components/buttons/toggle-button/toggle-button";
-import TextContainer from "../text-container/text-container";
+import { Input } from "@/app/components/input-field";
 import CarImage from "@/app/components/result-card/car-image/car-image";
-import StatItem from "../stat-item/stat-item";
-import SavedVehicles from "../saved-vehicles/saved-vehicles";
-import AuctionNotificationSettings from "../notifications/notification";
 import { CURRENCY } from "@/constants";
 import { usePanel } from "@/contexts/panel-context/panel-context";
-import { ThemeProvider } from "@/theme/themeContext";
+import { useFormValidation } from "@/hooks/useFormValidation";
 import { PAY_BUTTON } from "@/styles/text-container";
+import { ThemeProvider } from "@/theme/themeContext";
+import { trackError } from "@/utilities/error-tracking";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import AuctionNotificationSettings from "../notifications/notification";
+import SavedVehicles from "../saved-vehicles/saved-vehicles";
+import StatItem from "../stat-item/stat-item";
+import TextContainer from "../text-container/text-container";
 import { initialFormValues, validationRules } from "./checkout-validation";
-import { useState } from "react";
 import classes from "./checkout.module.css";
-import { AuctionDetailsHeader } from "@/app/components";
 
 export default function AuctionCheckout() {
   const { panel } = usePanel();
   const [savePayment, setSavePayment] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [authorized, setAuthorized] = useState(false);
 
   const { values, errors, handleChange } = useFormValidation(
     initialFormValues,
     validationRules
   );
-
+  const params = useParams();
+  const id = params.id ? Number(params.id) : undefined;
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const router = useRouter();
+  useEffect(() => {
+    if (!id) return;
+    const verifyAccess = async () => {
+      try {
+        const res = await apiClient.get(
+          `${API_BASE_URL}/auction/${id}/checkout`
+        );
+        if (res.status === 200) {
+          setAuthorized(true);
+        }
+      } catch (err) {
+        trackError(err as Error, { source: "accessing checkout page" });
+        router.replace("/unauthorized");
+      } finally {
+        setLoading(false);
+      }
+    };
+    verifyAccess();
+  }, [id]);
+  if (loading) return <Loading />;
+  if (!authorized) return null;
   return (
     <div className={classes.mainContainer}>
       <AuctionDetailsHeader />

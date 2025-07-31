@@ -8,7 +8,7 @@ import EmailBox from "../email-box/email-box";
 import classes from "./footer.module.css";
 import { ToastContainer } from "react-toastify";
 import { RoundedContainer } from "@/app/components";
-
+import ArrowImg from "@/assets/images/icons/arrow.png";
 const footerData = [
   {
     title: "Company",
@@ -37,6 +37,12 @@ const footerData = [
 ];
 export default function Footer() {
   const handleBrandClick = useHandleBrandClick();
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   return (
     <>
       <RoundedContainer />
@@ -124,10 +130,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className={`${classes.white} ${classes.footerBottom}`}>
-          <div>
-            <p>© 2025 BoxCar, All rights reserved</p>
+        <div className={classes.line}>
+          <div onClick={scrollToTop} className={classes.moveToTop}>
+            <Image src={ArrowImg} alt="arrow" width={15} height={15} />
           </div>
+        </div>
+
+        <div className={`${classes.white} ${classes.footerBottom}`}>
+          <p>© 2025 BoxCar, All rights reserved</p>
           <div className={classes.termsPrivacy}>
             <p>Terms & Conditions</p>
             <div className={classes.privacy}>

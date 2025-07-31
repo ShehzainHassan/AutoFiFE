@@ -9,15 +9,20 @@ import Image from "next/image";
 import ButtonPrimary from "../../buttons/button-primary";
 import classes from "./auction-card.module.css";
 import { AuctionCardProps } from "./auction-card.types";
+import { useRouter } from "next/navigation";
 
 const AuctionCard = ({
+  auctionId,
   vehicleDetails,
   price,
   endUTC,
   tag,
 }: AuctionCardProps) => {
   const { hours, minutes, seconds, totalSeconds } = useCountdown(endUTC);
-
+  const router = useRouter();
+  const redirectToAuctionDetails = (id: number) => {
+    router.push(`/auction/${id}`);
+  };
   const timerText =
     totalSeconds > 0
       ? `Ends in: ${hours}h ${minutes.toString().padStart(2, "0")}m ${seconds
@@ -26,7 +31,9 @@ const AuctionCard = ({
       : "ENDED";
 
   return (
-    <div className={classes.container}>
+    <div
+      onClick={() => redirectToAuctionDetails(auctionId)}
+      className={classes.container}>
       {tag && (
         <div className={classes.tag}>
           <span className={classes.redDot}>🔴</span>LIVE

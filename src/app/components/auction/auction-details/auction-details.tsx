@@ -1,5 +1,9 @@
 "use client";
-import { auctionData } from "@/constants/auction";
+import {
+  AuctionCardCarousel,
+  AuctionDetailsHeader,
+  WatchListCard,
+} from "@/app/components";
 import { usePanel } from "@/contexts/panel-context/panel-context";
 import useAuctionById from "@/hooks/useAuctionById";
 import { getUserIdFromLocalStorage } from "@/utilities/utilities";
@@ -8,15 +12,10 @@ import ErrorMessage from "../../error-message";
 import Loading from "../../loading";
 import classes from "./auction-details.module.css";
 import AuctionInfoPanel from "./auction-info-panel/auction-info-panel";
+import BidHistoryContainer from "./bid-history/bid-history-container";
 import InfoTabs from "./info-tabs/info-tabs";
 import AuctionNotificationSettings from "./notifications/notification";
 import SavedVehicles from "./saved-vehicles/saved-vehicles";
-import {
-  AuctionCardCarousel,
-  AuctionDetailsHeader,
-  WatchListCard,
-} from "@/app/components";
-import BidHistoryContainer from "./bid-history/bid-history-container";
 export default function AuctionDetails() {
   const router = useRouter();
   const { panel } = usePanel();
@@ -71,7 +70,7 @@ export default function AuctionDetails() {
 
             <div className={classes.auctionCarousel}>
               <h2>For You</h2>
-              <AuctionCardCarousel auctionData={auctionData} />
+              <AuctionCardCarousel />
             </div>
           </>
         )}

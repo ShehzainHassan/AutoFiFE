@@ -6,6 +6,7 @@
   width: 325px;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 }
 .subContainer {
   display: flex;

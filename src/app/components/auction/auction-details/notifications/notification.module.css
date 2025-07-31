@@ -12,10 +12,19 @@
   max-width: 960px;
   width: 100%;
   margin: 0 auto;
-  padding: 16px;
 }
 .notificationSettingsContainer {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 32px;
+  margin-top: 10px;
+}
+.headerContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  gap: 16px;
 }

@@ -1,43 +1,4 @@
 import { VehicleAuctionData } from "@/interfaces/auction";
-
-export const auctionData = [
-  {
-    vehicleDetails: "2008 Bentley Arnage 6.8 R",
-    price: 38500,
-    endUTC: "2025-07-16 15:00:00.000 +0500",
-    tag: "Live",
-  },
-  {
-    vehicleDetails: "2015 Audi RS5 Coupe",
-    price: 48900,
-    endUTC: "2025-07-17 8:00:00.000 +0500",
-    tag: "Live",
-  },
-  {
-    vehicleDetails: "2020 BMW M3 Competition",
-    price: 61500,
-    endUTC: "2025-07-20 10:00:00.000 +0500",
-    tag: "Live",
-  },
-  {
-    vehicleDetails: "2022 Tesla Model S Plaid",
-    price: 89900,
-    endUTC: "2025-07-18 9:00:00.000 +0500",
-    tag: "Live",
-  },
-  {
-    vehicleDetails: "2017 Porsche 911 Carrera",
-    price: 74000,
-    endUTC: "2025-07-30 15:00:00.000 +0500",
-    tag: "Live",
-  },
-  {
-    vehicleDetails: "2018 Mercedes-AMG C63 S",
-    price: 67000,
-    endUTC: "2025-07-24 20:00:00.000 +0500",
-    tag: "Live",
-  },
-];
 export const dropdownFilters = ["Status", "Make", "Price", "Sort"];
 export const mockVehicleData: VehicleAuctionData[] = [
   {

@@ -433,3 +433,20 @@ export const sortOptions = [
   { label: "Ending Soon", sortBy: "endTime", descending: false },
   { label: "Ending Late", sortBy: "endTime", descending: true },
 ];
+
+export function formatNotificationTypeToString(notificationType: number) {
+  switch (notificationType) {
+    case 0:
+      return "AuctionStart";
+    case 1:
+      return "Outbid";
+    case 2:
+      return "PaymentDue";
+    case 3:
+      return "AuctionWon";
+    case 4:
+      return "AuctionEnd";
+    default:
+      return "AuctionStart";
+  }
+}
