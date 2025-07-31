@@ -2,10 +2,10 @@
 import notificationAPI from "@/api/notificationAPI";
 import { useQuery } from "@tanstack/react-query";
 
-const useGetUserNotifications = (userId: number) => {
+const useGetUserNotifications = () => {
   return useQuery({
-    queryKey: ["userNotifications", userId],
-    queryFn: () => notificationAPI.getUserNotifications(userId),
+    queryKey: ["userNotifications"],
+    queryFn: () => notificationAPI.getUserNotifications(),
   });
 };
 

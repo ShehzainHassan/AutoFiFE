@@ -38,8 +38,8 @@ const useDeleteUserLike = () => {
     onSuccess: () => {
       toast.success("Vehicle removed from favorites!");
     },
-    onSettled: (_, __, { userId }) => {
-      queryClient.invalidateQueries({ queryKey: ["userLikedVins", userId] });
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["userLikedVins"] });
     },
   });
 };

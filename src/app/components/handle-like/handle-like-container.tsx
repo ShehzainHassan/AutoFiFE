@@ -21,6 +21,7 @@ export default function HandleLikeContainer({
   const handleLike = () => {
     if (!authData) {
       toast.error("Please sign in to like a vehicle");
+
       return;
     }
 

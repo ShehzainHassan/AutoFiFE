@@ -22,12 +22,12 @@ const userAPI = {
     return response.data;
   },
   getUserById: async (id: number) => {
-    const response = await axios.get(`${API_BASE_URL}/user/${id}`);
+    const response = await apiClient.get(`${API_BASE_URL}/user/${id}`);
     return response.data;
   },
-  getUserSearches: async (userId: number) => {
-    const response = await axios.get(
-      `${API_BASE_URL}/user/get-user-saved-searches/${userId}`
+  getUserSearches: async () => {
+    const response = await apiClient.get(
+      `${API_BASE_URL}/user/get-user-saved-searches`
     );
     return response.data;
   },
@@ -83,9 +83,9 @@ const userAPI = {
     );
     return response.data;
   },
-  getUserLikedVins: async (userId: number) => {
-    const response = await axios.get(
-      `${API_BASE_URL}/user/get-user-liked-vins/${userId}`
+  getUserLikedVins: async () => {
+    const response = await apiClient.get(
+      `${API_BASE_URL}/user/get-user-liked-vins`
     );
     return response.data;
   },

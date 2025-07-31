@@ -2,7 +2,6 @@ import { StaticImageData } from "next/image";
 
 export interface WatchlistImageCardProps {
   auctionId: number;
-  userId: number;
 }
 
 export interface WatchlistImageCardViewProps {

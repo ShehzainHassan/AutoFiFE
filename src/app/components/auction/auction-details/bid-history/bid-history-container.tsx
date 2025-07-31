@@ -14,12 +14,10 @@ export default function BidHistoryContainer({ auctionId }: BidHistoryProps) {
   const queryClient = useQueryClient();
 
   const { data: bids, isError, error, isLoading } = useBidHistory(auctionId);
-
   const userIds = useMemo(
     () => [...new Set((bids ?? []).map((b) => b.userId))],
     [bids]
   );
-
   const {
     userMap,
     isLoading: usersLoading,

@@ -1,20 +1,19 @@
 "use client";
 
+import Loading from "@/app/components/loading";
 import { useMemo } from "react";
 import { toast } from "react-toastify";
-import ErrorMessage from "@/app/components/error-message";
-import Loading from "@/app/components/loading";
 
 import FeaturedAuction from "@/assets/images/cars/2018_Honda_Civic.png";
-import useUserWatchList from "@/hooks/useUserWatchList";
 import useAddAuctionToWatchlist from "@/hooks/useAddAuctionToWatchlist";
 import useRemoveFromWatchlist from "@/hooks/useRemoveAuctionFromWatchlist";
-import { WatchlistImageCardProps } from "./watchlist-image-card.types";
+import useUserWatchList from "@/hooks/useUserWatchList";
 import WatchlistImageCardView from "./watchlist-image-card-view";
+import { WatchlistImageCardProps } from "./watchlist-image-card.types";
+import ErrorMessage from "@/app/components/error-message";
 
 export default function WatchlistImageCardContainer({
   auctionId,
-  userId,
 }: WatchlistImageCardProps) {
   const authData = localStorage.getItem("authData") ?? "";
 
@@ -23,7 +22,7 @@ export default function WatchlistImageCardContainer({
     isLoading,
     isError,
     error,
-  } = useUserWatchList(userId);
+  } = useUserWatchList(!!authData);
   const { mutate: addToWatchlist } = useAddAuctionToWatchlist();
   const { mutate: removeFromWatchlist } = useRemoveFromWatchlist();
 
@@ -38,9 +37,9 @@ export default function WatchlistImageCardContainer({
     }
 
     if (!isWatchlisted) {
-      addToWatchlist({ auctionId, userId });
+      addToWatchlist({ auctionId });
     } else {
-      removeFromWatchlist({ auctionId, userId });
+      removeFromWatchlist({ auctionId });
     }
   };
 

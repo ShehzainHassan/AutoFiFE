@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 
 interface RemoveWatchInput {
   auctionId: number;
-  userId: number;
 }
 
 type Watchlist = number[];
@@ -23,38 +22,32 @@ const useRemoveFromWatchlist = () => {
     RemoveWatchInput,
     { prevWatchlist?: Watchlist; prevWatchers?: Watchers }
   >({
-    mutationFn: async ({ auctionId, userId }) => {
-      await auctionAPI.removeFromWatchlist(auctionId, userId);
+    mutationFn: async ({ auctionId }) => {
+      await auctionAPI.removeFromWatchlist(auctionId);
     },
-    onMutate: async ({ auctionId, userId }) => {
-      await queryClient.cancelQueries({ queryKey: ["userWatchList", userId] });
+    onMutate: async ({ auctionId }) => {
+      await queryClient.cancelQueries({ queryKey: ["userWatchList"] });
       await queryClient.cancelQueries({
         queryKey: ["auctionWatchers", auctionId],
       });
 
       const prevWatchlist = queryClient.getQueryData<Watchlist>([
         "userWatchList",
-        userId,
       ]);
       const prevWatchers = queryClient.getQueryData<Watchers>([
         "auctionWatchers",
         auctionId,
       ]);
 
-      queryClient.setQueryData<Watchlist>(
-        ["userWatchList", userId],
-        (old = []) => old.filter((a) => a !== auctionId)
-      );
-      queryClient.setQueryData<Watchers>(
-        ["auctionWatchers", auctionId],
-        (old = []) => old.filter((u) => u !== userId)
+      queryClient.setQueryData<Watchlist>(["userWatchList"], (old = []) =>
+        old.filter((a) => a !== auctionId)
       );
 
       return { prevWatchlist, prevWatchers };
     },
-    onError: (error, { auctionId, userId }, ctx) => {
+    onError: (error, { auctionId }, ctx) => {
       if (ctx?.prevWatchlist)
-        queryClient.setQueryData(["userWatchList", userId], ctx.prevWatchlist);
+        queryClient.setQueryData(["userWatchList"], ctx.prevWatchlist);
       if (ctx?.prevWatchers)
         queryClient.setQueryData(
           ["auctionWatchers", auctionId],
@@ -62,8 +55,8 @@ const useRemoveFromWatchlist = () => {
         );
       handleApiError(error, router);
     },
-    onSettled: (_data, _error, { auctionId, userId }) => {
-      queryClient.invalidateQueries({ queryKey: ["userWatchList", userId] });
+    onSettled: (_data, _error, { auctionId }) => {
+      queryClient.invalidateQueries({ queryKey: ["userWatchList"] });
       queryClient.invalidateQueries({
         queryKey: ["auctionWatchers", auctionId],
       });

@@ -14,37 +14,30 @@ const useAddUserLike = () => {
       return await userAPI.addUserLike(userId, vin);
     },
 
-    onMutate: async ({ userId, vin }) => {
-      await queryClient.cancelQueries({ queryKey: ["userLikedVins", userId] });
+    onMutate: async ({ vin }) => {
+      await queryClient.cancelQueries({ queryKey: ["userLikedVins"] });
 
       const previousVins = queryClient.getQueryData<string[]>([
         "userLikedVins",
-        userId,
       ]);
 
-      queryClient.setQueryData<string[]>(
-        ["userLikedVins", userId],
-        (old = []) => {
-          if (!old.includes(vin)) return [...old, vin];
-          return old;
-        }
-      );
+      queryClient.setQueryData<string[]>(["userLikedVins"], (old = []) => {
+        if (!old.includes(vin)) return [...old, vin];
+        return old;
+      });
 
       return { previousVins };
     },
 
-    onError: (error, { userId }, context) => {
+    onError: (error, _variables, context) => {
       if (context?.previousVins) {
-        queryClient.setQueryData(
-          ["userLikedVins", userId],
-          context.previousVins
-        );
+        queryClient.setQueryData(["userLikedVins"], context.previousVins);
       }
       handleApiError(error, router);
     },
 
-    onSettled: (_, __, { userId }) => {
-      queryClient.invalidateQueries({ queryKey: ["userLikedVins", userId] });
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["userLikedVins"] });
     },
 
     onSuccess: () => {

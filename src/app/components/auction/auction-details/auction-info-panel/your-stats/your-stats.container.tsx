@@ -2,11 +2,9 @@ import ErrorMessage from "@/app/components/error-message";
 import Loading from "@/app/components/loading";
 import useUserBids from "@/hooks/useUserBids";
 import useUserWatchList from "@/hooks/useUserWatchList";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import YourStats from "./your-stats";
 
 export default function YourStatsContainer() {
-  const userId = getUserIdFromLocalStorage() ?? -1;
   const authData = localStorage.getItem("authData") ?? "";
 
   const {
@@ -14,14 +12,14 @@ export default function YourStatsContainer() {
     isLoading: watchLoading,
     isError: watchError,
     error: watchErr,
-  } = useUserWatchList(userId);
+  } = useUserWatchList(!!authData);
 
   const {
     data: bids,
     isLoading: bidsLoading,
     isError: bidsError,
     error: bidsErr,
-  } = useUserBids(userId);
+  } = useUserBids(!!authData);
 
   if (watchLoading || bidsLoading) return <Loading />;
 

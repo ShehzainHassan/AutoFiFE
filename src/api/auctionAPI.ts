@@ -28,9 +28,9 @@ const auctionAPI = {
     );
     return response.data;
   },
-  getUserBidHistory: async (id: number) => {
-    const response = await axios.get<Bid[]>(
-      `${API_BASE_URL}/auction/userBids/${id}`
+  getUserBidHistory: async () => {
+    const response = await apiClient.get<Bid[]>(
+      `${API_BASE_URL}/auction/userBids`
     );
     return response.data;
   },
@@ -40,9 +40,9 @@ const auctionAPI = {
     );
     return response.data;
   },
-  getUserWatchList: async (id: number) => {
-    const response = await axios.get<Watchlist[]>(
-      `${API_BASE_URL}/auction/user/${id}/watchlist`
+  getUserWatchList: async () => {
+    const response = await apiClient.get<Watchlist[]>(
+      `${API_BASE_URL}/auction/user/watchlist`
     );
     return response.data;
   },
@@ -62,21 +62,21 @@ const auctionAPI = {
     );
     return response.data;
   },
-  addAuctionToWatchlist: async (auctionId: number, userId: number) => {
+  addAuctionToWatchlist: async (auctionId: number) => {
     const response = await apiClient.post(
-      `${API_BASE_URL}/auction/${auctionId}/watch?userId=${userId}`
+      `${API_BASE_URL}/auction/${auctionId}/watch`
     );
     return response.data;
   },
-  removeFromWatchlist: async (auctionId: number, userId: number) => {
+  removeFromWatchlist: async (auctionId: number) => {
     const response = await apiClient.delete(
-      `${API_BASE_URL}/auction/${auctionId}/watch?userId=${userId}`
+      `${API_BASE_URL}/auction/${auctionId}/watch`
     );
     return response.data;
   },
-  getUserAutoBid: async (userId: number, auctionId: number) => {
-    const response = await axios.get<AutoBid>(
-      `${API_BASE_URL}/api/autobid/${auctionId}/user/${userId}`
+  getUserAutoBid: async (auctionId: number) => {
+    const response = await apiClient.get<AutoBid>(
+      `${API_BASE_URL}/api/autobid/${auctionId}`
     );
     return response.data;
   },
@@ -100,19 +100,15 @@ const auctionAPI = {
     );
     return response.data;
   },
-  isAutoBidSet: async (auctionId: number, userId: number) => {
-    const response = await axios.get(
-      `${API_BASE_URL}/api/autobid/auction/${auctionId}/user/${userId}`
+  isAutoBidSet: async (auctionId: number) => {
+    const response = await apiClient.get(
+      `${API_BASE_URL}/api/autobid/auction/${auctionId}`
     );
     return response.data;
   },
-  updateAutoBid: async (
-    auctionId: number,
-    userId: number,
-    updateAutoBid: UpdateAutoBid
-  ) => {
+  updateAutoBid: async (auctionId: number, updateAutoBid: UpdateAutoBid) => {
     const response = await apiClient.put(
-      `${API_BASE_URL}/api/autobid/update/auction/${auctionId}/user/${userId}`,
+      `${API_BASE_URL}/api/autobid/update/auction/${auctionId}`,
       {
         maxBidAmount: updateAutoBid.maxBidAmount,
         bidStrategyType: updateAutoBid.bidStrategyType,

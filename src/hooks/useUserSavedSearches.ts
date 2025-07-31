@@ -2,15 +2,13 @@
 import userAPI from "@/api/userAPI";
 import { useQuery } from "@tanstack/react-query";
 
-const useUserSavedSearches = (userId: number | null) => {
+const useUserSavedSearches = () => {
   return useQuery({
-    queryKey: ["userSavedSearches", userId],
+    queryKey: ["userSavedSearches"],
     queryFn: async () => {
-      if (!userId) throw new Error("User ID is required");
-      const response = await userAPI.getUserSearches(userId);
+      const response = await userAPI.getUserSearches();
       return response;
     },
-    enabled: !!userId,
   });
 };
 

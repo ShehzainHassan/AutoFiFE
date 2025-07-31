@@ -1,12 +1,12 @@
 import { Notification } from "@/interfaces/notification";
-import axios from "axios";
+import apiClient from "./apiClient";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const notificationAPI = {
-  getUserNotifications: async (userId: number) => {
-    const response = await axios.get<Notification>(
-      `${API_BASE_URL}/api/notification?page=1&pageSize=10&userId=${userId}`
+  getUserNotifications: async () => {
+    const response = await apiClient.get<Notification>(
+      `${API_BASE_URL}/api/notification?page=1&pageSize=10`
     );
     return response.data;
   },

@@ -2,10 +2,10 @@
 import auctionAPI from "@/api/auctionAPI";
 import { useQuery } from "@tanstack/react-query";
 
-const useIsAutoBidSet = (auctionId: number, userId: number) => {
+const useIsAutoBidSet = (auctionId: number) => {
   return useQuery({
-    queryKey: ["isAutoBidSet", auctionId, userId],
-    queryFn: () => auctionAPI.isAutoBidSet(auctionId, userId),
+    queryKey: ["isAutoBidSet", auctionId],
+    queryFn: () => auctionAPI.isAutoBidSet(auctionId),
   });
 };
 

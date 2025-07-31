@@ -1,9 +1,6 @@
 "use client";
 import auctionAPI from "@/api/auctionAPI";
-import {
-  getUserIdFromLocalStorage,
-  handleApiError,
-} from "@/utilities/utilities";
+import { handleApiError } from "@/utilities/utilities";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -111,7 +108,6 @@ const usePlaceBid = () => {
 
     onSuccess: (_, variables) => {
       const { auctionId } = variables;
-      const userId = getUserIdFromLocalStorage() ?? -1;
       queryClient.invalidateQueries({
         queryKey: ["placeBid", auctionId],
       });
@@ -120,7 +116,7 @@ const usePlaceBid = () => {
       });
 
       queryClient.invalidateQueries({
-        queryKey: ["userBids", userId],
+        queryKey: ["userBids"],
       });
       queryClient.invalidateQueries({ queryKey: ["bidHistory", auctionId] });
       toast.success("Bid placed successfully!");

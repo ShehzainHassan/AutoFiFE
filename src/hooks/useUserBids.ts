@@ -2,11 +2,11 @@
 import auctionAPI from "@/api/auctionAPI";
 import { useQuery } from "@tanstack/react-query";
 
-const useUserBids = (id: number) => {
+const useUserBids = (enabled: boolean) => {
   return useQuery({
-    queryKey: ["userBids", id],
-    queryFn: () => auctionAPI.getUserBidHistory(id),
-    enabled: id > 0,
+    queryKey: ["userBids"],
+    queryFn: () => auctionAPI.getUserBidHistory(),
+    enabled,
   });
 };
 

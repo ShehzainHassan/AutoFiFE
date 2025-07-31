@@ -1,10 +1,9 @@
 "use client";
 
 import useUserLikedVins from "@/hooks/useUserLikedVins";
-import { createContext, useContext } from "react";
 import useUserSavedSearches from "@/hooks/useUserSavedSearches";
+import { createContext, useContext } from "react";
 import { UserFavoritesContextType } from "./user-favorites-context.types";
-import { useAuth } from "../auth-context";
 
 const UserFavoritesContext = createContext<
   UserFavoritesContextType | undefined
@@ -13,13 +12,12 @@ const UserFavoritesContext = createContext<
 export const UserFavoritesProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { userId } = useAuth();
-  const { data, isLoading, isError } = useUserLikedVins(userId);
+  const { data, isLoading, isError } = useUserLikedVins();
   const {
     data: savedSearches,
     isLoading: loadingSearches,
     isError: searchesError,
-  } = useUserSavedSearches(userId);
+  } = useUserSavedSearches();
 
   return (
     <UserFavoritesContext.Provider

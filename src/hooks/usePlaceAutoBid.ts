@@ -18,10 +18,10 @@ const usePlaceAutoBid = () => {
 
     onMutate: async (autoBid) => {
       await queryClient.cancelQueries({
-        queryKey: ["isAutoBidSet", autoBid.auctionId, autoBid.userId],
+        queryKey: ["isAutoBidSet", autoBid.auctionId],
       });
       await queryClient.cancelQueries({
-        queryKey: ["userAutoBid", autoBid.userId, autoBid.auctionId],
+        queryKey: ["userAutoBid", autoBid.auctionId],
       });
 
       const previousIsSet = queryClient.getQueryData([
@@ -31,18 +31,11 @@ const usePlaceAutoBid = () => {
       ]);
       const previousUserAutoBid = queryClient.getQueryData([
         "userAutoBid",
-        autoBid.userId,
         autoBid.auctionId,
       ]);
 
-      queryClient.setQueryData(
-        ["isAutoBidSet", autoBid.auctionId, autoBid.userId],
-        true
-      );
-      queryClient.setQueryData(
-        ["userAutoBid", autoBid.userId, autoBid.auctionId],
-        autoBid
-      );
+      queryClient.setQueryData(["isAutoBidSet", autoBid.auctionId], true);
+      queryClient.setQueryData(["userAutoBid", autoBid.auctionId], autoBid);
 
       return { previousIsSet, previousUserAutoBid };
     },
@@ -61,11 +54,11 @@ const usePlaceAutoBid = () => {
 
       if (context) {
         queryClient.setQueryData(
-          ["isAutoBidSet", _variables.auctionId, _variables.userId],
+          ["isAutoBidSet", _variables.auctionId],
           context.previousIsSet
         );
         queryClient.setQueryData(
-          ["userAutoBid", _variables.userId, _variables.auctionId],
+          ["userAutoBid", _variables.auctionId],
           context.previousUserAutoBid
         );
       }
@@ -74,10 +67,10 @@ const usePlaceAutoBid = () => {
     onSuccess: (_data, variables) => {
       toast.success("Auto bid is enabled!");
       queryClient.invalidateQueries({
-        queryKey: ["isAutoBidSet", variables.auctionId, variables.userId],
+        queryKey: ["isAutoBidSet", variables.auctionId],
       });
       queryClient.invalidateQueries({
-        queryKey: ["userAutoBid", variables.userId, variables.auctionId],
+        queryKey: ["userAutoBid", variables.auctionId],
       });
       queryClient.invalidateQueries({
         queryKey: ["highest-bidder", variables.auctionId],

@@ -46,7 +46,7 @@ export default function AuctionInfoPanel({
   useEffect(() => {
     if (isSuccess) {
       queryClient.invalidateQueries({
-        queryKey: ["userNotifications", userId],
+        queryKey: ["userNotifications"],
       });
     }
   }, [isSuccess, queryClient, userId]);

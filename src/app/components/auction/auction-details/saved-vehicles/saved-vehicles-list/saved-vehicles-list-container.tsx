@@ -1,28 +1,27 @@
 "use client";
-import { useMemo } from "react";
 import { useQueries } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useMemo } from "react";
 
-import useUserWatchList from "@/hooks/useUserWatchList";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import auctionAPI from "@/api/auctionAPI";
 import ErrorMessage from "@/app/components/error-message";
 import Loading from "@/app/components/loading";
 import { usePanel } from "@/contexts/panel-context/panel-context";
-import SavedVehiclesView from "./saved-vehicles-list-view";
+import useUserWatchList from "@/hooks/useUserWatchList";
 import { Auction } from "@/interfaces/auction";
+import SavedVehiclesView from "./saved-vehicles-list-view";
 
 export default function SavedVehiclesContainer() {
-  const userId = getUserIdFromLocalStorage() ?? -1;
   const { togglePanel } = usePanel();
   const router = useRouter();
+  const authData = localStorage.getItem("authData") ?? "";
 
   const {
     data: watchlist,
     isLoading: watchLoading,
     isError: watchError,
     error: watchErr,
-  } = useUserWatchList(userId);
+  } = useUserWatchList(!!authData);
 
   const auctionIds = useMemo(
     () => watchlist?.map((w) => w.auctionId) ?? [],

@@ -4,7 +4,6 @@ import CarImage from "@/app/components/result-card/car-image/car-image";
 import vehicleImg from "@/assets/images/cars/Bentley-Arnage4.4.png";
 import { usePanel } from "@/contexts/panel-context/panel-context";
 import useGetUserNotifications from "@/hooks/useGetUserNotifications";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
 import TextContainer from "../../text-container/text-container";
 import classes from "./user-notifications.module.css";
@@ -14,9 +13,11 @@ export default function UserNotifications() {
     isLoading,
     isError,
     error,
-  } = useGetUserNotifications(getUserIdFromLocalStorage() ?? -1);
+  } = useGetUserNotifications();
   const router = useRouter();
   const { togglePanel } = usePanel();
+  const authData = localStorage.getItem("authData");
+  if (!authData) return;
   if (isLoading) return <Loading />;
   if (isError) return <ErrorMessage message={error.message} />;
   if (!notifications) return;

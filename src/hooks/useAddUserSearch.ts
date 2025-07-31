@@ -20,16 +20,16 @@ const useAddUserSearch = () => {
       return await userAPI.saveUserSearch(userId, search);
     },
 
-    onMutate: async ({ userId, search }) => {
+    onMutate: async ({ search }) => {
       await queryClient.cancelQueries({
-        queryKey: ["userSavedSearches", userId],
+        queryKey: ["userSavedSearches"],
       });
 
       const previousSearches =
-        queryClient.getQueryData<string[]>(["userSavedSearches", userId]) || [];
+        queryClient.getQueryData<string[]>(["userSavedSearches"]) || [];
 
       queryClient.setQueryData<string[]>(
-        ["userSavedSearches", userId],
+        ["userSavedSearches"],
         [...previousSearches, search]
       );
 
@@ -46,9 +46,9 @@ const useAddUserSearch = () => {
       handleApiError(error, router);
     },
 
-    onSuccess: async (_, { userId }) => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["userSavedSearches", userId],
+        queryKey: ["userSavedSearches"],
       });
       toast.success("Search saved!");
     },

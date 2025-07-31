@@ -20,19 +20,17 @@ const useDeleteUserSearch = () => {
       return await userAPI.removeUserSearch(userId, search);
     },
 
-    onMutate: async ({ userId, search }) => {
+    onMutate: async ({ search }) => {
       await queryClient.cancelQueries({
-        queryKey: ["userSavedSearches", userId],
+        queryKey: ["userSavedSearches"],
       });
 
       const previousSearches = queryClient.getQueryData<string[]>([
         "userSavedSearches",
-        userId,
       ]);
 
-      queryClient.setQueryData<string[]>(
-        ["userSavedSearches", userId],
-        (old = []) => old.filter((s) => s !== search)
+      queryClient.setQueryData<string[]>(["userSavedSearches"], (old = []) =>
+        old.filter((s) => s !== search)
       );
 
       return { previousSearches };
@@ -40,15 +38,15 @@ const useDeleteUserSearch = () => {
 
     onError: (error, _vars, context) => {
       queryClient.setQueryData(
-        ["userSavedSearches", _vars.userId],
+        ["userSavedSearches"],
         context?.previousSearches
       );
       handleApiError(error, router);
     },
 
-    onSettled: (_data, _error, { userId }) => {
+    onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ["userSavedSearches", userId],
+        queryKey: ["userSavedSearches"],
       });
     },
 

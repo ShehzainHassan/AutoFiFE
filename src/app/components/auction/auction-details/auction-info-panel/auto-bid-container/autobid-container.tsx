@@ -42,9 +42,9 @@ export default function AutoPlaceBidContainer({
   });
 
   const { data: isAutoBidSet = false, isLoading: isAutoBidLoading } =
-    useIsAutoBidSet(auctionId, userId);
+    useIsAutoBidSet(auctionId);
   const { data: userAutoBid = null, isLoading: userAutoBidLoading } =
-    useUserAutoBid(userId, auctionId, isAutoBidSet);
+    useUserAutoBid(auctionId, isAutoBidSet);
 
   const handleSubmit = () => {
     if (isAutoBidSet) {
@@ -53,7 +53,7 @@ export default function AutoPlaceBidContainer({
         bidStrategyType: formatBidStrategyType(biddingStrategy),
         isActive: isActive ?? true,
       };
-      updateAutoBid({ auctionId, userId, updateAutoBid: payload });
+      updateAutoBid({ auctionId, updateAutoBid: payload });
     } else {
       const payload: AutoBid = {
         userId,
@@ -89,6 +89,7 @@ export default function AutoPlaceBidContainer({
   const isDisabled =
     placing || updating || !maxBidAmount || Number(maxBidAmount) <= 0;
 
+  if (!authData) return <p>Please sign in to set autobid</p>;
   return (
     <AutoPlaceBidView
       maxBidAmount={maxBidAmount}

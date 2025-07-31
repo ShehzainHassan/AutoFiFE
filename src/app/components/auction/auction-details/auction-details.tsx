@@ -6,7 +6,6 @@ import {
 } from "@/app/components";
 import { usePanel } from "@/contexts/panel-context/panel-context";
 import useAuctionById from "@/hooks/useAuctionById";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import { useParams, useRouter } from "next/navigation";
 import ErrorMessage from "../../error-message";
 import Loading from "../../loading";
@@ -58,10 +57,7 @@ export default function AuctionDetails() {
                     {auction.vehicle.model}
                   </h1>
                 </div>
-                <WatchListCard
-                  auctionId={id}
-                  userId={getUserIdFromLocalStorage() ?? -1}
-                />
+                <WatchListCard auctionId={id} />
                 <InfoTabs />
                 <BidHistoryContainer auctionId={auction.auctionId} />
               </div>

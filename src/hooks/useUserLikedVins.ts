@@ -2,15 +2,13 @@
 import userAPI from "@/api/userAPI";
 import { useQuery } from "@tanstack/react-query";
 
-const useUserLikedVins = (userId: number | null) => {
+const useUserLikedVins = () => {
   return useQuery({
-    queryKey: ["userLikedVins", userId],
+    queryKey: ["userLikedVins"],
     queryFn: async () => {
-      if (!userId) throw new Error("User ID is required");
-      const response = await userAPI.getUserLikedVins(userId);
+      const response = await userAPI.getUserLikedVins();
       return response;
     },
-    enabled: !!userId,
   });
 };
 
