@@ -2,16 +2,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 36px 39px 36px 97px;
 }
+
 .buttonLeft {
   display: flex;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
 }
+
 .buttonRight {
   display: flex;
+  align-items: center;
   gap: 5px;
 }
+
 .icon {
   width: 24px;
   height: 24px;
@@ -25,4 +30,13 @@
   text-decoration: underline;
   color: var(--color-gray700);
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .buttonsContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px;
+  }
 }

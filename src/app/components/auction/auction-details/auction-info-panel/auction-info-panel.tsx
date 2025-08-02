@@ -8,7 +8,6 @@ import {
 import { CURRENCY } from "@/constants";
 import useAuctionById from "@/hooks/useAuctionById";
 import useGetAuctionResult from "@/hooks/useGetAuctionResult";
-import { useSignalNotifications } from "@/hooks/useSignalNotications";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,6 +16,7 @@ import classes from "./auction-info-panel.module.css";
 import { AuctionInfoPanelProps } from "./auction-info-panel.types";
 import { AutoBidContainer, ManualBidContainer } from "@/app/components";
 import { getUserIdFromLocalStorage } from "@/utilities/utilities";
+import { useSignalNotifications } from "@/hooks/useSignalNotifications";
 export default function AuctionInfoPanel({
   vehiclePrice,
 }: AuctionInfoPanelProps) {

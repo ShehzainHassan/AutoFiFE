@@ -13,11 +13,12 @@ import useGetUnreadCount from "@/hooks/useGetUnreadCount";
 
 export default function AuctionDetailsHeader() {
   const { panel, togglePanel } = usePanel();
+  const authData = localStorage.getItem("authData");
   const router = useRouter();
   const redictToAuction = () => {
     router.push("/auction");
   };
-  const { data: notificationCount } = useGetUnreadCount();
+  const { data: notificationCount, isLoading } = useGetUnreadCount(!!authData);
   return (
     <div
       className={[
@@ -75,7 +76,13 @@ export default function AuctionDetailsHeader() {
                 width={20}
                 height={20}
               />
-              <p className={classes.notificationCount}>{notificationCount}</p>
+              {!isLoading &&
+                typeof notificationCount === "number" &&
+                notificationCount > 0 && (
+                  <p className={classes.notificationCount}>
+                    {notificationCount}
+                  </p>
+                )}
             </div>
           </div>
 

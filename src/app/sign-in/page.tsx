@@ -9,82 +9,53 @@ import {
 import useLoginUser from "@/hooks/useLoginUser";
 import { validateEmail, validatePassword } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TopSection from "../components/auth-top-section/auth-top-section";
 import NeedHelp from "../components/need-help/need-help";
 import signUpClasses from "../sign-up/sign-up.module.css";
 import classes from "./sign-in.module.css";
+import { useFormValidation } from "@/hooks/useFormValidation";
+
 export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const router = useRouter();
   const { mutate: loginUser, isPending } = useLoginUser();
 
-  const redirectToSignUp = () => {
-    router.push("/sign-up");
-  };
-  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setEmail(value);
-    const error = validateEmail(value);
-    setErrors((prev) => ({
-      ...prev,
-      email: error || "",
-    }));
-  };
-  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPassword(value);
-    const error = validatePassword(value);
-    setErrors((prev) => ({
-      ...prev,
-      password: error || "",
-    }));
-  };
-  const validateFields = () => {
-    let isValid = true;
-    const newErrors: { name?: string; email?: string; password?: string } = {};
+  const {
+    values: { email, password },
+    errors,
+    handleChange,
+    setErrors,
+  } = useFormValidation(
+    { email: "", password: "" },
+    {
+      email: validateEmail,
+      password: validatePassword,
+    }
+  );
 
-    if (!email.trim()) {
-      newErrors.email = "Email is required!";
-      isValid = false;
-    }
+  const handleLogin = () => {
+    const newErrors: { email?: string; password?: string } = {};
 
-    if (!password.trim()) {
-      newErrors.password = "Password is required!";
-      isValid = false;
-    }
+    if (!email.trim()) newErrors.email = "Email is required!";
+    else newErrors.email = validateEmail(email);
 
-    if (validateEmail(email) != "") {
-      newErrors.email = validateEmail(email);
-      isValid = false;
-    }
-    if (validatePassword(password) != "") {
-      newErrors.password = validatePassword(password);
-      isValid = false;
-    }
+    if (!password.trim()) newErrors.password = "Password is required!";
+    else newErrors.password = validatePassword(password);
 
     setErrors(newErrors);
+    const isValid = Object.values(newErrors).every((err) => err === "");
 
-    if (!isValid) return false;
-
-    return true;
-  };
-  const handleLogin = () => {
-    const formData = { email, password };
-    if (validateFields()) {
-      loginUser(formData, {
-        onSuccess: () => {
-          router.push("/");
-          setIsButtonDisabled(true);
-        },
-      });
+    if (isValid) {
+      loginUser(
+        { email, password },
+        {
+          onSuccess: () => router.push("/"),
+        }
+      );
     }
   };
+
   return (
     <div className={classes.container}>
       <AuthImage />
@@ -92,7 +63,7 @@ export default function SignIn() {
         <TopSection
           textRight="Not a member yet?"
           btnText="JOIN NOW"
-          onClick={redirectToSignUp}
+          onClick={() => router.push("/sign-up")}
         />
         <div className={classes.subContainer}>
           <AuthHeader title="Welcome Back" subTitle="Login to continue" />
@@ -102,20 +73,21 @@ export default function SignIn() {
                 iconImg="/images/message.png"
                 value={email}
                 placeholder="example@email.com"
-                onChange={handleEmail}
+                onChange={handleChange("email")}
                 className={errors.email ? signUpClasses.redBorder : undefined}
               />
               {errors.email && (
                 <p className={signUpClasses.error}>{errors.email}</p>
               )}
             </div>
+
             <div className={signUpClasses.inputContainer}>
               <AuthInput
                 iconImg="/images/password.png"
                 value={password}
                 type="password"
                 placeholder="Password"
-                onChange={handlePassword}
+                onChange={handleChange("password")}
                 className={
                   errors.password ? signUpClasses.redBorder : undefined
                 }
@@ -124,10 +96,11 @@ export default function SignIn() {
                 <p className={signUpClasses.error}>{errors.password}</p>
               )}
             </div>
+
             <AuthButton
               btnText="Proceed to my Account"
               onClick={handleLogin}
-              disabled={isPending || isButtonDisabled}
+              disabled={isPending}
             />
             <ToastContainer />
           </div>

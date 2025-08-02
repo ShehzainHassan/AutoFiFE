@@ -5,11 +5,11 @@ import usePlaceBid from "@/hooks/usePlaceBid";
 import { useParams } from "next/navigation";
 import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import { useQueryClient } from "@tanstack/react-query";
-import { useSignalNotifications } from "@/hooks/useSignalNotications";
 import { useState } from "react";
 import Loading from "@/app/components/loading";
 import ManualBidView from "./manual-bid-view";
 import { ManualBidProps } from "./manual-bid.types";
+import { useSignalNotifications } from "@/hooks/useSignalNotifications";
 
 export default function ManualBidContainer({
   startingPrice,

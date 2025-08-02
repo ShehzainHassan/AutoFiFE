@@ -6,9 +6,9 @@ import useBidHistory from "@/hooks/useBidHistory";
 import { useUsersMap } from "@/hooks/useUserMap";
 import { useMemo } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useSignalNotifications } from "@/hooks/useSignalNotications";
 import { BidHistoryProps } from "./bid-history.types";
 import BidHistoryView from "./bid-history-view";
+import { useSignalNotifications } from "@/hooks/useSignalNotifications";
 
 export default function BidHistoryContainer({ auctionId }: BidHistoryProps) {
   const queryClient = useQueryClient();

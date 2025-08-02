@@ -15,107 +15,63 @@ import {
   validatePassword,
 } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NeedHelp from "../components/need-help/need-help";
 import classes from "./sign-up.module.css";
+import { useFormValidation } from "@/hooks/useFormValidation";
 
 export default function SignUp() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const { mutate: loginUser, isPending: loginLoading } = useLoginUser();
   const router = useRouter();
-  const redirectToLogin = () => {
-    router.push("sign-in");
-  };
-  const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setName(value);
-    const error = validateName(value, "Name");
-    setErrors((prev) => ({
-      ...prev,
-      name: error || "",
-    }));
-  };
-  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setEmail(value);
-    const error = validateEmail(value);
-    setErrors((prev) => ({
-      ...prev,
-      email: error || "",
-    }));
-  };
-  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPassword(value);
-    const error = validatePassword(value);
-    setErrors((prev) => ({
-      ...prev,
-      password: error || "",
-    }));
-  };
-  const validateFields = () => {
-    let isValid = true;
+  const { mutate: saveUser, isPending } = useSaveUser();
+  const { mutate: loginUser, isPending: loginLoading } = useLoginUser();
+
+  const {
+    values: { name, email, password },
+    errors,
+    handleChange,
+    setErrors,
+  } = useFormValidation(
+    { name: "", email: "", password: "" },
+    {
+      name: (val) => validateName(val, "Name"),
+      email: validateEmail,
+      password: validatePassword,
+    }
+  );
+
+  const handleSignUp = () => {
     const newErrors: { name?: string; email?: string; password?: string } = {};
 
-    if (!name.trim()) {
-      newErrors.name = "Name is required!";
-      isValid = false;
-    }
+    if (!name.trim()) newErrors.name = "Name is required!";
+    else newErrors.name = validateName(name, "Name");
 
-    if (!email.trim()) {
-      newErrors.email = "Email is required!";
-      isValid = false;
-    }
+    if (!email.trim()) newErrors.email = "Email is required!";
+    else newErrors.email = validateEmail(email);
 
-    if (!password.trim()) {
-      newErrors.password = "Password is required!";
-      isValid = false;
-    }
-    if (validateName(name, "Name") != "") {
-      newErrors.name = validateName(name, "Name");
-      isValid = false;
-    }
-    if (validateEmail(email) != "") {
-      newErrors.email = validateEmail(email);
-      isValid = false;
-    }
-    if (validatePassword(password) != "") {
-      newErrors.password = validatePassword(password);
-      isValid = false;
-    }
+    if (!password.trim()) newErrors.password = "Password is required!";
+    else newErrors.password = validatePassword(password);
 
     setErrors(newErrors);
+    const isValid = Object.values(newErrors).every((err) => err === "");
 
-    if (!isValid) return false;
-
-    return true;
-  };
-  const { mutate: saveUser, isPending } = useSaveUser();
-  const handleSignUp = () => {
-    const formData = {
-      name,
-      email,
-      password,
-    };
-    if (validateFields()) {
-      saveUser(formData, {
-        onSuccess: () => {
-          setIsButtonDisabled(true);
-          loginUser(formData, {
-            onSuccess: () => {
-              router.push("/");
-            },
-          });
-        },
-      });
+    if (isValid) {
+      saveUser(
+        { name, email, password },
+        {
+          onSuccess: () => {
+            loginUser(
+              { email, password },
+              {
+                onSuccess: () => router.push("/"),
+              }
+            );
+          },
+        }
+      );
     }
   };
+
   return (
     <div className={classes.container}>
       <AuthImage />
@@ -123,7 +79,7 @@ export default function SignUp() {
         <AuthTopSection
           textRight="Already a Member?"
           btnText="LOG IN NOW"
-          onClick={redirectToLogin}
+          onClick={() => router.push("/sign-in")}
         />
         <div className={classes.subContainer}>
           <AuthHeader
@@ -136,7 +92,7 @@ export default function SignUp() {
                 iconImg="/images/icon-user.png"
                 value={name}
                 placeholder="Johnson Doe"
-                onChange={handleName}
+                onChange={handleChange("name")}
                 className={errors.name ? classes.redBorder : undefined}
               />
               {errors.name && <p className={classes.error}>{errors.name}</p>}
@@ -147,7 +103,7 @@ export default function SignUp() {
                 iconImg="/images/message.png"
                 value={email}
                 placeholder="example@email.com"
-                onChange={handleEmail}
+                onChange={handleChange("email")}
                 className={errors.email ? classes.redBorder : undefined}
               />
               {errors.email && <p className={classes.error}>{errors.email}</p>}
@@ -157,19 +113,20 @@ export default function SignUp() {
               <AuthInput
                 iconImg="/images/password.png"
                 value={password}
-                placeholder="Password"
                 type="password"
-                onChange={handlePassword}
+                placeholder="Password"
+                onChange={handleChange("password")}
                 className={errors.password ? classes.redBorder : undefined}
               />
               {errors.password && (
                 <p className={classes.error}>{errors.password}</p>
               )}
             </div>
+
             <AuthButton
               btnText="Become a Member"
               onClick={handleSignUp}
-              disabled={isPending || isButtonDisabled}
+              disabled={isPending || loginLoading}
             />
             {(isPending || loginLoading) && <Loading />}
             <ToastContainer />

@@ -2,13 +2,14 @@
 import userAPI from "@/api/userAPI";
 import { useQuery } from "@tanstack/react-query";
 
-const useUserSavedSearches = () => {
+const useUserSavedSearches = (enabled: boolean) => {
   return useQuery({
     queryKey: ["userSavedSearches"],
     queryFn: async () => {
       const response = await userAPI.getUserSearches();
       return response;
     },
+    enabled,
   });
 };
 

@@ -8,7 +8,14 @@ export function getAuctionConnection(auctionId: number): signalR.HubConnection {
   if (connections[auctionId]) return connections[auctionId];
 
   const connection = new signalR.HubConnectionBuilder()
-    .withUrl(`${API_BASE_URL}/hubs/auction?auctionId=${auctionId}`)
+    .withUrl(`${API_BASE_URL}/hubs/auction?auctionId=${auctionId}`, {
+      accessTokenFactory: () => {
+        const authData = localStorage.getItem("authData");
+        if (!authData) return "";
+        const { token } = JSON.parse(authData);
+        return token;
+      },
+    })
     .withAutomaticReconnect()
     .build();
 

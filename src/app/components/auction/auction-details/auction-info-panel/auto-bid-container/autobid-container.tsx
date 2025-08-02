@@ -1,7 +1,6 @@
 "use client";
 import useIsAutoBidSet from "@/hooks/useIsAutoBidSet";
 import usePlaceAutoBid from "@/hooks/usePlaceAutoBid";
-import { useSignalNotifications } from "@/hooks/useSignalNotications";
 import useUpdateAutoBid from "@/hooks/useUpdateAutoBid";
 import useUserAutoBid from "@/hooks/useUserAutoBid";
 import { AutoBid, UpdateAutoBid } from "@/interfaces/auction";
@@ -16,6 +15,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { AutoBidTypeProps } from "../auction-info-panel.types";
 import AutoPlaceBidView from "./auto-bid-view";
+import { useSignalNotifications } from "@/hooks/useSignalNotifications";
 
 export default function AutoPlaceBidContainer({
   auctionId,

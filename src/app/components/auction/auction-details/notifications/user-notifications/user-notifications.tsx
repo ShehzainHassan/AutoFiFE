@@ -1,40 +1,24 @@
 "use client";
 
-import ErrorMessage from "@/app/components/error-message";
-import Loading from "@/app/components/loading";
 import CarImage from "@/app/components/result-card/car-image/car-image";
 import vehicleImg from "@/assets/images/cars/Bentley-Arnage4.4.png";
 import { usePanel } from "@/contexts/panel-context/panel-context";
-import useMarkAsRead from "@/hooks/useMarkAsRead";
 import { formatTimeAMPM } from "@/utilities/utilities";
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead";
 import { useRouter } from "next/navigation";
 import TextContainer from "../../text-container/text-container";
 import classes from "./user-notifications.module.css";
-import usePaginatedNotifications from "@/hooks/useGetUserNotifications";
+import { UserNotificationsProps } from "./user-notifications.types";
 
-export default function UserNotifications() {
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = usePaginatedNotifications();
-
+export default function UserNotifications({
+  notifications,
+  markAsRead,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+}: UserNotificationsProps) {
   const { togglePanel } = usePanel();
   const router = useRouter();
-  const { mutate: markAsRead } = useMarkAsRead();
-  const authData =
-    typeof window !== "undefined" ? localStorage.getItem("authData") : null;
-
-  if (!authData) return null;
-  if (isLoading) return <Loading />;
-  if (isError) return <ErrorMessage message={error.message} />;
-
-  const notifications = data?.pages.flatMap((page) => page.items) ?? [];
 
   const redirectToCheckout = (auctionId: number) => {
     togglePanel("none");
@@ -93,7 +77,7 @@ export default function UserNotifications() {
       {hasNextPage && (
         <div style={{ textAlign: "center", marginTop: "20px" }}>
           <button
-            onClick={() => fetchNextPage()}
+            onClick={fetchNextPage}
             disabled={isFetchingNextPage}
             className={classes.loadMoreBtn}>
             {isFetchingNextPage ? "Loading..." : "Load More"}
