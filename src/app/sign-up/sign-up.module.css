@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  grid-template-columns: 3.17fr 8.83fr;
+  grid-template-columns: 3.9fr 8.1fr;
   height: 100vh;
   color: var(--color-gray700);
 }

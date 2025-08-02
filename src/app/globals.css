@@ -5,14 +5,14 @@
   box-sizing: border-box;
 }
 body.dark {
-  --color-gray700: #ffffff;
-  --color-background: #121212;
+  --color-gray700: var(--color-white100);
+  --color-background: var(--color-black100);
   background-color: var(--color-background);
   color: var(--color-gray700);
 }
 
 body {
-  background-color: #ffffff;
+  background-color: var(--color-white100);
   color: var(--color-gray700);
   transition: background-color 0.3s, color 0.3s;
 }

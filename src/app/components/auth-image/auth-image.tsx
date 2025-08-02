@@ -1,20 +1,16 @@
 import Image from "next/image";
 import classes from "./auth-image.module.css";
 import headings from "@/styles/typography.module.css";
-import background from "@/assets/images/general/background.png";
 import BoxCarsLogo from "@/assets/images/logos/BoxCars_Logo.png";
 import Logo from "@/assets/images/logos/logo.png";
+import backgroundImage from "@/assets/images/general/background.png";
 export default function AuthImage() {
   return (
-    <div className={classes.container}>
-      <Image
-        src={background}
-        alt="hero"
-        fill
-        loading="lazy"
-        placeholder="blur"
-        className={classes.image}
-      />
+    <div
+      className={classes.container}
+      style={{
+        backgroundImage: `url(${backgroundImage.src})`,
+      }}>
       <div className={classes.logo}>
         <Image
           src={BoxCarsLogo}

@@ -1,7 +1,11 @@
 .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 0;
   position: relative;
-  width: 100%;
-  height: 100%;
+  background-position: 30% 60%;
 }
 .image {
   object-fit: cover;
@@ -10,17 +14,11 @@
   display: flex;
   gap: 25px;
   align-items: center;
-  position: absolute;
-  top: 150px;
-  left: 35%;
 }
 .textContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 40px;
-  position: absolute;
-  bottom: 150px;
-  left: 15%;
   color: var(--color-white100);
 }

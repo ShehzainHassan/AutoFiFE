@@ -1,76 +1,43 @@
 "use client";
+
 import {
   AuthButton,
   AuthHeader,
   AuthImage,
   AuthInput,
-  AuthTopSection,
   Loading,
+  AuthTopSection,
 } from "@/app/components";
-import useLoginUser from "@/hooks/useLoginUser";
-import useSaveUser from "@/hooks/useSaveUser";
-import {
-  validateEmail,
-  validateName,
-  validatePassword,
-} from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NeedHelp from "../components/need-help/need-help";
 import classes from "./sign-up.module.css";
-import { useFormValidation } from "@/hooks/useFormValidation";
+import loadingClass from "../sign-in/sign-in.module.css";
+import useSaveUser from "@/hooks/useSaveUser";
+import useLoginUser from "@/hooks/useLoginUser";
+import { useAuthForm } from "@/hooks/useAuthForm";
 
 export default function SignUp() {
   const router = useRouter();
   const { mutate: saveUser, isPending } = useSaveUser();
-  const { mutate: loginUser, isPending: loginLoading } = useLoginUser();
+  const { mutate: loginUser, isPending: loginPending } = useLoginUser();
 
-  const {
-    values: { name, email, password },
-    errors,
-    handleChange,
-    setErrors,
-  } = useFormValidation(
-    { name: "", email: "", password: "" },
-    {
-      name: (val) => validateName(val, "Name"),
-      email: validateEmail,
-      password: validatePassword,
-    }
-  );
-
-  const handleSignUp = () => {
-    const newErrors: { name?: string; email?: string; password?: string } = {};
-
-    if (!name.trim()) newErrors.name = "Name is required!";
-    else newErrors.name = validateName(name, "Name");
-
-    if (!email.trim()) newErrors.email = "Email is required!";
-    else newErrors.email = validateEmail(email);
-
-    if (!password.trim()) newErrors.password = "Password is required!";
-    else newErrors.password = validatePassword(password);
-
-    setErrors(newErrors);
-    const isValid = Object.values(newErrors).every((err) => err === "");
-
-    if (isValid) {
-      saveUser(
-        { name, email, password },
-        {
-          onSuccess: () => {
-            loginUser(
-              { email, password },
-              {
-                onSuccess: () => router.push("/"),
-              }
-            );
-          },
-        }
-      );
-    }
-  };
+  const { values, errors, handleChange, handleSubmit } = useAuthForm({
+    type: "signUp",
+    onSubmit: (data) => {
+      saveUser(data, {
+        onSuccess: () => {
+          loginUser(
+            { email: data.email, password: data.password },
+            {
+              onSuccess: () => router.push("/"),
+            }
+          );
+        },
+      });
+    },
+  });
 
   return (
     <div className={classes.container}>
@@ -90,7 +57,7 @@ export default function SignUp() {
             <div className={classes.inputContainer}>
               <AuthInput
                 iconImg="/images/icon-user.png"
-                value={name}
+                value={values.name ?? ""}
                 placeholder="Johnson Doe"
                 onChange={handleChange("name")}
                 className={errors.name ? classes.redBorder : undefined}
@@ -101,7 +68,7 @@ export default function SignUp() {
             <div className={classes.inputContainer}>
               <AuthInput
                 iconImg="/images/message.png"
-                value={email}
+                value={values.email}
                 placeholder="example@email.com"
                 onChange={handleChange("email")}
                 className={errors.email ? classes.redBorder : undefined}
@@ -112,7 +79,7 @@ export default function SignUp() {
             <div className={classes.inputContainer}>
               <AuthInput
                 iconImg="/images/password.png"
-                value={password}
+                value={values.password}
                 type="password"
                 placeholder="Password"
                 onChange={handleChange("password")}
@@ -125,10 +92,14 @@ export default function SignUp() {
 
             <AuthButton
               btnText="Become a Member"
-              onClick={handleSignUp}
-              disabled={isPending || loginLoading}
+              onClick={handleSubmit}
+              disabled={isPending || loginPending}
             />
-            {(isPending || loginLoading) && <Loading />}
+            {(isPending || loginPending) && (
+              <div className={loadingClass.loading}>
+                <Loading />
+              </div>
+            )}
             <ToastContainer />
           </div>
         </div>

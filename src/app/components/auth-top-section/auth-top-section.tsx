@@ -53,7 +53,7 @@ export default function TopSection({
         </button>
         <IconButton onClick={toggleTheme} aria-label="Toggle dark mode">
           {isDark ? (
-            <LightModeIcon style={{ color: "#ffffff" }} />
+            <LightModeIcon style={{ color: "var(--color-white100)" }} />
           ) : (
             <DarkModeIcon />
           )}

@@ -1,4 +1,5 @@
 "use client";
+
 import {
   AuthButton,
   AuthHeader,
@@ -6,8 +7,6 @@ import {
   AuthInput,
   Loading,
 } from "@/app/components";
-import useLoginUser from "@/hooks/useLoginUser";
-import { validateEmail, validatePassword } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,46 +14,21 @@ import TopSection from "../components/auth-top-section/auth-top-section";
 import NeedHelp from "../components/need-help/need-help";
 import signUpClasses from "../sign-up/sign-up.module.css";
 import classes from "./sign-in.module.css";
-import { useFormValidation } from "@/hooks/useFormValidation";
+import useLoginUser from "@/hooks/useLoginUser";
+import { useAuthForm } from "@/hooks/useAuthForm";
 
 export default function SignIn() {
   const router = useRouter();
   const { mutate: loginUser, isPending } = useLoginUser();
 
-  const {
-    values: { email, password },
-    errors,
-    handleChange,
-    setErrors,
-  } = useFormValidation(
-    { email: "", password: "" },
-    {
-      email: validateEmail,
-      password: validatePassword,
-    }
-  );
-
-  const handleLogin = () => {
-    const newErrors: { email?: string; password?: string } = {};
-
-    if (!email.trim()) newErrors.email = "Email is required!";
-    else newErrors.email = validateEmail(email);
-
-    if (!password.trim()) newErrors.password = "Password is required!";
-    else newErrors.password = validatePassword(password);
-
-    setErrors(newErrors);
-    const isValid = Object.values(newErrors).every((err) => err === "");
-
-    if (isValid) {
-      loginUser(
-        { email, password },
-        {
-          onSuccess: () => router.push("/"),
-        }
-      );
-    }
-  };
+  const { values, errors, handleChange, handleSubmit } = useAuthForm({
+    type: "signIn",
+    onSubmit: (data) => {
+      loginUser(data, {
+        onSuccess: () => router.push("/"),
+      });
+    },
+  });
 
   return (
     <div className={classes.container}>
@@ -71,7 +45,7 @@ export default function SignIn() {
             <div className={signUpClasses.inputContainer}>
               <AuthInput
                 iconImg="/images/message.png"
-                value={email}
+                value={values.email}
                 placeholder="example@email.com"
                 onChange={handleChange("email")}
                 className={errors.email ? signUpClasses.redBorder : undefined}
@@ -84,27 +58,33 @@ export default function SignIn() {
             <div className={signUpClasses.inputContainer}>
               <AuthInput
                 iconImg="/images/password.png"
-                value={password}
+                value={values.password}
                 type="password"
                 placeholder="Password"
                 onChange={handleChange("password")}
                 className={
-                  errors.password ? signUpClasses.redBorder : undefined
+                  errors.password === "Password is required."
+                    ? signUpClasses.redBorder
+                    : undefined
                 }
               />
-              {errors.password && (
+              {errors.password === "Password is required." && (
                 <p className={signUpClasses.error}>{errors.password}</p>
               )}
             </div>
 
             <AuthButton
               btnText="Proceed to my Account"
-              onClick={handleLogin}
+              onClick={handleSubmit}
               disabled={isPending}
             />
             <ToastContainer />
           </div>
-          {isPending && <Loading />}
+          {isPending && (
+            <div className={classes.loading}>
+              <Loading />
+            </div>
+          )}
         </div>
         <NeedHelp />
       </div>
