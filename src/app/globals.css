@@ -4,9 +4,17 @@
   padding: 0;
   box-sizing: border-box;
 }
+body.dark {
+  --color-gray700: #ffffff;
+  --color-background: #121212;
+  background-color: var(--color-background);
+  color: var(--color-gray700);
+}
+
 body {
-  background-color: var(--color-white100);
-  color: var(--color-black100);
+  background-color: #ffffff;
+  color: var(--color-gray700);
+  transition: background-color 0.3s, color 0.3s;
 }
 .css-1u9des2-indicatorSeparator {
   display: none;

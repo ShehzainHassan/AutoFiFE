@@ -5,10 +5,12 @@
   gap: 12px;
 }
 .title {
-  color: var(--color-black400);
   text-transform: uppercase;
 }
 .subTitle {
   color: var(--color-gray700);
   text-transform: uppercase;
+}
+.white {
+  color: var(--color-white100);
 }
