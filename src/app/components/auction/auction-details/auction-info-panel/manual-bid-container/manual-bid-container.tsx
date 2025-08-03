@@ -1,15 +1,13 @@
 "use client";
 
+import Loading from "@/app/components/loading";
 import useHighestBidderId from "@/hooks/useGetHighestBidderId";
 import usePlaceBid from "@/hooks/usePlaceBid";
-import { useParams } from "next/navigation";
 import { getUserIdFromLocalStorage } from "@/utilities/utilities";
-import { useQueryClient } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 import { useState } from "react";
-import Loading from "@/app/components/loading";
 import ManualBidView from "./manual-bid-view";
 import { ManualBidProps } from "./manual-bid.types";
-import { useSignalNotifications } from "@/hooks/useSignalNotifications";
 
 export default function ManualBidContainer({
   startingPrice,
@@ -24,11 +22,6 @@ export default function ManualBidContainer({
 
   const { mutate: placeBid, isPending } = usePlaceBid();
   const { data: highestId, isLoading } = useHighestBidderId(auctionId);
-  const queryClient = useQueryClient();
-
-  useSignalNotifications(auctionId, () => {
-    queryClient.invalidateQueries({ queryKey: ["highest-bidder", auctionId] });
-  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

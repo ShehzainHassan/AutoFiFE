@@ -2,21 +2,21 @@
 import {
   AuctionStats,
   AuctionTimer,
+  AutoBidContainer,
   Loading,
+  ManualBidContainer,
   MyAuctionStats,
 } from "@/app/components";
 import { CURRENCY } from "@/constants";
 import useAuctionById from "@/hooks/useAuctionById";
 import useGetAuctionResult from "@/hooks/useGetAuctionResult";
+import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import classes from "./auction-info-panel.module.css";
 import { AuctionInfoPanelProps } from "./auction-info-panel.types";
-import { AutoBidContainer, ManualBidContainer } from "@/app/components";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
-import { useSignalNotifications } from "@/hooks/useSignalNotifications";
 export default function AuctionInfoPanel({
   vehiclePrice,
 }: AuctionInfoPanelProps) {
@@ -33,16 +33,6 @@ export default function AuctionInfoPanel({
     !!auction && auction.status === "Ended"
   );
 
-  useSignalNotifications(
-    id,
-    () => {
-      queryClient.invalidateQueries({ queryKey: ["auctionById", id] });
-    },
-    () => {
-      queryClient.invalidateQueries({ queryKey: ["auctionById", id] });
-      queryClient.invalidateQueries({ queryKey: ["auctionResult", id] });
-    }
-  );
   useEffect(() => {
     if (isSuccess) {
       queryClient.invalidateQueries({

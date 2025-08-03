@@ -1,12 +1,12 @@
 "use client";
+import { ButtonPrimary } from "@/app/components";
 import ExpandIcon from "@/assets/images/icons/expand.png";
 import Logo from "@/assets/images/logos/logo.png";
+import useTranslation from "@/i18n";
 import headings from "@/styles/typography.module.css";
 import Image from "next/image";
-import { ButtonPrimary } from "@/app/components";
-import { NavbarProps } from "./navbar.types";
 import classes from "./navbar.module.css";
-import useTranslation from "@/i18n";
+import { NavbarProps } from "./navbar.types";
 
 export default function NavbarView({
   menuOpen,
@@ -19,7 +19,6 @@ export default function NavbarView({
   showLogout,
 }: NavbarProps) {
   const { t } = useTranslation();
-
   const navbarItems = t("navbar.navItems");
 
   return (
@@ -34,6 +33,7 @@ export default function NavbarView({
         placeholder="blur"
         onClick={redirectToHome}
       />
+
       <button
         className={classes.hamburger}
         aria-label="Toggle menu"
@@ -42,6 +42,7 @@ export default function NavbarView({
         <span className={classes.bar}></span>
         <span className={classes.bar}></span>
       </button>
+
       <div
         data-testid="nav-container"
         className={`${classes.navList} ${classes.navListMobile} ${
@@ -66,6 +67,7 @@ export default function NavbarView({
               <h3 className={`${headings.navElement} ${classes.white}`}>
                 {isSignIn && userName ? userName : label}
               </h3>
+
               {showExpandIcon && (
                 <Image
                   src={ExpandIcon}
@@ -76,6 +78,7 @@ export default function NavbarView({
                   placeholder="blur"
                 />
               )}
+
               {isSignIn && userName && showLogout && (
                 <div
                   className={`${classes.logoutContainer} ${

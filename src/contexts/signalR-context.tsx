@@ -1,0 +1,90 @@
+"use client";
+
+import * as signalR from "@microsoft/signalr";
+import { useQueryClient } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
+import { createContext, useEffect } from "react";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+const SignalRContext = createContext<boolean>(false);
+
+export function SignalRProvider({ children }: { children: React.ReactNode }) {
+  const queryClient = useQueryClient();
+  const pathname = usePathname();
+  const match = pathname.match(/\/auction\/(\d+)/);
+  const auctionId = match ? parseInt(match[1]) : null;
+
+  useEffect(() => {
+    const authData = localStorage.getItem("authData");
+    if (!authData) return;
+
+    const { token } = JSON.parse(authData);
+
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(`${API_BASE_URL}/hubs/auction`, {
+        accessTokenFactory: () => token,
+      })
+      .withAutomaticReconnect()
+      .build();
+
+    connection.on("ReceiveNewBid", async (data: { auctionId: number }) => {
+      console.log("ReceiveNewBid", data.auctionId);
+
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["highest-bidder", data.auctionId],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ["bidHistory", data.auctionId],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ["auctionById", data.auctionId],
+        }),
+      ]);
+
+      await queryClient.invalidateQueries({ queryKey: ["userNotifications"] });
+      await queryClient.invalidateQueries({ queryKey: ["unread-count"] });
+    });
+
+    connection.on("AuctionEnded", async (data: { auctionId: number }) => {
+      console.log("AuctionEnded", data.auctionId);
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["auctionDetails", data.auctionId],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ["auctionResult", data.auctionId],
+        }),
+      ]);
+      await queryClient.invalidateQueries({ queryKey: ["userNotifications"] });
+      await queryClient.invalidateQueries({ queryKey: ["unread-count"] });
+    });
+
+    connection
+      .start()
+      .then(async () => {
+        console.log("✅ SignalR connected");
+        if (auctionId) {
+          await connection.invoke("JoinAuctionGroup", auctionId);
+          console.log("Joined group auction-" + auctionId);
+        }
+      })
+      .catch((err) => console.error("❌ SignalR connection failed", err));
+
+    connection.onreconnected(async () => {
+      console.log("SignalR reconnected");
+      if (auctionId) {
+        await connection.invoke("JoinAuctionGroup", auctionId);
+      }
+    });
+
+    return () => {
+      connection.stop();
+    };
+  }, [queryClient, pathname, auctionId]);
+
+  return (
+    <SignalRContext.Provider value={true}>{children}</SignalRContext.Provider>
+  );
+}
