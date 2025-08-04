@@ -100,6 +100,37 @@ const auctionAPI = {
     );
     return response.data;
   },
+  trackBidEvent: async (auctionId: number, amount: number) => {
+    const response = await apiClient.post(
+      `${API_BASE_URL}/api/analytics/track-bid`,
+      {
+        auctionId,
+        amount,
+      }
+    );
+    return response.data;
+  },
+  trackAuctionView: async (auctionId: number) => {
+    const response = await apiClient.post(
+      `${API_BASE_URL}/api/analytics/auction-view?auctionId=${auctionId}&source=Web`
+    );
+    return response.data;
+  },
+  trackAuctionCompletion: async (
+    auctionId: number,
+    isSuccessful: boolean,
+    finalPrice: number
+  ) => {
+    const response = await axios.post(
+      `${API_BASE_URL}/api/analytics/auction-completion`,
+      {
+        auctionId,
+        isSuccessful,
+        finalPrice,
+      }
+    );
+    return response.data;
+  },
   isAutoBidSet: async (auctionId: number) => {
     const response = await apiClient.get(
       `${API_BASE_URL}/api/autobid/auction/${auctionId}`

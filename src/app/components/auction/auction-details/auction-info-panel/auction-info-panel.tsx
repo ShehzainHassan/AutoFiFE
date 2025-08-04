@@ -32,7 +32,6 @@ export default function AuctionInfoPanel({
     id,
     !!auction && auction.status === "Ended"
   );
-
   useEffect(() => {
     if (isSuccess) {
       queryClient.invalidateQueries({

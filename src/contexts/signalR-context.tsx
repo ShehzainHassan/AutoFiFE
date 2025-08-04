@@ -42,21 +42,26 @@ export function SignalRProvider({ children }: { children: React.ReactNode }) {
           queryKey: ["auctionById", data.auctionId],
         }),
       ]);
-
-      await queryClient.invalidateQueries({ queryKey: ["userNotifications"] });
-      await queryClient.invalidateQueries({ queryKey: ["unread-count"] });
     });
 
     connection.on("AuctionEnded", async (data: { auctionId: number }) => {
       console.log("AuctionEnded", data.auctionId);
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: ["auctionDetails", data.auctionId],
+          queryKey: ["auctionById", data.auctionId],
         }),
         queryClient.invalidateQueries({
           queryKey: ["auctionResult", data.auctionId],
         }),
       ]);
+
+      await queryClient.invalidateQueries({ queryKey: ["userNotifications"] });
+      await queryClient.invalidateQueries({ queryKey: ["unread-count"] });
+    });
+
+    connection.on("Outbid", async (data: { auctionId: number }) => {
+      console.log("⚠️ You have been outbid in auction:", data.auctionId);
+
       await queryClient.invalidateQueries({ queryKey: ["userNotifications"] });
       await queryClient.invalidateQueries({ queryKey: ["unread-count"] });
     });

@@ -52,7 +52,7 @@
   color: var(--color-white100);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .hero {
     gap: 60px;
     padding: 0;

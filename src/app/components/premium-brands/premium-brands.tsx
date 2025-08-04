@@ -41,26 +41,28 @@ export default function PremiumBrands() {
 
   return (
     <div className={classes.container}>
-      <SectionTitle
-        title="Explore Our Premium Brands"
-        buttonText={showAllBrands ? "Hide All Brands" : "View All"}
-        onClick={handleViewAll}
-        backgroundColor="var(--color-white300)"
-      />
+      <div className={classes.subContainer}>
+        <SectionTitle
+          title="Explore Our Premium Brands"
+          buttonText={showAllBrands ? "Hide All Brands" : "View All"}
+          onClick={handleViewAll}
+          backgroundColor="var(--color-white300)"
+        />
 
-      <div className={classes.cardContainer}>
-        {isLoading && showAllBrands ? (
-          <p data-testid="fetching">Fetching all brands...</p>
-        ) : (
-          brandsToShow.map((brand) => (
-            <BrandCard
-              key={brand.brand}
-              brand={brand.brand}
-              imgSrc={brand.imgSrc}
-              onClick={() => handleBrandClick(brand.brand)}
-            />
-          ))
-        )}
+        <div className={classes.cardContainer}>
+          {isLoading && showAllBrands ? (
+            <p data-testid="fetching">Fetching all brands...</p>
+          ) : (
+            brandsToShow.map((brand) => (
+              <BrandCard
+                key={brand.brand}
+                brand={brand.brand}
+                imgSrc={brand.imgSrc}
+                onClick={() => handleBrandClick(brand.brand)}
+              />
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

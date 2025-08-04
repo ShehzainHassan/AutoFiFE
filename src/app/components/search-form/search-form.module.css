@@ -27,7 +27,7 @@
   align-items: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .container {
     gap: 15px;
     flex-direction: column;

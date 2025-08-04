@@ -15,6 +15,9 @@ import BidHistoryContainer from "./bid-history/bid-history-container";
 import InfoTabs from "./info-tabs/info-tabs";
 import AuctionNotificationSettings from "./notifications/notification";
 import SavedVehicles from "./saved-vehicles/saved-vehicles";
+import { useEffect } from "react";
+import useTrackAuctionView from "@/hooks/useTrackAuctionView";
+import { useAuth } from "@/contexts/auth-context";
 export default function AuctionDetails() {
   const router = useRouter();
   const { panel } = usePanel();
@@ -24,7 +27,15 @@ export default function AuctionDetails() {
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
   const { data: auction, isLoading, isError, error } = useAuctionById(id);
+  const { userId } = useAuth();
 
+  const trackAuctionView = useTrackAuctionView();
+
+  useEffect(() => {
+    if (auction && auction.auctionId && userId) {
+      trackAuctionView.mutate(auction.auctionId);
+    }
+  }, [auction, userId]);
   if (isLoading) return <Loading />;
   if (isError) return <ErrorMessage message={error.message} />;
   if (!auction) return <p>No auction found.</p>;

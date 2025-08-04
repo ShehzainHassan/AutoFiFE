@@ -6,7 +6,14 @@
   border-top-right-radius: 80px;
   background-color: var(--color-white300);
   justify-content: center;
-  padding: 115px 260px;
+}
+.subContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 1440px;
+  width: 100%;
+  margin: 115px auto;
 }
 
 .cardContainer {
@@ -17,7 +24,12 @@
   justify-content: space-between;
 }
 @media (max-width: 768px) {
-  .container {
-    padding: 50px;
+  .cardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    justify-content: space-between;
   }
 }
