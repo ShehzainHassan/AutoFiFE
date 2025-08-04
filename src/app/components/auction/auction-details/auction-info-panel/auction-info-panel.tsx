@@ -30,7 +30,7 @@ export default function AuctionInfoPanel({
   const { data: auction, isLoading } = useAuctionById(id);
   const { data: auctionResult, isSuccess } = useGetAuctionResult(
     id,
-    !!auction && auction.status === "Ended"
+    !!auction && (auction.status === "Ended" || hasLocallyEnded)
   );
   useEffect(() => {
     if (isSuccess) {

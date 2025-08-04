@@ -7,6 +7,9 @@ const useBidHistory = (id: number) => {
     queryKey: ["bidHistory", id],
     queryFn: () => auctionAPI.getBidHistory(id),
     enabled: id > 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
   });
 };
 

@@ -6,6 +6,9 @@ const useHighestBidderId = (id: number) => {
   return useQuery({
     queryKey: ["highest-bidder", id],
     queryFn: () => auctionAPI.getHighestBidderId(id),
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
   });
 };
 

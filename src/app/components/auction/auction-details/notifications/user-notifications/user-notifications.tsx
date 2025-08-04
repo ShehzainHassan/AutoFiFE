@@ -55,7 +55,8 @@ export default function UserNotifications({
 
         return (
           <div className={classes.container} key={key}>
-            <div className={classes.textContent}>
+            {/* <div className={classes.tag}>Outbid</div> */}
+            <div>
               {content}
               {notification.notificationType === 3 && (
                 <TextContainer

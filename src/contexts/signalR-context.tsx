@@ -1,5 +1,6 @@
 "use client";
 
+import auctionAPI from "@/api/auctionAPI";
 import * as signalR from "@microsoft/signalr";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
@@ -44,23 +45,50 @@ export function SignalRProvider({ children }: { children: React.ReactNode }) {
       ]);
     });
 
-    connection.on("AuctionEnded", async (data: { auctionId: number }) => {
-      console.log("AuctionEnded", data.auctionId);
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: ["auctionById", data.auctionId],
-        }),
-        queryClient.invalidateQueries({
-          queryKey: ["auctionResult", data.auctionId],
-        }),
-      ]);
+    connection.on(
+      "AuctionEnded",
+      async (data: {
+        auctionId: number;
+        finalPrice: number;
+        isReserveMet: boolean;
+      }) => {
+        console.log("AuctionEnded", data.auctionId);
+        await Promise.all([
+          queryClient.invalidateQueries({
+            queryKey: ["auctionById", data.auctionId],
+          }),
+          queryClient.invalidateQueries({
+            queryKey: ["auctionResult", data.auctionId],
+          }),
+        ]);
+
+        await queryClient.invalidateQueries({
+          queryKey: ["userNotifications"],
+        });
+        await queryClient.invalidateQueries({ queryKey: ["unread-count"] });
+        await auctionAPI.trackAuctionCompletion(
+          data.auctionId,
+          data.isReserveMet,
+          data.finalPrice
+        );
+      }
+    );
+
+    connection.on("Outbid", async (data: { auctionId: number }) => {
+      console.log("⚠️ You have been outbid in auction:", data.auctionId);
+
+      await queryClient.invalidateQueries({ queryKey: ["userNotifications"] });
+      await queryClient.invalidateQueries({ queryKey: ["unread-count"] });
+    });
+    connection.on("ReservePriceMet", async (data: { auctionId: number }) => {
+      console.log("ReservePriceMet", data.auctionId);
 
       await queryClient.invalidateQueries({ queryKey: ["userNotifications"] });
       await queryClient.invalidateQueries({ queryKey: ["unread-count"] });
     });
 
-    connection.on("Outbid", async (data: { auctionId: number }) => {
-      console.log("⚠️ You have been outbid in auction:", data.auctionId);
+    connection.on("AuctionExtended", async (data: { auctionId: number }) => {
+      console.log("AuctionExtended", data.auctionId);
 
       await queryClient.invalidateQueries({ queryKey: ["userNotifications"] });
       await queryClient.invalidateQueries({ queryKey: ["unread-count"] });

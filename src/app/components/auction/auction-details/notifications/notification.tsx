@@ -39,7 +39,10 @@ export default function AuctionNotificationSettings() {
         />
       </div>
 
-      <div className={classes.notificationSettingsContainer}>
+      <div
+        className={`${classes.notificationSettingsContainer} ${
+          selected === tabs[0] ? classes.userNotifs : ""
+        }`}>
         {selected === tabs[0] ? (
           isLoading ? (
             <Loading />

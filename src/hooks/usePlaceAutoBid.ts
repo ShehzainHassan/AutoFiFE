@@ -64,7 +64,7 @@ const usePlaceAutoBid = () => {
       }
     },
 
-    onSuccess: (_data, variables) => {
+    onSuccess: async (_data, variables) => {
       toast.success("Auto bid is enabled!");
       queryClient.invalidateQueries({
         queryKey: ["isAutoBidSet", variables.auctionId],

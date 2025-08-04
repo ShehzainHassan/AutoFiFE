@@ -7,6 +7,9 @@ const useTrackAuctionView = () => {
     mutationFn: async (auctionId: number) => {
       return await auctionAPI.trackAuctionView(auctionId);
     },
+    onSuccess: async (_data, auctionId) => {
+      await auctionAPI.updateAuctionAnalytics(auctionId);
+    },
   });
 };
 

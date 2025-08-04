@@ -28,3 +28,6 @@
   margin: 0 auto;
   gap: 16px;
 }
+.userNotifs {
+  gap: 5px;
+}

@@ -6,7 +6,9 @@ import {
 } from "@/app/components";
 import { usePanel } from "@/contexts/panel-context/panel-context";
 import useAuctionById from "@/hooks/useAuctionById";
+import useTrackAuctionView from "@/hooks/useTrackAuctionView";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 import ErrorMessage from "../../error-message";
 import Loading from "../../loading";
 import classes from "./auction-details.module.css";
@@ -15,9 +17,6 @@ import BidHistoryContainer from "./bid-history/bid-history-container";
 import InfoTabs from "./info-tabs/info-tabs";
 import AuctionNotificationSettings from "./notifications/notification";
 import SavedVehicles from "./saved-vehicles/saved-vehicles";
-import { useEffect } from "react";
-import useTrackAuctionView from "@/hooks/useTrackAuctionView";
-import { useAuth } from "@/contexts/auth-context";
 export default function AuctionDetails() {
   const router = useRouter();
   const { panel } = usePanel();
@@ -27,15 +26,17 @@ export default function AuctionDetails() {
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
   const { data: auction, isLoading, isError, error } = useAuctionById(id);
-  const { userId } = useAuth();
+  const hasTrackedRef = useRef(false);
 
-  const trackAuctionView = useTrackAuctionView();
+  const { mutate: trackAuctionView } = useTrackAuctionView();
 
   useEffect(() => {
-    if (auction && auction.auctionId && userId) {
-      trackAuctionView.mutate(auction.auctionId);
+    if (!hasTrackedRef.current && id !== -1) {
+      trackAuctionView(id);
+      hasTrackedRef.current = true;
     }
-  }, [auction, userId]);
+  }, [id, trackAuctionView]);
+
   if (isLoading) return <Loading />;
   if (isError) return <ErrorMessage message={error.message} />;
   if (!auction) return <p>No auction found.</p>;

@@ -7,6 +7,9 @@ const useAuctionById = (id: number) => {
     queryKey: ["auctionById", id],
     queryFn: () => auctionAPI.getAuctionById(id),
     enabled: id > 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
   });
 };
 

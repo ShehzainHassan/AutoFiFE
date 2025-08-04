@@ -106,7 +106,7 @@ const usePlaceBid = () => {
       queryClient.invalidateQueries({ queryKey: ["placeBid", auctionId] });
     },
 
-    onSuccess: (_, variables) => {
+    onSuccess: async (_, variables) => {
       const { auctionId } = variables;
       queryClient.invalidateQueries({
         queryKey: ["placeBid", auctionId],
@@ -119,6 +119,12 @@ const usePlaceBid = () => {
         queryKey: ["userBids"],
       });
       queryClient.invalidateQueries({ queryKey: ["bidHistory", auctionId] });
+      await auctionAPI.trackBidEvent(
+        auctionId,
+        variables.userId,
+        variables.amount
+      );
+      await auctionAPI.updateAuctionAnalytics(auctionId);
       toast.success("Bid placed successfully!");
     },
   });

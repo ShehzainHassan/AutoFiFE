@@ -100,11 +100,12 @@ const auctionAPI = {
     );
     return response.data;
   },
-  trackBidEvent: async (auctionId: number, amount: number) => {
+  trackBidEvent: async (auctionId: number, userId: number, amount: number) => {
     const response = await apiClient.post(
       `${API_BASE_URL}/api/analytics/track-bid`,
       {
         auctionId,
+        userId,
         amount,
       }
     );
@@ -128,6 +129,12 @@ const auctionAPI = {
         isSuccessful,
         finalPrice,
       }
+    );
+    return response.data;
+  },
+  updateAuctionAnalytics: async (auctionId: number) => {
+    const response = await axios.post(
+      `${API_BASE_URL}/api/analytics/update-auction-analytics?auctionId=${auctionId}`
     );
     return response.data;
   },
