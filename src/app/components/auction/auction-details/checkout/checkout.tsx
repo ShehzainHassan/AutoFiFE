@@ -1,6 +1,6 @@
 "use client";
 import apiClient from "@/api/apiClient";
-import { AuctionDetailsHeader, Loading } from "@/app/components";
+import { AuctionDetailsHeader, ButtonPrimary, Loading } from "@/app/components";
 import { IOSSwitch } from "@/app/components/buttons/toggle-button/toggle-button";
 import { Input } from "@/app/components/input-field";
 import CarImage from "@/app/components/result-card/car-image/car-image";
@@ -18,6 +18,10 @@ import StatItem from "../stat-item/stat-item";
 import TextContainer from "../text-container/text-container";
 import { initialFormValues, validationRules } from "./checkout-validation";
 import classes from "./checkout.module.css";
+import useAuctionById from "@/hooks/useAuctionById";
+import { BLUE_THEME } from "@/constants/button-primary-themes";
+import { getUserIdFromLocalStorage } from "@/utilities/utilities";
+import useTrackPayment from "@/hooks/useTrackPayment";
 
 export default function AuctionCheckout() {
   const { panel } = usePanel();
@@ -33,6 +37,19 @@ export default function AuctionCheckout() {
   const id = params.id ? Number(params.id) : undefined;
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const router = useRouter();
+  const hasErrors = Object.values(errors).some((error) => error !== "");
+  const { data: auction } = useAuctionById(id ?? -1);
+  const trackPayment = useTrackPayment();
+  const handleSubmit = () => {
+    if (hasErrors || !auction) return;
+
+    const userId = getUserIdFromLocalStorage() ?? -1;
+    trackPayment.mutate({
+      auctionId: auction.auctionId,
+      userId,
+      amount: auction.currentPrice + 250,
+    });
+  };
   useEffect(() => {
     if (!id) return;
     const verifyAccess = async () => {
@@ -53,7 +70,7 @@ export default function AuctionCheckout() {
     verifyAccess();
   }, [id]);
   if (loading) return <Loading />;
-  if (!authorized) return null;
+  if (!authorized || !auction) return null;
   return (
     <div className={classes.mainContainer}>
       <AuctionDetailsHeader />
@@ -77,7 +94,11 @@ export default function AuctionCheckout() {
                       placeholder="1234 5678 9012 3456"
                       onChange={handleChange("cardNumber")}
                     />
-                    {errors.cardNumber && <span>{errors.cardNumber}</span>}
+                    {errors.cardNumber && (
+                      <span className={classes.errorText}>
+                        {errors.cardNumber}
+                      </span>
+                    )}
                   </Input>
                 </div>
 
@@ -90,7 +111,11 @@ export default function AuctionCheckout() {
                       placeholder="MM/YY"
                       onChange={handleChange("expiryDate")}
                     />
-                    {errors.expiryDate && <span>{errors.expiryDate}</span>}
+                    {errors.expiryDate && (
+                      <span className={classes.errorText}>
+                        {errors.expiryDate}
+                      </span>
+                    )}
                   </Input>
 
                   <Input width="100px">
@@ -101,7 +126,9 @@ export default function AuctionCheckout() {
                       placeholder="123"
                       onChange={handleChange("cvv")}
                     />
-                    {errors.cvv && <span>{errors.cvv}</span>}
+                    {errors.cvv && (
+                      <span className={classes.errorText}>{errors.cvv}</span>
+                    )}
                   </Input>
                 </div>
 
@@ -123,7 +150,11 @@ export default function AuctionCheckout() {
                       placeholder="123 Main St"
                       onChange={handleChange("address")}
                     />
-                    {errors.address && <span>{errors.address}</span>}
+                    {errors.address && (
+                      <span className={classes.errorText}>
+                        {errors.address}
+                      </span>
+                    )}
                   </Input>
 
                   <Input width="400px">
@@ -144,7 +175,9 @@ export default function AuctionCheckout() {
                         value={values.city}
                         onChange={handleChange("city")}
                       />
-                      {errors.city && <span>{errors.city}</span>}
+                      {errors.city && (
+                        <span className={classes.errorText}>{errors.city}</span>
+                      )}
                     </Input>
                     <Input width="220px">
                       <Input.Label>State</Input.Label>
@@ -153,7 +186,11 @@ export default function AuctionCheckout() {
                         value={values.state}
                         onChange={handleChange("state")}
                       />
-                      {errors.state && <span>{errors.state}</span>}
+                      {errors.state && (
+                        <span className={classes.errorText}>
+                          {errors.state}
+                        </span>
+                      )}
                     </Input>
                   </div>
 
@@ -165,7 +202,11 @@ export default function AuctionCheckout() {
                       placeholder="00000"
                       onChange={handleChange("zipCode")}
                     />
-                    {errors.zipCode && <span>{errors.zipCode}</span>}
+                    {errors.zipCode && (
+                      <span className={classes.errorText}>
+                        {errors.zipCode}
+                      </span>
+                    )}
                   </Input>
 
                   <div className={classes.paymentToggle}>
@@ -192,9 +233,13 @@ export default function AuctionCheckout() {
                 <div className={classes.bidInfo}>
                   <p className={classes.text}>Winning Bid</p>
                   <p className={`${classes.text} ${classes.price}`}>
-                    {CURRENCY}24,500
+                    {CURRENCY}
+                    {auction.currentPrice.toLocaleString()}
                   </p>
-                  <p className={classes.text}>2021 Ford F-150</p>
+                  <p className={classes.text}>
+                    {auction.vehicle.year} {auction.vehicle.make}{" "}
+                    {auction.vehicle.model}
+                  </p>
                 </div>
                 <div className={classes.imgWrapper}>
                   <CarImage src="/images/glc_2023.png" />
@@ -202,14 +247,17 @@ export default function AuctionCheckout() {
               </div>
 
               <div className={classes.fees}>
-                <StatItem label="Auction Price" value={24000} />
+                <StatItem label="Auction Price" value={auction.currentPrice} />
                 <StatItem label="Fees" value={250} />
               </div>
               <StatItem label="Taxes" value={250} />
 
               <div className={classes.total}>
                 <p>Total</p>
-                <p>{CURRENCY}24,500</p>
+                <p>
+                  {CURRENCY}
+                  {(auction.currentPrice + 250).toLocaleString()}
+                </p>
               </div>
 
               <div className={classes.paymentInfo}>
@@ -219,6 +267,13 @@ export default function AuctionCheckout() {
                   delivered and inspected.
                 </p>
               </div>
+              <ThemeProvider value={BLUE_THEME}>
+                <ButtonPrimary
+                  onClick={handleSubmit}
+                  isDisabled={hasErrors || trackPayment.isPending}
+                  btnText="Submit"
+                />
+              </ThemeProvider>
             </div>
           </div>
         )}

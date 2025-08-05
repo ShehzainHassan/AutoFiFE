@@ -7,9 +7,9 @@ import {
   UpdateAutoBid,
   Watchlist,
 } from "@/interfaces/auction";
+import buildAuctionQuery from "@/utilities/utilities";
 import axios from "axios";
 import apiClient from "./apiClient";
-import buildAuctionQuery from "@/utilities/utilities";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -135,6 +135,27 @@ const auctionAPI = {
   updateAuctionAnalytics: async (auctionId: number) => {
     const response = await axios.post(
       `${API_BASE_URL}/api/analytics/update-auction-analytics?auctionId=${auctionId}`
+    );
+    return response.data;
+  },
+  isPaymentCompleted: async (auctionId: number) => {
+    const response = await axios.get(
+      `${API_BASE_URL}/api/analytics/payment-status?auctionId=${auctionId}`
+    );
+    return response.data;
+  },
+  paymentCompleted: async (
+    auctionId: number,
+    userId: number,
+    amount: number
+  ) => {
+    const response = await axios.post(
+      `${API_BASE_URL}/api/analytics/track-payment`,
+      {
+        auctionId,
+        userId,
+        amount,
+      }
     );
     return response.data;
   },

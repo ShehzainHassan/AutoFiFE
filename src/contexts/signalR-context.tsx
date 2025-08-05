@@ -76,10 +76,48 @@ export function SignalRProvider({ children }: { children: React.ReactNode }) {
 
     connection.on("Outbid", async (data: { auctionId: number }) => {
       console.log("⚠️ You have been outbid in auction:", data.auctionId);
-
       await queryClient.invalidateQueries({ queryKey: ["userNotifications"] });
       await queryClient.invalidateQueries({ queryKey: ["unread-count"] });
     });
+    connection.on(
+      "AuctionStatusChanged",
+      async (data: { auctionId: number; newStatus: string }) => {
+        console.log(`Auction ${data.auctionId} is now in: ${data.newStatus}`);
+
+        await queryClient.invalidateQueries({
+          queryKey: ["userNotifications"],
+        });
+        await queryClient.invalidateQueries({ queryKey: ["unread-count"] });
+      }
+    );
+
+    connection.on(
+      "AutoBidExecuted",
+      async (data: { auctionId: number; amount: number }) => {
+        console.log(
+          `AutoBid placed on Auction ID: ${data.auctionId}, Amount: ${data.amount}`
+        );
+
+        await queryClient.invalidateQueries({
+          queryKey: ["userNotifications"],
+        });
+        await queryClient.invalidateQueries({ queryKey: ["unread-count"] });
+      }
+    );
+
+    connection.on(
+      "BidderCountUpdated",
+      async (data: { auctionId: number; activeBidders: number }) => {
+        console.log(
+          `Updated bidder count for auction ${data.auctionId}: ${data.activeBidders}`
+        );
+
+        await queryClient.invalidateQueries({
+          queryKey: ["userNotifications"],
+        });
+        await queryClient.invalidateQueries({ queryKey: ["unread-count"] });
+      }
+    );
     connection.on("ReservePriceMet", async (data: { auctionId: number }) => {
       console.log("ReservePriceMet", data.auctionId);
 

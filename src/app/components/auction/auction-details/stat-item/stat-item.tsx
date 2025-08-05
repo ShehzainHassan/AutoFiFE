@@ -4,7 +4,7 @@ export default function StatItem({ label, value }: StatItemProps) {
   return (
     <div className={classes.container}>
       <p className={classes.label}>{label}</p>
-      <p>{value}</p>
+      <p>{value.toLocaleString()}</p>
     </div>
   );
 }

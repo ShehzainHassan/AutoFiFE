@@ -13,7 +13,7 @@ export default function AuctionTimer({
 }: AuctionTimerProps) {
   const isPreview = auction.status === "PreviewMode";
   const countdown = useCountdown(
-    isPreview ? auction?.startUtc ?? "" : auction?.endUtc ?? ""
+    isPreview ? auction?.scheduledStartTime ?? "" : auction?.endUtc ?? ""
   );
 
   const { hours, minutes, seconds } = countdown;

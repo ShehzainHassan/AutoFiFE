@@ -1,10 +1,12 @@
 "use client";
 
+import auctionAPI from "@/api/auctionAPI";
 import CarImage from "@/app/components/result-card/car-image/car-image";
 import vehicleImg from "@/assets/images/cars/Bentley-Arnage4.4.png";
 import { usePanel } from "@/contexts/panel-context/panel-context";
 import { formatTimeAMPM } from "@/utilities/utilities";
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead";
+import { useQueries } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import TextContainer from "../../text-container/text-container";
 import classes from "./user-notifications.module.css";
@@ -25,11 +27,32 @@ export default function UserNotifications({
     router.push(`/auction/${auctionId}/checkout`);
   };
 
+  const paymentStatusResults = useQueries({
+    queries: notifications
+      .filter((n) => n.notificationType === 3 && n.auctionId !== null)
+      .map((n) => ({
+        queryKey: ["isPaymentCompleted", n.auctionId],
+        queryFn: () => auctionAPI.isPaymentCompleted(n.auctionId!),
+        enabled: !!n.auctionId,
+      })),
+  });
+
   return (
     <>
       {notifications.map((notification) => {
         const isRead = notification.isRead;
         const key = notification.id;
+        const auctionId = notification.auctionId ?? -1;
+
+        let isPaymentCompleted = false;
+        if (notification.notificationType === 3 && notification.auctionId) {
+          const resultIndex = notifications
+            .filter((n) => n.notificationType === 3 && n.auctionId !== null)
+            .findIndex((n) => n.id === notification.id);
+
+          isPaymentCompleted =
+            paymentStatusResults[resultIndex]?.data?.paymentCompleted ?? false;
+        }
 
         const content = (
           <div className={classes.header}>
@@ -55,15 +78,14 @@ export default function UserNotifications({
 
         return (
           <div className={classes.container} key={key}>
-            {/* <div className={classes.tag}>Outbid</div> */}
             <div>
               {content}
               {notification.notificationType === 3 && (
                 <TextContainer
-                  value="Checkout"
+                  value={isPaymentCompleted ? "Payment Completed" : "Checkout"}
                   className={classes.textContainer}
                   onClick={() =>
-                    redirectToCheckout(notification.auctionId ?? -1)
+                    !isPaymentCompleted && redirectToCheckout(auctionId)
                   }
                 />
               )}

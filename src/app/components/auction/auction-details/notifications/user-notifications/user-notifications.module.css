@@ -28,6 +28,7 @@
   color: var(--color-blue260);
 }
 .textContainer {
+  width: fit-content !important;
   cursor: pointer;
 }
 .unread {
