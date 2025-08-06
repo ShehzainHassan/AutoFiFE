@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 25px;
+}
+
+.headerRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  background-color: var(--color-gray100);
+  padding: 12px 24px;
+}
+
+.dataRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  background-color: var(--color-white100);
+  padding: 12px 24px;
+  border: 1px solid var(--color-gray100);
+}
+
+.cell {
+  text-align: left;
+  font-size: 14px;
+}

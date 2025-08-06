@@ -1,0 +1,11 @@
+.container {
+  display: grid;
+  grid-template-columns: 2.15fr 9.85fr;
+  padding: 20px 63.5px;
+  background-color: var(--color-white250);
+}
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 27.5px;
+}

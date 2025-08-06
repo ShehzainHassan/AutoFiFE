@@ -1,0 +1,10 @@
+.subContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dropdowns {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}

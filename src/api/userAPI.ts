@@ -6,6 +6,10 @@ import apiClient from "./apiClient";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const userAPI = {
+  getAllUsersCount: async () => {
+    const response = await axios.get(`${API_BASE_URL}/user/all-users-count`);
+    return response.data;
+  },
   saveUser: async (formData: User) => {
     const response = await axios.post(`${API_BASE_URL}/user/add`, {
       Name: formData.name,

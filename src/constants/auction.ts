@@ -104,3 +104,7 @@ export const priceOptions = [
   { label: "Bids between 5,000 - 10,000", min: 5000, max: 10000 },
   { label: "Bids between 10,000 - 20,000", min: 10000, max: 20000 },
 ];
+
+export const CategoryOptions = [
+  { label: "All Categories", value: "All_Categories" },
+];

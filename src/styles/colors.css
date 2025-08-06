@@ -6,10 +6,12 @@
   --color-white100_opaque_18: rgba(255, 255, 255, 0.18);
   --color-white100_opaque_20: rgba(255, 255, 255, 0.2);
   --color-white200: #e3e3e3;
+  --color-white250: #f9fafb;
   --color-white300: #f9fbfc;
   --color-white800: #f7fafc;
 
   --color-gray100: #e9e9e9;
+  --color-gray190: #dbe0e6;
   --color-gray200: #e1e1e1;
   --color-gray300: #e4e4e5;
   --color-gray400: #c3c3c3;
@@ -19,9 +21,11 @@
   --color-gray540: #e2e8f0;
   --color-gray550: #e4e4e5;
   --color-gray560: #e8edf5;
+  --color-gray565: #f0f2f5;
   --color-gray570: #9e9e9e;
   --color-gray575: #757575;
   --color-gray580: #718096;
+  --color-gray590: #6b7280;
   --color-gray600: #666666;
   --color-gray650: #5e6976;
   --color-gray700: #424242;

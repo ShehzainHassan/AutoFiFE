@@ -42,3 +42,14 @@ input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
+.rdrDateDisplayWrapper {
+  display: none !important;
+}
+.rdrNextPrevButton {
+  display: none !important;
+}
+.rdrMonthAndYearPickers select {
+  appearance: none;
+  background-image: none !important;
+  padding-right: 0 !important;
+}
