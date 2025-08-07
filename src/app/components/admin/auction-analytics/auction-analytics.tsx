@@ -1,5 +1,5 @@
-import { CategoryOptions } from "@/constants/auction";
 import useAuctionAnalyticsTable from "@/hooks/useAuctionAnalyticsTable";
+import useGetAllCategories from "@/hooks/useGetAllCategories";
 import useAuctionAnalytics from "@/hooks/useGetAuctionAnalytics";
 import {
   AuctionAnalyticsResult,
@@ -12,9 +12,11 @@ import SelectDateContainer from "../select-date-container/select-date-container"
 import AnalyticsTable from "../table/table";
 import TitleContainer from "../title-container/title-container";
 import classes from "./auction-analytics.module.css";
+import BarGraph from "../graphs/bar-graph/bar-graph";
+import { auctionTableColumns } from "@/constants/analytics";
+import Loading from "../../loading";
 
 export default function AuctionAnalytics() {
-  const [category, setCategory] = useState(CategoryOptions[0].value);
   const today = new Date();
   const lastWeek = new Date();
   lastWeek.setDate(today.getDate() - 7);
@@ -28,19 +30,20 @@ export default function AuctionAnalytics() {
   ]);
 
   const [submittedRange, setSubmittedRange] = useState(selectedRange);
+  const { data: categories } = useGetAllCategories();
+  const categoryOptions = [
+    { label: "All Categories", value: "All_Categories" },
+    ...(categories ?? []).map((cat) => ({
+      label: cat,
+      value: cat,
+    })),
+  ];
+
+  const [category, setCategory] = useState(categoryOptions[0].value);
 
   const start = submittedRange[0]?.startDate ?? new Date();
   const end = submittedRange[0]?.endDate ?? new Date();
 
-  const columns: { key: keyof AuctionTableData; label: string }[] = [
-    { key: "auctionId", label: "Auction ID" },
-    { key: "vehicleName", label: "Vehicle" },
-    { key: "views", label: "Views" },
-    { key: "bidders", label: "Bidders" },
-    { key: "bids", label: "Bids" },
-    { key: "finalPrice", label: "Final Price" },
-    { key: "status", label: "Status" },
-  ];
   const { data, isLoading } = useAuctionAnalytics(
     start.toLocaleDateString("en-CA"),
     end.toLocaleDateString("en-CA")
@@ -49,8 +52,21 @@ export default function AuctionAnalytics() {
   const { data: tableData, isLoading: isTableLoading } =
     useAuctionAnalyticsTable(
       start.toLocaleDateString("en-CA"),
-      end.toLocaleDateString("en-CA")
+      end.toLocaleDateString("en-CA"),
+      category
     );
+  const chartData = tableData?.reduce<Record<string, number>>((acc, curr) => {
+    const category = curr.vehicleCategory ?? "Unknown";
+    acc[category] = (acc[category] || 0) + 1;
+    return acc;
+  }, {});
+
+  const formattedChartData = Object.entries(chartData ?? {}).map(
+    ([category, value]) => ({
+      category,
+      value,
+    })
+  );
   return (
     <div>
       <div className={classes.subContainer}>
@@ -63,7 +79,7 @@ export default function AuctionAnalytics() {
             value={category}
             onChange={setCategory}
             placeholder="Select Category">
-            <Dropdown.Select options={CategoryOptions} />
+            <Dropdown.Select options={categoryOptions} />
           </Dropdown>
           <SelectDateContainer
             range={selectedRange}
@@ -85,12 +101,22 @@ export default function AuctionAnalytics() {
       />
 
       {isTableLoading ? (
-        <p className={classes.loading}>Loading table...</p>
+        <div className={classes.loading}>
+          <Loading />
+        </div>
       ) : (
         <AnalyticsTable<AuctionTableData>
-          columns={columns}
+          columns={auctionTableColumns}
           data={tableData ?? []}
         />
+      )}
+
+      {isTableLoading ? (
+        <div className={classes.loading}>
+          <Loading />
+        </div>
+      ) : (
+        <BarGraph data={formattedChartData} />
       )}
     </div>
   );

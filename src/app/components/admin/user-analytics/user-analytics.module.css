@@ -3,3 +3,39 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.percentageChange {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.percentChange {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.percentValue {
+  font-size: 20px;
+}
+
+.positive {
+  color: var(--color-green600);
+}
+
+.negative {
+  color: var(--color-red500);
+}
+
+.downIcon {
+  color: var(--color-red500);
+  font-size: 16px;
+  margin-right: 4px;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+}

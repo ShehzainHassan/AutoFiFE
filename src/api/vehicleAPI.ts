@@ -30,6 +30,12 @@ const vehicleAPI = {
     const response = await axios.get(`${API_BASE_URL}/Vehicle/get-makes`);
     return response.data;
   },
+  getAllCategories: async () => {
+    const response = await axios.get<string[]>(
+      `${API_BASE_URL}/Vehicle/get-categories`
+    );
+    return response.data;
+  },
   getByMake: async (make: string, offset: number, pageSize: number) => {
     const response = await axios.get<VehicleListResult>(
       `${API_BASE_URL}/Vehicle/by-make`,

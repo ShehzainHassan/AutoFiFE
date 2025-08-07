@@ -53,3 +53,7 @@ input[type="number"] {
   background-image: none !important;
   padding-right: 0 !important;
 }
+.recharts-surface {
+  outline: none;
+  border: none;
+}

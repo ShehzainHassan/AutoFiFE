@@ -1,0 +1,39 @@
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.percentageChange {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.percentChange {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.change {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.positiveText {
+  color: var(--color-green600);
+  font-weight: 600;
+}
+
+.negativeText {
+  color: var(--color-red500);
+  font-weight: 600;
+}
+
+.loading {
+  text-align: center;
+  font-size: 16px;
+  padding: 16px;
+}
