@@ -19,6 +19,12 @@ export interface RevenueAnalyticsResult {
   successfulPaymentsPercentage: number;
 }
 
+export interface SystemAnalyticsResult {
+  averageApiResponseTime: number;
+  errorRate: number;
+  activeSessions: number;
+  systemUptime: number;
+}
 export interface AuctionTableData {
   auctionId: number;
   vehicleName: string;
@@ -68,4 +74,22 @@ export interface RecentDownloads {
   totalItems: number;
   page: number;
   pageSize: number;
+}
+
+export interface ErrorLogItem {
+  id: number;
+  errorCode: string;
+  message: string;
+  timestamp: string;
+}
+
+export interface ErrorLogs {
+  items: ErrorLogItem[];
+  totalItems: number;
+  page: number;
+  pageSize: number;
+}
+export interface APIGraphAnalyticsItem {
+  timeLabel: string;
+  avgResponseTimeMs: number;
 }

@@ -39,3 +39,8 @@
   padding: 20px;
   font-style: italic;
 }
+.table {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}

@@ -1,5 +1,6 @@
 import {
   AuctionTableData,
+  ErrorLogItem,
   RecentDownloadsItem,
   RevenueTableData,
   UserTableData,
@@ -26,6 +27,17 @@ export const periodOptions = [
   { label: "Last 12 Months", value: "Last12Months" },
 ];
 
+export const apiPeriodOptions = [
+  { label: "All Time", value: "AllTime" },
+  { label: "Last 6 Hours", value: "Last6Hours" },
+  { label: "Last 12 Hours", value: "Last12Hours" },
+  { label: "Last 24 Hours", value: "Last24Hours" },
+  { label: "Last 2 Days", value: "Last2Days" },
+  { label: "Last Week", value: "LastWeek" },
+  { label: "Last Month", value: "LastMonth" },
+  { label: "Last Quarter", value: "LastQuarter" },
+  { label: "Last Year", value: "LastYear" },
+];
 export const revenueTableColumns: {
   key: keyof RevenueTableData;
   label: string;
@@ -57,4 +69,13 @@ export const userTableColumns: {
   { key: "lastActive", label: "Last Active" },
   { key: "totalBids", label: "Total Bids" },
   { key: "totalWins", label: "Total Wins" },
+];
+export const errorLogsTableColumns: {
+  key: keyof ErrorLogItem;
+  label: string;
+}[] = [
+  { key: "timestamp", label: "Timestamp" },
+
+  { key: "errorCode", label: "Error Code" },
+  { key: "message", label: "Message" },
 ];

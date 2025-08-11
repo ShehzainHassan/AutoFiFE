@@ -12,6 +12,7 @@ import duration from "dayjs/plugin/duration";
 import { AuctionFilters } from "@/interfaces/auction";
 import userAPI from "@/api/userAPI";
 import auctionAPI from "@/api/auctionAPI";
+import analyticsAPI from "@/api/analyticsAPI";
 dayjs.extend(duration);
 
 export function getModelOptions(make: string): Options[] {
@@ -451,21 +452,17 @@ export function formatNotificationTypeToString(notificationType: number) {
       return "AuctionStart";
   }
 }
-export function formatDate(dateString: string) {
-  const date = new Date(dateString);
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
 export async function getStartEndDates(
   period: string,
   type: "user" | "revenue" = "user"
 ) {
   const today = new Date();
+  today.setHours(12, 0, 0, 0);
+
   const end = new Date(today);
   end.setDate(today.getDate() - 1);
-  let start: Date = new Date(end);
+
+  let start = new Date(end);
 
   switch (period) {
     case "AllTime": {
@@ -477,11 +474,10 @@ export async function getStartEndDates(
         start = new Date(oldestAuctionDate);
       }
       return {
-        startDate: formatDate(start.toISOString()),
-        endDate: formatDate(today.toISOString()),
+        startDate: formatLocalDate(start),
+        endDate: formatLocalDate(end),
       };
     }
-
     case "Last7Days":
       start.setDate(end.getDate() - 6);
       break;
@@ -504,11 +500,17 @@ export async function getStartEndDates(
   }
 
   return {
-    startDate: formatDate(start.toISOString()),
-    endDate: formatDate(end.toISOString()),
+    startDate: formatLocalDate(start),
+    endDate: formatLocalDate(end),
   };
 }
 
+function formatLocalDate(date: Date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(date.getDate()).padStart(2, "0")}`;
+}
 export function getReportName(reportId: number) {
   switch (reportId) {
     case 0:
@@ -535,5 +537,113 @@ export function getReportId(reportName: string) {
       return 3;
     default:
       return 0;
+  }
+}
+export function formatTimestamp(isoString: string) {
+  const date = new Date(isoString);
+  return date
+    .toLocaleString("en-CA", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    })
+    .replace(",", "");
+}
+
+export async function getStartEndDateTime(period: string) {
+  const now = new Date();
+
+  function toISOStringWithFraction(date: Date) {
+    return date.toISOString();
+  }
+
+  switch (period) {
+    case "AllTime": {
+      const oldestLog = await analyticsAPI.getOldestAPILog();
+      const startDate = new Date(oldestLog);
+      return {
+        startDate: toISOStringWithFraction(startDate),
+        endDate: toISOStringWithFraction(now),
+      };
+    }
+
+    case "Last6Hours":
+      return {
+        startDate: toISOStringWithFraction(
+          new Date(now.getTime() - 6 * 60 * 60 * 1000)
+        ),
+        endDate: toISOStringWithFraction(now),
+      };
+
+    case "Last12Hours":
+      return {
+        startDate: toISOStringWithFraction(
+          new Date(now.getTime() - 12 * 60 * 60 * 1000)
+        ),
+        endDate: toISOStringWithFraction(now),
+      };
+
+    case "Last24Hours":
+      return {
+        startDate: toISOStringWithFraction(
+          new Date(now.getTime() - 24 * 60 * 60 * 1000)
+        ),
+        endDate: toISOStringWithFraction(now),
+      };
+
+    case "Last2Days":
+      return {
+        startDate: toISOStringWithFraction(
+          new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000)
+        ),
+        endDate: toISOStringWithFraction(now),
+      };
+
+    case "LastWeek":
+      return {
+        startDate: toISOStringWithFraction(
+          new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+        ),
+        endDate: toISOStringWithFraction(now),
+      };
+
+    case "LastMonth": {
+      const startDate = new Date(now);
+      startDate.setMonth(startDate.getMonth() - 1);
+      return {
+        startDate: toISOStringWithFraction(startDate),
+        endDate: toISOStringWithFraction(now),
+      };
+    }
+
+    case "LastQuarter": {
+      const startDate = new Date(now);
+      startDate.setMonth(startDate.getMonth() - 3);
+      return {
+        startDate: toISOStringWithFraction(startDate),
+        endDate: toISOStringWithFraction(now),
+      };
+    }
+
+    case "LastYear": {
+      const startDate = new Date(now);
+      startDate.setFullYear(startDate.getFullYear() - 1);
+      return {
+        startDate: toISOStringWithFraction(startDate),
+        endDate: toISOStringWithFraction(now),
+      };
+    }
+
+    default:
+      return {
+        startDate: toISOStringWithFraction(
+          new Date(now.getTime() - 24 * 60 * 60 * 1000)
+        ),
+        endDate: toISOStringWithFraction(now),
+      };
   }
 }

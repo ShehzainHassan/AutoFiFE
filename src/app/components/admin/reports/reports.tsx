@@ -73,7 +73,6 @@ export default function Reports({ selected }: ReportProps) {
       setDates({ startDate, endDate });
     })();
   }, [period, selectedReport]);
-
   const transformedData =
     data?.pages.flatMap((page) =>
       page.items.map((item) => ({

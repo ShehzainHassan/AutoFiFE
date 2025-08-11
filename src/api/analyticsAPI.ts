@@ -1,9 +1,12 @@
 import {
+  APIGraphAnalyticsItem,
   AuctionAnalyticsResult,
   AuctionTableData,
+  ErrorLogs,
   RecentDownloads,
   RevenueAnalyticsResult,
   RevenueTableData,
+  SystemAnalyticsResult,
   UserAnalyticsResult,
   UserTableData,
 } from "@/interfaces/analytics";
@@ -29,7 +32,12 @@ const analyticsAPI = {
     );
     return response.data;
   },
-
+  getSystemAnalytics: async (startDate: string, endDate: string) => {
+    const response = await axios.get<SystemAnalyticsResult>(
+      `${API_BASE_URL}/api/analytics/system?startDate=${startDate}&endDate=${endDate}`
+    );
+    return response.data;
+  },
   getAuctionTableAnalytics: async (
     startDate: string,
     endDate: string,
@@ -44,7 +52,6 @@ const analyticsAPI = {
     const response = await axios.get<AuctionTableData[]>(url);
     return response.data;
   },
-
   getUserTableAnalytics: async (startDate: string, endDate: string) => {
     const response = await axios.get<UserTableData[]>(
       `${API_BASE_URL}/api/analytics/user-report?startDate=${startDate}&endDate=${endDate}`
@@ -101,6 +108,24 @@ const analyticsAPI = {
   getRecentDownloads: async (page = 1, pageSize = 10) => {
     const response = await axios.get<RecentDownloads>(
       `${API_BASE_URL}/api/analytics/recent-downloads?page=${page}&pageSize=${pageSize}`
+    );
+    return response.data;
+  },
+  getErrorLogs: async (page = 1, pageSize = 10) => {
+    const response = await axios.get<ErrorLogs>(
+      `${API_BASE_URL}/api/analytics/error-logs?page=${page}&pageSize=${pageSize}`
+    );
+    return response.data;
+  },
+  getOldestAPILog: async () => {
+    const response = await axios.get(
+      `${API_BASE_URL}/api/analytics/oldest-api-log`
+    );
+    return response.data;
+  },
+  getAPIGraphAnalytics: async (startDate: string, endDate: string) => {
+    const response = await axios.get<APIGraphAnalyticsItem[]>(
+      `${API_BASE_URL}/api/analytics/response-times?startDate=${startDate}&endDate=${endDate}`
     );
     return response.data;
   },

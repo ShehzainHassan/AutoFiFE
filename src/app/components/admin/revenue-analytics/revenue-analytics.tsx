@@ -158,15 +158,20 @@ export default function RevenueAnalytics() {
         isLoading={isGraphLoading}
       />
 
-      {isTableLoading ? (
-        <div className={classes.loading}>
-          <Loading />
+      {tableData && tableData.length > 0 && (
+        <div className={classes.table}>
+          <h3>Revenue Breakdown</h3>
+          {isTableLoading ? (
+            <div className={classes.loading}>
+              <Loading />
+            </div>
+          ) : (
+            <AnalyticsTable<RevenueTableData>
+              columns={revenueTableColumns}
+              data={tableData ?? []}
+            />
+          )}
         </div>
-      ) : (
-        <AnalyticsTable<RevenueTableData>
-          columns={revenueTableColumns}
-          data={tableData ?? []}
-        />
       )}
     </>
   );

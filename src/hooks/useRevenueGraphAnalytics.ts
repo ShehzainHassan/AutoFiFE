@@ -9,7 +9,7 @@ const useRevenueGraphAnalytics = (
   enabled: boolean
 ) => {
   return useQuery({
-    queryKey: ["revenue--graph-analytics", startDate, endDate, type],
+    queryKey: ["revenue-graph-analytics", startDate, endDate, type],
     queryFn: () =>
       analyticsAPI.getRevenueGraphAnalytics(startDate, endDate, type),
     enabled,

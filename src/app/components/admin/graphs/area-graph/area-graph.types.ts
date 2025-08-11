@@ -9,7 +9,7 @@ type PeriodOption = {
 };
 
 export type AreaGraphProps = {
-  title: string;
+  title: React.ReactNode;
   data: DataPoint[];
   period: string;
   setPeriod: (period: string) => void;

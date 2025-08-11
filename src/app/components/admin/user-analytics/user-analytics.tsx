@@ -68,7 +68,7 @@ export default function UserAnalytics() {
   );
 
   const percentChange = () => {
-    if (!userGraph || isGraphLoading) return null;
+    if (!userGraph || isGraphLoading || !tableData) return null;
 
     const change = userGraph.percentageChange;
     const isPositive = change >= 0;
@@ -129,14 +129,18 @@ export default function UserAnalytics() {
         pecentageChange={percentChange()}
         isLoading={isGraphLoading}
       />
-
-      {isTableLoading ? (
-        <p className={classes.loading}>Loading table...</p>
-      ) : (
-        <AnalyticsTable<UserTableData>
-          columns={userTableColumns}
-          data={tableData ?? []}
-        />
+      {tableData && tableData.length > 0 && (
+        <div className={classes.table}>
+          <h3>Users Breakdown</h3>
+          {isTableLoading ? (
+            <p className={classes.loading}>Loading table...</p>
+          ) : (
+            <AnalyticsTable<UserTableData>
+              columns={userTableColumns}
+              data={tableData ?? []}
+            />
+          )}
+        </div>
       )}
     </div>
   );

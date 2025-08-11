@@ -1,0 +1,20 @@
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.errorLogsContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.areaGraphTitle {
+  display: flex;
+  flex-direction: column;
+}
+.areaGraphDescription {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-gray400);
+  margin-top: 8px;
+}

@@ -23,6 +23,7 @@ const AreaGraph = ({
   const handlePeriodChange = (newPeriod: string) => {
     setPeriod(newPeriod);
   };
+
   const xAxisInterval = data.length <= 10 ? 0 : Math.floor(data.length / 8);
   if (isLoading)
     return (
