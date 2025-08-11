@@ -2,10 +2,16 @@
 import analyticsAPI from "@/api/analyticsAPI";
 import { useQuery } from "@tanstack/react-query";
 
-const useUserGraphAnalytics = (period: string) => {
+const useUserGraphAnalytics = (
+  startDate: string,
+  endDate: string,
+  type: string,
+  enabled: boolean
+) => {
   return useQuery({
-    queryKey: ["user-graph-analytics", period],
-    queryFn: () => analyticsAPI.getUserGraphAnalytics(period),
+    queryKey: ["user-graph-analytics", startDate, endDate, type],
+    queryFn: () => analyticsAPI.getUserGraphAnalytics(startDate, endDate, type),
+    enabled,
   });
 };
 

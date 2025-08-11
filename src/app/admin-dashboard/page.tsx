@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo, JSX } from "react";
+import { useState, useMemo, useEffect, JSX } from "react";
 import { Footer, Navbar } from "../components";
 import AdminSidebar from "../components/admin/admin-sidebar/admin-sidebar";
 
@@ -16,6 +16,7 @@ import SystemPerformance from "../components/admin/system-performance/system-per
 import Reports from "../components/admin/reports/reports";
 
 import classes from "./page.module.css";
+import { reportTypeOptions } from "@/interfaces/analytics";
 
 const sidebarItems = [
   { label: "Auction Analytics", icon: AuctionAnalyticsIcon },
@@ -35,11 +36,35 @@ const componentsMap: Record<string, JSX.Element> = {
 
 export default function AdminDashboard() {
   const [selectedItem, setSelectedItem] = useState(sidebarItems[0].label);
-
-  const SelectedComponent = useMemo(
-    () => componentsMap[selectedItem],
-    [selectedItem]
+  const [defaultReportType, setDefaultReportType] = useState<string>(
+    reportTypeOptions[0].value
   );
+  const [fromViewReport, setFromViewReport] = useState(false);
+
+  const handleViewReport = () => {
+    setDefaultReportType(reportTypeOptions[1].value);
+    setFromViewReport(true);
+    setSelectedItem("Reports");
+  };
+
+  const SelectedComponent = useMemo(() => {
+    if (selectedItem === "Reports") {
+      const initialType = fromViewReport
+        ? defaultReportType
+        : reportTypeOptions[0].value;
+      return <Reports selected={initialType} />;
+    }
+    if (selectedItem === "Auction Analytics") {
+      return <AuctionAnalytics onViewReport={handleViewReport} />;
+    }
+    return componentsMap[selectedItem];
+  }, [selectedItem, defaultReportType, fromViewReport]);
+
+  useEffect(() => {
+    if (selectedItem === "Reports" && fromViewReport) {
+      setFromViewReport(false);
+    }
+  }, [selectedItem, fromViewReport]);
 
   return (
     <div>

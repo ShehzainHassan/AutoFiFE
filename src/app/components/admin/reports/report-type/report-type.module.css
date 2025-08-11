@@ -1,0 +1,24 @@
+.reportTypeContainer {
+  display: flex;
+  padding: 26px;
+  border: 1px solid var(--color-gray545);
+  background-color: var(--color-white100);
+  gap: 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.reportTypeContainer:hover {
+  background-color: var(--color-gray100);
+}
+.selected {
+  border: 2px solid var(--color-blue500);
+}
+.reportTypeText {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.description {
+  max-width: 300px;
+}

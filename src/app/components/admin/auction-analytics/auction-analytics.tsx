@@ -1,3 +1,4 @@
+import { auctionTableColumns } from "@/constants/analytics";
 import useAuctionAnalyticsTable from "@/hooks/useAuctionAnalyticsTable";
 import useGetAllCategories from "@/hooks/useGetAllCategories";
 import useAuctionAnalytics from "@/hooks/useGetAuctionAnalytics";
@@ -7,24 +8,28 @@ import {
 } from "@/interfaces/analytics";
 import { useState } from "react";
 import Dropdown from "../../dropdown";
+import Loading from "../../loading";
 import AnalyticsStats from "../analytics-stats/analytics-stats";
+import BarGraph from "../graphs/bar-graph/bar-graph";
 import SelectDateContainer from "../select-date-container/select-date-container";
 import AnalyticsTable from "../table/table";
 import TitleContainer from "../title-container/title-container";
 import classes from "./auction-analytics.module.css";
-import BarGraph from "../graphs/bar-graph/bar-graph";
-import { auctionTableColumns } from "@/constants/analytics";
-import Loading from "../../loading";
+import { AuctionAnalyticsProps } from "./auction-analytics.types";
 
-export default function AuctionAnalytics() {
+export default function AuctionAnalytics({
+  onViewReport,
+}: AuctionAnalyticsProps) {
   const today = new Date();
-  const lastWeek = new Date();
-  lastWeek.setDate(today.getDate() - 7);
+  const yesterday = new Date();
+  yesterday.setDate(today.getDate() - 1);
 
+  const lastWeek = new Date();
+  lastWeek.setDate(yesterday.getDate() - 6);
   const [selectedRange, setSelectedRange] = useState([
     {
       startDate: lastWeek,
-      endDate: today,
+      endDate: yesterday,
       key: "selection",
     },
   ]);
@@ -67,6 +72,16 @@ export default function AuctionAnalytics() {
       value,
     })
   );
+  const viewReport = () => {
+    return (
+      <p
+        onClick={() => onViewReport && onViewReport()}
+        className={classes.viewReport}>
+        View Report
+      </p>
+    );
+  };
+
   return (
     <div>
       <div className={classes.subContainer}>
@@ -101,7 +116,7 @@ export default function AuctionAnalytics() {
       />
 
       {isTableLoading ? (
-        <div className={classes.loading}>
+        <div>
           <Loading />
         </div>
       ) : (
@@ -116,7 +131,7 @@ export default function AuctionAnalytics() {
           <Loading />
         </div>
       ) : (
-        <BarGraph data={formattedChartData} />
+        <BarGraph data={formattedChartData} viewReport={viewReport()} />
       )}
     </div>
   );

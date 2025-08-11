@@ -8,3 +8,10 @@
   align-items: center;
   gap: 14px;
 }
+.viewReport {
+  cursor: pointer;
+  color: var(--color-blue420);
+}
+.viewReport:hover {
+  text-decoration: underline;
+}

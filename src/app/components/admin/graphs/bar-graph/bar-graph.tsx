@@ -7,16 +7,11 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
-import { ChartData } from "./bar-graph.types";
+import { BarGraphProps, MyData } from "./bar-graph.types";
 import classes from "./bar-graph.module.css";
 import type { TooltipProps } from "recharts";
-type MyData = {
-  payload: {
-    category: string;
-    value: number;
-  };
-};
-export default function BarGraph({ data }: { data: ChartData[] }) {
+
+export default function BarGraph({ data, viewReport }: BarGraphProps) {
   const total = data.reduce((sum, item) => sum + item.value, 0);
 
   const CustomTooltip = (props: TooltipProps<number, string>) => {
@@ -51,7 +46,7 @@ export default function BarGraph({ data }: { data: ChartData[] }) {
       <div className={classes.textContainer}>
         <div className={classes.header}>
           <h3>Auctions by Category</h3>
-          <p className={classes.viewReport}>View report</p>
+          {viewReport}
         </div>
         <h1>{total.toLocaleString()}</h1>
         <p>

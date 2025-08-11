@@ -10,6 +10,14 @@
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   background-color: var(--color-gray100);
   padding: 12px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.body {
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .dataRow {
@@ -23,4 +31,14 @@
 .cell {
   text-align: left;
   font-size: 14px;
+}
+
+.downloadCell {
+  text-align: right;
+}
+
+.headerRow,
+.dataRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)) 200px;
 }

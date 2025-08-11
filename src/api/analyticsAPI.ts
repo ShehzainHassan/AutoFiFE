@@ -1,6 +1,7 @@
 import {
   AuctionAnalyticsResult,
   AuctionTableData,
+  RecentDownloads,
   RevenueAnalyticsResult,
   RevenueTableData,
   UserAnalyticsResult,
@@ -56,15 +57,50 @@ const analyticsAPI = {
     );
     return response.data;
   },
-  getUserGraphAnalytics: async (period: string) => {
+  getUserGraphAnalytics: async (
+    startDate: string,
+    endDate: string,
+    type: string
+  ) => {
     const response = await axios.get(
-      `${API_BASE_URL}/api/analytics/user-summary?period=${period}`
+      `${API_BASE_URL}/api/analytics/user-summary?startDate=${startDate}&endDate=${endDate}&type=${type}`
     );
     return response.data;
   },
-  getRevenueGraphAnalytics: async (period: string) => {
+  getRevenueGraphAnalytics: async (
+    startDate: string,
+    endDate: string,
+    type: string
+  ) => {
     const response = await axios.get(
-      `${API_BASE_URL}/api/analytics/revenue-summary?period=${period}`
+      `${API_BASE_URL}/api/analytics/revenue-summary?startDate=${startDate}&endDate=${endDate}&type=${type}`
+    );
+    return response.data;
+  },
+  exportReport: async (
+    reportType: string,
+    startDate: string,
+    endDate: string,
+    format: string
+  ) => {
+    const response = await axios.get(
+      `${API_BASE_URL}/api/analytics/export?reportType=${reportType}&startDate=${startDate}&endDate=${endDate}&format=${format}`,
+      {
+        responseType: "blob",
+      }
+    );
+    const file = new Blob([response.data], {
+      type: format === "PDF" ? "application/pdf" : "text/csv",
+    });
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(file);
+    link.download = `Report_${reportType}_${startDate}_to_${endDate}.${format.toLowerCase()}`;
+    link.click();
+    window.URL.revokeObjectURL(link.href);
+  },
+  getRecentDownloads: async (page = 1, pageSize = 10) => {
+    const response = await axios.get<RecentDownloads>(
+      `${API_BASE_URL}/api/analytics/recent-downloads?page=${page}&pageSize=${pageSize}`
     );
     return response.data;
   },

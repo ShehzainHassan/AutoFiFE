@@ -15,10 +15,7 @@
   justify-content: space-between;
   align-items: center;
 }
-.viewReport {
-  cursor: pointer;
-  color: var(--color-blue420);
-}
+
 .chart {
   margin-top: 40px;
 }

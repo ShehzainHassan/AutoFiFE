@@ -28,6 +28,12 @@ const auctionAPI = {
     );
     return response.data;
   },
+  getOldestAuctionDate: async () => {
+    const response = await axios.get<string>(
+      `${API_BASE_URL}/auction/oldest-auction`
+    );
+    return response.data;
+  },
   getUserBidHistory: async () => {
     const response = await apiClient.get<Bid[]>(
       `${API_BASE_URL}/auction/userBids`

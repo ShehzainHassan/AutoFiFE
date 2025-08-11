@@ -1,5 +1,6 @@
 import {
   AuctionTableData,
+  RecentDownloadsItem,
   RevenueTableData,
   UserTableData,
 } from "@/interfaces/analytics";
@@ -37,7 +38,20 @@ export const revenueTableColumns: {
   { key: "commission", label: "Commission" },
 ];
 
-export const userTableColumns: { key: keyof UserTableData; label: string }[] = [
+export const recentDownloadsTableColumns: {
+  key: keyof RecentDownloadsItem;
+  label: string;
+}[] = [
+  { key: "reportType", label: "Report Type" },
+  { key: "dateRange", label: "Date Range" },
+  { key: "format", label: "Format" },
+  { key: "downloadedAt", label: "Date Downloaded" },
+  { key: "downloadAction", label: "" },
+];
+export const userTableColumns: {
+  key: keyof UserTableData;
+  label: string;
+}[] = [
   { key: "userName", label: "User Name" },
   { key: "registrationDate", label: "Registration Date" },
   { key: "lastActive", label: "Last Active" },

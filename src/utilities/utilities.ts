@@ -10,6 +10,8 @@ import DOMPurify from "isomorphic-dompurify";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import { AuctionFilters } from "@/interfaces/auction";
+import userAPI from "@/api/userAPI";
+import auctionAPI from "@/api/auctionAPI";
 dayjs.extend(duration);
 
 export function getModelOptions(make: string): Options[] {
@@ -33,7 +35,6 @@ export function getMakeByModel(modelName: string): string {
   }
   return "Any_Makes";
 }
-
 export function getPriceRange(priceValue: string): PriceRange {
   if (!priceValue || priceValue === "All_Prices") {
     return { startPrice: null, endPrice: null };
@@ -448,5 +449,91 @@ export function formatNotificationTypeToString(notificationType: number) {
       return "AuctionEnd";
     default:
       return "AuctionStart";
+  }
+}
+export function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+export async function getStartEndDates(
+  period: string,
+  type: "user" | "revenue" = "user"
+) {
+  const today = new Date();
+  const end = new Date(today);
+  end.setDate(today.getDate() - 1);
+  let start: Date = new Date(end);
+
+  switch (period) {
+    case "AllTime": {
+      if (type === "user") {
+        const oldestUserDate = await userAPI.getOldestUserDate();
+        start = new Date(oldestUserDate);
+      } else {
+        const oldestAuctionDate = await auctionAPI.getOldestAuctionDate();
+        start = new Date(oldestAuctionDate);
+      }
+      return {
+        startDate: formatDate(start.toISOString()),
+        endDate: formatDate(today.toISOString()),
+      };
+    }
+
+    case "Last7Days":
+      start.setDate(end.getDate() - 6);
+      break;
+
+    case "Last2Weeks":
+      start.setDate(end.getDate() - 13);
+      break;
+
+    case "LastMonth":
+      start.setDate(end.getDate() - 29);
+      break;
+
+    case "LastQuarter":
+      start.setDate(end.getDate() - 89);
+      break;
+
+    case "Last12Months":
+      start = new Date(end.getFullYear() - 1, end.getMonth(), end.getDate());
+      break;
+  }
+
+  return {
+    startDate: formatDate(start.toISOString()),
+    endDate: formatDate(end.toISOString()),
+  };
+}
+
+export function getReportName(reportId: number) {
+  switch (reportId) {
+    case 0:
+      return "Dashboard Summary";
+    case 1:
+      return "Auction Report";
+    case 2:
+      return "User Report";
+    case 3:
+      return "Revenue Report";
+    default:
+      return "Dashboard Summary";
+  }
+}
+export function getReportId(reportName: string) {
+  switch (reportName) {
+    case "Dashboard Summary":
+      return 0;
+    case "Auction Report":
+      return 1;
+    case "User Report":
+      return 2;
+    case "Revenue Report":
+      return 3;
+    default:
+      return 0;
   }
 }

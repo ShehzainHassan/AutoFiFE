@@ -29,6 +29,10 @@ const userAPI = {
     const response = await apiClient.get(`${API_BASE_URL}/user/${id}`);
     return response.data;
   },
+  getOldestUserDate: async () => {
+    const response = await apiClient.get(`${API_BASE_URL}/user/oldest-user`);
+    return response.data;
+  },
   getUserSearches: async () => {
     const response = await apiClient.get(
       `${API_BASE_URL}/user/get-user-saved-searches`

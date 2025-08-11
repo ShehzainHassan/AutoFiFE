@@ -118,3 +118,25 @@ export const SELL_CARD: ThemeContextType = {
     width: "160px",
   },
 };
+
+export const SELECTED_FORMAT: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-blue100)",
+    borderRadius: "8px",
+    textColor: "var(--color-blue420)",
+    padding: "10px 25px",
+    hoverColor: "var(--color-blue100)",
+    border: "1px solid var(--color-blue500)",
+  },
+};
+
+export const DOWNLOAD_BUTTON: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "transparent",
+    borderRadius: "none",
+    textColor: "var(--color-blue420)",
+    padding: "none",
+    hoverColor: "none",
+    border: "none",
+  },
+};

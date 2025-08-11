@@ -1,5 +1,5 @@
 import useUserAnalytics from "@/hooks/useGetUserAnalytics";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AnalyticsStats from "../analytics-stats/analytics-stats";
 import SelectDateContainer from "../select-date-container/select-date-container";
 import TitleContainer from "../title-container/title-container";
@@ -13,15 +13,38 @@ import { periodOptions, userTableColumns } from "@/constants/analytics";
 import IncreaseIcon from "@/assets/images/icons/increase.svg";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import Image from "next/image";
+import { getStartEndDates } from "@/utilities/utilities";
 
 export default function UserAnalytics() {
   const today = new Date();
-  const lastWeek = new Date();
-  lastWeek.setDate(today.getDate() - 7);
+  const yesterday = new Date();
+  yesterday.setDate(today.getDate() - 1);
 
+  const lastWeek = new Date();
+  lastWeek.setDate(yesterday.getDate() - 6);
+  const [selectedRange, setSelectedRange] = useState([
+    {
+      startDate: lastWeek,
+      endDate: yesterday,
+      key: "selection",
+    },
+  ]);
   const [period, setPeriod] = useState(periodOptions[0].value);
-  const { data: userGraph, isLoading: isGraphLoading } =
-    useUserGraphAnalytics(period);
+  const [dates, setDates] = useState({ startDate: "", endDate: "" });
+
+  useEffect(() => {
+    (async () => {
+      const { startDate, endDate } = await getStartEndDates(period, "user");
+      setDates({ startDate, endDate });
+    })();
+  }, [period]);
+
+  const { data: userGraph, isLoading: isGraphLoading } = useUserGraphAnalytics(
+    dates.startDate,
+    dates.endDate,
+    "Users",
+    Boolean(dates.startDate && dates.endDate)
+  );
 
   const transformedData = userGraph
     ? Object.entries(userGraph.data).map(([label, value]) => ({
@@ -30,13 +53,6 @@ export default function UserAnalytics() {
       }))
     : [];
 
-  const [selectedRange, setSelectedRange] = useState([
-    {
-      startDate: lastWeek,
-      endDate: today,
-      key: "selection",
-    },
-  ]);
   const [submittedRange, setSubmittedRange] = useState(selectedRange);
   const start = submittedRange[0]?.startDate ?? new Date();
   const end = submittedRange[0]?.endDate ?? new Date();

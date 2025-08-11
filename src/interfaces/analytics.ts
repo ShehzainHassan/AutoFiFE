@@ -44,3 +44,28 @@ export interface UserTableData {
   totalBids: number;
   totalWins: number;
 }
+export interface ReportTypeOption {
+  label: string;
+  value: string;
+}
+
+export const reportTypeOptions: ReportTypeOption[] = [
+  { label: "Dashboard Summary", value: "DashboardSummary" },
+  { label: "Auction Report", value: "AuctionReport" },
+  { label: "User Report", value: "UserReport" },
+  { label: "Revenue Report", value: "RevenueReport" },
+];
+
+export interface RecentDownloadsItem {
+  reportType: string;
+  dateRange: string;
+  format: string;
+  downloadedAt: string;
+  downloadAction?: string;
+}
+export interface RecentDownloads {
+  items: RecentDownloadsItem[];
+  totalItems: number;
+  page: number;
+  pageSize: number;
+}
