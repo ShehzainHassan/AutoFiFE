@@ -7,7 +7,7 @@ import { BLUE_THEME } from "@/constants/button-primary-themes";
 import classes from "./search-form.module.css";
 import { SearchFormViewProps } from "./search-form.types";
 
-export const SearchFormView = ({
+export const SearchForm = ({
   makeProps,
   modelProps,
   priceProps,

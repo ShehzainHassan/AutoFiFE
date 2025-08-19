@@ -8,6 +8,7 @@ import {
   VehicleListResult,
   VehicleOptions,
 } from "@/interfaces/vehicle";
+import { sanitizeVehicleFilters } from "@/utilities/utilities";
 import axios from "axios";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const RECOMMENDER_SYSTEM_BASE_URL = process.env.NEXT_PUBLIC_RECOMMENDER_SYSTEM;
@@ -63,24 +64,31 @@ const vehicleAPI = {
     return response.data;
   },
   getVehicleCount: async (filters: VehicleFilter) => {
+    const sanitizedFilters = sanitizeVehicleFilters(filters);
     const response = await axios.get<number>(
       `${API_BASE_URL}/Vehicle/total-vehicle-count`,
       {
-        params: { ...filters },
+        params: sanitizedFilters,
       }
     );
+
     return response.data;
   },
   getGearboxCount: async (filters: VehicleFilter) => {
+    const sanitizedFilters = sanitizeVehicleFilters(filters);
     const response = await axios.get(`${API_BASE_URL}/Vehicle/gearbox-count`, {
-      params: { ...filters },
+      params: sanitizedFilters,
     });
+
     return response.data;
   },
   getColorsCount: async (filters: VehicleFilter) => {
+    const sanitizedFilters = sanitizeVehicleFilters(filters);
+
     const response = await axios.get(`${API_BASE_URL}/Vehicle/colors-count`, {
-      params: { ...filters },
+      params: sanitizedFilters,
     });
+
     return response.data;
   },
   searchVehicles: async (
@@ -104,8 +112,8 @@ const vehicleAPI = {
         params: {
           pageView: pageSize,
           offset,
-          make,
-          model,
+          ...(make !== "Any_Makes" ? { make } : {}),
+          ...(model !== "Any_Models" ? { model } : {}),
           startPrice,
           endPrice,
           status,
@@ -118,6 +126,7 @@ const vehicleAPI = {
         },
       }
     );
+
     return response.data;
   },
   saveQuestionnaire: async (

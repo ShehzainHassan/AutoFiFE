@@ -6,9 +6,9 @@ import { ThemeProvider } from "@/theme/themeContext";
 import FeaturedIcon from "../featured-icons/featured-icons";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
 import NavbarContainer from "../navbar/navbar-container";
+import { SearchForm, useSearchForm } from "../search-form";
 import classes from "./hero.module.css";
 import { HeroProps } from "./hero.types";
-import { SearchFormContainer } from "../search-form";
 
 export default function Hero({
   tabs,
@@ -17,6 +17,10 @@ export default function Hero({
   handleCarModelClick,
 }: HeroProps) {
   const { t } = useTranslation();
+  const { makeProps, modelProps, priceProps, handleSearchClick } =
+    useSearchForm({
+      statusTab: selectedTab,
+    });
   return (
     <div className={classes.hero}>
       <NavbarContainer />
@@ -33,7 +37,13 @@ export default function Hero({
                 borderColor="transparent"
               />
             </ThemeProvider>
-            <SearchFormContainer statusTab={selectedTab} />
+
+            <SearchForm
+              makeProps={makeProps}
+              modelProps={modelProps}
+              priceProps={priceProps}
+              onSearch={handleSearchClick}
+            />
           </div>
         </div>
         <div className={classes.textContainer}>

@@ -1,3 +1,4 @@
+"use client";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import useGetAllMakes from "@/hooks/useGetAllMakes";
 import {
@@ -9,8 +10,9 @@ import {
 import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { PRICE_OPTIONS } from "@/constants";
+import { SearchFormProps } from "./search-form.types";
 
-export function useSearchLogic(statusTab: string) {
+export function useSearchForm({ statusTab }: SearchFormProps) {
   const {
     mainSearch,
     stagedSearch,

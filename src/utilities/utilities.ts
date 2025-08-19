@@ -1,6 +1,6 @@
 import { CURRENCY, MODEL_OPTIONS } from "@/constants";
 import { Options } from "@/interfaces/dropdown-options";
-import { Vehicle } from "@/interfaces/vehicle";
+import { Vehicle, VehicleFilter } from "@/interfaces/vehicle";
 import axios from "axios";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { toast } from "react-toastify";
@@ -646,4 +646,15 @@ export async function getStartEndDateTime(period: string) {
         endDate: toISOStringWithFraction(now),
       };
   }
+}
+export function sanitizeVehicleFilters(
+  filters: VehicleFilter
+): Partial<VehicleFilter> {
+  const { make, model, ...rest } = filters;
+
+  return {
+    ...rest,
+    ...(make !== "Any_Makes" ? { make } : {}),
+    ...(model !== "Any_Models" ? { model } : {}),
+  };
 }

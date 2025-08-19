@@ -1,20 +1,20 @@
-"use client";
-import { useSearchLogic } from "@/app/components/search-form/useSearchLogic";
-import { SearchFormView } from "./search-form-view";
-import { SearchFormContainerProps } from "./search-form.types";
+// "use client";
+// import { useSearchLogic } from "@/app/components/search-form/useSearchForm";
+// import { SearchFormView } from "./search-form";
+// import { SearchFormContainerProps } from "./search-form.types";
 
-export default function SearchFormContainer({
-  statusTab,
-}: SearchFormContainerProps) {
-  const { makeProps, modelProps, priceProps, handleSearchClick } =
-    useSearchLogic(statusTab);
+// export default function SearchFormContainer({
+//   statusTab,
+// }: SearchFormContainerProps) {
+//   const { makeProps, modelProps, priceProps, handleSearchClick } =
+//     useSearchLogic(statusTab);
 
-  return (
-    <SearchFormView
-      makeProps={makeProps}
-      modelProps={modelProps}
-      priceProps={priceProps}
-      onSearch={handleSearchClick}
-    />
-  );
-}
+//   return (
+//     <SearchFormView
+//       makeProps={makeProps}
+//       modelProps={modelProps}
+//       priceProps={priceProps}
+//       onSearch={handleSearchClick}
+//     />
+//   );
+// }
