@@ -46,29 +46,13 @@ export default function Home() {
       <Suspense fallback={<div>Loading...</div>}>
         <LazyComponent>
           <AllVehicles />
-        </LazyComponent>
-        <LazyComponent>
           <CarVideo />
-        </LazyComponent>
-        <LazyComponent>
           <Statistics />
-        </LazyComponent>
-        <LazyComponent>
           <WhyChooseUs />
-        </LazyComponent>
-        <LazyComponent>
           <PopularMakes />
-        </LazyComponent>
-        <LazyComponent>
           <Shop />
-        </LazyComponent>
-        <LazyComponent>
           <Customers />
-        </LazyComponent>
-        <LazyComponent>
           <LatestBlog />
-        </LazyComponent>
-        <LazyComponent>
           <Footer />
         </LazyComponent>
       </Suspense>

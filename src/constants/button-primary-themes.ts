@@ -140,3 +140,25 @@ export const DOWNLOAD_BUTTON: ThemeContextType = {
     border: "none",
   },
 };
+
+export const NEW_CHAT: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-blue500)",
+    borderRadius: "70px",
+    textColor: "var(--color-white100)",
+    padding: "12px 30px",
+    hoverColor: "var(--color-blue600)",
+    border: "none",
+    width: "100%",
+  },
+};
+export const SEARCH_CARS: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-blue500)",
+    borderRadius: "60px",
+    textColor: "var(--color-white100)",
+    padding: "15px 40px",
+    hoverColor: "var(--color-blue600)",
+    border: "none",
+  },
+};

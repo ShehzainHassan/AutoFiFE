@@ -10,7 +10,7 @@ import {
 import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { PRICE_OPTIONS } from "@/constants";
-import { SearchFormProps } from "./search-form.types";
+import { SearchFormProps } from "@/app/components/search-form";
 
 export function useSearchForm({ statusTab }: SearchFormProps) {
   const {

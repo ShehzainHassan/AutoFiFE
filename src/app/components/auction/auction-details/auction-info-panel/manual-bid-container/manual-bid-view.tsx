@@ -1,5 +1,4 @@
 import ButtonPrimary from "@/app/components/buttons/button-primary";
-import { Input } from "@/app/components/input-field";
 import Loading from "@/app/components/loading";
 import TextContainer from "../../text-container/text-container";
 import { CURRENCY } from "@/constants";
@@ -8,6 +7,7 @@ import { SECONDARY_CONTAINER } from "@/styles/text-container";
 import { ThemeProvider } from "@/theme/themeContext";
 import classes from "../auction-info-panel.module.css";
 import { ManualBidViewProps } from "./manual-bid.types";
+import Input from "@/app/components/input-field";
 
 export default function ManualBidView({
   bid,

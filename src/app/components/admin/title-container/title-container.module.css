@@ -3,6 +3,13 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
 .subtitle {
   color: var(--color-gray590);
+  font-size: 16px;
 }

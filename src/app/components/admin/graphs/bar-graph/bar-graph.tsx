@@ -26,7 +26,7 @@ export default function BarGraph({ data, viewReport }: BarGraphProps) {
       return (
         <div
           style={{
-            background: "#fff",
+            background: "var(--color-white100)",
             padding: "6px 10px",
             borderRadius: "6px",
             boxShadow: "0 2px 8px rgba(0,0,0,0.15)",

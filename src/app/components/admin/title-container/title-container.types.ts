@@ -1,4 +1,4 @@
-export type TitleContainerProps = {
+export interface TitleContainerProps {
   title: string;
   subTitle: string;
-};
+}

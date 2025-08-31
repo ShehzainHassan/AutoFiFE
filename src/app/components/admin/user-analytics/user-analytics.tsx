@@ -1,34 +1,24 @@
-import useUserAnalytics from "@/hooks/useGetUserAnalytics";
 import { useState, useEffect } from "react";
-import AnalyticsStats from "../analytics-stats/analytics-stats";
-import SelectDateContainer from "../select-date-container/select-date-container";
-import TitleContainer from "../title-container/title-container";
-import classes from "./user-analytics.module.css";
-import { UserAnalyticsResult, UserTableData } from "@/interfaces/analytics";
+import useUserAnalytics from "@/hooks/useGetUserAnalytics";
 import useUserAnalyticsTable from "@/hooks/useUserAnalyticsTable";
-import AnalyticsTable from "../table/table";
 import useUserGraphAnalytics from "@/hooks/useUserGraphAnalytics";
+import { getStartEndDates } from "@/utilities/utilities";
+import AnalyticsStats from "../analytics-stats/analytics-stats";
+import AnalyticsTable from "../table/table";
 import AreaGraph from "../graphs/area-graph/area-graph";
+import { UserAnalyticsResult, UserTableData } from "@/interfaces/analytics";
 import { periodOptions, userTableColumns } from "@/constants/analytics";
 import IncreaseIcon from "@/assets/images/icons/increase.svg";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import Image from "next/image";
-import { getStartEndDates } from "@/utilities/utilities";
+import classes from "./user-analytics.module.css";
+import { useAnalyticsDateRange } from "@/hooks/useAnalyticsDateRange";
+import AnalyticsLayout from "../analytics-layout/analytics-layout";
 
 export default function UserAnalytics() {
-  const today = new Date();
-  const yesterday = new Date();
-  yesterday.setDate(today.getDate() - 1);
+  const { selectedRange, setSelectedRange, setSubmittedRange, start, end } =
+    useAnalyticsDateRange();
 
-  const lastWeek = new Date();
-  lastWeek.setDate(yesterday.getDate() - 6);
-  const [selectedRange, setSelectedRange] = useState([
-    {
-      startDate: lastWeek,
-      endDate: yesterday,
-      key: "selection",
-    },
-  ]);
   const [period, setPeriod] = useState(periodOptions[0].value);
   const [dates, setDates] = useState({ startDate: "", endDate: "" });
 
@@ -52,10 +42,6 @@ export default function UserAnalytics() {
         value: Number(value),
       }))
     : [];
-
-  const [submittedRange, setSubmittedRange] = useState(selectedRange);
-  const start = submittedRange[0]?.startDate ?? new Date();
-  const end = submittedRange[0]?.endDate ?? new Date();
 
   const { data, isLoading } = useUserAnalytics(
     start.toLocaleDateString("en-CA"),
@@ -83,7 +69,7 @@ export default function UserAnalytics() {
             ) : (
               <TrendingDownIcon className={classes.downIcon} />
             )}
-            <span className={change >= 0 ? classes.positive : classes.negative}>
+            <span className={isPositive ? classes.positive : classes.negative}>
               vs {period}
             </span>
           </div>
@@ -93,19 +79,12 @@ export default function UserAnalytics() {
   };
 
   return (
-    <div>
-      <div className={classes.subContainer}>
-        <TitleContainer
-          title="User Analytics"
-          subTitle="Engagement metrics for the AutoFi car auction platform."
-        />
-        <SelectDateContainer
-          range={selectedRange}
-          setRange={setSelectedRange}
-          onClose={() => setSubmittedRange(selectedRange)}
-        />
-      </div>
-
+    <AnalyticsLayout
+      title="User Analytics"
+      subTitle="Engagement metrics for the AutoFi car auction platform."
+      selectedRange={selectedRange}
+      setSelectedRange={setSelectedRange}
+      onDateSubmit={() => setSubmittedRange(selectedRange)}>
       <AnalyticsStats<UserAnalyticsResult>
         isLoading={isLoading}
         data={data}
@@ -129,6 +108,7 @@ export default function UserAnalytics() {
         pecentageChange={percentChange()}
         isLoading={isGraphLoading}
       />
+
       {tableData && tableData.length > 0 && (
         <div className={classes.table}>
           <h3>Users Breakdown</h3>
@@ -142,6 +122,6 @@ export default function UserAnalytics() {
           )}
         </div>
       )}
-    </div>
+    </AnalyticsLayout>
   );
 }

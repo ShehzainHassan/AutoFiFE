@@ -1,9 +1,9 @@
 import { useQuestionnaire } from "@/contexts/questionnaire-context";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Input } from "../../input-field";
 import classes from "./input-amount.module.css";
 import { InputAmountProps } from "./input-amount.types";
+import Input from "../../input-field";
 
 const InputAmount = ({ vehiclePrice }: InputAmountProps) => {
   const { formData, setFormData } = useQuestionnaire();

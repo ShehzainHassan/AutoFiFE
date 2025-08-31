@@ -1,9 +1,9 @@
-import { Dropdown } from "@/app/components/";
-import CustomDropdownIndicator from "../dropdown-indicator/dropdown-indicator";
-import { customSelectStyles } from "@/styles/custom-select";
 import { ButtonPrimary } from "@/app/components";
+import { Dropdown } from "@/app/components/";
+import { SEARCH_CARS } from "@/constants/button-primary-themes";
+import { customSelectStyles } from "@/styles/custom-select";
 import { ThemeProvider } from "@/theme/themeContext";
-import { BLUE_THEME } from "@/constants/button-primary-themes";
+import CustomDropdownIndicator from "../dropdown-indicator/dropdown-indicator";
 import classes from "./search-form.module.css";
 import { SearchFormViewProps } from "./search-form.types";
 
@@ -47,11 +47,10 @@ export const SearchForm = ({
         </Dropdown>
       </div>
 
-      <ThemeProvider value={BLUE_THEME}>
+      <ThemeProvider value={SEARCH_CARS}>
         <ButtonPrimary
           imgSrc="/images/search.png"
           btnText="Search Cars"
-          padding="15px 40px"
           onClick={onSearch}
         />
       </ThemeProvider>

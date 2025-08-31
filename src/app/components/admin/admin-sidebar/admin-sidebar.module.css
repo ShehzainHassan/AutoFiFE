@@ -17,6 +17,9 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .sidebarItem {
@@ -26,6 +29,10 @@
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
 }
 
 .sidebarItem:hover {

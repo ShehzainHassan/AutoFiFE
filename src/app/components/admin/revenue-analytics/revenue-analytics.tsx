@@ -1,39 +1,29 @@
+import { useEffect, useState, useMemo } from "react";
 import useGetRevenueAnalytics from "@/hooks/useGetRevenueAnalytics";
+import useRevenueAnalyticsTable from "@/hooks/useRevenueAnalyticsTable";
+import useRevenueGraphAnalytics from "@/hooks/useRevenueGraphAnalytics";
+import { getStartEndDates } from "@/utilities/utilities";
+import { CURRENCY } from "@/constants";
+import { periodOptions, revenueTableColumns } from "@/constants/analytics";
 import {
   RevenueAnalyticsResult,
   RevenueTableData,
 } from "@/interfaces/analytics";
-import { useState, useEffect } from "react";
 import AnalyticsStats from "../analytics-stats/analytics-stats";
-import SelectDateContainer from "../select-date-container/select-date-container";
-import TitleContainer from "../title-container/title-container";
-import { CURRENCY } from "@/constants";
-import classes from "./revenue-analytics.module.css";
-import useRevenueAnalyticsTable from "@/hooks/useRevenueAnalyticsTable";
 import AnalyticsTable from "../table/table";
 import AreaGraph from "../graphs/area-graph/area-graph";
-import useRevenueGraphAnalytics from "@/hooks/useRevenueGraphAnalytics";
-import { periodOptions, revenueTableColumns } from "@/constants/analytics";
+import Loading from "../../loading";
 import Image from "next/image";
 import IncreaseIcon from "@/assets/images/icons/increase.svg";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
-import Loading from "../../loading";
-import { getStartEndDates } from "@/utilities/utilities";
+import classes from "./revenue-analytics.module.css";
+import { useAnalyticsDateRange } from "@/hooks/useAnalyticsDateRange";
+import AnalyticsLayout from "../analytics-layout/analytics-layout";
 
 export default function RevenueAnalytics() {
-  const today = new Date();
-  const yesterday = new Date();
-  yesterday.setDate(today.getDate() - 1);
+  const { selectedRange, setSelectedRange, setSubmittedRange, start, end } =
+    useAnalyticsDateRange();
 
-  const lastWeek = new Date();
-  lastWeek.setDate(yesterday.getDate() - 6);
-  const [selectedRange, setSelectedRange] = useState([
-    {
-      startDate: lastWeek,
-      endDate: yesterday,
-      key: "selection",
-    },
-  ]);
   const [period, setPeriod] = useState(periodOptions[0].value);
   const [dates, setDates] = useState({ startDate: "", endDate: "" });
 
@@ -43,6 +33,7 @@ export default function RevenueAnalytics() {
       setDates({ startDate, endDate });
     })();
   }, [period]);
+
   const { data: revenueGraph, isLoading: isGraphLoading } =
     useRevenueGraphAnalytics(
       dates.startDate,
@@ -51,31 +42,21 @@ export default function RevenueAnalytics() {
       Boolean(dates.startDate && dates.endDate)
     );
 
-  const transformedData = revenueGraph
-    ? Object.entries(revenueGraph.data).map(([label, value]) => ({
-        label,
-        value: Number(value),
-      }))
-    : [];
+  const transformedData = useMemo(() => {
+    return revenueGraph
+      ? Object.entries(revenueGraph.data).map(([label, value]) => ({
+          label,
+          value: Number(value),
+        }))
+      : [];
+  }, [revenueGraph]);
 
-  const [submittedRange, setSubmittedRange] = useState(selectedRange);
-  const start = submittedRange[0]?.startDate ?? new Date();
-  const end = submittedRange[0]?.endDate ?? new Date();
-
-  const { data, isLoading } = useGetRevenueAnalytics(
-    start.toLocaleDateString("en-CA"),
-    end.toLocaleDateString("en-CA")
+  const totalValue = useMemo(
+    () => transformedData.reduce((sum, item) => sum + item.value, 0),
+    [transformedData]
   );
 
-  const { data: tableData, isLoading: isTableLoading } =
-    useRevenueAnalyticsTable(
-      start.toLocaleDateString("en-CA"),
-      end.toLocaleDateString("en-CA")
-    );
-
-  const totalValue = transformedData.reduce((sum, item) => sum + item.value, 0);
-
-  const percentChange = () => {
+  const percentChange = useMemo(() => {
     if (isGraphLoading || !revenueGraph) return null;
 
     const change = revenueGraph.percentageChange;
@@ -109,22 +90,26 @@ export default function RevenueAnalytics() {
         )}
       </div>
     );
-  };
+  }, [isGraphLoading, revenueGraph, period, totalValue]);
+
+  const { data, isLoading } = useGetRevenueAnalytics(
+    start.toLocaleDateString("en-CA"),
+    end.toLocaleDateString("en-CA")
+  );
+
+  const { data: tableData, isLoading: isTableLoading } =
+    useRevenueAnalyticsTable(
+      start.toLocaleDateString("en-CA"),
+      end.toLocaleDateString("en-CA")
+    );
 
   return (
-    <>
-      <div className={classes.titleContainer}>
-        <TitleContainer
-          title="Revenue Analytics"
-          subTitle="Financial tracking and insights"
-        />
-        <SelectDateContainer
-          range={selectedRange}
-          setRange={setSelectedRange}
-          onClose={() => setSubmittedRange(selectedRange)}
-        />
-      </div>
-
+    <AnalyticsLayout
+      title="Revenue Analytics"
+      subTitle="Financial tracking and insights"
+      selectedRange={selectedRange}
+      setSelectedRange={setSelectedRange}
+      onDateSubmit={() => setSubmittedRange(selectedRange)}>
       <AnalyticsStats<RevenueAnalyticsResult>
         isLoading={isLoading}
         data={data}
@@ -154,7 +139,7 @@ export default function RevenueAnalytics() {
         period={period}
         setPeriod={setPeriod}
         periodOptions={periodOptions}
-        pecentageChange={percentChange()}
+        pecentageChange={percentChange}
         isLoading={isGraphLoading}
       />
 
@@ -173,6 +158,6 @@ export default function RevenueAnalytics() {
           )}
         </div>
       )}
-    </>
+    </AnalyticsLayout>
   );
 }

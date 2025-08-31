@@ -1,8 +1,8 @@
 import { InputPhoneProps } from "./input-phone.types";
 import classes from "./input-phone.module.css";
-import { Input } from "../../input-field";
 import { useQuestionnaire } from "@/contexts/questionnaire-context";
 import { validatePhoneNumber } from "@/utilities/utilities";
+import Input from "../../input-field";
 const InputPhone = ({ errors, setErrors }: InputPhoneProps) => {
   const { formData, setFormData } = useQuestionnaire();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,13 +1,19 @@
-import { TitleContainerProps } from "./title-container.types";
+import { memo } from "react";
 import classes from "./title-container.module.css";
-export default function TitleContainer({
-  title,
-  subTitle,
-}: TitleContainerProps) {
+import { TitleContainerProps } from "./title-container.types";
+
+function TitleContainer({ title, subTitle }: TitleContainerProps) {
   return (
-    <div className={classes.container}>
-      <h1>{title}</h1>
+    <section
+      className={classes.container}
+      aria-labelledby="analytics-title"
+      role="region">
+      <h1 id="analytics-title" className={classes.title}>
+        {title}
+      </h1>
       <p className={classes.subtitle}>{subTitle}</p>
-    </div>
+    </section>
   );
 }
+
+export default memo(TitleContainer);

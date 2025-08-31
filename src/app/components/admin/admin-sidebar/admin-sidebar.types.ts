@@ -1,12 +1,12 @@
 import { StaticImageData } from "next/image";
 
-export type SidebarItem = {
+export interface SidebarItem {
   label: string;
   icon: string | StaticImageData;
-};
+}
 
-export type AdminSidebarProps = {
+export interface AdminSidebarProps {
   items: SidebarItem[];
   selected: string;
-  setSelected: (label: string) => void;
-};
+  onSelect: (label: string) => void;
+}

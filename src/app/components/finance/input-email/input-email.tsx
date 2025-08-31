@@ -1,8 +1,8 @@
 import { useQuestionnaire } from "@/contexts/questionnaire-context";
 import { validateEmail } from "@/utilities/utilities";
-import { Input } from "../../input-field";
 import classes from "./input-email.module.css";
 import { InputEmailProps } from "./input-email.types";
+import Input from "../../input-field";
 const InputEmail = ({ errors, setErrors }: InputEmailProps) => {
   const { formData, setFormData } = useQuestionnaire();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -6,7 +6,6 @@ import { grayedField } from "@/styles/custom-select";
 import { ThemeProvider } from "@/theme/themeContext";
 import inputClass from "../auction-info-panel.module.css";
 import { AutoPlaceBidViewProps } from "./autobid.types";
-import { Input } from "@/app/components/input-field";
 import {
   bidDelayOptions,
   BidStrategyOptions,
@@ -15,6 +14,7 @@ import {
 } from "@/constants/auction";
 import { IOSSwitch } from "@/app/components/buttons/toggle-button/toggle-button";
 import { useMemo } from "react";
+import Input from "@/app/components/input-field";
 
 export default function AutoPlaceBidView({
   maxBidAmount,

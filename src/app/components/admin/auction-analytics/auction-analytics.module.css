@@ -15,3 +15,6 @@
 .viewReport:hover {
   text-decoration: underline;
 }
+.dropdown {
+  z-index: 2;
+}

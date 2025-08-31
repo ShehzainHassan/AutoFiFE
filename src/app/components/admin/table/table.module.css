@@ -7,7 +7,7 @@
 
 .headerRow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)) 200px;
   background-color: var(--color-gray100);
   padding: 12px 24px;
   position: sticky;
@@ -22,7 +22,7 @@
 
 .dataRow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)) 200px;
   background-color: var(--color-white100);
   padding: 12px 24px;
   border: 1px solid var(--color-gray100);
@@ -35,10 +35,4 @@
 
 .downloadCell {
   text-align: right;
-}
-
-.headerRow,
-.dataRow {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)) 200px;
 }

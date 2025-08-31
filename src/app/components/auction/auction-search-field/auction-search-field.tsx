@@ -1,8 +1,8 @@
 import MaginfyIcon from "@/assets/images/icons/magnify.png";
-import { Input } from "../../input-field";
 import classes from "./auction-search-field.module.css";
 import { SearchFieldProps } from "./auction-search-field.types";
 import Image from "next/image";
+import Input from "../../input-field";
 export default function SearchField({
   width = "120px",
   search,

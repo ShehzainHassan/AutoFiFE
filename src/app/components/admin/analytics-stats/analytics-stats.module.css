@@ -1,4 +1,17 @@
 .analyticsContainer {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.loadingWrapper {
+  padding: 1rem;
+  text-align: center;
+}
+
+.emptyState {
+  padding: 1rem;
+  color: var(--color-gray400);
+  font-style: italic;
 }

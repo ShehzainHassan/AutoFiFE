@@ -15,14 +15,34 @@ export default function AnalyticsStats<T>({
     return getValues(data);
   }, [data, getValues]);
 
-  if (isLoading) return <Loading />;
-  if (!data) return null;
+  if (isLoading) {
+    return (
+      <div role="status" aria-live="polite" className={classes.loadingWrapper}>
+        <Loading />
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div role="alert" aria-live="assertive" className={classes.emptyState}>
+        No analytics data available.
+      </div>
+    );
+  }
 
   return (
-    <div className={classes.analyticsContainer}>
+    <section
+      className={classes.analyticsContainer}
+      aria-label="Analytics Summary">
       {displayItems.map(({ label, value }) => (
-        <TextContainer key={label} label={label} value={value} />
+        <TextContainer
+          key={label}
+          label={label}
+          value={value}
+          aria-label={`Analytics metric ${label} with value ${value}`}
+        />
       ))}
-    </div>
+    </section>
   );
 }

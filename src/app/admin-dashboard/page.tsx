@@ -73,7 +73,7 @@ export default function AdminDashboard() {
         <AdminSidebar
           items={sidebarItems}
           selected={selectedItem}
-          setSelected={setSelectedItem}
+          onSelect={setSelectedItem}
         />
         <div className={classes.mainContent}>{SelectedComponent}</div>
       </div>

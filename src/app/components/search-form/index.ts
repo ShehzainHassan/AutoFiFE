@@ -1,5 +1,5 @@
+export { useSearchForm } from "@/hooks/useSearchForm";
 export { SearchForm } from "./search-form";
-export { useSearchForm } from "./useSearchForm";
 export type {
   SearchFormProps,
   SearchFormViewProps,

@@ -5,8 +5,8 @@ import useNewsLetter from "@/hooks/useNewsLetter";
 import { ThemeProvider } from "@/theme/themeContext";
 import { validateEmail } from "@/utilities/utilities";
 import { useState } from "react";
-import { Input } from "../input-field";
 import classes from "./email-box.module.css";
+import Input from "../input-field";
 
 export default function EmailBox() {
   const { mutate: submitEmail, isPending } = useNewsLetter(() => {
