@@ -3,12 +3,12 @@ import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import headings from "@/styles/typography.module.css";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ColorsExpanded from '../Filters-Component/colors-expanded/colors-expanded';
-import GearboxExpanded from '../Filters-Component/gearbox-expanded/gearbox-expanded';
-import MileageExpandedContainer from '../Filters-Component/mileage-expanded/mileage-expanded-container';
-import PriceExpandedContainer from '../Filters-Component/price-expanded/price-expanded-container';
-import StatusExpanded from '../Filters-Component/status-expanded/status-expanded';
-import YearsExpanded from '../Filters-Component/years-expanded/years-expanded';
+import ColorsExpanded from "../filters/colors-expanded/colors-expanded";
+import GearboxExpanded from "../filters/gearbox-expanded/gearbox-expanded";
+import MileageExpandedContainer from "../filters/mileage-expanded/mileage-expanded-container";
+import PriceExpandedContainer from "../filters/price-expanded/price-expanded-container";
+import StatusExpanded from "../filters/status-expanded/status-expanded";
+import YearsExpanded from "../filters/years-expanded/years-expanded";
 import { ExpandableProps } from "./expandable-dropdown.types";
 import classes from "./expandable.module.css";
 

@@ -91,7 +91,6 @@ export default function InputQuery({ messageCount }: InputQueryProps) {
     });
   };
   const isSendDisabled = !input.trim();
-
   return (
     <div>
       {!selectedSessionId &&

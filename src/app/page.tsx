@@ -2,19 +2,19 @@
 
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import { AllVehicles, LazyComponent } from "@/app/components";
-import HeroContainer from "./components/hero-Component/hero-container";
+import { LazyComponent } from "@/app/components";
+import HeroContainer from "./components/hero/hero-container";
 import PremiumBrands from "./components/premium-brands/premium-brands";
 import classes from "./page.module.css";
 import NeedHelp from "./components/box-assistant/need-help/need-help";
+import AllVehicles from "./components/all-vehicles/all-vehicles.container";
 
 const CarVideo = dynamic(() => import("./components/car-video/car-video"), {
   ssr: false,
 });
-const Statistics = dynamic(
-  () => import("./components/Statistics-Component/statistics"),
-  { ssr: false }
-);
+const Statistics = dynamic(() => import("./components/statistics/statistics"), {
+  ssr: false,
+});
 const WhyChooseUs = dynamic(
   () => import("./components/why-choose-us/why-choose-us"),
   { ssr: false }
@@ -23,7 +23,7 @@ const PopularMakes = dynamic(
   () => import("./components/popular-makes/popular-makes"),
   { ssr: false }
 );
-const Shop = dynamic(() => import("./components/shop-Component/shop"), {
+const Shop = dynamic(() => import("./components/shop/shop"), {
   ssr: false,
 });
 const Customers = dynamic(
@@ -34,7 +34,7 @@ const LatestBlog = dynamic(
   () => import("./components/latest-blog/latest-blog"),
   { ssr: false }
 );
-const Footer = dynamic(() => import("./components/Footer-Component/footer"), {
+const Footer = dynamic(() => import("./components/footer/footer"), {
   ssr: false,
 });
 

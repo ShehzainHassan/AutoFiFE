@@ -1,5 +1,5 @@
 import { LiveActivity, Navbar } from "@/app/components";
-import Footer from "../components/Footer-Component/footer";
+import Footer from "../components/footer/footer";
 import classes from "./page.module.css";
 import NeedHelp from "../components/box-assistant/need-help/need-help";
 export default function AuctionPage() {

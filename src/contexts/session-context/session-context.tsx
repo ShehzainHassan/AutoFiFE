@@ -40,7 +40,6 @@ export const SessionProvider = ({
     setSelectedSessionId(null);
     setMessages([]);
   };
-
   return (
     <SessionContext.Provider
       value={{

@@ -1,6 +1,6 @@
 import { screen, fireEvent } from "@testing-library/react";
 import { renderWithClient } from "@/test-utils/render-with-client";
-import AllVehiclesSwiper from "../all-vehicle-swiper";
+import AllVehiclesSwiper from ".";
 
 jest.mock("@/hooks/useAllVehicles", () => jest.fn());
 
