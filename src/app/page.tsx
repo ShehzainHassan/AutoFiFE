@@ -6,6 +6,7 @@ import { AllVehicles, LazyComponent } from "@/app/components";
 import HeroContainer from "./components/hero-Component/hero-container";
 import PremiumBrands from "./components/premium-brands/premium-brands";
 import classes from "./page.module.css";
+import NeedHelp from "./components/box-assistant/need-help/need-help";
 
 const CarVideo = dynamic(() => import("./components/car-video/car-video"), {
   ssr: false,
@@ -53,6 +54,7 @@ export default function Home() {
           <Shop />
           <Customers />
           <LatestBlog />
+          <NeedHelp />
           <Footer />
         </LazyComponent>
       </Suspense>

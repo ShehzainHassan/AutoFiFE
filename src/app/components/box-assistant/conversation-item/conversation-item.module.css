@@ -1,0 +1,57 @@
+.recentConversationInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 15px;
+}
+.recentConversations {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 8fr 3fr;
+}
+.recentConversations:hover {
+  background-color: var(--color-blue50);
+  cursor: pointer;
+  border-radius: 57px;
+}
+.selected {
+  background-color: var(--color-blue50);
+  border-top-left-radius: 57px;
+  border-bottom-left-radius: 57px;
+  color: var(--color-blue550);
+}
+.truncateTitle {
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.modifyContainer {
+  display: flex;
+  position: relative;
+}
+.modify {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--color-blue220);
+  height: 100%;
+  border-top-left-radius: 57px;
+  border-bottom-left-radius: 57px;
+  padding: 15px;
+}
+.iconButton {
+  background: none;
+  outline: none;
+  border: none;
+}
+.rounded {
+  position: absolute;
+  right: -30px;
+  background-color: var(--color-white100);
+  width: 40px;
+  height: 100%;
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+}

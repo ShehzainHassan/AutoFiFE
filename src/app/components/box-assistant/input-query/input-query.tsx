@@ -4,38 +4,56 @@ import SendIcon from "@/assets/images/icons/send.png";
 import ThinkIcon from "@/assets/images/icons/think.png";
 import useAIResponse from "@/hooks/useAIResponse";
 import { AIResponseModel, ChatMessage } from "@/interfaces/aiAssistant";
-import {
-  getRandomItems,
-  getUserIdFromLocalStorage,
-} from "@/utilities/utilities";
+import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Input from "../../input-field";
 import classes from "./input-query.module.css";
 
 import useContextualSuggestions from "@/hooks/useContextualSuggestions";
 import { InputQueryProps } from "./input-query.types";
+import usePopularQueries from "@/hooks/usePopularQueries";
+import { useSession } from "@/contexts/session-context";
 
-export default function InputQuery({
-  sessionId,
-  onNewMessage,
-  messageCount,
-}: InputQueryProps) {
+export default function InputQuery({ messageCount }: InputQueryProps) {
   const [input, setInput] = useState("");
 
   const userId = getUserIdFromLocalStorage() ?? -1;
   const { data: suggestions } = useContextualSuggestions(userId);
-
+  const { data: popularQueries } = usePopularQueries();
+  const { selectedSessionId, setSelectedSessionId, setMessages } = useSession();
   const { mutate: askAI } = useAIResponse({
     onSuccess: (res: AIResponseModel) => {
+      if (res.session_id) {
+        setSelectedSessionId(res.session_id);
+      }
       const aiMessage: ChatMessage = {
         sender: "AI",
         message: res.answer,
         timestamp: new Date().toISOString(),
       };
-      onNewMessage(aiMessage, true);
+      handleNewMessage(aiMessage, true);
     },
   });
+
+  const mergedSuggestions = useMemo(() => {
+    const contextual = suggestions ?? [];
+    const popular = (popularQueries ?? []).map((pq) => pq.text);
+
+    const selectedContextual = contextual.slice(0, 3);
+    const selectedPopular = popular.slice(0, 2);
+
+    let combined = [...selectedContextual, ...selectedPopular];
+
+    if (combined.length < 5) {
+      const moreContextual = contextual.filter((c) => !combined.includes(c));
+      const morePopular = popular.filter((p) => !combined.includes(p));
+
+      combined = [...combined, ...moreContextual, ...morePopular].slice(0, 5);
+    }
+
+    return combined.filter((v, i, arr) => arr.indexOf(v) === i).slice(0, 5);
+  }, [suggestions, popularQueries]);
 
   const handleSend = (text?: string) => {
     const finalInput = text ?? input;
@@ -46,34 +64,41 @@ export default function InputQuery({
       message: finalInput,
       timestamp: new Date().toISOString(),
     };
-    onNewMessage(userMessage);
+    handleNewMessage(userMessage);
 
     const botPlaceholder: ChatMessage = {
       sender: "AI",
       message: "Thinking...",
       timestamp: new Date().toISOString(),
     };
-    onNewMessage(botPlaceholder);
+    handleNewMessage(botPlaceholder);
 
     askAI({
       userId,
       question: finalInput,
-      session_id: sessionId,
+      session_id: selectedSessionId,
     });
 
     setInput("");
   };
 
+  const handleNewMessage = (msg: ChatMessage, replaceLast = false) => {
+    setMessages((prev) => {
+      if (replaceLast) {
+        return [...prev.slice(0, -1), msg];
+      }
+      return [...prev, msg];
+    });
+  };
   const isSendDisabled = !input.trim();
 
   return (
     <div>
-      {!sessionId &&
+      {!selectedSessionId &&
         messageCount === 0 &&
-        suggestions &&
-        suggestions.length > 0 && (
+        mergedSuggestions.length > 0 && (
           <div className={classes.suggestions}>
-            {getRandomItems<string>(suggestions, 4).map((s, i) => (
+            {mergedSuggestions.map((s, i) => (
               <div
                 key={i}
                 className={classes.suggestion}

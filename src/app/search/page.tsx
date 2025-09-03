@@ -1,10 +1,11 @@
 "use client";
 
-import Footer from '../components/Footer-Component/footer';
+import NeedHelp from "../components/box-assistant/need-help/need-help";
+import Footer from "../components/Footer-Component/footer";
 import LoadResults from "../components/load-results/load-results";
 import VirtualizedList from "../components/load-virtualized-results/load-virutalized-results";
 import NavbarContainer from "../components/navbar/navbar-container";
-import Pagination from '../components/pagination-Component/pagination';
+import Pagination from "../components/pagination-Component/pagination";
 import ResultHeaderBottom from "../components/result-header-bottom/result-header-bottom";
 import ResultHeader from "../components/result-header/result-header";
 import SidebarContainer from "../components/sidebar/sidebar-container";
@@ -42,6 +43,7 @@ export default function Search() {
         </div>
         <VehicleInfoTabs submittedParams={submittedParams} />
       </div>
+      <NeedHelp />
       <Footer />
     </>
   );

@@ -4,13 +4,14 @@ import {
   CompareFeatures,
   VehicleSelector,
 } from "@/app/components";
-import Footer from '@/app/components/Footer-Component';
-import NavbarContainer from '@/app/components/navbar';
+import Footer from "@/app/components/Footer-Component";
+import NavbarContainer from "@/app/components/navbar";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
 import { CompareVehicle } from "@/interfaces/vehicle";
 import { ThemeProvider } from "@/theme/themeContext";
 import { useState } from "react";
 import classes from "./page.module.css";
+import NeedHelp from "@/app/components/box-assistant/need-help/need-help";
 
 export default function CompareVehiclesPage() {
   const [vehicles, setVehicles] = useState<CompareVehicle[]>([
@@ -67,6 +68,7 @@ export default function CompareVehiclesPage() {
           <CompareFeatures vehicle1={vehicles[0]} vehicle2={vehicles[1]} />
         )}
       </div>
+      <NeedHelp />
       <Footer />
     </>
   );

@@ -2,6 +2,7 @@ import {
   AIResponseModel,
   ChatSession,
   ChatSessionSummary,
+  PopularQuery,
 } from "@/interfaces/aiAssistant";
 import apiClient from "./apiClient";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -50,8 +51,35 @@ const aiAssistantAPI = {
     return response.data;
   },
   getContextualSuggestion: async (userId: number) => {
-    const response = await apiClient.get(
+    const response = await apiClient.get<string[]>(
       `${API_BASE_URL}/api/AIAssistant/contextual-suggestions/${userId}`
+    );
+    return response.data;
+  },
+  getPopularQueries: async () => {
+    const response = await apiClient.get<PopularQuery[]>(
+      `${API_BASE_URL}/api/AIAssistant/popular-queries`
+    );
+    return response.data;
+  },
+  deleteSessionById: async (sessionId: string) => {
+    const response = await apiClient.delete(
+      `${API_BASE_URL}/api/AIAssistant/chats/${sessionId}`
+    );
+    return response.data;
+  },
+  deleteAllSessions: async () => {
+    const response = await apiClient.delete(
+      `${API_BASE_URL}/api/AIAssistant/chats`
+    );
+    return response.data;
+  },
+  editSessionTitle: async (sessionId: string, newTitle: string) => {
+    const response = await apiClient.put(
+      `${API_BASE_URL}/api/AIAssistant/chats/${sessionId}/title`,
+      {
+        newTitle,
+      }
     );
     return response.data;
   },

@@ -1,3 +1,4 @@
+"use client";
 import Dropdown from "@/app/components/dropdown";
 import {
   Area,
@@ -10,6 +11,7 @@ import {
 } from "recharts";
 import { AreaGraphProps } from "./area-graph.types";
 import Loading from "@/app/components/loading";
+import classes from "./area-graph.module.css";
 
 const AreaGraph = ({
   data,
@@ -25,38 +27,20 @@ const AreaGraph = ({
   };
 
   const xAxisInterval = data.length <= 10 ? 0 : Math.floor(data.length / 8);
-  if (isLoading)
+
+  if (isLoading) {
     return (
-      <div>
+      <div role="status" aria-live="polite">
         <Loading />
       </div>
     );
+  }
+
   return (
-    <div
-      style={{
-        marginTop: "32px",
-        width: "100%",
-        backgroundColor: "#FFFFFF",
-        border: "2px solid #E2E8F0",
-        borderRadius: "8px",
-        padding: "20px",
-      }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}>
+    <div className={classes.container}>
+      <div className={classes.header}>
         <div>
-          <h3
-            style={{
-              margin: 0,
-              marginBottom: "10px",
-              fontSize: "18px",
-              color: "#2D3748",
-            }}>
-            {title}
-          </h3>
+          <h3 className={classes.title}>{title}</h3>
           <div>{pecentageChange}</div>
         </div>
         <Dropdown value={period} onChange={handlePeriodChange}>
@@ -70,8 +54,16 @@ const AreaGraph = ({
           data={data}>
           <defs>
             <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#007BFF" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#007BFF" stopOpacity={0} />
+              <stop
+                offset="5%"
+                stopColor="var(--color-blue420)"
+                stopOpacity={0.8}
+              />
+              <stop
+                offset="95%"
+                stopColor="var(--color-blue420)"
+                stopOpacity={0}
+              />
             </linearGradient>
           </defs>
           <XAxis
@@ -96,20 +88,19 @@ const AreaGraph = ({
               return label;
             }}
           />
-
           <YAxis axisLine={false} tick={false} tickLine={false} />
           <Tooltip />
           <Line
             type="monotone"
             dataKey="value"
-            stroke="#007BFF"
+            stroke="var(--color-blue420)"
             strokeWidth={2}
             dot={false}
           />
           <Area
             type="monotone"
             dataKey="value"
-            stroke="#007BFF"
+            stroke="var(--color-blue420)"
             fill="url(#colorRevenue)"
           />
         </AreaChart>

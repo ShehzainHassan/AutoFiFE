@@ -4,8 +4,8 @@ export default function About() {
     <div className={classes.container}>
       <div className={classes.top}>
         <h1>
-          &quot;BoxAssistant&quot; - AI-powered Assistance to Handle your
-          queries
+          &quot;<span className={classes.boxTitle}>BoxAssistant</span>&quot; -
+          AI-powered Assistance to Handle your queries
         </h1>
         <p>
           <span>BoxCars</span> is a car finance web app that utilizes AI to

@@ -24,17 +24,8 @@ export default function BarGraph({ data, viewReport }: BarGraphProps) {
       const value = item.payload.value;
 
       return (
-        <div
-          style={{
-            background: "var(--color-white100)",
-            padding: "6px 10px",
-            borderRadius: "6px",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-            pointerEvents: "none",
-            whiteSpace: "nowrap",
-            zIndex: 1000,
-          }}>
-          <p style={{ margin: 0 }}>{`${category}: ${value}`}</p>
+        <div className={classes.tooltip} role="tooltip">
+          <p>{`${category}: ${value}`}</p>
         </div>
       );
     }
@@ -54,7 +45,7 @@ export default function BarGraph({ data, viewReport }: BarGraphProps) {
         </p>
       </div>
 
-      <ResponsiveContainer width="100%" height={300} className={classes.chart}>
+      <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
           <CartesianGrid vertical={false} horizontal={false} />
           <XAxis dataKey="category" axisLine={false} tickLine={false} />

@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100%;
   background-color: var(--color-white100);
+  justify-content: space-between;
 }
 .header {
   display: flex;
@@ -33,7 +34,7 @@
   justify-content: center;
   width: 60px;
   height: 50px;
-  background-color: var(--color-purple600);
+  background-color: var(--color-purple400);
   border-radius: 50%;
 }
 .yourConversations {
@@ -45,68 +46,68 @@
   border-bottom: 1px solid var(--color-gray400);
   margin-top: 20px;
 }
-.recentConversationsContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 30px;
-}
-.recentConversationInfo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  padding: 15px;
-}
-.recentConversations {
-  display: grid;
-  align-items: center;
-  grid-template-columns: 8fr 3fr;
-}
-.recentConversations:hover {
-  background-color: var(--color-blue50);
-  cursor: pointer;
-  border-radius: 57px;
-}
-.modify {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color: var(--color-blue220);
-  height: 100%;
-  border-top-left-radius: 57px;
-  border-bottom-left-radius: 57px;
-  padding: 15px;
-}
+
 .text {
   font-size: small;
 }
-.truncateTitle {
-  max-width: 160px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.newChat {
+  background: linear-gradient(to right, #459aff, #6054ff) !important;
 }
-.modifyContainer {
+.clearBtn {
+  cursor: pointer;
+  color: var(--color-purple500);
+}
+.bottomContainer {
   display: flex;
-  position: relative;
+  flex-direction: column;
+  gap: 14px;
+  padding: 30px;
+  cursor: pointer;
 }
-.rounded {
-  position: absolute;
-  right: -30px;
-  background-color: var(--color-white100);
-  width: 40px;
-  height: 100%;
-  border-top-left-radius: 40px;
-  border-bottom-left-radius: 40px;
+.settingsContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid var(--color-gray400);
+  padding: 8px;
+  border-radius: 25px;
+}
+.settings {
+  display: flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-blue110);
+  border-radius: 50%;
+}
+.settingsContainer:hover {
+  background-color: var(--color-gray200);
+}
+.nameContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid var(--color-gray400);
+  padding: 8px;
+  border-radius: 25px;
+}
+.nameContainer:hover {
+  background-color: var(--color-gray200);
 }
 
-.clearBtn {
-  color: var(--color-blue400);
+.name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.selected {
-  background-color: var(--color-blue50);
-  border-top-left-radius: 57px;
-  border-bottom-left-radius: 57px;
-  color: var(--color-blue550);
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: var(--color-purple300);
 }

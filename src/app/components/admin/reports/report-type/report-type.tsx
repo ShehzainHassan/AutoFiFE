@@ -1,24 +1,49 @@
+"use client";
+
 import Image from "next/image";
-import { ReportTypeProps } from "./report-type.types";
+import React, { useCallback } from "react";
 import classes from "./report-type.module.css";
-export default function ReportType({
+import { ReportTypeProps } from "./report-type.types";
+
+const ReportType: React.FC<ReportTypeProps> = ({
   imageSrc,
   title,
   description,
   selected,
   onClick,
-}: ReportTypeProps) {
+}) => {
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        onClick();
+      }
+    },
+    [onClick]
+  );
+
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-pressed={selected}
+      onClick={onClick}
+      onKeyDown={handleKeyDown}
       className={`${classes.reportTypeContainer} ${
         selected ? classes.selected : ""
-      }`}
-      onClick={onClick}>
-      <Image src={imageSrc} alt="report-type" width={96} height={96} />
+      }`}>
+      <Image
+        src={imageSrc}
+        alt={`${title} report type`}
+        width={96}
+        height={96}
+      />
       <div className={classes.reportTypeText}>
         <h2>{title}</h2>
         <p className={classes.description}>{description}</p>
       </div>
     </div>
   );
-}
+};
+
+export default React.memo(ReportType);

@@ -2,9 +2,15 @@ import {
   AuctionTableData,
   ErrorLogItem,
   RecentDownloadsItem,
+  reportTypeOptions,
   RevenueTableData,
   UserTableData,
 } from "@/interfaces/analytics";
+
+import AuctionReport from "@/assets/images/general/auction-report.png";
+import DashboardSummary from "@/assets/images/general/dashboard-summary.png";
+import RevenueReport from "@/assets/images/general/revenue-report.png";
+import UserReport from "@/assets/images/general/user-report.png";
 
 export const auctionTableColumns: {
   key: keyof AuctionTableData;
@@ -78,4 +84,35 @@ export const errorLogsTableColumns: {
 
   { key: "errorCode", label: "Error Code" },
   { key: "message", label: "Message" },
+];
+
+export const reportTypeData = [
+  {
+    imageSrc: DashboardSummary,
+    title: "Dashboard Summary",
+    description:
+      "High level overview of key metrics and trends across all auctions.",
+    value: reportTypeOptions[0].value,
+  },
+  {
+    imageSrc: AuctionReport,
+    title: "Auction Report",
+    description:
+      "Detailed information about individual auctions, including bids, participants, and outcomes.",
+    value: reportTypeOptions[1].value,
+  },
+  {
+    imageSrc: UserReport,
+    title: "User Report",
+    description:
+      "Insights into user activity, engagement, and performance within the platform.",
+    value: reportTypeOptions[2].value,
+  },
+  {
+    imageSrc: RevenueReport,
+    title: "Revenue Report",
+    description:
+      "Analysis of revenue generated from auctions, including fees, commissions, and other sources.",
+    value: reportTypeOptions[3].value,
+  },
 ];

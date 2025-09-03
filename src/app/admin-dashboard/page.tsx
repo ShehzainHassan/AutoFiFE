@@ -17,6 +17,7 @@ import Reports from "../components/admin/reports/reports";
 
 import classes from "./page.module.css";
 import { reportTypeOptions } from "@/interfaces/analytics";
+import NeedHelp from "../components/box-assistant/need-help/need-help";
 
 const sidebarItems = [
   { label: "Auction Analytics", icon: AuctionAnalyticsIcon },
@@ -77,6 +78,7 @@ export default function AdminDashboard() {
         />
         <div className={classes.mainContent}>{SelectedComponent}</div>
       </div>
+      <NeedHelp />
       <Footer />
     </div>
   );

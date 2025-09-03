@@ -1,0 +1,32 @@
+.container {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 154px;
+  height: 150px;
+  border-radius: 120px;
+  background-color: var(--color-purple200);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.subContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  font-family: Inter, sans-serif;
+  max-width: 100px;
+  width: 100%;
+}

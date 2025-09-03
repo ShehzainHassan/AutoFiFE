@@ -11,14 +11,15 @@ import {
   MaritalStatus,
 } from "@/app/components";
 import ErrorMessage from "@/app/components/error-message/error-message";
-import Footer from '@/app/components/Footer-Component';
-import NavbarContainer from '@/app/components/navbar';
+import Footer from "@/app/components/Footer-Component";
+import NavbarContainer from "@/app/components/navbar";
 import useVehiclesById from "@/hooks/useVehicleById";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import classes from "./page.module.css";
 import { maritalStatusOptions } from "@/constants/marital-status-options";
 import { employmentStatusOptions } from "@/constants/employment-status-options";
+import NeedHelp from "@/app/components/box-assistant/need-help/need-help";
 export default function FinancePage() {
   const params = useParams();
   const idParam = params.id;
@@ -82,6 +83,7 @@ export default function FinancePage() {
         )}
         {step === 7 && <ContactInfo id={vehicle.id} />}
       </div>
+      <NeedHelp />
       <Footer />
     </div>
   );

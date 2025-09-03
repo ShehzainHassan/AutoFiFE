@@ -1,5 +1,5 @@
-import { Input } from "../../input-field";
 import { useContactFormContext } from "../../../../contexts/contact-form-context/contact-form-context";
+import Input from "../../input-field";
 import classes from "../contact-info-form.module.css";
 
 const InputPhone = () => {

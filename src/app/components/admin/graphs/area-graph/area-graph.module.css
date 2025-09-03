@@ -1,0 +1,21 @@
+.container {
+  margin-top: 32px;
+  width: 100%;
+  background-color: var(--color-white100);
+  border: 2px solid var(--color-gray540);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: var(--color-black100);
+}

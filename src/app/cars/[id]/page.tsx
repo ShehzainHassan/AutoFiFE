@@ -2,8 +2,8 @@
 import { Loading, VehicleImageGallery } from "@/app/components";
 import ContactFormContainer from "@/app/components/contact-info-form/contact-form-container";
 import EmptyState from "@/app/components/empty-state/empty-state";
-import Footer from '@/app/components/Footer-Component';
-import NavbarContainer from '@/app/components/navbar';
+import Footer from "@/app/components/Footer-Component";
+import NavbarContainer from "@/app/components/navbar";
 import { ContactFormProvider } from "@/contexts/contact-form-context/contact-form-context";
 import useVehiclesById from "@/hooks/useVehicleById";
 import useVehicleFeatures from "@/hooks/useVehicleFeatures";
@@ -12,6 +12,7 @@ import { lazy, Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./page.module.css";
+import NeedHelp from "@/app/components/box-assistant/need-help/need-help";
 
 const VehicleFeatures = lazy(
   () => import("@/app/components/vehicle-features/vehicle-features")
@@ -74,6 +75,7 @@ export default function CarDetails() {
       </div>
 
       <ToastContainer />
+      <NeedHelp />
       <Footer />
     </>
   );

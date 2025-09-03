@@ -1,32 +1,31 @@
-import AuctionReport from "@/assets/images/general/auction-report.png";
-import DashboardSummary from "@/assets/images/general/dashboard-summary.png";
-import RevenueReport from "@/assets/images/general/revenue-report.png";
-import UserReport from "@/assets/images/general/user-report.png";
+"use client";
+import auctionAPI from "@/api/auctionAPI";
+import userAPI from "@/api/userAPI";
 import {
   periodOptions,
   recentDownloadsTableColumns,
+  reportTypeData,
 } from "@/constants/analytics";
 import {
   BLUE_THEME,
   SELECTED_FORMAT,
   WHITE_WITH_BORDER,
 } from "@/constants/button-primary-themes";
-import { ThemeProvider } from "@/theme/themeContext";
-import { useEffect, useState } from "react";
-import ButtonPrimary from "../../buttons/button-primary";
-import Dropdown from "../../dropdown";
-import TitleContainer from "../title-container/title-container";
-import ReportType from "./report-type/report-type";
-import classes from "./reports.module.css";
-import { ReportProps } from "./report.types";
-import { RecentDownloadsItem, reportTypeOptions } from "@/interfaces/analytics";
-import { getReportName, getStartEndDates } from "@/utilities/utilities";
 import useExportReport from "@/hooks/useExportReport";
 import useRecentDownloads from "@/hooks/useRecentDownloads";
+import { RecentDownloadsItem, reportTypeOptions } from "@/interfaces/analytics";
+import { ThemeProvider } from "@/theme/themeContext";
+import { getReportName, getStartEndDates } from "@/utilities/utilities";
+import { useCallback, useEffect, useState } from "react";
+import ButtonPrimary from "../../buttons/button-primary";
+import Dropdown from "../../dropdown";
 import Loading from "../../loading";
 import AnalyticsTable from "../table/table";
-import auctionAPI from "@/api/auctionAPI";
-import userAPI from "@/api/userAPI";
+import TitleContainer from "../title-container/title-container";
+import ReportType from "./report-type/report-type";
+import { ReportProps } from "./report.types";
+import classes from "./reports.module.css";
+
 export default function Reports({ selected }: ReportProps) {
   const [period, setPeriod] = useState(periodOptions[0].value);
   const [selectedReport, setSelectedReport] = useState(
@@ -35,17 +34,18 @@ export default function Reports({ selected }: ReportProps) {
   const [dates, setDates] = useState({ startDate: "", endDate: "" });
   const [selectedFormat, setSelectedFormat] = useState("CSV");
   const { mutate, isPending } = useExportReport();
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useRecentDownloads();
 
-  const handleExport = () => {
+  const handleExport = useCallback(() => {
     mutate({
       reportType: selectedReport,
       startDate: dates.startDate,
       endDate: dates.endDate,
       format: selectedFormat,
     });
-  };
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useRecentDownloads();
+  }, [mutate, selectedReport, dates, selectedFormat]);
+
   useEffect(() => {
     (async () => {
       const auctionOldestDate = new Date(
@@ -54,7 +54,6 @@ export default function Reports({ selected }: ReportProps) {
       const userOldestDate = new Date(await userAPI.getOldestUserDate());
 
       let reportParam: "user" | "revenue";
-
       if (
         selectedReport === reportTypeOptions[1].value ||
         selectedReport === reportTypeOptions[3].value
@@ -73,6 +72,7 @@ export default function Reports({ selected }: ReportProps) {
       setDates({ startDate, endDate });
     })();
   }, [period, selectedReport]);
+
   const transformedData =
     data?.pages.flatMap((page) =>
       page.items.map((item) => ({
@@ -80,43 +80,28 @@ export default function Reports({ selected }: ReportProps) {
         reportType: getReportName(Number(item.reportType)),
       }))
     ) ?? [];
+
   return (
     <div className={classes.container}>
       <TitleContainer
         title="Analytics Reports"
         subTitle="Export data from the BoxCars platform with ease."
       />
+
       <h3>1. Select Report Type</h3>
       <div className={classes.reportTypesContainer}>
-        <ReportType
-          imageSrc={DashboardSummary}
-          title="Dashboard Summary"
-          description="High level overview of key metrics and trends across all auctions."
-          selected={selectedReport === reportTypeOptions[0].value}
-          onClick={() => setSelectedReport(reportTypeOptions[0].value)}
-        />
-        <ReportType
-          imageSrc={AuctionReport}
-          title="Auction Report"
-          description="Detailed information about individual auctions, including bids, participants, and outcomes."
-          selected={selectedReport === reportTypeOptions[1].value}
-          onClick={() => setSelectedReport(reportTypeOptions[1].value)}
-        />
-        <ReportType
-          imageSrc={UserReport}
-          title="User Report"
-          description="Insights into user activity, engagement, and performance within the platform."
-          selected={selectedReport === reportTypeOptions[2].value}
-          onClick={() => setSelectedReport(reportTypeOptions[2].value)}
-        />
-        <ReportType
-          imageSrc={RevenueReport}
-          title="Revenue Report"
-          description="Analysis of revenue generated from auctions, including fees, commissions, and other sources."
-          selected={selectedReport === reportTypeOptions[3].value}
-          onClick={() => setSelectedReport(reportTypeOptions[3].value)}
-        />
+        {reportTypeData.map(({ imageSrc, title, description, value }) => (
+          <ReportType
+            key={value}
+            imageSrc={imageSrc}
+            title={title}
+            description={description}
+            selected={selectedReport === value}
+            onClick={() => setSelectedReport(value)}
+          />
+        ))}
       </div>
+
       <div className={classes.exportContainer}>
         <h3>2. Configure Export Options</h3>
         <div className={classes.exportContainerInner}>
@@ -127,54 +112,51 @@ export default function Reports({ selected }: ReportProps) {
                 <Dropdown.Select options={periodOptions} />
               </Dropdown>
             </div>
+
             <div className={classes.format}>
               <p>Format</p>
               <div className={classes.buttons}>
-                <ThemeProvider
-                  value={
-                    selectedFormat === "CSV"
-                      ? SELECTED_FORMAT
-                      : WHITE_WITH_BORDER
-                  }>
-                  <ButtonPrimary
-                    onClick={() => setSelectedFormat("CSV")}
-                    btnText="CSV"
-                  />
-                </ThemeProvider>
-
-                <ThemeProvider
-                  value={
-                    selectedFormat === "PDF"
-                      ? SELECTED_FORMAT
-                      : WHITE_WITH_BORDER
-                  }>
-                  <ButtonPrimary
-                    onClick={() => setSelectedFormat("PDF")}
-                    btnText="PDF"
-                  />
-                </ThemeProvider>
+                {["CSV", "PDF"].map((format) => (
+                  <ThemeProvider
+                    key={format}
+                    value={
+                      selectedFormat === format
+                        ? SELECTED_FORMAT
+                        : WHITE_WITH_BORDER
+                    }>
+                    <ButtonPrimary
+                      onClick={() => setSelectedFormat(format)}
+                      btnText={format}
+                      aria-label={`Select ${format} format`}
+                    />
+                  </ThemeProvider>
+                ))}
               </div>
             </div>
           </div>
+
           <div className={classes.border} />
+
           <ThemeProvider value={BLUE_THEME}>
             <ButtonPrimary
               className={classes.exportReport}
               btnText="Export Report"
               onClick={handleExport}
               isDisabled={isPending}
+              aria-label="Export selected report"
             />
           </ThemeProvider>
         </div>
       </div>
+
       {isLoading ? (
-        <div>
+        <div role="status" aria-live="polite">
           <Loading />
         </div>
       ) : (
         <AnalyticsTable<RecentDownloadsItem>
           columns={recentDownloadsTableColumns}
-          data={transformedData ?? []}
+          data={transformedData}
           onScrollEnd={() => {
             if (hasNextPage && !isFetchingNextPage) {
               fetchNextPage();

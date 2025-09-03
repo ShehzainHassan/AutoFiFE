@@ -10,6 +10,7 @@ import { DM_Sans, Inter, Roboto } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import { SignalRProvider } from "@/contexts/signalR-context";
+import { SessionProvider } from "@/contexts/session-context";
 const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
@@ -50,10 +51,12 @@ export default function RootLayout({
                   <QuestionnaireProvider>
                     <PanelProvider>
                       <SignalRProvider>
-                        <body
-                          className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
-                          {children}
-                        </body>
+                        <SessionProvider>
+                          <body
+                            className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
+                            {children}
+                          </body>
+                        </SessionProvider>
                       </SignalRProvider>
                     </PanelProvider>
                   </QuestionnaireProvider>
