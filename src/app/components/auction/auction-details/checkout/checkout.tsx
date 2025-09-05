@@ -1,8 +1,12 @@
 "use client";
 import apiClient from "@/api/apiClient";
-import { AuctionDetailsHeader, ButtonPrimary, Loading } from "@/app/components";
+import {
+  AuctionDetailsHeader,
+  ButtonPrimary,
+  Loading,
+  AuctionNotificationSettings,
+} from "@/app/components";
 import { IOSSwitch } from "@/app/components/buttons/toggle-button/toggle-button";
-import { Input } from "@/app/components/input-field";
 import CarImage from "@/app/components/result-card/car-image/car-image";
 import { CURRENCY } from "@/constants";
 import { usePanel } from "@/contexts/panel-context/panel-context";
@@ -12,7 +16,6 @@ import { ThemeProvider } from "@/theme/themeContext";
 import { trackError } from "@/utilities/error-tracking";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import AuctionNotificationSettings from "../notifications/notification";
 import SavedVehicles from "../saved-vehicles/saved-vehicles";
 import StatItem from "../stat-item/stat-item";
 import TextContainer from "../text-container/text-container";
@@ -22,6 +25,7 @@ import useAuctionById from "@/hooks/useAuctionById";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
 import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import useTrackPayment from "@/hooks/useTrackPayment";
+import Input from "@/app/components/input-field";
 
 export default function AuctionCheckout() {
   const { panel } = usePanel();

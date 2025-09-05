@@ -2,10 +2,8 @@
 import {
   AuctionStats,
   AuctionTimer,
-  AutoBidContainer,
   Loading,
-  ManualBidContainer,
-  MyAuctionStats,
+  YourStats,
 } from "@/app/components";
 import { CURRENCY } from "@/constants";
 import useAuctionById from "@/hooks/useAuctionById";
@@ -17,6 +15,8 @@ import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import classes from "./auction-info-panel.module.css";
 import { AuctionInfoPanelProps } from "./auction-info-panel.types";
+import AutoBid from "./auto-bid-container";
+import { ManualBid } from "./manual-bid-container";
 export default function AuctionInfoPanel({
   vehiclePrice,
 }: AuctionInfoPanelProps) {
@@ -98,12 +98,12 @@ export default function AuctionInfoPanel({
         </div>
 
         {bidType === "Manual" ? (
-          <ManualBidContainer
+          <ManualBid
             currentBid={auction.currentPrice}
             startingPrice={auction.startingPrice}
           />
         ) : (
-          <AutoBidContainer
+          <AutoBid
             auctionId={id}
             currentBid={auction.currentPrice}
             startingPrice={auction.startingPrice}
@@ -131,7 +131,7 @@ export default function AuctionInfoPanel({
       {renderAuctionResult()}
       {renderBidSection()}
 
-      <MyAuctionStats />
+      <YourStats />
       <ToastContainer />
     </div>
   );

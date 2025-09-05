@@ -1,1 +1,1 @@
-export { default } from "./manual-bid-container";
+export { default as ManualBid } from "./manual-bid";

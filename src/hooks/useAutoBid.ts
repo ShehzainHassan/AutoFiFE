@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import useIsAutoBidSet from "@/hooks/useIsAutoBidSet";
 import usePlaceAutoBid from "@/hooks/usePlaceAutoBid";
 import useUpdateAutoBid from "@/hooks/useUpdateAutoBid";
@@ -11,15 +12,12 @@ import {
   formatBidTimingReverse,
   getUserIdFromLocalStorage,
 } from "@/utilities/utilities";
-import { useEffect, useState } from "react";
-import { AutoBidTypeProps } from "../auction-info-panel.types";
-import AutoPlaceBidView from "./auto-bid-view";
 
-export default function AutoPlaceBidContainer({
-  auctionId,
-  startingPrice,
-  currentBid,
-}: AutoBidTypeProps) {
+export function useAutoBid(
+  auctionId: number,
+  startingPrice: number,
+  currentBid: number
+) {
   const [maxBidAmount, setMaxBidAmount] = useState("");
   const [biddingStrategy, setBiddingStrategy] = useState("");
   const [timingPreference, setTimingPreference] = useState("");
@@ -82,30 +80,27 @@ export default function AutoPlaceBidContainer({
   const isDisabled =
     placing || updating || !maxBidAmount || Number(maxBidAmount) <= 0;
 
-  if (!authData) return <p>Please sign in to set autobid</p>;
-  return (
-    <AutoPlaceBidView
-      maxBidAmount={maxBidAmount}
-      biddingStrategy={biddingStrategy}
-      timingPreference={timingPreference}
-      bidDelaySeconds={bidDelaySeconds}
-      maxBidsPerMinute={maxBidsPerMinute}
-      totalBids={totalBids}
-      isActive={isActive}
-      startingPrice={startingPrice}
-      currentBid={currentBid}
-      isAutoBidSet={isAutoBidSet}
-      authData={authData}
-      isLoading={isAutoBidLoading || userAutoBidLoading}
-      isDisabled={isDisabled}
-      onInputChange={(e) => setMaxBidAmount(e.target.value)}
-      onStrategyChange={setBiddingStrategy}
-      onTimingChange={setTimingPreference}
-      onBidDelayChange={setBidDelaySeconds}
-      onMaxBidsChange={setMaxBidsPerMinute}
-      onTotalBidsChange={setTotalBids}
-      onStatusChange={setIsActive}
-      onSubmit={handleSubmit}
-    />
-  );
+  return {
+    maxBidAmount,
+    biddingStrategy,
+    timingPreference,
+    bidDelaySeconds,
+    maxBidsPerMinute,
+    totalBids,
+    isActive,
+    authData,
+    isAutoBidSet,
+    isLoading: isAutoBidLoading || userAutoBidLoading,
+    isDisabled,
+    startingPrice,
+    currentBid,
+    setMaxBidAmount,
+    setBiddingStrategy,
+    setTimingPreference,
+    setBidDelaySeconds,
+    setMaxBidsPerMinute,
+    setTotalBids,
+    setIsActive,
+    handleSubmit,
+  };
 }

@@ -8,6 +8,8 @@ import {
   ErrorMessage,
   VerticalCarousel,
 } from "@/app/components";
+import { Profiler } from "react";
+import { trackRender } from "@/utilities/performance-tracking";
 export default function AllVehiclesSwiper({
   vehicleStatus,
 }: AllVehicleSwiperProps) {
@@ -26,18 +28,20 @@ export default function AllVehiclesSwiper({
   const allVehicles = data.pages.flatMap((page) => page.vehicles) || [];
 
   return (
-    <VerticalCarousel
-      vehicleListResult={{
-        vehicles: allVehicles,
-        totalCount: data.pages[0].totalCount || 0,
-        gearboxCounts: data.pages[0].gearboxCounts || [],
-        colorCounts: data.pages[0].colorCounts || [],
-      }}
-      onReachEnd={() => {
-        if (hasNextPage) {
-          fetchNextPage();
-        }
-      }}
-    />
+    <Profiler id="VerticalCarousel" onRender={trackRender}>
+      <VerticalCarousel
+        vehicleListResult={{
+          vehicles: allVehicles,
+          totalCount: data.pages[0].totalCount || 0,
+          gearboxCounts: data.pages[0].gearboxCounts || [],
+          colorCounts: data.pages[0].colorCounts || [],
+        }}
+        onReachEnd={() => {
+          if (hasNextPage) {
+            fetchNextPage();
+          }
+        }}
+      />
+    </Profiler>
   );
 }

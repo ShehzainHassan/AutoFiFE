@@ -2,9 +2,8 @@
 
 import { useSession } from "@/contexts/session-context";
 import useGetUserSessionTitles from "@/hooks/useGetUserSessionTitles";
-import { Footer, Navbar } from "../components";
+import { ChatMessages, Footer, Navbar } from "../components";
 import About from "../components/box-assistant/about/about";
-import ChatMessages from "../components/box-assistant/chat-messages/chat-messages";
 import InputQuery from "../components/box-assistant/input-query/input-query";
 import Sidebar from "../components/box-assistant/sidebar/sidebar";
 import classes from "./page.module.css";

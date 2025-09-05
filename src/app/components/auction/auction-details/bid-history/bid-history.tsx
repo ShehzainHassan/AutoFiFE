@@ -1,14 +1,13 @@
-"use client";
-
 import ErrorMessage from "@/app/components/error-message";
-import Loading from "@/app/components/loading";
 import useBidHistory from "@/hooks/useBidHistory";
 import { useUsersMap } from "@/hooks/useUserMap";
-import { useMemo } from "react";
-import BidHistoryView from "./bid-history-view";
+import { Profiler, useMemo } from "react";
+import classes from "./bid-history.module.css";
 import { BidHistoryProps } from "./bid-history.types";
-
-export default function BidHistoryContainer({ auctionId }: BidHistoryProps) {
+import { BidHistoryTable, Loading } from "@/app/components";
+import { ErrorBoundary } from "@sentry/nextjs";
+import { trackRender } from "@/utilities/performance-tracking";
+export default function BidHistory({ auctionId }: BidHistoryProps) {
   const { data: bids, isError, error, isLoading } = useBidHistory(auctionId);
   const userIds = useMemo(
     () => [...new Set((bids ?? []).map((b) => b.userId))],
@@ -26,6 +25,14 @@ export default function BidHistoryContainer({ auctionId }: BidHistoryProps) {
   if (usersError)
     return <ErrorMessage message={usersErr?.message ?? "Error"} />;
   if (!bids || bids.length === 0) return null;
-
-  return <BidHistoryView bids={bids} userMap={userMap} />;
+  return (
+    <ErrorBoundary fallback={<div>Failed to load Bid History</div>}>
+      <Profiler id="BidHistory" onRender={trackRender}>
+        <div className={classes.container}>
+          <h2>Bid History</h2>
+          <BidHistoryTable bids={bids} userMap={userMap} />
+        </div>
+      </Profiler>
+    </ErrorBoundary>
+  );
 }

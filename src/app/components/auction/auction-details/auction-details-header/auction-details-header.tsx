@@ -1,96 +1,163 @@
 "use client";
+import React, { useCallback, useMemo, Profiler } from "react";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { ErrorBoundary } from "@sentry/nextjs";
+import { trackRender } from "@/utilities/performance-tracking";
+import { usePanel } from "@/contexts/panel-context/panel-context";
+import useGetUnreadCount from "@/hooks/useGetUnreadCount";
+import classes from "./auction-details-header.module.css";
+
 import AuctionIcon from "@/assets/images/icons/auction.png";
 import NotificationBell from "@/assets/images/icons/notification.png";
 import ProfilePic from "@/assets/images/icons/profile-pic.png";
-import { ThemeProvider } from "@/theme/themeContext";
-import Image from "next/image";
-import { AuctionSearchField } from "@/app/components";
-import TextContainer from "../text-container/text-container";
-import classes from "./auction-details-header.module.css";
-import { usePanel } from "@/contexts/panel-context/panel-context";
-import { useRouter } from "next/navigation";
-import useGetUnreadCount from "@/hooks/useGetUnreadCount";
+
+const AuctionSearchField = dynamic(
+  () => import("@/app/components/auction/auction-search-field")
+);
+const TextContainer = dynamic(() => import("../text-container/text-container"));
+const Image = dynamic(() => import("next/image"));
+const ThemeProvider = dynamic(() =>
+  import("@/theme/themeContext").then((mod) => mod.ThemeProvider)
+);
 
 export default function AuctionDetailsHeader() {
   const { panel, togglePanel } = usePanel();
-  const authData = localStorage.getItem("authData");
   const router = useRouter();
-  const redictToAuction = () => {
-    router.push("/auction");
-  };
+
+  const authData = useMemo(() => {
+    try {
+      return JSON.parse(localStorage.getItem("authData") || "{}");
+    } catch {
+      return {};
+    }
+  }, []);
+
   const { data: notificationCount, isLoading } = useGetUnreadCount(!!authData);
+
+  const handleRedirectToAuction = useCallback(() => {
+    router.push("/auction");
+  }, [router]);
+
+  const handleTogglePanel = useCallback(
+    (panelType: "watchlist" | "notification") => {
+      togglePanel(panelType);
+    },
+    [togglePanel]
+  );
+
   return (
-    <div
-      className={[
-        classes.container,
-        panel !== "none" && classes.column,
-        panel !== "none" && classes.panelOpen,
-      ]
-        .filter(Boolean)
-        .join(" ")}>
-      <div className={classes.topBar}>
-        <div>
-          <div className={classes.tabs}>
-            <div className={classes.tabMain} onClick={redictToAuction}>
-              <Image
-                src={AuctionIcon}
-                alt="auction-icon"
-                width={16}
-                height={16}
-                placeholder="blur"
-                loading="lazy"
-              />
-              <h3>Auction</h3>
+    <ErrorBoundary fallback={<div>Failed to load Auction Details Header</div>}>
+      <Profiler id="AuctionDetailsHeader" onRender={trackRender}>
+        <div
+          className={[
+            classes.container,
+            panel !== "none" && classes.column,
+            panel !== "none" && classes.panelOpen,
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          role="region"
+          aria-label="Auction header navigation">
+          <div className={classes.topBar}>
+            <div>
+              <div className={classes.tabs}>
+                <div
+                  className={classes.tabMain}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Go to Auction"
+                  onClick={handleRedirectToAuction}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ")
+                      handleRedirectToAuction();
+                  }}>
+                  <Image
+                    src={AuctionIcon}
+                    alt="Auction icon"
+                    width={16}
+                    height={16}
+                    placeholder="blur"
+                    loading="lazy"
+                  />
+                  <h3>Auction</h3>
+                </div>
+
+                <div className={classes.tabItems}>
+                  {["Buy", "Sell", "Finance", "How it works"].map((label) => (
+                    <p
+                      key={label}
+                      className={classes.tabItem}
+                      role="link"
+                      tabIndex={0}>
+                      {label}
+                    </p>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className={classes.tabItems}>
-              <p className={classes.tabItem}>Buy</p>
-              <p className={classes.tabItem}>Sell</p>
-              <p className={classes.tabItem}>Finance</p>
-              <p className={classes.tabItem}>How it works</p>
+
+            <div className={classes.inputContainer}>
+              <AuctionSearchField />
+
+              <div className={classes.notificationContainer}>
+                <ThemeProvider>
+                  <TextContainer
+                    value="Watchlist"
+                    className={`${classes.textContainer} ${
+                      panel === "watchlist" ? classes.selected : ""
+                    }`}
+                    onClick={() => handleTogglePanel("watchlist")}
+                    aria-label="Open Watchlist panel"
+                  />
+                </ThemeProvider>
+
+                <div
+                  className={`${classes.notification} ${
+                    panel === "notification" ? classes.selected : ""
+                  }`}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Open Notifications panel"
+                  onClick={() => handleTogglePanel("notification")}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ")
+                      handleTogglePanel("notification");
+                  }}>
+                  <Image
+                    src={NotificationBell}
+                    alt="Notification bell"
+                    width={20}
+                    height={20}
+                  />
+                  {!isLoading &&
+                    typeof notificationCount === "number" &&
+                    notificationCount > 0 && (
+                      <p
+                        className={classes.notificationCount}
+                        role="status"
+                        aria-live="polite">
+                        {notificationCount}
+                      </p>
+                    )}
+                </div>
+              </div>
+
+              <div
+                className={`${classes.notification} ${classes.profilePic}`}
+                role="img"
+                aria-label="User profile picture">
+                <Image
+                  src={ProfilePic}
+                  alt="Profile picture"
+                  width={40}
+                  height={40}
+                />
+              </div>
             </div>
           </div>
         </div>
-
-        <div className={classes.inputContainer}>
-          <AuctionSearchField />
-
-          <div className={classes.notificationContainer}>
-            <ThemeProvider>
-              <TextContainer
-                value="Watchlist"
-                className={`${classes.textContainer} ${
-                  panel === "watchlist" ? classes.selected : ""
-                } `}
-                onClick={() => togglePanel("watchlist")}
-              />
-            </ThemeProvider>
-
-            <div
-              className={`${classes.notification} ${
-                panel === "notification" ? classes.selected : ""
-              }`}
-              onClick={() => togglePanel("notification")}>
-              <Image
-                src={NotificationBell}
-                alt="Notification"
-                width={20}
-                height={20}
-              />
-              {!isLoading &&
-                typeof notificationCount === "number" &&
-                notificationCount > 0 && (
-                  <p className={classes.notificationCount}>
-                    {notificationCount}
-                  </p>
-                )}
-            </div>
-          </div>
-
-          <div className={`${classes.notification} ${classes.profilePic}`}>
-            <Image src={ProfilePic} alt="profile-pic" width={40} height={40} />
-          </div>
-        </div>
-      </div>
-    </div>
+      </Profiler>
+    </ErrorBoundary>
   );
 }

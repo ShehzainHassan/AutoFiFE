@@ -11,6 +11,8 @@ import { Suspense } from "react";
 import "./globals.css";
 import { SignalRProvider } from "@/contexts/signalR-context";
 import { SessionProvider } from "@/contexts/session-context";
+import { ErrorBoundary } from "@sentry/nextjs";
+import { ErrorMessage } from "./components";
 const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
@@ -43,28 +45,31 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Suspense>
-        <CarSearchProvider>
-          <ThemeProvider>
-            <ReactQueryProvider>
-              <AuthProvider>
-                <UserFavoritesProvider>
-                  <QuestionnaireProvider>
-                    <PanelProvider>
-                      <SignalRProvider>
-                        <SessionProvider>
-                          <body
-                            className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
-                            {children}
-                          </body>
-                        </SessionProvider>
-                      </SignalRProvider>
-                    </PanelProvider>
-                  </QuestionnaireProvider>
-                </UserFavoritesProvider>
-              </AuthProvider>
-            </ReactQueryProvider>
-          </ThemeProvider>
-        </CarSearchProvider>
+        <ErrorBoundary
+          fallback={<ErrorMessage message="An unexpected error occurred" />}>
+          <CarSearchProvider>
+            <ThemeProvider>
+              <ReactQueryProvider>
+                <AuthProvider>
+                  <UserFavoritesProvider>
+                    <QuestionnaireProvider>
+                      <PanelProvider>
+                        <SignalRProvider>
+                          <SessionProvider>
+                            <body
+                              className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
+                              {children}
+                            </body>
+                          </SessionProvider>
+                        </SignalRProvider>
+                      </PanelProvider>
+                    </QuestionnaireProvider>
+                  </UserFavoritesProvider>
+                </AuthProvider>
+              </ReactQueryProvider>
+            </ThemeProvider>
+          </CarSearchProvider>
+        </ErrorBoundary>
       </Suspense>
     </html>
   );

@@ -1,18 +1,12 @@
 "use client";
 
-import Loading from "@/app/components/loading";
+import { useState } from "react";
+import { useParams } from "next/navigation";
 import useHighestBidderId from "@/hooks/useGetHighestBidderId";
 import usePlaceBid from "@/hooks/usePlaceBid";
 import { getUserIdFromLocalStorage } from "@/utilities/utilities";
-import { useParams } from "next/navigation";
-import { useState } from "react";
-import ManualBidView from "./manual-bid-view";
-import { ManualBidProps } from "./manual-bid.types";
 
-export default function ManualBidContainer({
-  startingPrice,
-  currentBid,
-}: ManualBidProps) {
+export function useManualBid() {
   const [bid, setBid] = useState("");
   const authData = localStorage.getItem("authData") ?? "";
   const userId = getUserIdFromLocalStorage() ?? -1;
@@ -42,21 +36,16 @@ export default function ManualBidContainer({
     setBid((current + amount).toString());
   };
 
-  if (isLoading) return <Loading />;
-
-  return (
-    <ManualBidView
-      bid={bid}
-      setBid={setBid}
-      authData={authData}
-      currentBid={currentBid}
-      startingPrice={startingPrice}
-      highestId={highestId}
-      userId={userId}
-      isPending={isPending}
-      handleInputChange={handleInputChange}
-      handlePlaceBid={handlePlaceBid}
-      increaseBid={increaseBid}
-    />
-  );
+  return {
+    bid,
+    setBid,
+    authData,
+    highestId,
+    userId,
+    isPending,
+    isLoading,
+    handleInputChange,
+    handlePlaceBid,
+    increaseBid,
+  };
 }

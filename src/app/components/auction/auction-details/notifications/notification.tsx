@@ -1,17 +1,19 @@
 "use client";
 
-import ErrorMessage from "@/app/components/error-message";
+import { useState, useMemo } from "react";
 import HorizontalTabs from "@/app/components/horizontal-tabs/horizontal-tabs";
 import Loading from "@/app/components/loading";
 import usePaginatedNotifications from "@/hooks/useGetUserNotifications";
 import useMarkAsRead from "@/hooks/useMarkAsRead";
-import { useState } from "react";
-import NotificationContainer from "./notification-container/notification-container";
 import classes from "./notification.module.css";
-import UserNotifications from "./user-notifications";
+import {
+  ErrorMessage,
+  NotificationContainer,
+  UserNotifications,
+} from "@/app/components";
 
 export default function AuctionNotificationSettings() {
-  const tabs = ["Notifications", "Notification Settings"];
+  const tabs = useMemo(() => ["Notifications", "Notification Settings"], []);
   const [selected, setSelected] = useState(tabs[0]);
 
   const {
@@ -26,7 +28,11 @@ export default function AuctionNotificationSettings() {
 
   const { mutate: markAsRead } = useMarkAsRead();
 
-  const notifications = data?.pages.flatMap((page) => page.items) ?? [];
+  const notifications = useMemo(() => {
+    return data?.pages.flatMap((page) => page.items) ?? [];
+  }, [data]);
+
+  const handleTabChange = (tab: string) => setSelected(tab);
 
   return (
     <div className={classes.container}>
@@ -35,14 +41,16 @@ export default function AuctionNotificationSettings() {
         <HorizontalTabs
           selectedTab={selected}
           tabs={tabs}
-          onTabChange={setSelected}
+          onTabChange={handleTabChange}
         />
       </div>
 
       <div
         className={`${classes.notificationSettingsContainer} ${
           selected === tabs[0] ? classes.userNotifs : ""
-        }`}>
+        }`}
+        role="region"
+        aria-label={selected}>
         {selected === tabs[0] ? (
           isLoading ? (
             <Loading />

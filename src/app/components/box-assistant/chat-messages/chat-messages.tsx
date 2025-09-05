@@ -1,149 +1,108 @@
 "use client";
-
-import useSubmitFeedback from "@/hooks/useSubmitFeedback";
+import React, { memo } from "react";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import { useEffect, useState } from "react";
 import classes from "./chat-messages.module.css";
 import { ChatMessagesProps } from "./chat-messages.types";
+import { useChatMessagesContainer } from "@/hooks/useChatMessageContainer";
 
-export default function ChatMessages({ messages }: ChatMessagesProps) {
-  const [votes, setVotes] = useState<Record<number, "up" | "down" | null>>({});
-  const submitFeedback = useSubmitFeedback();
-  useEffect(() => {
-    const initialVotes: Record<number, "up" | "down" | null> = {};
-    messages.forEach((msg, index) => {
-      initialVotes[index] =
-        msg.feedback === 1 ? "up" : msg.feedback === 2 ? "down" : null;
-    });
-    setVotes(initialVotes);
-  }, [messages]);
-  const handleVote = (index: number, type: "up" | "down") => {
-    const currentVote = votes[index];
-    const newVote = currentVote === type ? null : type;
+function ChatMessages({ messages }: ChatMessagesProps) {
+  const { parsedMessages, handleVote, getVoteForIndex } =
+    useChatMessagesContainer(messages);
 
-    setVotes((prev) => ({ ...prev, [index]: newVote }));
+  const latestUserIndex = [...parsedMessages]
+    .reverse()
+    .findIndex((msg) => msg.sender === "User");
+  const actualLatestUserIndex =
+    latestUserIndex >= 0 ? parsedMessages.length - 1 - latestUserIndex : -1;
 
-    const voteMap = {
-      up: "UPVOTED",
-      down: "DOWNVOTED",
-      null: "NOTVOTED",
-    } as const;
-    const messageId = messages[index].id ?? -1;
-    const vote = newVote === null ? "NOTVOTED" : voteMap[newVote];
-    submitFeedback.mutate({ message_id: messageId, vote });
-  };
-
-  const renderMessageContent = (msg: ChatMessagesProps["messages"][number]) => {
-    const safeParse = (str: string) => {
-      try {
-        return JSON.parse(str);
-      } catch {
-        return null;
-      }
-    };
-
-    switch (msg.uiType) {
-      case "TEXT":
-        return <div>{msg.message}</div>;
-
-      case "TABLE": {
-        const data = safeParse(msg.message);
-        if (Array.isArray(data) && data.length > 0) {
-          const columns = Object.keys(data[0]);
-          return (
-            <table className={classes.table}>
-              <thead>
-                <tr>
-                  {columns.map((col) => (
-                    <th key={col}>{col}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((row, idx) => (
-                  <tr key={idx}>
-                    {columns.map((col) => (
-                      <td key={col}>{row[col]}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          );
-        }
-        return <div>{msg.message}</div>;
-      }
-
-      case "CARD_GRID": {
-        const data = safeParse(msg.message);
-        if (Array.isArray(data) && data.length > 0) {
-          return (
-            <div className={classes.cardGrid}>
-              {data.map((item, idx) => (
-                <div key={idx} className={classes.card}>
-                  {Object.entries(item).map(([key, value]) => (
-                    <div key={key}>
-                      <strong>{key}:</strong> {String(value)}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          );
-        }
-        return <div>{msg.message}</div>;
-      }
-
-      case "CALCULATOR":
-        return (
-          <div>
-            <strong>Calculation Result:</strong>
-            <pre>{msg.message}</pre>
-          </div>
-        );
-
-      case "CHART":
-        return (
-          <div>
-            <strong>Chart Data:</strong>
-            <pre>{msg.message}</pre>
-          </div>
-        );
-
-      default:
-        return <div>{msg.message}</div>;
-    }
+  const renderMessageContent = (msg: (typeof parsedMessages)[number]) => {
+    return (
+      <div>
+        {msg.message && (
+          <div
+            className={classes.uiBlock}
+            dangerouslySetInnerHTML={{ __html: msg.message }}
+          />
+        )}
+      </div>
+    );
   };
 
   return (
-    <div className={classes.messageList}>
-      {messages.map((msg, index) => (
-        <div
-          key={msg.id ?? index}
-          className={`${classes.messageBox} ${
-            msg.sender === "User" ? classes.userMessage : classes.botMessage
-          }`}>
-          {renderMessageContent(msg)}
+    <div
+      className={classes.messageList}
+      role="list"
+      aria-live="polite"
+      aria-busy="false">
+      {parsedMessages.map((msg, index) => {
+        const key = msg.id ?? index;
+        const vote = getVoteForIndex(index);
 
-          {msg.sender === "AI" && msg.message !== "Thinking..." && (
-            <div className={classes.voteContainer}>
-              <ThumbUpIcon
-                className={`${classes.voteIcon} ${
-                  votes[index] === "up" ? classes.upvoted : ""
-                }`}
-                onClick={() => handleVote(index, "up")}
-              />
-              <ThumbDownIcon
-                className={`${classes.voteIcon} ${
-                  votes[index] === "down" ? classes.downvoted : ""
-                }`}
-                onClick={() => handleVote(index, "down")}
-              />
+        const showSuggestedActions =
+          msg.sender === "AI" &&
+          index === actualLatestUserIndex + 1 &&
+          msg.suggestedActions &&
+          msg.suggestedActions?.length > 0;
+
+        return (
+          <div
+            key={key}
+            className={`${classes.messageBox} ${
+              msg.sender === "User" ? classes.userMessage : classes.botMessage
+            }`}
+            role="listitem"
+            aria-label={
+              msg.sender === "User" ? "User message" : "Assistant message"
+            }>
+            <div className={classes.messageContent}>
+              {renderMessageContent(msg)}
             </div>
-          )}
-        </div>
-      ))}
+
+            {msg.sender === "AI" && msg.message !== "Thinking..." && (
+              <div
+                className={classes.voteContainer}
+                role="group"
+                aria-label="Message feedback">
+                <div
+                  role="button"
+                  className={`${classes.iconButton} ${
+                    vote === "up" ? classes.upvoted : ""
+                  }`}
+                  aria-pressed={vote === "up"}
+                  aria-label="Upvote"
+                  onClick={() => handleVote(index, "up")}>
+                  <ThumbUpIcon fontSize="small" />
+                </div>
+
+                <div
+                  role="button"
+                  className={`${classes.iconButton} ${
+                    vote === "down" ? classes.downvoted : ""
+                  }`}
+                  aria-pressed={vote === "down"}
+                  aria-label="Downvote"
+                  onClick={() => handleVote(index, "down")}>
+                  <ThumbDownIcon fontSize="small" />
+                </div>
+              </div>
+            )}
+
+            {showSuggestedActions && (
+              <div className={classes.suggestedActions}>
+                {msg.suggestedActions &&
+                  msg.suggestedActions.map((action, i) => (
+                    <button key={i} type="button">
+                      {action}
+                    </button>
+                  ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
+
+export default memo(ChatMessages);

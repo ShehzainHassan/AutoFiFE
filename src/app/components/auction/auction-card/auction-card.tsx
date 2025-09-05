@@ -1,75 +1,98 @@
 "use client";
-import vehicleImg from "@/assets/images/cars/Bentley-Arnage4.4.png";
+import React, { Profiler } from "react";
+import dynamic from "next/dynamic";
+import { AuctionCardProps } from "./auction-card.types";
+import { useAuctionCard } from "@/hooks/useAuctionCard";
+import { ThemeProvider } from "@/theme/themeContext";
 import { CURRENCY } from "@/constants";
 import { WHITE_WITH_BLUE_BORDER } from "@/constants/button-primary-themes";
-import useCountdown from "@/hooks/useCountdown";
 import headings from "@/styles/typography.module.css";
-import { ThemeProvider } from "@/theme/themeContext";
-import Image from "next/image";
-import ButtonPrimary from "../../buttons/button-primary";
 import classes from "./auction-card.module.css";
-import { AuctionCardProps } from "./auction-card.types";
-import { useRouter } from "next/navigation";
+import { ErrorBoundary } from "@sentry/nextjs";
+import { trackRender } from "@/utilities/performance-tracking";
+import CarImage from "@/assets/images/cars/2018_Honda_Civic.png";
+const ButtonPrimary = dynamic(() => import("../../buttons/button-primary"));
+const Image = dynamic(() => import("next/image"));
 
-const AuctionCard = ({
-  auctionId,
-  vehicleDetails,
-  price,
-  endUTC,
-  tag,
-}: AuctionCardProps) => {
-  const { hours, minutes, seconds, totalSeconds } = useCountdown(endUTC);
-  const router = useRouter();
-  const redirectToAuctionDetails = (id: number) => {
-    router.push(`/auction/${id}`);
-  };
-  const timerText =
-    totalSeconds > 0
-      ? `Ends in: ${hours}h ${minutes.toString().padStart(2, "0")}m ${seconds
-          .toString()
-          .padStart(2, "0")}s`
-      : "ENDED";
+const AuctionCard = React.memo(
+  ({ auctionId, vehicleDetails, price, endUTC, tag }: AuctionCardProps) => {
+    const { totalSeconds, timerText, handleRedirect } = useAuctionCard(
+      auctionId,
+      endUTC
+    );
 
-  return (
-    <div
-      onClick={() => redirectToAuctionDetails(auctionId)}
-      className={classes.container}>
-      {tag && (
-        <div className={classes.tag}>
-          <span className={classes.redDot}>🔴</span>LIVE
-        </div>
-      )}
+    return (
+      <Profiler id={`AuctionCard-${auctionId}`} onRender={trackRender}>
+        <ErrorBoundary fallback={<div>Failed to load auction card.</div>}>
+          <article
+            className={classes.container}
+            tabIndex={0}
+            role="group"
+            aria-label={`Auction card for ${vehicleDetails}`}>
+            {tag && (
+              <div className={classes.tag} role="status" aria-live="polite">
+                <span className={classes.redDot} aria-hidden="true">
+                  🔴
+                </span>
+                LIVE
+              </div>
+            )}
 
-      <div>
-        <div className={classes.imageWrapper}>
-          <Image
-            src={vehicleImg}
-            alt="vehicle-img"
-            fill
-            className={classes.image}
-          />
-        </div>
+            <div
+              role="button"
+              onClick={handleRedirect}
+              className={classes.cardButton}
+              aria-label={`View details for ${vehicleDetails}`}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") handleRedirect();
+              }}>
+              <div className={classes.imageWrapper}>
+                <Image
+                  src={CarImage}
+                  alt={`${vehicleDetails} image`}
+                  fill
+                  className={classes.image}
+                  priority={false}
+                />
+              </div>
 
-        <div className={classes.subContainer}>
-          <h2 className={headings.auctionVehicleTitle}>{vehicleDetails}</h2>
+              <div className={classes.subContainer}>
+                <h2 className={headings.auctionVehicleTitle}>
+                  {vehicleDetails}
+                </h2>
 
-          <h2 className={`${headings.auctionVehiclePrice} ${classes.blue}`}>
-            {CURRENCY}
-            {price.toLocaleString()}
-          </h2>
+                <h2
+                  className={`${headings.auctionVehiclePrice} ${classes.blue}`}>
+                  {CURRENCY}
+                  {price.toLocaleString()}
+                </h2>
 
-          <div className={`${headings.auctionCardTimer} ${classes.endTimer}`}>
-            {totalSeconds > 0 && <span className={classes.redDot}>🔴</span>}
-            {timerText}
-          </div>
+                <div
+                  className={`${headings.auctionCardTimer} ${classes.endTimer}`}
+                  role="status"
+                  aria-live="polite">
+                  {totalSeconds > 0 && (
+                    <span className={classes.redDot} aria-hidden="true">
+                      🔴
+                    </span>
+                  )}
+                  {timerText}
+                </div>
 
-          <ThemeProvider value={WHITE_WITH_BLUE_BORDER}>
-            <ButtonPrimary btnText="Quick Bid" />
-          </ThemeProvider>
-        </div>
-      </div>
-    </div>
-  );
-};
+                <ThemeProvider value={WHITE_WITH_BLUE_BORDER}>
+                  <ButtonPrimary
+                    btnText="Quick Bid"
+                    aria-label={`Place quick bid on ${vehicleDetails}`}
+                  />
+                </ThemeProvider>
+              </div>
+            </div>
+          </article>
+        </ErrorBoundary>
+      </Profiler>
+    );
+  }
+);
 
+AuctionCard.displayName = "AuctionCard";
 export default AuctionCard;

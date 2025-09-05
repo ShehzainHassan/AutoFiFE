@@ -10,32 +10,35 @@ const useAIResponse = (options?: {
   onError?: () => void;
 }) => {
   const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async ({
-      userId,
-      question,
-      session_id,
-    }: {
-      userId: number;
-      question: string;
-      session_id: string | null;
-    }): Promise<AIResponseModel> => {
+
+  return useMutation<
+    AIResponseModel,
+    unknown,
+    { userId: number; question: string; session_id: string | null }
+  >({
+    mutationFn: async ({ userId, question, session_id }) => {
       return await aiAssistantAPI.getAIResponse(userId, question, session_id);
     },
-    onSuccess: (res) => {
+    onSuccess: (res, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["userChats", variables.session_id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["userSessions"],
+      });
+
       options?.onSuccess?.(res);
-      setTimeout(() => {
-        queryClient.invalidateQueries({ queryKey: ["userSessions"] });
-      }, 500);
     },
     onError: (error: unknown) => {
       options?.onError?.();
+
       let errorMessage = "An unexpected error occurred.";
       if (axios.isAxiosError(error)) {
         errorMessage = error.response?.data?.message || error.message;
       } else if (typeof error === "string") {
         errorMessage = error;
       }
+
       toast.error(errorMessage);
     },
   });

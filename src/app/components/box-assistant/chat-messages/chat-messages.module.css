@@ -3,8 +3,14 @@
   flex-direction: column;
   gap: 12px;
   margin-bottom: 20px;
-  max-height: 300px;
+  max-height: 600px;
   overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.messageList::-webkit-scrollbar {
+  display: none;
 }
 
 .messageBox {
@@ -30,7 +36,6 @@
   align-self: flex-start;
   background-color: var(--color-white100);
   color: var(--color-black100);
-  max-width: 700px;
 }
 
 .voteContainer {
@@ -52,29 +57,20 @@
   color: var(--color-red500);
 }
 
-.table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 8px;
+.iconButton {
+  cursor: pointer;
 }
 
-.table th,
-.table td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
+.suggestedActions button {
+  margin: 4px 4px 0 0;
+  padding: 6px 12px;
+  background-color: var(--color-gray300);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-.cardGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.card {
-  border: 1px solid #ccc;
-  padding: 12px;
-  border-radius: 8px;
-  background-color: var(--color-white100);
+.suggestedActions button:hover {
+  background-color: var(--color-gray500);
 }

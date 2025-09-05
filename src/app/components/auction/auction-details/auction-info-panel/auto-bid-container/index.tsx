@@ -1,1 +1,1 @@
-export { default } from "./autobid-container";
+export { default } from "./auto-bid";

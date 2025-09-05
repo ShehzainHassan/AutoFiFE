@@ -52,9 +52,17 @@ export { default as AuctionCardCarousel } from "./auction/auction-card-carousel"
 export { default as AuctionSearchField } from "./auction/auction-search-field";
 export { default as AuctionDetailsHeader } from "./auction/auction-details/auction-details-header";
 export { default as AuctionStats } from "./auction/auction-details/auction-info-panel/auction-stats/auction-stats.container";
-export { default as MyAuctionStats } from "./auction/auction-details/auction-info-panel/your-stats/your-stats.container";
 export { default as AuctionTimer } from "./auction/auction-details/auction-info-panel/auction-timer";
 export { default as AutoBidContainer } from "./auction/auction-details/auction-info-panel/auto-bid-container";
-export { default as ManualBidContainer } from "./auction/auction-details/auction-info-panel/manual-bid-container";
 export { default as WatchListCard } from "./auction/auction-details/watchlist-image-card";
 export { default as LazyComponent } from "./lazy-component";
+
+export * from "./auction/auction-details/auction-info-panel/your-stats";
+export * from "./auction/auction-details/bid-history";
+export * from "./box-assistant/chat-messages";
+export * from "./auction/auction-details/bid-history/bid-history-table";
+export * from "./auction/auction-details/bid-history";
+export * from "./auction/auction-details/info-tabs";
+export * from "./auction/auction-details/notifications/notification-container";
+export * from "./auction/auction-details/notifications/user-notifications";
+export * from "./auction/auction-details/notifications";

@@ -1,7 +1,7 @@
 "use client";
 
 import auctionAPI from "@/api/auctionAPI";
-import CarImage from "@/app/components/result-card/car-image/car-image";
+import { lazy, Profiler, Suspense, useCallback, useMemo } from "react";
 import vehicleImg from "@/assets/images/cars/Bentley-Arnage4.4.png";
 import { usePanel } from "@/contexts/panel-context/panel-context";
 import { formatTimeAMPM } from "@/utilities/utilities";
@@ -11,6 +11,12 @@ import { useRouter } from "next/navigation";
 import TextContainer from "../../text-container/text-container";
 import classes from "./user-notifications.module.css";
 import { UserNotificationsProps } from "./user-notifications.types";
+import { ErrorBoundary } from "@sentry/nextjs";
+import { trackRender } from "@/utilities/performance-tracking";
+
+const CarImage = lazy(
+  () => import("@/app/components/result-card/car-image/car-image")
+);
 
 export default function UserNotifications({
   notifications,
@@ -22,10 +28,20 @@ export default function UserNotifications({
   const { togglePanel } = usePanel();
   const router = useRouter();
 
-  const redirectToCheckout = (auctionId: number) => {
-    togglePanel("none");
-    router.push(`/auction/${auctionId}/checkout`);
-  };
+  const redirectToCheckout = useCallback(
+    (auctionId: number) => {
+      togglePanel("none");
+      router.push(`/auction/${auctionId}/checkout`);
+    },
+    [togglePanel, router]
+  );
+
+  const handleMarkAsRead = useCallback(
+    (id: number) => {
+      markAsRead(id);
+    },
+    [markAsRead]
+  );
 
   const paymentStatusResults = useQueries({
     queries: notifications
@@ -37,49 +53,55 @@ export default function UserNotifications({
       })),
   });
 
-  return (
-    <>
-      {notifications.map((notification) => {
+  const paymentStatusMap = useMemo(() => {
+    const map = new Map<number, boolean>();
+    notifications.forEach((n, i) => {
+      if (n.notificationType === 3 && n.auctionId !== null) {
+        const result = paymentStatusResults[i];
+        map.set(n.id, result?.data?.paymentCompleted ?? false);
+      }
+    });
+    return map;
+  }, [notifications, paymentStatusResults]);
+
+  const renderedNotifications = useMemo(
+    () =>
+      notifications.map((notification) => {
         const isRead = notification.isRead;
-        const key = notification.id;
         const auctionId = notification.auctionId ?? -1;
-
-        let isPaymentCompleted = false;
-        if (notification.notificationType === 3 && notification.auctionId) {
-          const resultIndex = notifications
-            .filter((n) => n.notificationType === 3 && n.auctionId !== null)
-            .findIndex((n) => n.id === notification.id);
-
-          isPaymentCompleted =
-            paymentStatusResults[resultIndex]?.data?.paymentCompleted ?? false;
-        }
-
-        const content = (
-          <div className={classes.header}>
-            <h3 className={isRead ? classes.read : classes.unread}>
-              {notification.title}
-              <span className={classes.time}>
-                ({formatTimeAMPM(notification.createdAt)})
-              </span>
-              {!isRead && (
-                <span onClick={() => markAsRead(notification.id)}>
-                  <MarkChatReadIcon className={classes.icon} />
-                </span>
-              )}
-            </h3>
-            <p
-              className={`${classes.message} ${
-                isRead ? classes.read : classes.unread
-              }`}>
-              {notification.message}
-            </p>
-          </div>
-        );
+        const isPaymentCompleted =
+          paymentStatusMap.get(notification.id) ?? false;
 
         return (
-          <div className={classes.container} key={key}>
+          <div
+            className={classes.container}
+            key={notification.id}
+            role="listitem">
             <div>
-              {content}
+              <div className={classes.header}>
+                <h3 className={isRead ? classes.read : classes.unread}>
+                  {notification.title}
+                  <span className={classes.time}>
+                    ({formatTimeAMPM(notification.createdAt)})
+                  </span>
+                  {!isRead && (
+                    <span
+                      onClick={() => handleMarkAsRead(notification.id)}
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Mark notification as read">
+                      <MarkChatReadIcon className={classes.icon} />
+                    </span>
+                  )}
+                </h3>
+                <p
+                  className={`${classes.message} ${
+                    isRead ? classes.read : classes.unread
+                  }`}>
+                  {notification.message}
+                </p>
+              </div>
+
               {notification.notificationType === 3 && (
                 <TextContainer
                   value={isPaymentCompleted ? "Payment Completed" : "Checkout"}
@@ -90,23 +112,45 @@ export default function UserNotifications({
                 />
               )}
             </div>
+
             {notification.notificationType === 3 && (
-              <CarImage src={vehicleImg} />
+              <Suspense
+                fallback={
+                  <div role="status" aria-live="polite">
+                    Loading image...
+                  </div>
+                }>
+                <CarImage src={vehicleImg} />
+              </Suspense>
             )}
           </div>
         );
-      })}
+      }),
+    [notifications, paymentStatusMap, redirectToCheckout, handleMarkAsRead]
+  );
 
-      {hasNextPage && (
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <button
-            onClick={fetchNextPage}
-            disabled={isFetchingNextPage}
-            className={classes.loadMoreBtn}>
-            {isFetchingNextPage ? "Loading..." : "Load More"}
-          </button>
+  return (
+    <ErrorBoundary fallback={<div>Failed to load User Notifications</div>}>
+      <Profiler id="UserNotifications" onRender={trackRender}>
+        <div role="list" aria-label="User notifications">
+          {renderedNotifications}
+
+          {hasNextPage && (
+            <div
+              role="status"
+              aria-live="polite"
+              style={{ textAlign: "center", marginTop: "20px" }}>
+              <button
+                onClick={fetchNextPage}
+                disabled={isFetchingNextPage}
+                className={classes.loadMoreBtn}
+                aria-label="Load more notifications">
+                {isFetchingNextPage ? "Loading..." : "Load More"}
+              </button>
+            </div>
+          )}
         </div>
-      )}
-    </>
+      </Profiler>
+    </ErrorBoundary>
   );
 }

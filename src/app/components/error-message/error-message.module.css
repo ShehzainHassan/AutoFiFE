@@ -1,3 +1,33 @@
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--color-background, var(--color-white100));
+}
+
+.errorIcon {
+  font-size: 3rem;
+  color: var(--color-red500);
+  margin-bottom: 1rem;
+}
+
+.errorTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary, var(--color-black100));
+}
+
 .errorText {
   color: var(--color-red500);
+  margin-bottom: 1rem;
+}
+
+.errorActions {
+  display: flex;
+  gap: 1rem;
 }

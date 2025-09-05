@@ -57,3 +57,51 @@ input[type="number"] {
   outline: none;
   border: none;
 }
+
+.ai-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  font-size: 14px;
+  table-layout: auto;
+}
+
+.ai-table th,
+.ai-table td {
+  border: 1px solid var(--color-gray300);
+  padding: 8px;
+  text-align: left;
+}
+.ai-table th {
+  background-color: var(--color-gray565);
+  font-weight: bold;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+  width: 100%;
+}
+.card-grid .card {
+  width: 100%;
+  border: 1px solid var(--color-gray300);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--color-gray100);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.chart-block {
+  overflow-x: auto;
+  background: var(--color-gray300);
+  border: 1px solid var(--color-gray400);
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}

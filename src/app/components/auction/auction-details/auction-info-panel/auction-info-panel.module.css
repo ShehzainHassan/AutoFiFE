@@ -7,8 +7,13 @@
 }
 .timerContainer {
   display: flex;
+  flex-direction: column;
   gap: 16px;
   padding: 24px 0;
+}
+.time {
+  display: flex;
+  gap: 16px;
 }
 .textContainer {
   display: flex;

@@ -5,6 +5,7 @@ export interface AIResponseModel {
   suggested_actions: string[];
   sources: string[];
   session_id: string;
+  uiBlock: string;
 }
 export interface ChatSessionSummary {
   id: string;
@@ -41,4 +42,10 @@ export interface PopularQuery {
   text: string;
   count: number;
   last_asked: string;
+}
+
+export interface FinanceOpportunity {
+  id: number;
+  title: string;
+  description: string;
 }
