@@ -4,7 +4,7 @@ import {
   ChatSessionSummary,
   PopularQuery,
 } from "@/interfaces/aiAssistant";
-import apiClient from "./apiClient";
+import rateLimitedClient from "./apiClient";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const aiAssistantAPI = {
@@ -13,7 +13,7 @@ const aiAssistantAPI = {
     question: string,
     session_id: string | null
   ) => {
-    const response = await apiClient.post<AIResponseModel>(
+    const response = await rateLimitedClient.post<AIResponseModel>(
       `${API_BASE_URL}/api/AIAssistant/query`,
       {
         session_id: session_id,
@@ -26,13 +26,13 @@ const aiAssistantAPI = {
     return response.data;
   },
   getUserSessionTitles: async () => {
-    const response = await apiClient.get<ChatSessionSummary[]>(
+    const response = await rateLimitedClient.get<ChatSessionSummary[]>(
       `${API_BASE_URL}/api/AIAssistant/chats`
     );
     return response.data;
   },
   getSessionChats: async (session_id: string) => {
-    const response = await apiClient.get<ChatSession>(
+    const response = await rateLimitedClient.get<ChatSession>(
       `${API_BASE_URL}/api/AIAssistant/chats/${session_id}`
     );
     return response.data;
@@ -41,7 +41,7 @@ const aiAssistantAPI = {
     message_id: number,
     vote: "NOTVOTED" | "UPVOTED" | "DOWNVOTED"
   ) => {
-    const response = await apiClient.post(
+    const response = await rateLimitedClient.post(
       `${API_BASE_URL}/api/AIAssistant/feedback`,
       {
         message_id,
@@ -51,31 +51,31 @@ const aiAssistantAPI = {
     return response.data;
   },
   getContextualSuggestion: async (userId: number) => {
-    const response = await apiClient.get<string[]>(
+    const response = await rateLimitedClient.get<string[]>(
       `${API_BASE_URL}/api/AIAssistant/contextual-suggestions/${userId}`
     );
     return response.data;
   },
   getPopularQueries: async () => {
-    const response = await apiClient.get<PopularQuery[]>(
+    const response = await rateLimitedClient.get<PopularQuery[]>(
       `${API_BASE_URL}/api/AIAssistant/popular-queries`
     );
     return response.data;
   },
   deleteSessionById: async (sessionId: string) => {
-    const response = await apiClient.delete(
+    const response = await rateLimitedClient.delete(
       `${API_BASE_URL}/api/AIAssistant/chats/${sessionId}`
     );
     return response.data;
   },
   deleteAllSessions: async () => {
-    const response = await apiClient.delete(
+    const response = await rateLimitedClient.delete(
       `${API_BASE_URL}/api/AIAssistant/chats`
     );
     return response.data;
   },
   editSessionTitle: async (sessionId: string, newTitle: string) => {
-    const response = await apiClient.put(
+    const response = await rateLimitedClient.put(
       `${API_BASE_URL}/api/AIAssistant/chats/${sessionId}/title`,
       {
         newTitle,

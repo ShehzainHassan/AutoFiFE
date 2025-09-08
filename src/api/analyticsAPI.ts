@@ -10,30 +10,30 @@ import {
   UserAnalyticsResult,
   UserTableData,
 } from "@/interfaces/analytics";
-import axios from "axios";
+import { limitedAxios } from "./rateLimitedAxios";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const analyticsAPI = {
   getAuctionAnalytics: async (startDate: string, endDate: string) => {
-    const response = await axios.get<AuctionAnalyticsResult>(
+    const response = await limitedAxios.get<AuctionAnalyticsResult>(
       `${API_BASE_URL}/api/analytics/auctions?startDate=${startDate}&endDate=${endDate}`
     );
     return response.data;
   },
   getUserAnalytics: async (startDate: string, endDate: string) => {
-    const response = await axios.get<UserAnalyticsResult>(
+    const response = await limitedAxios.get<UserAnalyticsResult>(
       `${API_BASE_URL}/api/analytics/users?startDate=${startDate}&endDate=${endDate}`
     );
     return response.data;
   },
   getRevenueAnalytics: async (startDate: string, endDate: string) => {
-    const response = await axios.get<RevenueAnalyticsResult>(
+    const response = await limitedAxios.get<RevenueAnalyticsResult>(
       `${API_BASE_URL}/api/analytics/revenue?startDate=${startDate}&endDate=${endDate}`
     );
     return response.data;
   },
   getSystemAnalytics: async (startDate: string, endDate: string) => {
-    const response = await axios.get<SystemAnalyticsResult>(
+    const response = await limitedAxios.get<SystemAnalyticsResult>(
       `${API_BASE_URL}/api/analytics/system?startDate=${startDate}&endDate=${endDate}`
     );
     return response.data;
@@ -49,17 +49,17 @@ const analyticsAPI = {
       url += `&category=${encodeURIComponent(category)}`;
     }
 
-    const response = await axios.get<AuctionTableData[]>(url);
+    const response = await limitedAxios.get<AuctionTableData[]>(url);
     return response.data;
   },
   getUserTableAnalytics: async (startDate: string, endDate: string) => {
-    const response = await axios.get<UserTableData[]>(
+    const response = await limitedAxios.get<UserTableData[]>(
       `${API_BASE_URL}/api/analytics/user-report?startDate=${startDate}&endDate=${endDate}`
     );
     return response.data;
   },
   getRevenueTableAnalytics: async (startDate: string, endDate: string) => {
-    const response = await axios.get<RevenueTableData[]>(
+    const response = await limitedAxios.get<RevenueTableData[]>(
       `${API_BASE_URL}/api/analytics/revenue-report?startDate=${startDate}&endDate=${endDate}`
     );
     return response.data;
@@ -69,7 +69,7 @@ const analyticsAPI = {
     endDate: string,
     type: string
   ) => {
-    const response = await axios.get(
+    const response = await limitedAxios.get(
       `${API_BASE_URL}/api/analytics/user-summary?startDate=${startDate}&endDate=${endDate}&type=${type}`
     );
     return response.data;
@@ -79,7 +79,7 @@ const analyticsAPI = {
     endDate: string,
     type: string
   ) => {
-    const response = await axios.get(
+    const response = await limitedAxios.get(
       `${API_BASE_URL}/api/analytics/revenue-summary?startDate=${startDate}&endDate=${endDate}&type=${type}`
     );
     return response.data;
@@ -90,7 +90,7 @@ const analyticsAPI = {
     endDate: string,
     format: string
   ) => {
-    const response = await axios.get(
+    const response = await limitedAxios.get(
       `${API_BASE_URL}/api/analytics/export?reportType=${reportType}&startDate=${startDate}&endDate=${endDate}&format=${format}`,
       {
         responseType: "blob",
@@ -106,25 +106,25 @@ const analyticsAPI = {
     window.URL.revokeObjectURL(link.href);
   },
   getRecentDownloads: async (page = 1, pageSize = 10) => {
-    const response = await axios.get<RecentDownloads>(
+    const response = await limitedAxios.get<RecentDownloads>(
       `${API_BASE_URL}/api/analytics/recent-downloads?page=${page}&pageSize=${pageSize}`
     );
     return response.data;
   },
   getErrorLogs: async (page = 1, pageSize = 10) => {
-    const response = await axios.get<ErrorLogs>(
+    const response = await limitedAxios.get<ErrorLogs>(
       `${API_BASE_URL}/api/analytics/error-logs?page=${page}&pageSize=${pageSize}`
     );
     return response.data;
   },
   getOldestAPILog: async () => {
-    const response = await axios.get(
+    const response = await limitedAxios.get(
       `${API_BASE_URL}/api/analytics/oldest-api-log`
     );
     return response.data;
   },
   getAPIGraphAnalytics: async (startDate: string, endDate: string) => {
-    const response = await axios.get<APIGraphAnalyticsItem[]>(
+    const response = await limitedAxios.get<APIGraphAnalyticsItem[]>(
       `${API_BASE_URL}/api/analytics/response-times?startDate=${startDate}&endDate=${endDate}`
     );
     return response.data;

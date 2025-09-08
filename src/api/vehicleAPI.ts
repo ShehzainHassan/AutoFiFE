@@ -10,7 +10,7 @@ import {
   VehicleOptions,
 } from "@/interfaces/vehicle";
 import { sanitizeVehicleFilters } from "@/utilities/utilities";
-import axios from "axios";
+import { limitedAxios } from "./rateLimitedAxios";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const RECOMMENDER_SYSTEM_BASE_URL = process.env.NEXT_PUBLIC_RECOMMENDER_SYSTEM;
 
@@ -20,7 +20,7 @@ const vehicleAPI = {
     offset: number,
     pageSize: number
   ) => {
-    const response = await axios.get<VehicleListResult>(
+    const response = await limitedAxios.get<VehicleListResult>(
       `${API_BASE_URL}/Vehicle`,
       {
         params: { pageView: pageSize, offset, status },
@@ -29,17 +29,19 @@ const vehicleAPI = {
     return response.data;
   },
   getAllMakes: async () => {
-    const response = await axios.get(`${API_BASE_URL}/Vehicle/get-makes`);
+    const response = await limitedAxios.get(
+      `${API_BASE_URL}/Vehicle/get-makes`
+    );
     return response.data;
   },
   getAllCategories: async () => {
-    const response = await axios.get<string[]>(
+    const response = await limitedAxios.get<string[]>(
       `${API_BASE_URL}/Vehicle/get-categories`
     );
     return response.data;
   },
   getByMake: async (make: string, offset: number, pageSize: number) => {
-    const response = await axios.get<VehicleListResult>(
+    const response = await limitedAxios.get<VehicleListResult>(
       `${API_BASE_URL}/Vehicle/by-make`,
       {
         params: { pageView: pageSize, offset, make },
@@ -48,15 +50,19 @@ const vehicleAPI = {
     return response.data;
   },
   getById: async (id: number) => {
-    const response = await axios.get<Vehicle>(`${API_BASE_URL}/Vehicle/${id}`);
+    const response = await limitedAxios.get<Vehicle>(
+      `${API_BASE_URL}/Vehicle/${id}`
+    );
     return response.data;
   },
   getAllColors: async () => {
-    const response = await axios.get(`${API_BASE_URL}/Vehicle/get-colors`);
+    const response = await limitedAxios.get(
+      `${API_BASE_URL}/Vehicle/get-colors`
+    );
     return response.data;
   },
   getCarFeatures: async (make: string, model: string) => {
-    const response = await axios.get<VehicleFeatures>(
+    const response = await limitedAxios.get<VehicleFeatures>(
       `${API_BASE_URL}/Vehicle/features`,
       {
         params: { make, model },
@@ -66,7 +72,7 @@ const vehicleAPI = {
   },
   getVehicleCount: async (filters: VehicleFilter) => {
     const sanitizedFilters = sanitizeVehicleFilters(filters);
-    const response = await axios.get<number>(
+    const response = await limitedAxios.get<number>(
       `${API_BASE_URL}/Vehicle/total-vehicle-count`,
       {
         params: sanitizedFilters,
@@ -77,18 +83,24 @@ const vehicleAPI = {
   },
   getGearboxCount: async (filters: VehicleFilter) => {
     const sanitizedFilters = sanitizeVehicleFilters(filters);
-    const response = await axios.get(`${API_BASE_URL}/Vehicle/gearbox-count`, {
-      params: sanitizedFilters,
-    });
+    const response = await limitedAxios.get(
+      `${API_BASE_URL}/Vehicle/gearbox-count`,
+      {
+        params: sanitizedFilters,
+      }
+    );
 
     return response.data;
   },
   getColorsCount: async (filters: VehicleFilter) => {
     const sanitizedFilters = sanitizeVehicleFilters(filters);
 
-    const response = await axios.get(`${API_BASE_URL}/Vehicle/colors-count`, {
-      params: sanitizedFilters,
-    });
+    const response = await limitedAxios.get(
+      `${API_BASE_URL}/Vehicle/colors-count`,
+      {
+        params: sanitizedFilters,
+      }
+    );
 
     return response.data;
   },
@@ -107,7 +119,7 @@ const vehicleAPI = {
     gearbox?: string | null,
     selectedColors?: string | null
   ) => {
-    const response = await axios.get<Vehicle[]>(
+    const response = await limitedAxios.get<Vehicle[]>(
       `${API_BASE_URL}/Vehicle/search-vehicles`,
       {
         params: {
@@ -134,26 +146,26 @@ const vehicleAPI = {
     questionnaire: Questionnaire,
     vehicleId: number
   ) => {
-    const response = await axios.post(
+    const response = await limitedAxios.post(
       `${API_BASE_URL}/Vehicle/save-questionnaire?vehicleId=${vehicleId}`,
       questionnaire
     );
     return response.data;
   },
   getSimilarVehicles: async (vehicleId: number) => {
-    const response = await axios.get<SimilarVehicleResponse>(
+    const response = await limitedAxios.get<SimilarVehicleResponse>(
       `${RECOMMENDER_SYSTEM_BASE_URL}/api/recommendations/similar/${vehicleId}`
     );
     return response.data;
   },
   getRecommendations: async (userId: number) => {
-    const response = await axios.get<RecommendationsResponse>(
+    const response = await limitedAxios.get<RecommendationsResponse>(
       `${RECOMMENDER_SYSTEM_BASE_URL}/api/recommendations/user/${userId}`
     );
     return response.data;
   },
   getVehicleOptions: async () => {
-    const response = await axios.get<VehicleOptions>(
+    const response = await limitedAxios.get<VehicleOptions>(
       `${API_BASE_URL}/Vehicle/get-vehicle-options`
     );
     return response.data;

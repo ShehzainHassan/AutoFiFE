@@ -8,58 +8,62 @@ import {
   Watchlist,
 } from "@/interfaces/auction";
 import buildAuctionQuery from "@/utilities/utilities";
-import axios from "axios";
-import apiClient from "./apiClient";
+import rateLimitedClient from "./apiClient";
+import { limitedAxios } from "./rateLimitedAxios";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const auctionAPI = {
   getAllAuctions: async () => {
-    const response = await axios.get<Auction[]>(`${API_BASE_URL}/auction/`);
+    const response = await limitedAxios.get<Auction[]>(
+      `${API_BASE_URL}/auction/`
+    );
     return response.data;
   },
   getAuctionById: async (id: number) => {
-    const response = await axios.get<Auction>(`${API_BASE_URL}/auction/${id}`);
+    const response = await limitedAxios.get<Auction>(
+      `${API_BASE_URL}/auction/${id}`
+    );
     return response.data;
   },
   getBidHistory: async (id: number) => {
-    const response = await axios.get<Bid[]>(
+    const response = await limitedAxios.get<Bid[]>(
       `${API_BASE_URL}/auction/${id}/bids`
     );
     return response.data;
   },
   getOldestAuctionDate: async () => {
-    const response = await axios.get<string>(
+    const response = await limitedAxios.get<string>(
       `${API_BASE_URL}/auction/oldest-auction`
     );
     return response.data;
   },
   getUserBidHistory: async () => {
-    const response = await apiClient.get<Bid[]>(
+    const response = await rateLimitedClient.get<Bid[]>(
       `${API_BASE_URL}/auction/userBids`
     );
     return response.data;
   },
   getHighestBidderId: async (id: number) => {
-    const response = await axios.get<number>(
+    const response = await limitedAxios.get<number>(
       `${API_BASE_URL}/auction/highest-bidder/${id}`
     );
     return response.data;
   },
   getUserWatchList: async () => {
-    const response = await apiClient.get<Watchlist[]>(
+    const response = await rateLimitedClient.get<Watchlist[]>(
       `${API_BASE_URL}/auction/user/watchlist`
     );
     return response.data;
   },
   getAuctionWatchers: async (id: number) => {
-    const response = await axios.get<Watchlist[]>(
+    const response = await limitedAxios.get<Watchlist[]>(
       `${API_BASE_URL}/auction/${id}/watchers`
     );
     return response.data;
   },
   placeBid: async (id: number, bidAmount: number, userId: number) => {
-    const response = await apiClient.post<Bid>(
+    const response = await rateLimitedClient.post<Bid>(
       `${API_BASE_URL}/auction/${id}/bids`,
       {
         amount: bidAmount,
@@ -69,45 +73,48 @@ const auctionAPI = {
     return response.data;
   },
   addAuctionToWatchlist: async (auctionId: number) => {
-    const response = await apiClient.post(
+    const response = await rateLimitedClient.post(
       `${API_BASE_URL}/auction/${auctionId}/watch`
     );
     return response.data;
   },
   removeFromWatchlist: async (auctionId: number) => {
-    const response = await apiClient.delete(
+    const response = await rateLimitedClient.delete(
       `${API_BASE_URL}/auction/${auctionId}/watch`
     );
     return response.data;
   },
   getUserAutoBid: async (auctionId: number) => {
-    const response = await apiClient.get<AutoBid>(
+    const response = await rateLimitedClient.get<AutoBid>(
       `${API_BASE_URL}/api/autobid/${auctionId}`
     );
     return response.data;
   },
   placeAutoBid: async (autoBid: AutoBid) => {
-    const response = await apiClient.post(`${API_BASE_URL}/api/autobid`, {
-      auctionId: autoBid.auctionId,
-      maxBidAmount: autoBid.maxBidAmount,
-      userId: autoBid.userId,
-      bidStrategyType: autoBid.bidStrategyType,
-      isActive: true,
-      bidDelaySeconds: autoBid.bidDelaySeconds,
-      maxBidsPerMinute: autoBid.maxBidsPerMinute,
-      preferredBidTiming: autoBid.preferredBidTiming,
-      maxSpreadBids: autoBid.maxSpreadBids,
-    });
+    const response = await rateLimitedClient.post(
+      `${API_BASE_URL}/api/autobid`,
+      {
+        auctionId: autoBid.auctionId,
+        maxBidAmount: autoBid.maxBidAmount,
+        userId: autoBid.userId,
+        bidStrategyType: autoBid.bidStrategyType,
+        isActive: true,
+        bidDelaySeconds: autoBid.bidDelaySeconds,
+        maxBidsPerMinute: autoBid.maxBidsPerMinute,
+        preferredBidTiming: autoBid.preferredBidTiming,
+        maxSpreadBids: autoBid.maxSpreadBids,
+      }
+    );
     return response.data;
   },
   processAuctionResult: async (auctionId: number) => {
-    const response = await axios.get<AuctionResult>(
+    const response = await limitedAxios.get<AuctionResult>(
       `${API_BASE_URL}/auction/${auctionId}/result`
     );
     return response.data;
   },
   trackBidEvent: async (auctionId: number, userId: number, amount: number) => {
-    const response = await apiClient.post(
+    const response = await rateLimitedClient.post(
       `${API_BASE_URL}/api/analytics/track-bid`,
       {
         auctionId,
@@ -118,7 +125,7 @@ const auctionAPI = {
     return response.data;
   },
   trackAuctionView: async (auctionId: number) => {
-    const response = await apiClient.post(
+    const response = await rateLimitedClient.post(
       `${API_BASE_URL}/api/analytics/auction-view?auctionId=${auctionId}&source=Web`
     );
     return response.data;
@@ -128,7 +135,7 @@ const auctionAPI = {
     isSuccessful: boolean,
     finalPrice: number
   ) => {
-    const response = await axios.post(
+    const response = await limitedAxios.post(
       `${API_BASE_URL}/api/analytics/auction-completion`,
       {
         auctionId,
@@ -139,13 +146,13 @@ const auctionAPI = {
     return response.data;
   },
   updateAuctionAnalytics: async (auctionId: number) => {
-    const response = await axios.post(
+    const response = await limitedAxios.post(
       `${API_BASE_URL}/api/analytics/update-auction-analytics?auctionId=${auctionId}`
     );
     return response.data;
   },
   isPaymentCompleted: async (auctionId: number) => {
-    const response = await axios.get(
+    const response = await limitedAxios.get(
       `${API_BASE_URL}/api/analytics/payment-status?auctionId=${auctionId}`
     );
     return response.data;
@@ -155,7 +162,7 @@ const auctionAPI = {
     userId: number,
     amount: number
   ) => {
-    const response = await axios.post(
+    const response = await limitedAxios.post(
       `${API_BASE_URL}/api/analytics/track-payment`,
       {
         auctionId,
@@ -166,13 +173,13 @@ const auctionAPI = {
     return response.data;
   },
   isAutoBidSet: async (auctionId: number) => {
-    const response = await apiClient.get(
+    const response = await rateLimitedClient.get(
       `${API_BASE_URL}/api/autobid/auction/${auctionId}`
     );
     return response.data;
   },
   updateAutoBid: async (auctionId: number, updateAutoBid: UpdateAutoBid) => {
-    const response = await apiClient.put(
+    const response = await rateLimitedClient.put(
       `${API_BASE_URL}/api/autobid/update/auction/${auctionId}`,
       {
         maxBidAmount: updateAutoBid.maxBidAmount,
@@ -184,7 +191,7 @@ const auctionAPI = {
   },
   getAuctionByFilters: async (filters: AuctionFilters) => {
     const query = buildAuctionQuery(filters);
-    const response = await axios.get<Auction[]>(
+    const response = await limitedAxios.get<Auction[]>(
       `${API_BASE_URL}/auction${query ? `?${query}` : ""}`
     );
     return response.data;

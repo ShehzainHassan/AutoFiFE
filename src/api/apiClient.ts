@@ -1,19 +1,23 @@
 import axios from "axios";
+import rateLimit from "axios-rate-limit";
 import { getTokenFromLocalStorage } from "@/utilities/utilities";
 
-const apiClient = axios.create({
+const baseClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 });
 
-apiClient.interceptors.request.use(
-  (config) => {
-    const token = getTokenFromLocalStorage();
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+baseClient.interceptors.request.use((config) => {
+  const token = getTokenFromLocalStorage();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
-export default apiClient;
+const rateLimitedClient = rateLimit(baseClient, {
+  maxRequests: 5,
+  perMilliseconds: 1000,
+  maxRPS: 5,
+});
+
+export default rateLimitedClient;
