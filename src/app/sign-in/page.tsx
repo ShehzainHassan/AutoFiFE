@@ -48,10 +48,17 @@ export default function SignIn() {
                 value={values.email}
                 placeholder="example@email.com"
                 onChange={handleChange("email")}
+                autoComplete="email"
+                type="email"
                 className={errors.email ? signUpClasses.redBorder : undefined}
+                aria-invalid={!!errors.email}
+                aria-describedby="email-error"
+                disabled={isPending}
               />
               {errors.email && (
-                <p className={signUpClasses.error}>{errors.email}</p>
+                <p id="email-error" className={signUpClasses.error}>
+                  {errors.email}
+                </p>
               )}
             </div>
 
@@ -62,14 +69,20 @@ export default function SignIn() {
                 type="password"
                 placeholder="Password"
                 onChange={handleChange("password")}
+                autoComplete="current-password"
                 className={
                   errors.password === "Password is required."
                     ? signUpClasses.redBorder
                     : undefined
                 }
+                aria-invalid={errors.password === "Password is required."}
+                aria-describedby="password-error"
+                disabled={isPending}
               />
               {errors.password === "Password is required." && (
-                <p className={signUpClasses.error}>{errors.password}</p>
+                <p id="password-error" className={signUpClasses.error}>
+                  {errors.password}
+                </p>
               )}
             </div>
 
@@ -81,7 +94,7 @@ export default function SignIn() {
             <ToastContainer />
           </div>
           {isPending && (
-            <div className={classes.loading}>
+            <div className={classes.loading} aria-busy="true">
               <Loading />
             </div>
           )}

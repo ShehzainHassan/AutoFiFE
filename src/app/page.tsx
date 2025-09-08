@@ -54,7 +54,11 @@ export default function Home() {
           <Shop />
           <Customers />
           <LatestBlog />
-          <NeedHelp />
+        </LazyComponent>
+      </Suspense>
+      <NeedHelp />
+      <Suspense fallback={<div>Loading...</div>}>
+        <LazyComponent>
           <Footer />
         </LazyComponent>
       </Suspense>

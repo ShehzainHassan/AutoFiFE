@@ -1,3 +1,4 @@
+import { DEFAULT_MAKE, DEFAULT_MODEL } from "@/constants";
 import { Questionnaire } from "@/interfaces/questionnaire";
 import {
   RecommendationsResponse,
@@ -112,8 +113,8 @@ const vehicleAPI = {
         params: {
           pageView: pageSize,
           offset,
-          ...(make !== "Any_Makes" ? { make } : {}),
-          ...(model !== "Any_Models" ? { model } : {}),
+          ...(make !== DEFAULT_MAKE ? { make } : {}),
+          ...(model !== DEFAULT_MODEL ? { model } : {}),
           startPrice,
           endPrice,
           status,

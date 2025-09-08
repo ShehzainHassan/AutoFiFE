@@ -1,10 +1,16 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding: 115px 260px;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
   gap: 40px;
+  padding: 115px 0;
 }
+
 .items {
   display: flex;
+  flex-wrap: wrap;
   gap: 45px;
+  justify-content: space-between;
 }

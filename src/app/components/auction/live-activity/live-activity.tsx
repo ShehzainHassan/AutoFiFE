@@ -1,37 +1,46 @@
 "use client";
 
-import { useState, useMemo } from "react";
 import { DropdownFilter } from "@/app/components";
-import CarImage from "../../result-card/car-image/car-image";
-import VehicleAuctionInfo from "./vehicle-auction-info";
-import { LiveActivityViewProps } from "./live-activity.types";
-import classes from "./live-activity.module.css";
-import headings from "@/styles/typography.module.css";
-import useGetAuctionByFilters from "@/hooks/useGetAuctionsByFilters";
 import { priceOptions } from "@/constants/auction";
+import useGetAllAuctions from "@/hooks/useGetAllAuctions";
+import useGetAuctionByFilters from "@/hooks/useGetAuctionsByFilters";
+import { AuctionFilters } from "@/interfaces/auction";
+import headings from "@/styles/typography.module.css";
 import { sortOptions } from "@/utilities/utilities";
+import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import CarImage from "../../result-card/car-image/car-image";
+import classes from "./live-activity.module.css";
+import VehicleAuctionInfo from "./vehicle-auction-info";
 
-export default function LiveActivityView({
-  auctions,
-  onAuctionClick,
-}: LiveActivityViewProps) {
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-  const [selectedMake, setSelectedMake] = useState<string | null>(null);
+export default function LiveActivityView() {
+  const router = useRouter();
+
+  const [selectedStatus, setSelectedStatus] = useState<string | null>("Any");
+  const [selectedMake, setSelectedMake] = useState<string | null>("Any");
   const [selectedPriceOption, setSelectedPriceOption] = useState<string | null>(
     "Any"
   );
   const [selectedSortOption, setSelectedSortOption] = useState<string | null>(
     "Any"
   );
+
+  const { data: vehicleAuctionData = [] } = useGetAllAuctions();
+
   const statusOptions = useMemo(() => {
-    const unique = Array.from(new Set(auctions.map((a) => a.status)));
+    const unique = Array.from(
+      new Set(vehicleAuctionData.map((a) => a?.status).filter(Boolean))
+    );
     return ["Any", ...unique];
-  }, [auctions]);
+  }, [vehicleAuctionData]);
 
   const makeOptions = useMemo(() => {
-    const unique = Array.from(new Set(auctions.map((a) => a.vehicle.make)));
+    const unique = Array.from(
+      new Set(vehicleAuctionData.map((a) => a?.vehicle?.make).filter(Boolean))
+    );
     return ["Any", ...unique];
-  }, [auctions]);
+  }, [vehicleAuctionData]);
+
   const selectedPrice = useMemo(() => {
     return priceOptions.find((opt) => opt.label === selectedPriceOption);
   }, [selectedPriceOption]);
@@ -40,9 +49,10 @@ export default function LiveActivityView({
     return sortOptions.find((opt) => opt.label === selectedSortOption);
   }, [selectedSortOption]);
 
-  const filters = {
-    status: selectedStatus === "Any" ? undefined : selectedStatus ?? undefined,
-    make: selectedMake === "Any" ? undefined : selectedMake ?? undefined,
+  const filters: AuctionFilters = {
+    status:
+      selectedStatus && selectedStatus !== "Any" ? selectedStatus : undefined,
+    make: selectedMake && selectedMake !== "Any" ? selectedMake : undefined,
     minPrice: selectedPrice?.min,
     maxPrice: selectedPrice?.max,
     ...(selectedSort?.sortBy ? { sortBy: selectedSort.sortBy } : {}),
@@ -50,13 +60,16 @@ export default function LiveActivityView({
       ? { descending: selectedSort.descending }
       : {}),
   };
-
   const {
     data: filteredAuctions = [],
     isLoading,
     isError,
-    error,
+    error: filteredError,
   } = useGetAuctionByFilters(filters);
+
+  const redirectToAuctionDetails = (auctionId: number) => {
+    router.push(`/auction/${auctionId}`);
+  };
 
   return (
     <div className={classes.container}>
@@ -96,27 +109,36 @@ export default function LiveActivityView({
 
       <div className={classes.auctionContainer}>
         {isLoading ? (
-          <p>Loading auctions...</p>
+          <p role="status" aria-live="polite">
+            Loading auctions...
+          </p>
         ) : isError ? (
-          <p>Error loading auctions: {(error as Error).message}</p>
+          <p role="alert" aria-live="assertive">
+            Error loading auctions: {(filteredError as Error)?.message}
+          </p>
         ) : filteredAuctions.length === 0 ? (
           <p>No auctions found.</p>
         ) : (
-          filteredAuctions.map((auction) => (
-            <div key={auction.auctionId} className={classes.cardWrapper}>
-              <CarImage
-                status={auction.status}
-                onClick={() => onAuctionClick(auction.auctionId)}
-                className={classes.fixedHeight}
-              />
-              <VehicleAuctionInfo
-                vehicleName={`${auction.vehicle.year} ${auction.vehicle.make} ${auction.vehicle.model}`}
-                currentBid={auction.currentPrice}
-                bidCount={auction.bids.length ?? 0}
-                timeLeft={auction.endUtc}
-              />
-            </div>
-          ))
+          filteredAuctions.map((auction) => {
+            const vehicle = auction?.vehicle;
+            if (!vehicle) return null;
+
+            return (
+              <div key={auction.auctionId} className={classes.cardWrapper}>
+                <CarImage
+                  status={auction.status}
+                  onClick={() => redirectToAuctionDetails(auction.auctionId)}
+                  className={classes.fixedHeight}
+                />
+                <VehicleAuctionInfo
+                  vehicleName={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
+                  currentBid={auction.currentPrice}
+                  bidCount={auction.bids?.length ?? 0}
+                  timeLeft={auction.endUtc}
+                />
+              </div>
+            );
+          })
         )}
       </div>
     </div>

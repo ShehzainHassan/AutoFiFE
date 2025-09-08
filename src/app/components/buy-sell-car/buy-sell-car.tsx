@@ -1,3 +1,5 @@
+"use client";
+
 import { ButtonPrimary } from "@/app/components";
 import { BUY_CARD, SELL_CARD } from "@/constants/button-primary-themes";
 import headings from "@/styles/typography.module.css";
@@ -6,15 +8,20 @@ import Image from "next/image";
 import classes from "./buy-sell-car.module.css";
 import { CarCardProps } from "./buy-sell-car.types";
 import ArrowWhiteIcon from "@/assets/images/icons/arrow-white.png";
+
 export default function BuySellCard({
   title,
   description,
   imgSrc = "/images/buy.png",
   type,
 }: CarCardProps) {
+  const theme = type === "Buy" ? BUY_CARD : SELL_CARD;
+
   return (
-    <div
+    <section
       className={classes.card}
+      role="region"
+      aria-label={`${type} car card`}
       style={{
         backgroundColor:
           type === "Buy" ? "var(--color-blue100)" : "var(--color-pink100)",
@@ -23,32 +30,24 @@ export default function BuySellCard({
       <p className={`${headings.criteriaText} ${classes.description}`}>
         {description}
       </p>
-      {type === "Buy" ? (
-        <ThemeProvider value={BUY_CARD}>
-          <ButtonPrimary
-            btnText="Get started"
-            imgPos="right"
-            imgSrc={ArrowWhiteIcon}
-          />
-        </ThemeProvider>
-      ) : (
-        <ThemeProvider value={SELL_CARD}>
-          <ButtonPrimary
-            btnText="Get started"
-            imgPos="right"
-            imgSrc={ArrowWhiteIcon}
-          />
-        </ThemeProvider>
-      )}
+
+      <ThemeProvider value={theme}>
+        <ButtonPrimary
+          btnText="Get started"
+          imgPos="right"
+          imgSrc={ArrowWhiteIcon}
+          className={classes.buttonPrimary}
+        />
+      </ThemeProvider>
 
       <Image
         src={imgSrc}
         className={classes.image}
-        alt="car"
+        alt={`${type} car illustration`}
         width={110}
         height={110}
         loading="lazy"
       />
-    </div>
+    </section>
   );
 }

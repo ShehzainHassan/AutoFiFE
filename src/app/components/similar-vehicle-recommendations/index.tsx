@@ -1,1 +1,1 @@
-export { default } from "./similar-vehicle-recommendations-container";
+export { default } from "./similar-vehicle-recommendations";

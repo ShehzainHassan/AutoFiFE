@@ -10,7 +10,6 @@ const ResultHeader = ({ resultText }: ResultHeaderProps) => {
   return (
     <div className={classes.resultHeader}>
       <h1 className={headings.resultTitle}>{resultText}</h1>
-
       <div className={classes.resultHeaderText}>
         <p className={classes.text}>
           See our <span className={classes.bold}>3,517</span> reviews on

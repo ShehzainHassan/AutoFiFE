@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import classes from "./need-help.module.css";
 import BoxAssistantLogo from "@/assets/images/logos/box-assistant.png";
@@ -8,23 +9,29 @@ import { useSession } from "@/contexts/session-context";
 export default function NeedHelp() {
   const router = useRouter();
   const { setSelectedSessionId } = useSession();
-  const redirectToBoxAssistantPage = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
+
+  const redirectToBoxAssistantPage = () => {
     setSelectedSessionId(null);
     router.push("/box-assistant");
   };
 
   return (
-    <div className={classes.container} onClick={redirectToBoxAssistantPage}>
-      <div className={classes.subContainer}>
+    <button
+      type="button"
+      className={classes.container}
+      onClick={redirectToBoxAssistantPage}
+      aria-label="Navigate to Box Assistant help page">
+      <span className={classes.subContainer}>
         <Image
           src={BoxAssistantLogo}
-          alt="box-assistant-logo"
+          alt="Box Assistant logo"
           width={60}
           height={60}
+          loading="lazy"
+          placeholder="blur"
         />
-        <p className={classes.text}>Need Help ?</p>
-      </div>
-    </div>
+        <span className={classes.text}>Need Help?</span>
+      </span>
+    </button>
   );
 }

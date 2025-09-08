@@ -1,23 +1,43 @@
 .container {
   padding: 115px 260px;
 }
-.list {
-  display: flex;
-  justify-content: unset;
-  gap: 180px;
-  padding-top: 35px;
-}
-.subList {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.text:hover {
-  cursor: pointer;
-  text-decoration: underline;
-}
+
 .shopHeader {
   display: flex;
   flex-direction: column;
   gap: 44px;
+}
+
+.list {
+  display: flex;
+  gap: 180px;
+  padding-top: 35px;
+}
+
+.subList {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  gap: 10px;
+}
+
+.text:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.text:focus-visible {
+  outline: 2px solid var(--color-blue500);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding: 60px 30px;
+  }
+
+  .list {
+    flex-direction: column;
+    gap: 40px;
+  }
 }

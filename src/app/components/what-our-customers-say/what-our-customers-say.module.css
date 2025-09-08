@@ -3,27 +3,42 @@
   flex-direction: column;
   gap: 60px;
   background-color: var(--color-white300);
-  padding: 115px 260px;
+  padding: 115px 0;
 }
+
 .reviewContainer {
   display: flex;
   gap: 60px;
   align-items: center;
+  justify-content: center;
+  max-width: 1660px;
+  width: 100%;
+  margin: 0 auto;
 }
-.customer {
+
+.subContainer {
   display: flex;
-  flex-direction: column;
-  gap: 3.5px;
+  gap: 150px;
+  align-items: center;
 }
+
 .review {
   display: flex;
   flex-direction: column;
   gap: 35px;
 }
+
+.customer {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5px;
+}
+
 .stars {
   display: flex;
   gap: 2px;
 }
+
 .star::before {
   content: "★";
   color: var(--color-yellow500);
@@ -32,18 +47,15 @@
   line-height: 18.5px;
   letter-spacing: 5px;
 }
+
 .rating {
   display: flex;
   gap: 10px;
 }
+
 .ratingContainer {
   color: var(--color-white100);
   padding: 1px 10px;
   background-color: var(--color-yellow500);
   border-radius: 28px;
-}
-.subContainer {
-  display: flex;
-  gap: 150px;
-  align-items: center;
 }

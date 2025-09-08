@@ -11,13 +11,15 @@ export default function ButtonNavigate({
   whiteButton = false,
   opacity = 1,
   className,
+  ariaLabel,
 }: ButtonNavigateProps) {
   const imageSrc = whiteButton ? "/images/next-white.png" : "/images/next.png";
 
   const imageClassName = type === "prev" ? classes.prev : "";
 
   return (
-    <div
+    <button
+      aria-label={ariaLabel}
       className={`${classes.container} ${className}`}
       onClick={onClick}
       style={{ backgroundColor, opacity }}>
@@ -29,6 +31,6 @@ export default function ButtonNavigate({
         height={height}
         loading="lazy"
       />
-    </div>
+    </button>
   );
 }

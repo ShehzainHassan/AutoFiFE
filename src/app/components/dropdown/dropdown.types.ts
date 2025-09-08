@@ -19,6 +19,7 @@ export type LabelProps = {
 };
 
 export type SelectComponentProps = {
+  id?: string;
   options: Options[];
   placeholder?: string;
   className?: string;

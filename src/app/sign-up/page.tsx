@@ -53,30 +53,44 @@ export default function SignUp() {
             title="Become an exclusive member"
             subTitle="Sign Up and Join the partnership"
           />
-          <div className={classes.fields}>
-            <div className={classes.inputContainer}>
+          <form
+            className={classes.fields}
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            noValidate>
+            <fieldset className={classes.inputContainer}>
               <AuthInput
                 iconImg="/images/icon-user.png"
                 value={values.name ?? ""}
                 placeholder="Johnson Doe"
                 onChange={handleChange("name")}
                 className={errors.name ? classes.redBorder : undefined}
+                aria-describedby="name-error"
+                autoComplete="name"
               />
-              {errors.name && <p className={classes.error}>{errors.name}</p>}
-            </div>
+              <p id="name-error" className={classes.error} aria-live="polite">
+                {errors.name ?? ""}
+              </p>
+            </fieldset>
 
-            <div className={classes.inputContainer}>
+            <fieldset className={classes.inputContainer}>
               <AuthInput
                 iconImg="/images/message.png"
                 value={values.email}
                 placeholder="example@email.com"
                 onChange={handleChange("email")}
                 className={errors.email ? classes.redBorder : undefined}
+                aria-describedby="email-error"
+                autoComplete="email"
               />
-              {errors.email && <p className={classes.error}>{errors.email}</p>}
-            </div>
+              <p id="email-error" className={classes.error} aria-live="polite">
+                {errors.email ?? ""}
+              </p>
+            </fieldset>
 
-            <div className={classes.inputContainer}>
+            <fieldset className={classes.inputContainer}>
               <AuthInput
                 iconImg="/images/password.png"
                 value={values.password}
@@ -84,24 +98,30 @@ export default function SignUp() {
                 placeholder="Password"
                 onChange={handleChange("password")}
                 className={errors.password ? classes.redBorder : undefined}
+                aria-describedby="password-error"
+                autoComplete="new-password"
               />
-              {errors.password && (
-                <p className={classes.error}>{errors.password}</p>
-              )}
-            </div>
+              <p
+                id="password-error"
+                className={classes.error}
+                aria-live="polite">
+                {errors.password ?? ""}
+              </p>
+            </fieldset>
 
             <AuthButton
               btnText="Become a Member"
               onClick={handleSubmit}
               disabled={isPending || loginPending}
             />
+
             {(isPending || loginPending) && (
               <div className={loadingClass.loading}>
                 <Loading />
               </div>
             )}
             <ToastContainer />
-          </div>
+          </form>
         </div>
         <NeedHelp />
       </div>

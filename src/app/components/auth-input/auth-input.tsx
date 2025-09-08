@@ -1,7 +1,8 @@
 "use client";
+
 import Image from "next/image";
 import classes from "./auth-input.module.css";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { AuthInputFieldProps } from "./auth-input.types";
 
 export default function AuthInputField({
@@ -10,30 +11,47 @@ export default function AuthInputField({
   onChange,
   placeholder = "",
   type = "text",
-  className,
+  className = "",
+  autoComplete,
+  disabled,
 }: AuthInputFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const isPassword = type === "password";
   const inputType = isPassword && showPassword ? "text" : type;
 
-  const toggleShowPassword = () => setShowPassword((prev) => !prev);
+  const toggleShowPassword = useCallback(() => {
+    setShowPassword((prev) => !prev);
+  }, []);
+
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange?.(e);
+    },
+    [onChange]
+  );
+
   return (
     <div className={`${classes.inputContainer} ${className}`}>
       <Image
         src={iconImg}
-        alt="icon"
+        alt=""
         width={24}
         height={24}
         loading="lazy"
         className={classes.icon}
+        aria-hidden="true"
       />
       <input
         type={inputType}
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
         placeholder={placeholder}
         className={classes.input}
+        aria-label={placeholder || "Input field"}
+        aria-required="true"
+        autoComplete={autoComplete}
+        disabled={disabled}
       />
       {isPassword && (
         <button

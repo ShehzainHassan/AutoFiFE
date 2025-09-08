@@ -1,15 +1,24 @@
 .container {
   display: flex;
+  align-items: center;
   gap: 10px;
   border-radius: 44px;
   background-color: var(--color-white100_opaque_18);
   padding: 10px 30px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  border: none;
 }
+
 .container:hover {
   background-color: var(--color-black100);
 }
+
+.container:focus-visible {
+  outline: 2px solid var(--color-white100);
+  outline-offset: 2px;
+}
+
 .white {
   color: var(--color-white100);
 }

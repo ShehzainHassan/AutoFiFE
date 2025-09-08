@@ -1,1 +1,1 @@
-export { default } from "./watchlist-image-card-container";
+export { default as WatchlistImageCard } from "./watchlist-image-card";

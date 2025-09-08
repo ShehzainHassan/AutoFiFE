@@ -1,4 +1,5 @@
 "use client";
+
 import { PAGE_SIZE } from "@/constants";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import {
@@ -8,38 +9,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classes from "./pagination.module.css";
 import { PaginationProps } from "./pagination.types";
+
 export default function Pagination({ totalCount }: PaginationProps) {
   const { searchParams, setSearchParams } = useSearch();
-  const handleFirstPage = () => {
-    setSearchParams({
-      ...searchParams,
-      offset: 0,
-    });
-  };
-
-  const handleLastPage = () => {
-    const totalPages = Math.ceil((totalCount ?? 0) / PAGE_SIZE);
-    const lastOffset = (totalPages - 1) * PAGE_SIZE;
-
-    setSearchParams({
-      ...searchParams,
-      offset: lastOffset,
-    });
-  };
-
-  const handlePrev = () => {
-    setSearchParams({
-      ...searchParams,
-      offset: searchParams.offset - PAGE_SIZE,
-    });
-  };
-
-  const handleNext = () => {
-    setSearchParams({
-      ...searchParams,
-      offset: searchParams.offset + PAGE_SIZE,
-    });
-  };
 
   const totalPages = Math.ceil((totalCount ?? 0) / PAGE_SIZE);
   const currentPage = Math.floor(searchParams.offset / PAGE_SIZE) + 1;
@@ -47,41 +19,81 @@ export default function Pagination({ totalCount }: PaginationProps) {
   const isNextDisabled = currentPage === totalPages;
 
   if (totalCount === 0) return null;
+
+  const handleFirstPage = () => {
+    if (!isPrevDisabled) {
+      setSearchParams({ ...searchParams, offset: 0 });
+    }
+  };
+
+  const handleLastPage = () => {
+    if (!isNextDisabled) {
+      const lastOffset = (totalPages - 1) * PAGE_SIZE;
+      setSearchParams({ ...searchParams, offset: lastOffset });
+    }
+  };
+
+  const handlePrev = () => {
+    if (!isPrevDisabled) {
+      setSearchParams({
+        ...searchParams,
+        offset: searchParams.offset - PAGE_SIZE,
+      });
+    }
+  };
+
+  const handleNext = () => {
+    if (!isNextDisabled) {
+      setSearchParams({
+        ...searchParams,
+        offset: searchParams.offset + PAGE_SIZE,
+      });
+    }
+  };
+
   return (
-    <div className={classes.pagination}>
-      <div
-        className={`${classes.buttonContainer} ${
-          isPrevDisabled ? classes.buttonDisabled : ""
-        }`}
-        onClick={handleFirstPage}>
+    <nav className={classes.pagination} aria-label="Pagination">
+      <button
+        className={classes.buttonContainer}
+        onClick={handleFirstPage}
+        disabled={isPrevDisabled}
+        aria-label="Go to first page"
+        aria-disabled={isPrevDisabled}>
         <FontAwesomeIcon icon={faChevronLeft} />
         <FontAwesomeIcon icon={faChevronLeft} />
-      </div>
-      <div
-        className={`${classes.buttonContainer} ${
-          isPrevDisabled ? classes.buttonDisabled : ""
-        }`}
-        onClick={!isPrevDisabled ? handlePrev : undefined}>
+      </button>
+
+      <button
+        className={classes.buttonContainer}
+        onClick={handlePrev}
+        disabled={isPrevDisabled}
+        aria-label="Go to previous page"
+        aria-disabled={isPrevDisabled}>
         <FontAwesomeIcon icon={faChevronLeft} />
-      </div>
-      <div>
+      </button>
+
+      <div aria-current="page">
         Page {currentPage.toLocaleString()} of {totalPages.toLocaleString()}
       </div>
-      <div
-        className={`${classes.buttonContainer} ${
-          isNextDisabled ? classes.buttonDisabled : ""
-        }`}
-        onClick={!isNextDisabled ? handleNext : undefined}>
+
+      <button
+        className={classes.buttonContainer}
+        onClick={handleNext}
+        disabled={isNextDisabled}
+        aria-label="Go to next page"
+        aria-disabled={isNextDisabled}>
         <FontAwesomeIcon icon={faChevronRight} />
-      </div>
-      <div
-        className={`${classes.buttonContainer} ${
-          isNextDisabled ? classes.buttonDisabled : ""
-        }`}
-        onClick={handleLastPage}>
+      </button>
+
+      <button
+        className={classes.buttonContainer}
+        onClick={handleLastPage}
+        disabled={isNextDisabled}
+        aria-label="Go to last page"
+        aria-disabled={isNextDisabled}>
         <FontAwesomeIcon icon={faChevronRight} />
         <FontAwesomeIcon icon={faChevronRight} />
-      </div>
-    </div>
+      </button>
+    </nav>
   );
 }

@@ -4,33 +4,43 @@
   padding: 10px 10px 10px 30px;
   border-radius: 80px;
   background-color: var(--color-white100);
+  flex-wrap: wrap;
 }
 
-.criteriaContainer {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-}
-
-.verticalBorder {
-  border: 1px solid var(--color-gray100);
-}
-.priceContainer {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  cursor: pointer;
-}
-
+.criteriaContainer,
 .priceBtnContainer {
   display: flex;
   align-items: center;
+  gap: 10px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.verticalBorder {
+  border-left: 1px solid var(--color-gray100);
+  height: 100%;
+}
+
+.dropdownLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.visuallyHidden {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 @media (max-width: 1023px) {
   .container {
-    gap: 15px;
     flex-direction: column;
+    gap: 15px;
     border-radius: 20px;
     width: 100%;
     padding: 10px;

@@ -11,9 +11,7 @@ import { ButtonNavigate } from "@/app/components";
 const CarImages = dynamic(() => import("../car-images/car-images"));
 
 const HandleShare = dynamic(() => import("../handle-share/handle-share"));
-const HandleLikeContainer = dynamic(
-  () => import("../handle-like/handle-like-container")
-);
+const HandleLikeContainer = dynamic(() => import("../handle-like/handle-like"));
 
 export default function CarImageGallery({ vehicle }: CarImageGalleryProps) {
   const images = [

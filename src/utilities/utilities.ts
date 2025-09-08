@@ -1,4 +1,9 @@
-import { CURRENCY, MODEL_OPTIONS } from "@/constants";
+import {
+  CURRENCY,
+  DEFAULT_MAKE,
+  DEFAULT_MODEL,
+  MODEL_OPTIONS,
+} from "@/constants";
 import { Options } from "@/interfaces/dropdown-options";
 import { Vehicle, VehicleFilter } from "@/interfaces/vehicle";
 import axios from "axios";
@@ -16,7 +21,7 @@ import analyticsAPI from "@/api/analyticsAPI";
 dayjs.extend(duration);
 
 export function getModelOptions(make: string): Options[] {
-  const isAnyMake = !make || make === "Any_Makes";
+  const isAnyMake = !make || make === DEFAULT_MAKE;
   if (isAnyMake) {
     return [{ label: "Any Models", value: "Any_Models" }];
   }
@@ -34,7 +39,7 @@ export function getMakeByModel(modelName: string): string {
       return make;
     }
   }
-  return "Any_Makes";
+  return DEFAULT_MAKE;
 }
 export function getPriceRange(priceValue: string): PriceRange {
   if (!priceValue || priceValue === "All_Prices") {
@@ -66,7 +71,7 @@ export function convertArrayToString(arr: string[]): string {
   return arr.join(",");
 }
 export function getResultTitle(make: string, model: string): string {
-  const isAnyMake = make === "Any_Makes";
+  const isAnyMake = make === DEFAULT_MAKE;
   const isAnyModel = model === "Any_Models";
 
   if (isAnyMake && isAnyModel) {
@@ -251,16 +256,18 @@ export function formatMakeOptions(makes: string[] = []) {
     value: specialMakes.includes(make) ? make : make.replace(/\s+/g, "-"),
   }));
 
-  return [{ label: "Any Makes", value: "Any_Makes" }, ...dynamicOptions];
+  return [{ label: "Any Makes", value: DEFAULT_MAKE }, ...dynamicOptions];
 }
 export function getFAQTitle(make: string, model: string): string {
-  if (make !== "Any_Makes" && model === "Any_Models") return `${make}`;
-  if (make !== "Any_Makes" && model !== "Any_Models") return `${make} ${model}`;
+  if (make !== DEFAULT_MAKE && model === DEFAULT_MODEL) return `${make}`;
+  if (make !== DEFAULT_MAKE && model !== DEFAULT_MODEL)
+    return `${make} ${model}`;
   return "";
 }
 export function getVehicleText(make: string, model: string): string {
-  if (make !== "Any_Makes" && model === "Any_Models") return `${make}`;
-  if (make !== "Any_Makes" && model !== "Any_Models") return `${make} ${model}`;
+  if (make !== DEFAULT_MAKE && model === DEFAULT_MODEL) return `${make}`;
+  if (make !== DEFAULT_MAKE && model !== DEFAULT_MODEL)
+    return `${make} ${model}`;
   return "BoxCars vehicles";
 }
 export function getTokenFromLocalStorage(): string | null {
@@ -654,8 +661,8 @@ export function sanitizeVehicleFilters(
 
   return {
     ...rest,
-    ...(make !== "Any_Makes" ? { make } : {}),
-    ...(model !== "Any_Models" ? { model } : {}),
+    ...(make !== DEFAULT_MAKE ? { make } : {}),
+    ...(model !== DEFAULT_MODEL ? { model } : {}),
   };
 }
 

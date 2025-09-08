@@ -4,10 +4,16 @@
   padding: 12px 12px 0;
   cursor: pointer;
 }
+
+.carDetails:focus-within {
+  box-shadow: 0 0 0 2px var(--color-blue500);
+}
+
 .cardMiddle {
   display: flex;
   justify-content: space-between;
 }
+
 .modal {
   position: absolute;
   top: 50%;
@@ -18,6 +24,11 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   width: 90%;
   max-width: 640px;
+  outline: none;
+}
+
+.cardTop {
+  outline: none;
 }
 .overlay {
   position: fixed;
@@ -28,15 +39,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
-.modalContent {
-  border: none !important;
-  border-radius: unset !important;
-  background-color: var(--color-white100);
-  padding: 0 30px 30px 30px !important;
-  border-bottom-left-radius: 8px !important;
-  border-bottom-right-radius: 8px !important;
-  width: 100% !important;
-}
+
 .modalHeader {
   display: flex;
   justify-content: space-between;
@@ -46,11 +49,21 @@
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
+
 .closeBtn {
   background-color: transparent;
   border: none;
-  outline: none;
   cursor: pointer;
   font-size: 24px;
   color: var(--color-black200);
+}
+
+.modalContent {
+  border: none !important;
+  border-radius: unset !important;
+  background-color: var(--color-white100);
+  padding: 0 30px 30px 30px !important;
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  width: 100% !important;
 }

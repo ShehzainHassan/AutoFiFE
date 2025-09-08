@@ -1,1 +1,1 @@
-export { default } from "./vehicle-selector-container";
+export { default } from "./vehicle-selector";

@@ -24,12 +24,19 @@
 
 .loginBtn {
   border: none;
-  outline: none;
   background: none;
   font-weight: 700;
   text-decoration: underline;
   color: var(--color-gray700);
   cursor: pointer;
+}
+.loginBtn:focus {
+  outline: none;
+}
+.loginBtn:focus-visible {
+  outline: 2px solid var(--color-gray700);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 @media (max-width: 768px) {

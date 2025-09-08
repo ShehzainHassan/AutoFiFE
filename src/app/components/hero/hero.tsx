@@ -5,10 +5,10 @@ import { WHITE_THEME } from "@/styles/tab-styles";
 import { ThemeProvider } from "@/theme/themeContext";
 import FeaturedIcon from "../featured-icons/featured-icons";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
-import NavbarContainer from "../navbar/navbar-container";
 import { SearchForm, useSearchForm } from "../search-form";
 import classes from "./hero.module.css";
 import { HeroProps } from "./hero.types";
+import { Navbar } from "../navbar";
 
 export default function Hero({
   tabs,
@@ -23,7 +23,7 @@ export default function Hero({
     });
   return (
     <div className={classes.hero}>
-      <NavbarContainer />
+      <Navbar />
       <div className={classes.container}>
         <div className={classes.textContainer}>
           <p className={classes.subTitle}>{t("hero.subHeading")}</p>

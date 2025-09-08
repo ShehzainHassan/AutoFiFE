@@ -5,4 +5,6 @@ export type AuthInputFieldProps = {
   placeholder?: string;
   type?: string;
   className?: string;
+  autoComplete?: string;
+  disabled?: boolean;
 };

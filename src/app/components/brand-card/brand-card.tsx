@@ -1,4 +1,5 @@
 "use client";
+
 import headings from "@/styles/typography.module.css";
 import Image from "next/image";
 import classes from "./brand-card.module.css";
@@ -10,15 +11,21 @@ export default function BrandCard({
   onClick,
 }: BrandCardProps) {
   return (
-    <div className={classes.cardContainer} onClick={onClick}>
+    <button
+      type="button"
+      className={classes.cardContainer}
+      onClick={onClick}
+      aria-label={`View details for ${brand}`}>
       <Image
         src={imgSrc}
-        alt="brand-logo"
+        alt={`${brand} logo`}
         width={100}
         height={100}
         loading="lazy"
       />
-      <p className={`${headings.brandText} ${classes.centerText}`}>{brand}</p>
-    </div>
+      <span className={`${headings.brandText} ${classes.centerText}`}>
+        {brand}
+      </span>
+    </button>
   );
 }

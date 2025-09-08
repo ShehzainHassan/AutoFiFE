@@ -1,16 +1,25 @@
+.resultHeaderBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .results {
   display: flex;
   align-items: center;
 }
 
-.resultHeaderBottom {
-  display: flex;
-  justify-content: space-between;
-}
 .noOfResults {
   padding: 0 8px 3px 3px;
   border-right: 1px solid var(--color-gray500);
+  font-weight: 500;
 }
+
 .location {
   margin-left: 5px;
+}
+
+.loading {
+  font-style: italic;
+  color: var(--color-gray500);
 }

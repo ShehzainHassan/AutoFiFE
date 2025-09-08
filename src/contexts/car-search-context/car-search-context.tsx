@@ -1,6 +1,6 @@
 "use client";
 
-import { PAGE_SIZE } from "@/constants";
+import { DEFAULT_MAKE, DEFAULT_MODEL, PAGE_SIZE } from "@/constants";
 import { MAX_YEAR, MIN_YEAR } from "@/constants/years";
 import { SearchParams } from "@/interfaces/search-params";
 import { convertArrayToString, getPriceRange } from "@/utilities/utilities";
@@ -22,8 +22,8 @@ export const CarSearchProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const queryParams = useSearchParams();
 
-  const make = queryParams.get("make") || "Any_Makes";
-  const model = queryParams.get("model") || "Any_Models";
+  const make = queryParams.get("make") || DEFAULT_MAKE;
+  const model = queryParams.get("model") || DEFAULT_MODEL;
   const price = queryParams.get("price") || "All_Prices";
   const status = queryParams.get("status") || "Any";
   const gearboxParam = queryParams.get("gearbox") || "Any";

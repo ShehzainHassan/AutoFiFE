@@ -1,7 +1,7 @@
-import { useSearch } from "@/contexts/car-search-context";
+import { useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useSearch } from "@/contexts/car-search-context";
 import useGetAllMakes from "@/hooks/useGetAllMakes";
-import { useMemo } from "react";
 import {
   convertArrayToString,
   formatMakeOptions,
@@ -9,6 +9,12 @@ import {
   getResultTitle,
 } from "@/utilities/utilities";
 import { SearchParams } from "@/interfaces/search-params";
+import {
+  DEFAULT_COLOR_COUNT,
+  DEFAULT_GEARBOX_COUNT,
+  DEFAULT_MAKE,
+  DEFAULT_MODEL,
+} from "@/constants";
 
 export const useSidebarLogic = (
   setSubmittedParams: (params: SearchParams) => void,
@@ -25,95 +31,115 @@ export const useSidebarLogic = (
   } = useSearch();
 
   const router = useRouter();
-
   const { data: makes, isLoading } = useGetAllMakes();
 
   const makeOptions = useMemo(() => {
-    if (isLoading) return [{ label: "Any Makes", value: "Any_Makes" }];
-    return makes
-      ? formatMakeOptions(makes)
-      : [{ label: "Any Makes", value: "Any_Makes" }];
+    return isLoading || !makes
+      ? [{ label: "Any Makes", value: DEFAULT_MAKE }]
+      : formatMakeOptions(makes);
   }, [makes, isLoading]);
 
-  const modelOptions = useMemo(
-    () => getModelOptions(stagedSearch.stagedMake ?? "Any_Makes"),
-    [stagedSearch.stagedMake]
+  const modelOptions = useMemo(() => {
+    return getModelOptions(stagedSearch.stagedMake ?? DEFAULT_MAKE);
+  }, [stagedSearch.stagedMake]);
+
+  const onMakeChange = useCallback(
+    (value: string) => {
+      setStagedSearch((prev) => ({
+        ...prev,
+        stagedMake: value,
+        stagedModel: DEFAULT_MODEL,
+      }));
+    },
+    [setStagedSearch]
   );
 
-  const onMakeChange = (value: string) => {
-    setStagedSearch({
-      ...stagedSearch,
-      stagedMake: value,
-      stagedModel: "Any_Models",
-    });
-  };
+  const onModelChange = useCallback(
+    (value: string) => {
+      setStagedSearch((prev) => ({
+        ...prev,
+        stagedModel: value,
+      }));
+    },
+    [setStagedSearch]
+  );
 
-  const onModelChange = (value: string) => {
-    setStagedSearch({
-      ...stagedSearch,
-      stagedModel: value,
-    });
-  };
+  const onSearchClick = useCallback(() => {
+    const {
+      stagedMake,
+      stagedModel,
+      stagedStartPrice,
+      stagedEndPrice,
+      stagedStatus,
+      stagedMileage,
+      stagedStartYear,
+      stagedEndYear,
+      stagedGearboxes,
+      stagedColors,
+    } = stagedSearch;
 
-  const onSearchClick = () => {
-    const newParams = {
+    const gearboxText =
+      stagedGearboxes.length > 0 &&
+      stagedGearboxes.length !== DEFAULT_GEARBOX_COUNT
+        ? stagedGearboxes.join(",")
+        : "Any";
+
+    const colorsText =
+      stagedColors.length > 0 && stagedColors.length !== DEFAULT_COLOR_COUNT
+        ? stagedColors.join(",")
+        : "Any";
+
+    const mileageText =
+      stagedMileage === 0 ? "0" : stagedMileage ? `<=${stagedMileage}` : "Any";
+
+    const newParams: SearchParams = {
       ...searchParams,
-      make: stagedSearch.stagedMake,
+      make: stagedMake,
+      model: stagedModel,
       offset: 0,
-      model: stagedSearch.stagedModel,
-      startPrice: stagedSearch.stagedStartPrice,
-      endPrice: stagedSearch.stagedEndPrice,
-      status: stagedSearch.stagedStatus,
-      mileage: stagedSearch.stagedMileage,
-      startYear: stagedSearch.stagedStartYear,
-      endYear: stagedSearch.stagedEndYear,
-      gearbox: convertArrayToString(stagedSearch.stagedGearboxes),
-      selectedColor: convertArrayToString(stagedSearch.stagedColors),
+      startPrice: stagedStartPrice,
+      endPrice: stagedEndPrice,
+      status: stagedStatus,
+      mileage: stagedMileage,
+      startYear: stagedStartYear,
+      endYear: stagedEndYear,
+      gearbox: convertArrayToString(stagedGearboxes),
+      selectedColor: convertArrayToString(stagedColors),
     };
 
     setMainSearch({
       ...mainSearch,
-      make: stagedSearch.stagedMake,
-      model: stagedSearch.stagedModel,
-      startPrice: stagedSearch.stagedStartPrice,
-      endPrice: stagedSearch.stagedEndPrice,
-      status: stagedSearch.stagedStatus,
-      mileage: stagedSearch.stagedMileage,
-      startYear: stagedSearch.stagedStartYear,
-      endYear: stagedSearch.stagedEndYear,
-      selectedGearboxes: stagedSearch.stagedGearboxes,
-      selectedColors: stagedSearch.stagedColors,
+      make: stagedMake,
+      model: stagedModel,
+      startPrice: stagedStartPrice,
+      endPrice: stagedEndPrice,
+      status: stagedStatus,
+      mileage: stagedMileage,
+      startYear: stagedStartYear,
+      endYear: stagedEndYear,
+      selectedGearboxes: stagedGearboxes,
+      selectedColors: stagedColors,
     });
 
     setSearchParams(newParams);
     setSubmittedParams(newParams);
     setExpandedSections(new Set());
-
-    setResultText(
-      getResultTitle(stagedSearch.stagedMake, stagedSearch.stagedModel)
-    );
-
-    let mileageText = stagedSearch.stagedMileage
-      ? `<=${stagedSearch.stagedMileage}`
-      : "Any";
-    if (stagedSearch.stagedMileage === 0) mileageText = "0";
-
-    const gearboxText =
-      stagedSearch.stagedGearboxes.length > 0 &&
-      stagedSearch.stagedGearboxes.length !== 3
-        ? stagedSearch.stagedGearboxes.join(",")
-        : "Any";
-
-    const colorsText =
-      stagedSearch.stagedColors.length > 0 &&
-      stagedSearch.stagedColors.length !== 16
-        ? stagedSearch.stagedColors.join(",")
-        : "Any";
+    setResultText(getResultTitle(stagedMake, stagedModel));
 
     router.push(
-      `/search?make=${stagedSearch.stagedMake}&model=${stagedSearch.stagedModel}&price=${mainSearch.price}&mileage=${mileageText}&startYear=${stagedSearch.stagedStartYear}&endYear=${stagedSearch.stagedEndYear}&gearbox=${gearboxText}&colors=${colorsText}&status=${stagedSearch.stagedStatus}`
+      `/search?make=${stagedMake}&model=${stagedModel}&price=${mainSearch.price}&mileage=${mileageText}&startYear=${stagedStartYear}&endYear=${stagedEndYear}&gearbox=${gearboxText}&colors=${colorsText}&status=${stagedStatus}`
     );
-  };
+  }, [
+    stagedSearch,
+    mainSearch,
+    searchParams,
+    setMainSearch,
+    setSearchParams,
+    setSubmittedParams,
+    setExpandedSections,
+    setResultText,
+    router,
+  ]);
 
   return {
     makeOptions,

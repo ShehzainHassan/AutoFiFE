@@ -1,30 +1,36 @@
+import { useMemo } from "react";
 import useTranslation from "@/i18n";
 import headings from "@/styles/typography.module.css";
 import classes from "../shop.module.css";
+
 const VehicleList = () => {
   const { t } = useTranslation();
-  const carsList = t("shop");
+  const carsList = useMemo(() => t("shop") ?? {}, [t]);
 
   return (
-    <div className={`${classes.list}`}>
-      {Object.values(carsList).map((column, index) => (
-        <div key={index} className={classes.subList}>
+    <div className={classes.list} role="list">
+      {Object.entries(carsList).map(([key, column]) => (
+        <ul key={key} className={classes.subList} aria-label={key}>
           {Array.isArray(column) ? (
             column.map((carName, idx) => (
-              <p
+              <li
                 key={idx}
-                className={`${headings.criteriaText} ${classes.text}`}>
+                className={`${headings.criteriaText} ${classes.text}`}
+                tabIndex={0}>
                 {carName}
-              </p>
+              </li>
             ))
           ) : (
-            <p className={`${headings.criteriaText} ${classes.text}`}>
+            <li
+              className={`${headings.criteriaText} ${classes.text}`}
+              tabIndex={0}>
               {column}
-            </p>
+            </li>
           )}
-        </div>
+        </ul>
       ))}
     </div>
   );
 };
+
 export default VehicleList;

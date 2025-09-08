@@ -5,6 +5,7 @@ import { SectionTitleProps } from "./section-title.types";
 import ArrowIcon from "@/assets/images/icons/arrow.svg";
 export default function SectionTitle({
   title,
+  titleId,
   buttonText,
   backgroundColor = "var(--color-white100)",
   showButton = true,
@@ -14,6 +15,7 @@ export default function SectionTitle({
 }: SectionTitleProps) {
   return (
     <div
+      id={titleId}
       className={`${classes.headingsContainer}`}
       style={{ backgroundColor, color }}>
       <h1 className={headings.sectionTitle}>{title}</h1>

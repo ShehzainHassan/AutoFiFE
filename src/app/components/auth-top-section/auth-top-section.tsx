@@ -1,11 +1,12 @@
 "use client";
+
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classes from "./auth-top-section.module.css";
 import { useRouter } from "next/navigation";
 import { TopSectionProps } from "./auth-top-section.types";
 import { IconButton } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 
@@ -16,42 +17,56 @@ export default function TopSection({
   onClick,
 }: TopSectionProps) {
   const router = useRouter();
-  const redirectToHome = () => {
-    router.push("/");
-  };
-
   const [isDark, setIsDark] = useState(false);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("theme");
-      setIsDark(stored === "dark");
-      document.body.classList.toggle("dark", stored === "dark");
-    }
-  }, []);
+  const redirectToHome = useCallback(() => {
+    router.push("/");
+  }, [router]);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     const newTheme = isDark ? "light" : "dark";
     localStorage.setItem("theme", newTheme);
     document.body.classList.toggle("dark", newTheme === "dark");
     setIsDark(!isDark);
-  };
+  }, [isDark]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("theme");
+    const dark = stored === "dark";
+    setIsDark(dark);
+    document.body.classList.toggle("dark", dark);
+  }, []);
 
   return (
-    <div className={classes.buttonsContainer}>
-      <div className={classes.buttonLeft} onClick={redirectToHome}>
+    <section
+      className={classes.buttonsContainer}
+      role="region"
+      aria-label="Authentication top section">
+      <div
+        className={classes.buttonLeft}
+        role="link"
+        tabIndex={0}
+        onClick={redirectToHome}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") redirectToHome();
+        }}
+        aria-label={backText}>
         <FontAwesomeIcon icon={faChevronLeft} className={classes.icon} />
-        <div>{backText}</div>
+        <span>{backText}</span>
       </div>
+
       <div className={classes.buttonRight}>
-        <div>{textRight}</div>
+        <span>{textRight}</span>
         <button
           aria-label={btnText}
           className={classes.loginBtn}
-          onClick={onClick}>
+          onClick={onClick}
+          type="button">
           {btnText}
         </button>
-        <IconButton onClick={toggleTheme} aria-label="Toggle dark mode">
+        <IconButton
+          onClick={toggleTheme}
+          aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}>
           {isDark ? (
             <LightModeIcon style={{ color: "var(--color-white100)" }} />
           ) : (
@@ -59,6 +74,6 @@ export default function TopSection({
           )}
         </IconButton>
       </div>
-    </div>
+    </section>
   );
 }

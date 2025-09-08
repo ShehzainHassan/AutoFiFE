@@ -1,7 +1,7 @@
-import useTracking from "@/hooks/useTracking";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import Modal from "react-modal";
+import useTracking from "@/hooks/useTracking";
 import ContactFormContainer from "../../contact-info-form/contact-form-container";
 import CardBottom from "../card-bottom/card-bottom";
 import CardHeader from "../card-header/card-header";
@@ -18,39 +18,49 @@ const CarDetails = ({ id, carTitle, miles, price }: CarDetailsProps) => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const addInteraction = useTracking();
-  const handleRedirect = () => {
+
+  const handleRedirect = useCallback(() => {
     router.push(`/cars/${id}`);
     addInteraction.mutate({ vehicleId: id, interactionType: "view" });
-  };
+  }, [id, router, addInteraction]);
+
   return (
-    <div className={classes.carDetails}>
-      <div onClick={handleRedirect}>
+    <section className={classes.carDetails} aria-labelledby={`car-${id}-title`}>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={handleRedirect}
+        className={classes.cardTop}
+        onKeyDown={(e) => e.key === "Enter" && handleRedirect()}
+        aria-label={`View details for ${carTitle}`}>
         <CardHeader {...{ carTitle, miles, price }} />
         <div className={classes.cardMiddle}>
           <PartnerInfo />
           <EstimatedMonthly />
         </div>
-
         <Rating />
-        <Features />
+        <Features features="Leather seats . Alloy wheels" />
       </div>
+
       <ContactInfoResultCard setIsModalOpen={setIsModalOpen} />
       <CardBottom />
+
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
         contentLabel="Request Info Modal"
         ariaHideApp={false}
+        aria-modal="true"
         className={classes.modal}
         overlayClassName={classes.overlay}>
         <div>
           <div className={classes.modalHeader}>
-            <h2>Request information</h2>
+            <h2 id={`car-${id}-title`}>Request information</h2>
             <button
-              aria-label="Close"
+              aria-label="Close modal"
               className={classes.closeBtn}
               onClick={() => setIsModalOpen(false)}>
-              X
+              <span aria-hidden="true">×</span>
             </button>
           </div>
           <ContactFormProvider>
@@ -58,7 +68,8 @@ const CarDetails = ({ id, carTitle, miles, price }: CarDetailsProps) => {
           </ContactFormProvider>
         </div>
       </Modal>
-    </div>
+    </section>
   );
 };
+
 export default CarDetails;

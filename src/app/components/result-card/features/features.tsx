@@ -1,10 +1,26 @@
 import classes from "./features.module.css";
 import headings from "@/styles/typography.module.css";
-const Features = () => (
-  <div className={`${classes.features} ${headings.smallText}`}>
-    <p>Leather seats</p>
-    <p>.</p>
-    <p>Alloy wheels</p>
-  </div>
-);
+import { FeaturesProps } from "./features.types";
+
+const Features = ({ features }: FeaturesProps) => {
+  const featureList = features
+    .split(".")
+    .map((f) => f.trim())
+    .filter(Boolean);
+
+  return (
+    <div
+      className={`${classes.features} ${headings.smallText}`}
+      aria-label="Vehicle features">
+      <ul className={classes.featureList}>
+        {featureList.map((feature, index) => (
+          <li key={index} className={classes.featureItem}>
+            {feature}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
 export default Features;

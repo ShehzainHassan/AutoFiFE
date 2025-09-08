@@ -1,5 +1,6 @@
 export type SectionTitleProps = {
   title: string;
+  titleId?: string;
   buttonText?: string;
   backgroundColor?: string;
   showButton?: boolean;

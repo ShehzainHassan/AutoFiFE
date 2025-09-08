@@ -1,22 +1,27 @@
-import { ThemeProvider } from "@/theme/themeContext";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
+import { ThemeProvider } from "@/theme/themeContext";
+import ButtonPrimary from "../buttons/button-primary";
+import Dropdown from "../dropdown";
+import Filters from "../filters";
 import classes from "./sidebar.module.css";
-import { SidebarViewProps } from "./sidebar.types";
-import { Dropdown } from "@/app/components/";
-import { ButtonPrimary } from "@/app/components";
-import Filters from "../filters/filters";
+import { SidebarContainerProps } from "./sidebar.types";
+import { useSidebarLogic } from "./useSidebarLogic";
+export default function SidebarContainer({
+  setSubmittedParams,
+  setResultText,
+}: SidebarContainerProps) {
+  const {
+    makeOptions,
+    modelOptions,
+    stagedMake,
+    stagedModel,
+    onMakeChange,
+    onModelChange,
+    onSearchClick,
+  } = useSidebarLogic(setSubmittedParams, setResultText);
 
-export default function SidebarView({
-  makeOptions,
-  modelOptions,
-  stagedMake,
-  stagedModel,
-  onMakeChange,
-  onModelChange,
-  onSearchClick,
-}: SidebarViewProps) {
   return (
-    <div className={classes.filterContainer}>
+    <aside className={classes.filterContainer} aria-labelledby="sidebar-title">
       <div className={classes.filters}>
         <Dropdown
           value={stagedMake}
@@ -41,6 +46,6 @@ export default function SidebarView({
         </div>
       </div>
       <Filters />
-    </div>
+    </aside>
   );
 }

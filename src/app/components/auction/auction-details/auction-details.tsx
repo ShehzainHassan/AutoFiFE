@@ -4,7 +4,7 @@ import {
   AuctionCardCarousel,
   AuctionDetailsHeader,
   BidHistoryContainer,
-  WatchListCard,
+  WatchlistImageCard,
   InfoTabs,
   AuctionNotificationSettings,
 } from "@/app/components";
@@ -12,7 +12,7 @@ import { usePanel } from "@/contexts/panel-context/panel-context";
 import useAuctionById from "@/hooks/useAuctionById";
 import useTrackAuctionView from "@/hooks/useTrackAuctionView";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useRef, useMemo, Profiler } from "react";
+import { useEffect, useRef, useMemo, useCallback, Profiler } from "react";
 import ErrorMessage from "../../error-message";
 import Loading from "../../loading";
 import classes from "./auction-details.module.css";
@@ -25,6 +25,7 @@ export default function AuctionDetails() {
   const router = useRouter();
   const { panel } = usePanel();
   const params = useParams();
+
   const id = useMemo(() => (params.id ? Number(params.id) : -1), [params.id]);
 
   const { data: auction, isLoading, isError, error } = useAuctionById(id);
@@ -38,16 +39,37 @@ export default function AuctionDetails() {
     }
   }, [id, trackAuctionView]);
 
-  const redirectToLiveAuctions = () => router.push("/auction");
+  const redirectToLiveAuctions = useCallback(() => {
+    router.push("/auction");
+  }, [router]);
 
-  if (isLoading) return <Loading />;
-  if (isError) return <ErrorMessage message={error.message} />;
-  if (!auction) return <p>No auction found.</p>;
+  if (isLoading) {
+    return (
+      <div role="status" aria-live="polite">
+        <Loading />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div role="alert" aria-live="assertive">
+        <ErrorMessage
+          message={(error as Error)?.message ?? "Failed to load auction"}
+        />
+      </div>
+    );
+  }
+
+  if (!auction) {
+    return <p>No auction found.</p>;
+  }
 
   const { vehicle, auctionId } = auction;
 
   return (
-    <ErrorBoundary fallback={<div>Failed to load Auction details</div>}>
+    <ErrorBoundary
+      fallback={<div role="alert">Failed to load Auction details</div>}>
       <Profiler id="AuctionDetails" onRender={trackRender}>
         <div
           className={`${classes.mainContainer} ${
@@ -80,7 +102,7 @@ export default function AuctionDetails() {
                         {vehicle.year} {vehicle.make} {vehicle.model}
                       </h1>
                     </div>
-                    <WatchListCard auctionId={id} />
+                    <WatchlistImageCard auctionId={id} />
                     <InfoTabs />
                     <BidHistoryContainer auctionId={auctionId} />
                   </div>

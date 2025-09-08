@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import SortByContainer from "./sort-by-container";
+import SortByContainer from "./sort-by";
 
 const mockSetSearchParams = jest.fn();
 

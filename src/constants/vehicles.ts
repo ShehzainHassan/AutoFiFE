@@ -1,3 +1,8 @@
+export const DEFAULT_MAKE = "Any_Makes";
+export const DEFAULT_MODEL = "Any_Models";
+export const DEFAULT_GEARBOX_COUNT = 3;
+export const DEFAULT_COLOR_COUNT = 16;
+
 export const PREMIUM_BRANDS = [
   { imgSrc: "/images/audi.png", brand: "Audi" },
   { imgSrc: "/images/bmw.png", brand: "BMW" },

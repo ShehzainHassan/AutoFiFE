@@ -6,7 +6,6 @@ const CardHeader = ({ carTitle, miles, price }: CardHeaderProps) => {
   return (
     <>
       <div className={classes.cardTop}>
-        {/* {specialText && <p className={headings.smallText}>{specialText}</p>} */}
         <h1 className={`${headings.carTitle}`}>{carTitle}</h1>
       </div>
       <div className={classes.distancePrice}>

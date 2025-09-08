@@ -5,24 +5,29 @@ import classes from "./statistics.module.css";
 export default function Statistics() {
   const { t } = useTranslation();
   const statistics = t("statistics");
-  return (
-    <>
-      <div className={classes.statsContainer}>
-        {Array.isArray(statistics) &&
-          statistics.length > 0 &&
-          statistics.map((statItem, index) => {
-            const key = Object.keys(statItem)[0];
-            const { value, label } = statItem[key];
 
-            return (
-              <div key={index} className={classes.statContainer}>
-                <h1 className={headings.numberText}>{value}</h1>
-                <p className={headings.mediumSpaced}>{label}</p>
-              </div>
-            );
-          })}
-      </div>
-      <div className={classes.border} />
-    </>
+  if (!Array.isArray(statistics) || statistics.length === 0) return null;
+
+  return (
+    <section
+      aria-labelledby="statistics-title"
+      className={classes.statsSection}>
+      <dl className={classes.statsContainer}>
+        {statistics.map((statItem, index) => {
+          const key = Object.keys(statItem)[0];
+          const { value, label } = statItem[key] ?? {};
+
+          if (!value || !label) return null;
+
+          return (
+            <div key={index} className={classes.statContainer}>
+              <dt className={headings.numberText}>{value}</dt>
+              <dd className={headings.mediumSpaced}>{label}</dd>
+            </div>
+          );
+        })}
+      </dl>
+      <div className={classes.border} role="presentation" />
+    </section>
   );
 }

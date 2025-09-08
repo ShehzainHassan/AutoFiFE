@@ -1,10 +1,36 @@
 .container {
+  display: flex;
+  flex-direction: column;
   background-color: var(--color-black100);
-  padding: 115px 260px;
+  padding: 115px 0;
 }
 
 .popularMakesHeader {
   display: flex;
   flex-direction: column;
   gap: 44px;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container:focus-within {
+  outline: 2px solid var(--color-blue500);
+  outline-offset: 4px;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding: 80px 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 60px 20px;
+  }
+
+  .popularMakesHeader {
+    gap: 30px;
+  }
 }

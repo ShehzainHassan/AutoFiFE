@@ -31,12 +31,15 @@
 .inputContainer {
   display: flex;
   flex-direction: column;
+  border: none;
 }
 
 .error {
   font-size: 12px;
   font-weight: 500;
   color: var(--color-red500);
+  min-height: 16px;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .redBorder {

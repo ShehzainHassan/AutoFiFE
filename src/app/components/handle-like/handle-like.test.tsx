@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import HandleLikeContainer from "./handle-like-container";
+import HandleLikeContainer from "./handle-like";
 import { toast } from "react-toastify";
 
 type MockHandleLikeProps = {

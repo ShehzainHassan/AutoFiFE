@@ -1,4 +1,4 @@
-import HandleLikeContainer from "../handle-like/handle-like-container";
+import HandleLikeContainer from "../handle-like/handle-like";
 import CarDetails from "./car-details/car-details";
 import CarImage from "./car-image/car-image";
 import classes from "./result-card.module.css";

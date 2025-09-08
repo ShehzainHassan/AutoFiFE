@@ -52,6 +52,7 @@ function SelectComponent({
   components,
   showDropdownIndicator = true,
   isDisabled = false,
+  id,
 }: SelectComponentProps) {
   const context = useContext(DropdownContext);
   if (!context) {
@@ -63,6 +64,7 @@ function SelectComponent({
 
   return (
     <TypedSelect
+      id={id}
       className={`${classes.select} ${className ?? ""}`}
       options={options}
       placeholder={selectPlaceholder}

@@ -3,8 +3,10 @@ import useAddUserLike from "@/hooks/useAddUserLike";
 import useDeleteUserLike from "@/hooks/useDeleteUserLike";
 import useTracking from "@/hooks/useTracking";
 import { getUserIdFromLocalStorage } from "@/utilities/utilities";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { toast } from "react-toastify";
-import HandleLikeView from "./handle-like-view";
+import classes from "./handle-like.module.css";
 import { HandleLikeContainerProps } from "./handle-like.types";
 
 export default function HandleLikeContainer({
@@ -52,5 +54,12 @@ export default function HandleLikeContainer({
     }
   };
 
-  return <HandleLikeView handleLike={handleLike} isLiked={isLiked} />;
+  return (
+    <div
+      className={classes.imgContainer}
+      data-testid="like-button"
+      onClick={handleLike}>
+      {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+    </div>
+  );
 }

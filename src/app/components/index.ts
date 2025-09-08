@@ -40,13 +40,11 @@ export { default as EmailBox } from "./email-box";
 export { default as Filters } from "./filters";
 export { default as HandleShare } from "./handle-share";
 export { default as Footer } from "./footer";
-export { default as SimilarVehicleRecommendations } from "./similar-vehicle-recommendations/similar-vehicle-recommendations-view";
 export { default as VerticalCarousel } from "./vehicle-carousel/vertical-carousel";
 export { default as VehicleInfoCard } from "./car-card/info-card/info-card";
 export { default as VehicleAuctionInfo } from "./auction/live-activity/vehicle-auction-info";
 export { default as DropdownFilter } from "./auction/live-activity/dropdown-filter";
-export { default as LiveActivity } from "./auction/live-activity/live-activity-container";
-export { default as Navbar } from "./navbar/navbar-container";
+
 export { default as AuctionCard } from "./auction/auction-card";
 export { default as AuctionCardCarousel } from "./auction/auction-card-carousel";
 export { default as AuctionSearchField } from "./auction/auction-search-field";
@@ -54,7 +52,6 @@ export { default as AuctionDetailsHeader } from "./auction/auction-details/aucti
 export { default as AuctionStats } from "./auction/auction-details/auction-info-panel/auction-stats/auction-stats.container";
 export { default as AuctionTimer } from "./auction/auction-details/auction-info-panel/auction-timer";
 export { default as AutoBidContainer } from "./auction/auction-details/auction-info-panel/auto-bid-container";
-export { default as WatchListCard } from "./auction/auction-details/watchlist-image-card";
 export { default as LazyComponent } from "./lazy-component";
 
 export * from "./auction/auction-details/auction-info-panel/your-stats";
@@ -66,3 +63,7 @@ export * from "./auction/auction-details/info-tabs";
 export * from "./auction/auction-details/notifications/notification-container";
 export * from "./auction/auction-details/notifications/user-notifications";
 export * from "./auction/auction-details/notifications";
+export * from "./auction/auction-details/watchlist-image-card";
+export * from "./auction/live-activity";
+export * from "./navbar";
+export * from "./similar-vehicle-recommendations";

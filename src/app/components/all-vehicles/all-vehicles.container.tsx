@@ -1,5 +1,5 @@
 "use client";
-import { MAX_YEAR, MIN_YEAR } from "@/constants";
+import { DEFAULT_MAKE, DEFAULT_MODEL, MAX_YEAR, MIN_YEAR } from "@/constants";
 import { useSearch } from "@/contexts/car-search-context";
 import { convertArrayToString, parseStatus } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
@@ -24,8 +24,8 @@ export default function AllVehicles() {
 
     setSearchParams({
       ...searchParams,
-      make: "Any_Makes",
-      model: "Any_Models",
+      make: DEFAULT_MAKE,
+      model: DEFAULT_MODEL,
       offset: 0,
       status: parsedStatus,
       mileage: mainSearch.mileage,
@@ -39,8 +39,8 @@ export default function AllVehicles() {
 
     setMainSearch((prev) => ({
       ...prev,
-      make: "Any_Makes",
-      model: "Any_Models",
+      make: DEFAULT_MAKE,
+      model: DEFAULT_MODEL,
       status: parsedStatus,
       startYear: MIN_YEAR,
       endYear: MAX_YEAR,
@@ -49,7 +49,7 @@ export default function AllVehicles() {
     }));
 
     router.push(
-      `/search?make=${selectedTab}&model=Any_Models&status=${parsedStatus}`
+      `/search?make=${selectedTab}&model=${DEFAULT_MODEL}&status=${parsedStatus}`
     );
   };
 

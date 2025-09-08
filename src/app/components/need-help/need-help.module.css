@@ -1,8 +1,27 @@
 .help {
   display: flex;
-  justify-content: flex-end;
-  padding: 45px 70px;
-  cursor: pointer;
+  align-self: flex-end;
   gap: 10px;
-  align-items: center;
+  width: fit-content;
+  padding: 6px 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.help:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.help:focus-visible {
+  outline: 2px solid var(--color-blue500);
+  outline-offset: 2px;
+}
+
+.text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-black100);
 }

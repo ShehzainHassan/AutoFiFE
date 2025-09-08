@@ -1,18 +1,24 @@
 import Image from "next/image";
 import classes from "./need-help.module.css";
 import HelpIcon from "@/assets/images/icons/help.png";
+
 export default function NeedHelp() {
   return (
-    <div className={classes.help} data-testid="wrapper">
+    <button
+      className={classes.help}
+      data-testid="wrapper"
+      type="button"
+      aria-label="Need help? Contact support">
       <Image
         src={HelpIcon}
         loading="lazy"
         placeholder="blur"
-        alt="help"
+        alt="Help icon"
         width={18}
         height={18}
+        priority={false}
       />
-      <div>Need help?</div>
-    </div>
+      <span className={classes.text}>Need help?</span>
+    </button>
   );
 }

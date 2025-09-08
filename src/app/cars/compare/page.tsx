@@ -4,14 +4,14 @@ import {
   CompareFeatures,
   VehicleSelector,
 } from "@/app/components";
+import NeedHelp from "@/app/components/box-assistant/need-help/need-help";
 import Footer from "@/app/components/footer";
-import NavbarContainer from "@/app/components/navbar";
+import { Navbar } from "@/app/components/navbar";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
 import { CompareVehicle } from "@/interfaces/vehicle";
 import { ThemeProvider } from "@/theme/themeContext";
 import { useState } from "react";
 import classes from "./page.module.css";
-import NeedHelp from "@/app/components/box-assistant/need-help/need-help";
 
 export default function CompareVehiclesPage() {
   const [vehicles, setVehicles] = useState<CompareVehicle[]>([
@@ -44,7 +44,7 @@ export default function CompareVehiclesPage() {
 
   return (
     <>
-      <NavbarContainer backgroundColor="var(--color-gray600)" />
+      <Navbar backgroundColor="var(--color-gray600)" />
       <div className={classes.container}>
         <div className={classes.vehicleContainer}>
           {vehicles.map((v, i) => (

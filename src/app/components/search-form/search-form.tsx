@@ -13,47 +13,55 @@ export const SearchForm = ({
   priceProps,
   onSearch,
 }: SearchFormViewProps) => {
+  const renderDropdown = (
+    id: string,
+    label: string,
+    props: typeof makeProps
+  ) => (
+    <label htmlFor={id} className={classes.dropdownLabel}>
+      <span className={classes.visuallyHidden}>{label}</span>
+      <Dropdown {...props} placeholder={label}>
+        <Dropdown.Select
+          id={id}
+          options={props.options ?? []}
+          styles={customSelectStyles}
+          components={{ DropdownIndicator: CustomDropdownIndicator }}
+        />
+      </Dropdown>
+    </label>
+  );
+
   return (
-    <div className={classes.container}>
-      <div className={classes.criteriaContainer}>
-        <Dropdown {...makeProps} placeholder="Select make">
-          <Dropdown.Select
-            options={makeProps.options ?? []}
-            styles={customSelectStyles}
-            components={{ DropdownIndicator: CustomDropdownIndicator }}
-          />
-        </Dropdown>
+    <form
+      className={classes.container}
+      role="search"
+      aria-label="Search for cars by make, model, and price"
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSearch();
+      }}>
+      <fieldset className={classes.criteriaContainer}>
+        {renderDropdown("make-select", "Select make", makeProps)}
         <div className={classes.verticalBorder} />
-      </div>
+      </fieldset>
 
-      <div className={classes.criteriaContainer}>
-        <Dropdown {...modelProps} placeholder="Select model">
-          <Dropdown.Select
-            options={modelProps.options ?? []}
-            styles={customSelectStyles}
-            components={{ DropdownIndicator: CustomDropdownIndicator }}
-          />
-        </Dropdown>
+      <fieldset className={classes.criteriaContainer}>
+        {renderDropdown("model-select", "Select model", modelProps)}
         <div className={classes.verticalBorder} />
-      </div>
+      </fieldset>
 
-      <div className={classes.priceBtnContainer}>
-        <Dropdown {...priceProps} placeholder="Select price">
-          <Dropdown.Select
-            options={priceProps.options ?? []}
-            styles={customSelectStyles}
-            components={{ DropdownIndicator: CustomDropdownIndicator }}
-          />
-        </Dropdown>
-      </div>
+      <fieldset className={classes.priceBtnContainer}>
+        {renderDropdown("price-select", "Select price", priceProps)}
+      </fieldset>
 
       <ThemeProvider value={SEARCH_CARS}>
         <ButtonPrimary
           imgSrc="/images/search.png"
           btnText="Search Cars"
           onClick={onSearch}
+          aria-label="Submit car search"
         />
       </ThemeProvider>
-    </div>
+    </form>
   );
 };

@@ -9,15 +9,20 @@ export default function FeaturedIcon({
   onClick,
 }: FeaturedIconProps) {
   return (
-    <div className={classes.container} onClick={onClick}>
+    <button
+      className={classes.container}
+      onClick={onClick}
+      aria-label={`View ${model} listings`}
+      type="button">
       <Image
         src={imgSrc}
-        alt="car-icon"
+        alt={`${model} icon`}
         width={25}
         height={16}
         loading="lazy"
+        priority={false}
       />
       <p className={`${headings.modelText} ${classes.white}`}>{model}</p>
-    </div>
+    </button>
   );
 }

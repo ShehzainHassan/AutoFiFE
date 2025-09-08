@@ -9,7 +9,7 @@ import {
 } from "@/utilities/utilities";
 import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { PRICE_OPTIONS } from "@/constants";
+import { DEFAULT_MAKE, PRICE_OPTIONS } from "@/constants";
 import { SearchFormProps } from "@/app/components/search-form";
 
 export function useSearchForm({ statusTab }: SearchFormProps) {
@@ -26,12 +26,12 @@ export function useSearchForm({ statusTab }: SearchFormProps) {
   const { data: makes, isLoading } = useGetAllMakes();
 
   const makeOptions = useMemo(() => {
-    if (isLoading) return [{ label: "Any Makes", value: "Any_Makes" }];
+    if (isLoading) return [{ label: "Any Makes", value: DEFAULT_MAKE }];
     return formatMakeOptions(makes ?? []);
   }, [makes, isLoading]);
 
   const modelOptions = useMemo(
-    () => getModelOptions(mainSearch.make ?? "Any_Makes"),
+    () => getModelOptions(mainSearch.make ?? DEFAULT_MAKE),
     [mainSearch.make]
   );
 

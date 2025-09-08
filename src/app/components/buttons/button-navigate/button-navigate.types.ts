@@ -7,4 +7,5 @@ export type ButtonNavigateProps = {
   whiteButton?: boolean;
   opacity?: number;
   className?: string;
+  ariaLabel?: string;
 };
