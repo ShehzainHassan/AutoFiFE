@@ -2,9 +2,11 @@
 
 import useChatMessages from "@/hooks/useChatMessages";
 import useGetUserSessionTitles from "@/hooks/useGetUserSessionTitles";
-import { ChatMessage } from "@/interfaces/aiAssistant";
+import { ChatMessage, AIResponseModel } from "@/interfaces/aiAssistant";
 import { createContext, useContext, useEffect, useState } from "react";
 import { SessionContextType } from "./session-context.types";
+import { useAuth } from "@/contexts/auth-context";
+import useAIResponse from "@/hooks/useAIResponse";
 
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
 
@@ -21,6 +23,21 @@ export const SessionProvider = ({
   const { data: sessionTitles, isLoading: isSessionLoading } =
     useGetUserSessionTitles();
   const { data: sessionMessages } = useChatMessages(selectedSessionId ?? "");
+  const { userId } = useAuth();
+
+  const { mutate: askAI } = useAIResponse({
+    onSuccess: (res: AIResponseModel) => {
+      if (res.session_id) {
+        setSelectedSessionId(res.session_id);
+      }
+      const aiMessage: ChatMessage = {
+        sender: "AI",
+        message: res.answer,
+        timestamp: new Date().toISOString(),
+      };
+      handleNewMessage(aiMessage, true);
+    },
+  });
 
   useEffect(() => {
     if (sessionMessages) {
@@ -36,10 +53,35 @@ export const SessionProvider = ({
     );
   };
 
+  const handleSend = (text: string) => {
+    if (!text.trim()) return;
+
+    const userMessage: ChatMessage = {
+      sender: "User",
+      message: text,
+      timestamp: new Date().toISOString(),
+    };
+    handleNewMessage(userMessage);
+
+    const botPlaceholder: ChatMessage = {
+      sender: "AI",
+      message: "Thinking...",
+      timestamp: new Date().toISOString(),
+    };
+    handleNewMessage(botPlaceholder);
+
+    askAI({
+      userId: userId ?? -1,
+      question: text,
+      session_id: selectedSessionId,
+    });
+  };
+
   const handleNewChat = () => {
     setSelectedSessionId(null);
     setMessages([]);
   };
+
   return (
     <SessionContext.Provider
       value={{
@@ -51,6 +93,7 @@ export const SessionProvider = ({
         setMessages,
         handleNewMessage,
         handleNewChat,
+        handleSend, // 🔥 now available everywhere
       }}>
       {children}
     </SessionContext.Provider>

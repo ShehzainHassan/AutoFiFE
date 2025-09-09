@@ -9,4 +9,5 @@ export interface SessionContextType {
   setMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>;
   handleNewMessage: (msg: ChatMessage, replaceLast?: boolean) => void;
   handleNewChat: () => void;
+  handleSend: (text: string) => void;
 }

@@ -2,8 +2,6 @@
 
 import SendIcon from "@/assets/images/icons/send.png";
 import ThinkIcon from "@/assets/images/icons/think.png";
-import useAIResponse from "@/hooks/useAIResponse";
-import { AIResponseModel, ChatMessage } from "@/interfaces/aiAssistant";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import Input from "../../input-field";
@@ -21,20 +19,7 @@ export default function InputQuery({ messageCount }: InputQueryProps) {
   const { userId } = useAuth();
   const { data: suggestions } = useContextualSuggestions(userId ?? -1);
   const { data: popularQueries } = usePopularQueries();
-  const { selectedSessionId, setSelectedSessionId, setMessages } = useSession();
-  const { mutate: askAI } = useAIResponse({
-    onSuccess: (res: AIResponseModel) => {
-      if (res.session_id) {
-        setSelectedSessionId(res.session_id);
-      }
-      const aiMessage: ChatMessage = {
-        sender: "AI",
-        message: res.answer,
-        timestamp: new Date().toISOString(),
-      };
-      handleNewMessage(aiMessage, true);
-    },
-  });
+  const { selectedSessionId, handleSend } = useSession();
 
   const mergedSuggestions = useMemo(() => {
     const contextual = suggestions ?? [];
@@ -55,40 +40,11 @@ export default function InputQuery({ messageCount }: InputQueryProps) {
     return combined.filter((v, i, arr) => arr.indexOf(v) === i).slice(0, 5);
   }, [suggestions, popularQueries]);
 
-  const handleSend = (text?: string) => {
-    const finalInput = text ?? input;
-    if (!finalInput.trim()) return;
-
-    const userMessage: ChatMessage = {
-      sender: "User",
-      message: finalInput,
-      timestamp: new Date().toISOString(),
-    };
-    handleNewMessage(userMessage);
-
-    const botPlaceholder: ChatMessage = {
-      sender: "AI",
-      message: "Thinking...",
-      timestamp: new Date().toISOString(),
-    };
-    handleNewMessage(botPlaceholder);
-
-    askAI({
-      userId: userId ?? -1,
-      question: finalInput,
-      session_id: selectedSessionId,
-    });
-
-    setInput("");
-  };
-
-  const handleNewMessage = (msg: ChatMessage, replaceLast = false) => {
-    setMessages((prev) => {
-      if (replaceLast) {
-        return [...prev.slice(0, -1), msg];
-      }
-      return [...prev, msg];
-    });
+  const sendMessage = () => {
+    if (!isSendDisabled) {
+      handleSend(input);
+      setInput("");
+    }
   };
   const isSendDisabled = !input.trim();
   return (
@@ -118,9 +74,7 @@ export default function InputQuery({ messageCount }: InputQueryProps) {
               placeholder="What's on your mind"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSend();
-              }}
+              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             />
           </Input>
         </div>
@@ -129,9 +83,7 @@ export default function InputQuery({ messageCount }: InputQueryProps) {
           className={`${classes.send} ${
             isSendDisabled ? classes.disabled : undefined
           }`}
-          onClick={() => {
-            if (!isSendDisabled) handleSend();
-          }}>
+          onClick={sendMessage}>
           <Image src={SendIcon} alt="share" width={23} height={23} />
         </div>
       </div>

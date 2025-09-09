@@ -5,8 +5,10 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import classes from "./chat-messages.module.css";
 import { ChatMessagesProps } from "./chat-messages.types";
 import { useChatMessagesContainer } from "@/hooks/useChatMessageContainer";
+import { useSession } from "@/contexts/session-context";
 
 function ChatMessages({ messages }: ChatMessagesProps) {
+  const { handleSend } = useSession();
   const { parsedMessages, handleVote, getVoteForIndex } =
     useChatMessagesContainer(messages);
 
@@ -93,7 +95,10 @@ function ChatMessages({ messages }: ChatMessagesProps) {
               <div className={classes.suggestedActionsBox}>
                 {msg.suggestedActions &&
                   msg.suggestedActions.map((action, i) => (
-                    <button key={i} type="button">
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => handleSend(action)}>
                       {action}
                     </button>
                   ))}
