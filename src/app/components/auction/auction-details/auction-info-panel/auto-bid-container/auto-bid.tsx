@@ -1,24 +1,24 @@
 "use client";
 import { ButtonPrimary, Dropdown, Loading } from "@/app/components";
+import { IOSSwitch } from "@/app/components/buttons/toggle-button/toggle-button";
+import Input from "@/app/components/input-field";
 import { CURRENCY } from "@/constants";
-import { BLUE_WITH_BORDER } from "@/constants/button-primary-themes";
-import { grayedField } from "@/styles/custom-select";
-import { ThemeProvider } from "@/theme/themeContext";
-import inputClass from "../auction-info-panel.module.css";
 import {
   bidDelayOptions,
   BidStrategyOptions,
   TimingPreferenceOptions,
   totalBidsOptions,
 } from "@/constants/auction";
-import { IOSSwitch } from "@/app/components/buttons/toggle-button/toggle-button";
-import { Profiler, useMemo } from "react";
-import Input from "@/app/components/input-field";
+import { BLUE_WITH_BORDER } from "@/constants/button-primary-themes";
 import { useAutoBid } from "@/hooks/useAutoBid";
-import { AutoBidProps } from "./autobid.types";
-import { ErrorBoundary } from "@sentry/nextjs";
+import { getAccessToken } from "@/store/tokenStore";
+import { grayedField } from "@/styles/custom-select";
+import { ThemeProvider } from "@/theme/themeContext";
 import { trackRender } from "@/utilities/performance-tracking";
-import { useAuth } from "@/contexts/auth-context";
+import { ErrorBoundary } from "@sentry/nextjs";
+import { Profiler, useMemo } from "react";
+import inputClass from "../auction-info-panel.module.css";
+import { AutoBidProps } from "./autobid.types";
 
 export default function AutoBid({
   auctionId,
@@ -55,7 +55,7 @@ export default function AutoBid({
     }));
   }, [bidDelaySeconds]);
 
-  const { accessToken } = useAuth();
+  const accessToken = getAccessToken();
   if (isLoading) return <Loading />;
 
   return (

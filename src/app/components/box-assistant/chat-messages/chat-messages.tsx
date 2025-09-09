@@ -46,50 +46,51 @@ function ChatMessages({ messages }: ChatMessagesProps) {
           msg.suggestedActions?.length > 0;
 
         return (
-          <div
-            key={key}
-            className={`${classes.messageBox} ${
-              msg.sender === "User" ? classes.userMessage : classes.botMessage
-            }`}
-            role="listitem"
-            aria-label={
-              msg.sender === "User" ? "User message" : "Assistant message"
-            }>
-            <div className={classes.messageContent}>
-              {renderMessageContent(msg)}
+          <React.Fragment key={key}>
+            <div
+              className={`${classes.messageBox} ${
+                msg.sender === "User" ? classes.userMessage : classes.botMessage
+              }`}
+              role="listitem"
+              aria-label={
+                msg.sender === "User" ? "User message" : "Assistant message"
+              }>
+              <div className={classes.messageContent}>
+                {renderMessageContent(msg)}
+              </div>
+
+              {msg.sender === "AI" && msg.message !== "Thinking..." && (
+                <div
+                  className={classes.voteContainer}
+                  role="group"
+                  aria-label="Message feedback">
+                  <div
+                    role="button"
+                    className={`${classes.iconButton} ${
+                      vote === "up" ? classes.upvoted : ""
+                    }`}
+                    aria-pressed={vote === "up"}
+                    aria-label="Upvote"
+                    onClick={() => handleVote(index, "up")}>
+                    <ThumbUpIcon fontSize="small" />
+                  </div>
+
+                  <div
+                    role="button"
+                    className={`${classes.iconButton} ${
+                      vote === "down" ? classes.downvoted : ""
+                    }`}
+                    aria-pressed={vote === "down"}
+                    aria-label="Downvote"
+                    onClick={() => handleVote(index, "down")}>
+                    <ThumbDownIcon fontSize="small" />
+                  </div>
+                </div>
+              )}
             </div>
 
-            {msg.sender === "AI" && msg.message !== "Thinking..." && (
-              <div
-                className={classes.voteContainer}
-                role="group"
-                aria-label="Message feedback">
-                <div
-                  role="button"
-                  className={`${classes.iconButton} ${
-                    vote === "up" ? classes.upvoted : ""
-                  }`}
-                  aria-pressed={vote === "up"}
-                  aria-label="Upvote"
-                  onClick={() => handleVote(index, "up")}>
-                  <ThumbUpIcon fontSize="small" />
-                </div>
-
-                <div
-                  role="button"
-                  className={`${classes.iconButton} ${
-                    vote === "down" ? classes.downvoted : ""
-                  }`}
-                  aria-pressed={vote === "down"}
-                  aria-label="Downvote"
-                  onClick={() => handleVote(index, "down")}>
-                  <ThumbDownIcon fontSize="small" />
-                </div>
-              </div>
-            )}
-
             {showSuggestedActions && (
-              <div className={classes.suggestedActions}>
+              <div className={classes.suggestedActionsBox}>
                 {msg.suggestedActions &&
                   msg.suggestedActions.map((action, i) => (
                     <button key={i} type="button">
@@ -98,7 +99,7 @@ function ChatMessages({ messages }: ChatMessagesProps) {
                   ))}
               </div>
             )}
-          </div>
+          </React.Fragment>
         );
       })}
     </div>

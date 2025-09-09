@@ -2,14 +2,14 @@
 import useSubmitInfo from "@/hooks/useSubmitInfo";
 import useTracking from "@/hooks/useTracking";
 import useVehiclesById from "@/hooks/useVehicleById";
+import { ContactFormData } from "@/interfaces/contact-info";
+import { getAccessToken } from "@/store/tokenStore";
+import { sanitizeFormData } from "@/utilities/utilities";
 import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
+import { useContactFormContext } from "../../../contexts/contact-form-context/contact-form-context";
 import ContactFormView from "./contact-form-view";
 import { ContactInfoFormProps } from "./contact-info-form.types";
-import { useContactFormContext } from "../../../contexts/contact-form-context/contact-form-context";
-import { toast } from "react-toastify";
-import { sanitizeFormData } from "@/utilities/utilities";
-import { ContactFormData } from "@/interfaces/contact-info";
-import { useAuth } from "@/contexts/auth-context";
 export default function ContactFormContainer({
   carId,
   className,
@@ -41,7 +41,8 @@ export default function ContactFormContainer({
   const make = vehicle?.make ?? "";
   const model = vehicle?.model ?? "";
   const year = vehicle?.year ?? "";
-  const { accessToken } = useAuth();
+  const accessToken = getAccessToken();
+
   const { mutate: submitInfo, isPending } = useSubmitInfo();
   const addInteraction = useTracking();
 
@@ -83,7 +84,6 @@ export default function ContactFormContainer({
     const sanitizedFormData = sanitizeFormData(
       formData
     ) as unknown as ContactFormData;
-    console.log("Sanitized Form Data:", sanitizedFormData);
     submitInfo(sanitizedFormData);
     addInteraction.mutate({
       vehicleId: (id ?? carId) as number,

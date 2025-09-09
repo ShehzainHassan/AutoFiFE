@@ -1,20 +1,20 @@
 "use client";
 
 import ButtonPrimary from "@/app/components/buttons/button-primary";
+import Input from "@/app/components/input-field";
 import Loading from "@/app/components/loading";
-import TextContainer from "../../text-container/text-container";
 import { CURRENCY } from "@/constants";
 import { BLUE_WITH_BORDER } from "@/constants/button-primary-themes";
+import { useManualBid } from "@/hooks/useManualBid";
+import { getAccessToken } from "@/store/tokenStore";
 import { SECONDARY_CONTAINER } from "@/styles/text-container";
 import { ThemeProvider } from "@/theme/themeContext";
-import classes from "../auction-info-panel.module.css";
-import Input from "@/app/components/input-field";
-import { ManualBidProps } from "./manual-bid.types";
-import { useManualBid } from "@/hooks/useManualBid";
+import { trackRender } from "@/utilities/performance-tracking";
 import { ErrorBoundary } from "@sentry/nextjs";
 import { Profiler } from "react";
-import { trackRender } from "@/utilities/performance-tracking";
-import { useAuth } from "@/contexts/auth-context";
+import TextContainer from "../../text-container/text-container";
+import classes from "../auction-info-panel.module.css";
+import { ManualBidProps } from "./manual-bid.types";
 
 export default function ManualBid({
   startingPrice,
@@ -32,7 +32,8 @@ export default function ManualBid({
     increaseBid,
   } = useManualBid();
 
-  const { accessToken } = useAuth();
+  const accessToken = getAccessToken();
+
   if (isLoading) return <Loading />;
 
   return (

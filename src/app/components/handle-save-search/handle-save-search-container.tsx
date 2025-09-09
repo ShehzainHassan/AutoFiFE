@@ -6,12 +6,15 @@ import useDeleteUserSearch from "@/hooks/useDeleteUserSearch";
 import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import SaveSearchButtonView from "./handle-save-search-view";
+import { getAccessToken } from "@/store/tokenStore";
 
 const SaveSearchButtonContainer = () => {
   const { userSearches } = useUserFavorites();
   const saveSearchMutation = useAddUserSearch();
   const deleteSearchMutation = useDeleteUserSearch();
-  const { userId, accessToken } = useAuth();
+  const { userId } = useAuth();
+  const accessToken = getAccessToken();
+
   const currentUrl = useCurrentUrl();
   const search = currentUrl?.search.toString() ?? "";
 

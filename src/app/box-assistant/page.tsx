@@ -1,7 +1,6 @@
 "use client";
 
 import { useSession } from "@/contexts/session-context";
-import useGetUserSessionTitles from "@/hooks/useGetUserSessionTitles";
 import { ChatMessages, Footer, Navbar } from "../components";
 import About from "../components/box-assistant/about/about";
 import InputQuery from "../components/box-assistant/input-query/input-query";
@@ -9,10 +8,7 @@ import Sidebar from "../components/box-assistant/sidebar/sidebar";
 import classes from "./page.module.css";
 
 export default function BoxAssistantPage() {
-  const { messages } = useSession();
-
-  const { data: sessionTitles, isLoading: isSessionLoading } =
-    useGetUserSessionTitles();
+  const { messages, sessionTitles, isSessionLoading } = useSession();
 
   return (
     <div>

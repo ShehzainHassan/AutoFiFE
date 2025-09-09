@@ -1,5 +1,4 @@
 export type AuthContextType = {
-  accessToken: string | null;
   userId: number | null;
   userName: string | null;
   userEmail: string | null;

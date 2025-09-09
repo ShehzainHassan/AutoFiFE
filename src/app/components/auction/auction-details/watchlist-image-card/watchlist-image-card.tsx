@@ -13,14 +13,14 @@ import useAddAuctionToWatchlist from "@/hooks/useAddAuctionToWatchlist";
 import useRemoveFromWatchlist from "@/hooks/useRemoveAuctionFromWatchlist";
 import useUserWatchList from "@/hooks/useUserWatchList";
 
-import { useAuth } from "@/contexts/auth-context";
+import { getAccessToken } from "@/store/tokenStore";
 import classes from "./watchlist-image-card.module.css";
 import { WatchlistImageCardProps } from "./watchlist-image-card.types";
 
 export default function WatchlistImageCardContainer({
   auctionId,
 }: WatchlistImageCardProps) {
-  const { accessToken } = useAuth();
+  const accessToken = getAccessToken();
 
   const {
     data: watchLists,

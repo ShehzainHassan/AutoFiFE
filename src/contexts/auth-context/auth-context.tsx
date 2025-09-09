@@ -11,7 +11,6 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -22,7 +21,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     userName: string;
     userEmail: string;
   }) => {
-    setAccessToken(data.accessToken);
     setUserId(data.userId);
     setUserName(data.userName);
     setUserEmail(data.userEmail);
@@ -35,7 +33,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const clearAuth = () => {
-    setAccessToken(null);
     setUserId(null);
     setUserName(null);
     setUserEmail(null);
@@ -73,7 +70,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <AuthContext.Provider
       value={{
-        accessToken,
         userId,
         userName,
         userEmail,

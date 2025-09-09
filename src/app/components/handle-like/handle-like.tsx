@@ -3,6 +3,7 @@ import { useUserFavorites } from "@/contexts/user-favorites-context/user-favorit
 import useAddUserLike from "@/hooks/useAddUserLike";
 import useDeleteUserLike from "@/hooks/useDeleteUserLike";
 import useTracking from "@/hooks/useTracking";
+import { getAccessToken } from "@/store/tokenStore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { toast } from "react-toastify";
@@ -14,7 +15,7 @@ export default function HandleLikeContainer({
 }: HandleLikeContainerProps) {
   const { userLikes } = useUserFavorites();
   const { userId } = useAuth();
-  const { accessToken } = useAuth();
+  const accessToken = getAccessToken();
   const addLikeMutation = useAddUserLike();
   const deleteLikeMutation = useDeleteUserLike();
   const addInteraction = useTracking();
