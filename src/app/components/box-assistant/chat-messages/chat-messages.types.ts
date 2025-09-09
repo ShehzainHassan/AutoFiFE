@@ -4,3 +4,6 @@ export interface ChatMessagesProps {
   messages: ChatMessage[];
   isPending?: boolean;
 }
+export interface ChatMessagesRef {
+  scrollToBottom: () => void;
+}

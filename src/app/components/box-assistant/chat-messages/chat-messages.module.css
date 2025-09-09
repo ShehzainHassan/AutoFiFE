@@ -84,3 +84,37 @@
 .suggestedActionsBox button:hover {
   background-color: var(--color-gray400);
 }
+
+.scrollButton {
+  position: sticky;
+  bottom: 20px;
+  align-self: center;
+  background-color: var(--color-purple500);
+  color: var(--color-white100);
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.scrollButton:hover {
+  background-color: var(--color-purple600);
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.scrollButton:hover svg {
+  animation: bounce 0.6s ease infinite;
+}

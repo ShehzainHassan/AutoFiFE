@@ -3,7 +3,7 @@
 import SendIcon from "@/assets/images/icons/send.png";
 import ThinkIcon from "@/assets/images/icons/think.png";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import Input from "../../input-field";
 import classes from "./input-query.module.css";
 
@@ -11,10 +11,19 @@ import { useAuth } from "@/contexts/auth-context";
 import { useSession } from "@/contexts/session-context";
 import useContextualSuggestions from "@/hooks/useContextualSuggestions";
 import usePopularQueries from "@/hooks/usePopularQueries";
-import { InputQueryProps } from "./input-query.types";
+import {
+  InputQueryProps,
+  CustomSpeechRecognition,
+  CustomSpeechRecognitionEvent,
+} from "./input-query.types";
 
-export default function InputQuery({ messageCount }: InputQueryProps) {
+import MicIcon from "@mui/icons-material/Mic";
+
+export default function InputQuery({ messageCount, chatRef }: InputQueryProps) {
   const [input, setInput] = useState("");
+  const [isListening, setIsListening] = useState(false);
+
+  const recognitionRef = useRef<CustomSpeechRecognition | null>(null);
 
   const { userId } = useAuth();
   const { data: suggestions } = useContextualSuggestions(userId ?? -1);
@@ -40,13 +49,62 @@ export default function InputQuery({ messageCount }: InputQueryProps) {
     return combined.filter((v, i, arr) => arr.indexOf(v) === i).slice(0, 5);
   }, [suggestions, popularQueries]);
 
+  const isSendDisabled = !input.trim();
+
   const sendMessage = () => {
     if (!isSendDisabled) {
       handleSend(input);
       setInput("");
+      chatRef.current?.scrollToBottom();
     }
   };
-  const isSendDisabled = !input.trim();
+
+  const toggleMic = () => {
+    if (!recognitionRef.current) {
+      const SpeechRecognitionConstructor =
+        (
+          window as unknown as {
+            SpeechRecognition?: new () => CustomSpeechRecognition;
+            webkitSpeechRecognition?: new () => CustomSpeechRecognition;
+          }
+        ).SpeechRecognition ||
+        (
+          window as unknown as {
+            webkitSpeechRecognition?: new () => CustomSpeechRecognition;
+          }
+        ).webkitSpeechRecognition;
+
+      if (!SpeechRecognitionConstructor) {
+        alert("Speech recognition not supported in this browser.");
+        return;
+      }
+
+      recognitionRef.current = new SpeechRecognitionConstructor();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+      recognitionRef.current.lang = "en-US";
+
+      recognitionRef.current.onresult = (
+        event: CustomSpeechRecognitionEvent
+      ) => {
+        const transcript = event.results[0][0].transcript;
+        setInput(transcript);
+      };
+
+      recognitionRef.current.onend = () => {
+        setIsListening(false);
+      };
+    }
+
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    } else {
+      recognitionRef.current.start();
+      setIsListening(true);
+    }
+  };
+
   return (
     <div>
       {!selectedSessionId &&
@@ -77,6 +135,14 @@ export default function InputQuery({ messageCount }: InputQueryProps) {
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             />
           </Input>
+
+          <MicIcon
+            onClick={toggleMic}
+            style={{
+              cursor: "pointer",
+              color: isListening ? "red" : "gray",
+            }}
+          />
         </div>
 
         <div
