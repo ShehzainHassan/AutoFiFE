@@ -1,16 +1,20 @@
 "use client";
-import apiClient from "@/api/apiClient";
 import {
   AuctionDetailsHeader,
+  AuctionNotificationSettings,
   ButtonPrimary,
   Loading,
-  AuctionNotificationSettings,
 } from "@/app/components";
 import { IOSSwitch } from "@/app/components/buttons/toggle-button/toggle-button";
+import Input from "@/app/components/input-field";
 import CarImage from "@/app/components/result-card/car-image/car-image";
 import { CURRENCY } from "@/constants";
+import { BLUE_THEME } from "@/constants/button-primary-themes";
+import { useAuth } from "@/contexts/auth-context";
 import { usePanel } from "@/contexts/panel-context/panel-context";
+import useAuctionById from "@/hooks/useAuctionById";
 import { useFormValidation } from "@/hooks/useFormValidation";
+import useTrackPayment from "@/hooks/useTrackPayment";
 import { PAY_BUTTON } from "@/styles/text-container";
 import { ThemeProvider } from "@/theme/themeContext";
 import { trackError } from "@/utilities/error-tracking";
@@ -21,11 +25,7 @@ import StatItem from "../stat-item/stat-item";
 import TextContainer from "../text-container/text-container";
 import { initialFormValues, validationRules } from "./checkout-validation";
 import classes from "./checkout.module.css";
-import useAuctionById from "@/hooks/useAuctionById";
-import { BLUE_THEME } from "@/constants/button-primary-themes";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
-import useTrackPayment from "@/hooks/useTrackPayment";
-import Input from "@/app/components/input-field";
+import { rateLimitedClient } from "@/api/apiClient";
 
 export default function AuctionCheckout() {
   const { panel } = usePanel();
@@ -44,13 +44,14 @@ export default function AuctionCheckout() {
   const hasErrors = Object.values(errors).some((error) => error !== "");
   const { data: auction } = useAuctionById(id ?? -1);
   const trackPayment = useTrackPayment();
+  const { userId } = useAuth();
+
   const handleSubmit = () => {
     if (hasErrors || !auction) return;
 
-    const userId = getUserIdFromLocalStorage() ?? -1;
     trackPayment.mutate({
       auctionId: auction.auctionId,
-      userId,
+      userId: userId ?? -1,
       amount: auction.currentPrice + 250,
     });
   };
@@ -58,7 +59,7 @@ export default function AuctionCheckout() {
     if (!id) return;
     const verifyAccess = async () => {
       try {
-        const res = await apiClient.get(
+        const res = await rateLimitedClient.get(
           `${API_BASE_URL}/auction/${id}/checkout`
         );
         if (res.status === 200) {

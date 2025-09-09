@@ -40,10 +40,6 @@ jest.mock("@/hooks/useTracking", () => () => ({
   mutate: mockMutateTrack,
 }));
 
-jest.mock("@/utilities/utilities", () => ({
-  getUserIdFromLocalStorage: () => 42,
-}));
-
 jest.mock("react-toastify", () => ({
   toast: {
     error: jest.fn(),

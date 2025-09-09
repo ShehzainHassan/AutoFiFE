@@ -1,23 +1,85 @@
 "use client";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
-import { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import { limitedAxios } from "@/api/rateLimitedAxios";
 import { AuthContextType } from "./auth-context.types";
+import { setAccessToken as setTokenInStore } from "@/store/tokenStore";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
-  useEffect(() => {
-    setUserId(getUserIdFromLocalStorage());
-  }, []);
+  const setAuthData = (data: {
+    accessToken: string;
+    userId: number;
+    userName: string;
+    userEmail: string;
+  }) => {
+    setAccessToken(data.accessToken);
+    setUserId(data.userId);
+    setUserName(data.userName);
+    setUserEmail(data.userEmail);
 
-  const login = (id: number) => {
-    setUserId(id);
+    setTokenInStore(data.accessToken);
+
+    Cookies.set("userId", data.userId.toString());
+    Cookies.set("userName", data.userName);
+    Cookies.set("userEmail", data.userEmail);
   };
 
+  const clearAuth = () => {
+    setAccessToken(null);
+    setUserId(null);
+    setUserName(null);
+    setUserEmail(null);
+
+    setTokenInStore(null);
+
+    Cookies.remove("userId");
+    Cookies.remove("userName");
+    Cookies.remove("userEmail");
+  };
+
+  const refreshToken = async () => {
+    const response = await limitedAxios.post(
+      `${API_BASE_URL}/user/refresh`,
+      {},
+      { withCredentials: true }
+    );
+
+    const { accessToken, userId, userName, userEmail } = response.data;
+    setAuthData({ accessToken, userId, userName, userEmail });
+    return response.data;
+  };
+
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        await refreshToken();
+      } catch {
+        clearAuth();
+      }
+    };
+    initAuth();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ userId, login }}>
+    <AuthContext.Provider
+      value={{
+        accessToken,
+        userId,
+        userName,
+        userEmail,
+        setAuthData,
+        clearAuth,
+      }}>
       {children}
     </AuthContext.Provider>
   );
@@ -25,6 +87,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 };

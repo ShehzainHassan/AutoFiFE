@@ -1,42 +1,42 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useMemo } from "react";
 import { toast } from "react-toastify";
-import Image from "next/image";
 
-import Loading from "@/app/components/loading";
 import ErrorMessage from "@/app/components/error-message";
 import HandleWatchlist from "@/app/components/handle-watchlist/handle-watchlist";
+import Loading from "@/app/components/loading";
 import FeaturedAuction from "@/assets/images/cars/2018_Honda_Civic.png";
 
 import useAddAuctionToWatchlist from "@/hooks/useAddAuctionToWatchlist";
 import useRemoveFromWatchlist from "@/hooks/useRemoveAuctionFromWatchlist";
 import useUserWatchList from "@/hooks/useUserWatchList";
 
+import { useAuth } from "@/contexts/auth-context";
 import classes from "./watchlist-image-card.module.css";
 import { WatchlistImageCardProps } from "./watchlist-image-card.types";
 
 export default function WatchlistImageCardContainer({
   auctionId,
 }: WatchlistImageCardProps) {
-  const authData = useMemo(() => localStorage.getItem("authData") ?? "", []);
+  const { accessToken } = useAuth();
 
   const {
     data: watchLists,
     isLoading,
     isError,
     error,
-  } = useUserWatchList(!!authData);
+  } = useUserWatchList(!!accessToken);
 
   const { mutate: addToWatchlist } = useAddAuctionToWatchlist();
   const { mutate: removeFromWatchlist } = useRemoveFromWatchlist();
-
   const isWatchlisted = useMemo(() => {
     return watchLists?.some((w) => w.auctionId === auctionId) ?? false;
   }, [watchLists, auctionId]);
 
   const handleWatchlist = useCallback(() => {
-    if (!authData) {
+    if (!accessToken) {
       toast.error("Please sign in to watchlist vehicle");
       return;
     }
@@ -46,7 +46,13 @@ export default function WatchlistImageCardContainer({
     } else {
       removeFromWatchlist({ auctionId });
     }
-  }, [authData, isWatchlisted, auctionId, addToWatchlist, removeFromWatchlist]);
+  }, [
+    accessToken,
+    isWatchlisted,
+    auctionId,
+    addToWatchlist,
+    removeFromWatchlist,
+  ]);
 
   if (isLoading) {
     return (

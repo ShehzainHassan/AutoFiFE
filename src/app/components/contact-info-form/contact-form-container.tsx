@@ -9,6 +9,7 @@ import { useContactFormContext } from "../../../contexts/contact-form-context/co
 import { toast } from "react-toastify";
 import { sanitizeFormData } from "@/utilities/utilities";
 import { ContactFormData } from "@/interfaces/contact-info";
+import { useAuth } from "@/contexts/auth-context";
 export default function ContactFormContainer({
   carId,
   className,
@@ -40,8 +41,7 @@ export default function ContactFormContainer({
   const make = vehicle?.make ?? "";
   const model = vehicle?.model ?? "";
   const year = vehicle?.year ?? "";
-  const authData = localStorage.getItem("authData") ?? "";
-
+  const { accessToken } = useAuth();
   const { mutate: submitInfo, isPending } = useSubmitInfo();
   const addInteraction = useTracking();
 
@@ -52,7 +52,6 @@ export default function ContactFormContainer({
   const canSendMessage = () => {
     return (
       fname.trim() !== "" &&
-      lname.trim() !== "" &&
       email.trim() !== "" &&
       postCode.trim() !== "" &&
       phone.trim() !== "" &&
@@ -64,7 +63,7 @@ export default function ContactFormContainer({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!authData) {
+    if (!accessToken) {
       toast.error("Please sign in to send message");
       return;
     }
@@ -84,6 +83,7 @@ export default function ContactFormContainer({
     const sanitizedFormData = sanitizeFormData(
       formData
     ) as unknown as ContactFormData;
+    console.log("Sanitized Form Data:", sanitizedFormData);
     submitInfo(sanitizedFormData);
     addInteraction.mutate({
       vehicleId: (id ?? carId) as number,

@@ -14,6 +14,7 @@ import { useManualBid } from "@/hooks/useManualBid";
 import { ErrorBoundary } from "@sentry/nextjs";
 import { Profiler } from "react";
 import { trackRender } from "@/utilities/performance-tracking";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function ManualBid({
   startingPrice,
@@ -22,7 +23,6 @@ export default function ManualBid({
   const {
     bid,
     setBid,
-    authData,
     highestId,
     userId,
     isPending,
@@ -32,6 +32,7 @@ export default function ManualBid({
     increaseBid,
   } = useManualBid();
 
+  const { accessToken } = useAuth();
   if (isLoading) return <Loading />;
 
   return (
@@ -64,7 +65,7 @@ export default function ManualBid({
         <div className={classes.bidInput}>
           <Input width="100%">
             <Input.Field
-              isDisabled={!authData || isPending}
+              isDisabled={!accessToken || isPending}
               type="text"
               placeholder="Enter bid"
               value={bid}
@@ -79,7 +80,7 @@ export default function ManualBid({
           </Input>
         </div>
 
-        {authData && (
+        {accessToken && (
           <div className={classes.bidAmounts}>
             <div className={classes.bidAmountContainer}>
               <ThemeProvider value={SECONDARY_CONTAINER}>
@@ -112,7 +113,7 @@ export default function ManualBid({
           </div>
         )}
 
-        {!authData ? (
+        {!accessToken ? (
           <p>Please sign in to place bid</p>
         ) : (
           <div className={classes.buttonContainer}>

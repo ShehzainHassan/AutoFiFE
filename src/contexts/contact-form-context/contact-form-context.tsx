@@ -1,11 +1,8 @@
-import {
-  getNameFromLocalStorage,
-  getUserEmailFromLocalStorage,
-} from "@/utilities/utilities";
-import { createContext, useContext, ReactNode, useState } from "react";
 import { useFormValidation } from "@/hooks/useFormValidation";
-import { contactFormRules } from "@/validation/contact-form-rules";
 import { ContactFormFields } from "@/interfaces/user";
+import { contactFormRules } from "@/validation/contact-form-rules";
+import { createContext, ReactNode, useContext, useState } from "react";
+import { useAuth } from "../auth-context";
 
 type ContactFormContextType = ReturnType<
   typeof useFormValidation<ContactFormFields>
@@ -20,15 +17,13 @@ const ContactFormContext = createContext<ContactFormContextType | undefined>(
 );
 
 export const ContactFormProvider = ({ children }: { children: ReactNode }) => {
-  const { firstName, lastName } = getNameFromLocalStorage();
-  const emailFromStorage = getUserEmailFromLocalStorage();
-
+  const { userEmail, userName } = useAuth();
   const initialValues: ContactFormFields = {
-    fname: firstName,
-    lname: lastName,
+    fname: userName ?? "",
+    lname: "",
     selected: "interested",
     postCode: "",
-    email: emailFromStorage,
+    email: userEmail ?? "",
     phone: "",
     preferredContact: "",
     commentText: "",

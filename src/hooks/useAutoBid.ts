@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/auth-context";
 import useIsAutoBidSet from "@/hooks/useIsAutoBidSet";
 import usePlaceAutoBid from "@/hooks/usePlaceAutoBid";
 import useUpdateAutoBid from "@/hooks/useUpdateAutoBid";
@@ -10,8 +10,8 @@ import {
   formatBidStrategyTypeReverse,
   formatBidTiming,
   formatBidTimingReverse,
-  getUserIdFromLocalStorage,
 } from "@/utilities/utilities";
+import { useEffect, useState } from "react";
 
 export function useAutoBid(
   auctionId: number,
@@ -26,9 +26,7 @@ export function useAutoBid(
   const [totalBids, setTotalBids] = useState("");
   const [isActive, setIsActive] = useState<boolean | null>(null);
 
-  const authData = localStorage.getItem("authData") ?? "";
-  const userId = getUserIdFromLocalStorage() ?? -1;
-
+  const { userId } = useAuth();
   const { mutate: placeAutoBid, isPending: placing } = usePlaceAutoBid();
   const { mutate: updateAutoBid, isPending: updating } = useUpdateAutoBid();
 
@@ -47,7 +45,7 @@ export function useAutoBid(
       updateAutoBid({ auctionId, updateAutoBid: payload });
     } else {
       const payload: AutoBid = {
-        userId,
+        userId: userId ?? -1,
         auctionId,
         maxBidAmount: Number(maxBidAmount),
         bidStrategyType: formatBidStrategyType(biddingStrategy),
@@ -88,7 +86,6 @@ export function useAutoBid(
     maxBidsPerMinute,
     totalBids,
     isActive,
-    authData,
     isAutoBidSet,
     isLoading: isAutoBidLoading || userAutoBidLoading,
     isDisabled,

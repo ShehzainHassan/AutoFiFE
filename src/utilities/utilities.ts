@@ -1,23 +1,22 @@
+import analyticsAPI from "@/api/analyticsAPI";
+import auctionAPI from "@/api/auctionAPI";
+import userAPI from "@/api/userAPI";
 import {
   CURRENCY,
   DEFAULT_MAKE,
   DEFAULT_MODEL,
   MODEL_OPTIONS,
 } from "@/constants";
+import { AuctionFilters } from "@/interfaces/auction";
 import { Options } from "@/interfaces/dropdown-options";
 import { Vehicle, VehicleFilter } from "@/interfaces/vehicle";
 import axios from "axios";
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+import DOMPurify from "isomorphic-dompurify";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { toast } from "react-toastify";
 import { PriceRange } from "./utilities.types";
-import { trackError } from "./error-tracking";
-import DOMPurify from "isomorphic-dompurify";
-import dayjs from "dayjs";
-import duration from "dayjs/plugin/duration";
-import { AuctionFilters } from "@/interfaces/auction";
-import userAPI from "@/api/userAPI";
-import auctionAPI from "@/api/auctionAPI";
-import analyticsAPI from "@/api/analyticsAPI";
 dayjs.extend(duration);
 
 export function getModelOptions(make: string): Options[] {
@@ -188,49 +187,6 @@ export function validatePassword(value: string): string {
 
   return "";
 }
-export function getUserIdFromLocalStorage(): number | null {
-  try {
-    const authData = localStorage.getItem("authData");
-    if (!authData) return null;
-    const parsed = JSON.parse(authData);
-    return parsed.userId ?? null;
-  } catch (err) {
-    trackError(err as Error, { source: "getUserIdFromLocalStorage" });
-    return null;
-  }
-}
-export function getUserEmailFromLocalStorage(): string {
-  try {
-    const authData = localStorage.getItem("authData");
-    if (!authData) return "";
-    const parsed = JSON.parse(authData);
-    return parsed.userEmail ?? null;
-  } catch (err) {
-    trackError(err as Error, { source: "getUserEmailFromLocalStorage" });
-    return "";
-  }
-}
-export function getNameFromLocalStorage(): {
-  firstName: string;
-  lastName: string;
-} {
-  try {
-    const authData = localStorage.getItem("authData");
-    if (!authData) return { firstName: "", lastName: "" };
-
-    const parsed = JSON.parse(authData);
-    const fullName: string = parsed.userName || "";
-
-    const nameParts = fullName.trim().split(" ");
-    const firstName = nameParts[0] || "";
-    const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
-
-    return { firstName, lastName };
-  } catch (err) {
-    trackError(err as Error, { source: "getNameFromLocalStorage" });
-    return { firstName: "", lastName: "" };
-  }
-}
 export function parseStatus(status: string): string {
   switch (status) {
     case "All":
@@ -269,17 +225,6 @@ export function getVehicleText(make: string, model: string): string {
   if (make !== DEFAULT_MAKE && model !== DEFAULT_MODEL)
     return `${make} ${model}`;
   return "BoxCars vehicles";
-}
-export function getTokenFromLocalStorage(): string | null {
-  try {
-    const authData = localStorage.getItem("authData");
-    if (!authData) return null;
-    const parsed = JSON.parse(authData);
-    return parsed.token ?? null;
-  } catch (err) {
-    trackError(err as Error, { source: "getTokenFromLocalStorage" });
-    return null;
-  }
 }
 export function handleApiError(error: unknown, router?: AppRouterInstance) {
   let errorMessage = "An unexpected error occurred.";
@@ -325,9 +270,7 @@ export function getImage(title: string) {
       return "/images/mileage.png";
   }
 }
-
 type FormValues = Record<string, string | boolean>;
-
 export function sanitizeFormData(data: FormValues): FormValues {
   const sanitized: FormValues = {};
 
@@ -339,7 +282,6 @@ export function sanitizeFormData(data: FormValues): FormValues {
 
   return sanitized;
 }
-
 export function formatTime(seconds: number) {
   const h = Math.floor(seconds / 3600)
     .toString()
@@ -352,7 +294,6 @@ export function formatTime(seconds: number) {
     .padStart(2, "0");
   return `${h}:${m}:${s}`;
 }
-
 export function formatTimeAMPM(dateString: string) {
   const date = new Date(dateString);
   let hours = date.getHours();
@@ -365,7 +306,6 @@ export function formatTimeAMPM(dateString: string) {
 
   return `${hours}:${minutesStr}${ampm}`;
 }
-
 export function formatBidStrategyType(strategy: string) {
   switch (strategy) {
     case "Conservative":
@@ -378,7 +318,6 @@ export function formatBidStrategyType(strategy: string) {
       return 0;
   }
 }
-
 export function formatBidTiming(preferredTiming: string) {
   switch (preferredTiming) {
     case "Immediate":
@@ -391,7 +330,6 @@ export function formatBidTiming(preferredTiming: string) {
       return 0;
   }
 }
-
 export function formatBidStrategyTypeReverse(value: number): string {
   switch (value) {
     case 0:
@@ -416,7 +354,6 @@ export function formatBidTimingReverse(value: number): string {
       return "Immediate";
   }
 }
-
 export default function buildAuctionQuery(filters: AuctionFilters) {
   const params = new URLSearchParams();
 
@@ -432,7 +369,6 @@ export default function buildAuctionQuery(filters: AuctionFilters) {
 
   return params.toString();
 }
-
 export const sortOptions = [
   { label: "Any", sortBy: undefined, descending: undefined },
   { label: "By Make (A to Z)", sortBy: "make", descending: false },
@@ -511,7 +447,6 @@ export async function getStartEndDates(
     endDate: formatLocalDate(end),
   };
 }
-
 function formatLocalDate(date: Date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
     2,
@@ -560,7 +495,6 @@ export function formatTimestamp(isoString: string) {
     })
     .replace(",", "");
 }
-
 export async function getStartEndDateTime(period: string) {
   const now = new Date();
 
@@ -665,7 +599,6 @@ export function sanitizeVehicleFilters(
     ...(model !== DEFAULT_MODEL ? { model } : {}),
   };
 }
-
 export function getRandomItems<T>(arr: T[], count: number): T[] {
   const shuffled = [...arr].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);

@@ -3,6 +3,7 @@ import rateLimit from "axios-rate-limit";
 
 const baseAxios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  withCredentials: true,
 });
 
 export const limitedAxios = rateLimit(baseAxios, {

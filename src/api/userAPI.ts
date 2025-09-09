@@ -1,13 +1,18 @@
 import { LoginDTO, User } from "@/interfaces/user";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
-import rateLimitedClient from "./apiClient";
+import { rateLimitedClient } from "./apiClient";
 import { limitedAxios } from "./rateLimitedAxios";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const userAPI = {
   getAllUsersCount: async () => {
-    const response = await limitedAxios.get(`${API_BASE_URL}/user/all-users-count`);
+    const response = await limitedAxios.get(
+      `${API_BASE_URL}/user/all-users-count`
+    );
+    return response.data;
+  },
+  refreshToken: async () => {
+    const response = await limitedAxios.post(`${API_BASE_URL}/user/refresh`);
     return response.data;
   },
   saveUser: async (formData: User) => {
@@ -30,7 +35,9 @@ const userAPI = {
     return response.data;
   },
   getOldestUserDate: async () => {
-    const response = await rateLimitedClient.get(`${API_BASE_URL}/user/oldest-user`);
+    const response = await rateLimitedClient.get(
+      `${API_BASE_URL}/user/oldest-user`
+    );
     return response.data;
   },
   getUserSearches: async () => {
@@ -40,10 +47,13 @@ const userAPI = {
     return response.data;
   },
   saveUserSearch: async (userId: number, search: string) => {
-    const response = await rateLimitedClient.post(`${API_BASE_URL}/user/save-search`, {
-      userId,
-      search,
-    });
+    const response = await rateLimitedClient.post(
+      `${API_BASE_URL}/user/save-search`,
+      {
+        userId,
+        search,
+      }
+    );
     return response.data;
   },
   removeUserSearch: async (userId: number, search: string) => {
@@ -58,11 +68,15 @@ const userAPI = {
     );
     return response.data;
   },
-  addUserInteraction: async (vehicleId: number, interactionType: string) => {
+  addUserInteraction: async (
+    vehicleId: number,
+    interactionType: string,
+    userId: number
+  ) => {
     const response = await rateLimitedClient.post(
       `${API_BASE_URL}/user/add-interaction`,
       {
-        UserId: getUserIdFromLocalStorage(),
+        UserId: userId,
         VehicleId: vehicleId,
         InteractionType: interactionType,
       }

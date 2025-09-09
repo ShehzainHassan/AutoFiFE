@@ -6,21 +6,20 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 const useLoginUser = () => {
-  const { login } = useAuth();
+  const { setAuthData } = useAuth();
+
   return useMutation({
     mutationFn: async (formData: LoginDTO) => {
       return await userAPI.loginUser(formData);
     },
     onSuccess: async (data) => {
-      const userData = {
-        token: data.token,
+      setAuthData({
+        accessToken: data.accessToken,
         userId: data.userId,
         userName: data.userName,
         userEmail: data.userEmail,
-      };
-      localStorage.setItem("authData", JSON.stringify(userData));
-      login(data.userId);
-      toast.success("Login successfull!");
+      });
+      toast.success("Login successful!");
     },
     onError: (error: unknown) => {
       let errorMessage = "Login failed";

@@ -1,10 +1,11 @@
 import { ContactFormData } from "@/interfaces/contact-info";
-import rateLimitedClient from "./apiClient";
+import { rateLimitedClient } from "./apiClient";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const contactInfoAPI = {
   saveInfo: async (formData: ContactFormData) => {
+    console.log("Sending form data to API:", formData);
     const response = await rateLimitedClient.post(
       `${API_BASE_URL}/contact/add`,
       {

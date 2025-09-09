@@ -6,9 +6,9 @@ import {
   YourStats,
 } from "@/app/components";
 import { CURRENCY } from "@/constants";
+import { useAuth } from "@/contexts/auth-context";
 import useAuctionById from "@/hooks/useAuctionById";
 import useGetAuctionResult from "@/hooks/useGetAuctionResult";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -26,7 +26,7 @@ export default function AuctionInfoPanel({
   const queryClient = useQueryClient();
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
-  const userId = getUserIdFromLocalStorage() ?? -1;
+  const { userId } = useAuth();
   const { data: auction, isLoading } = useAuctionById(id);
   const { data: auctionResult, isSuccess } = useGetAuctionResult(
     id,
@@ -64,7 +64,7 @@ export default function AuctionInfoPanel({
       if (auctionResult.userId) {
         return (
           <p className={classes.winner}>
-            {auctionResult.userName} wins the auction with highest bid{" "}
+            {auctionResult.userName} wins the auction with highest bid
             {CURRENCY}
             {auctionResult.winningBid}
           </p>

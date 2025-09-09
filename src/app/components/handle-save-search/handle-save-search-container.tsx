@@ -1,8 +1,8 @@
+import { useAuth } from "@/contexts/auth-context";
 import { useUserFavorites } from "@/contexts/user-favorites-context/user-favorites-context";
 import useAddUserSearch from "@/hooks/useAddUserSearch";
 import { useCurrentUrl } from "@/hooks/useCurrentUrl";
 import useDeleteUserSearch from "@/hooks/useDeleteUserSearch";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import SaveSearchButtonView from "./handle-save-search-view";
@@ -11,7 +11,7 @@ const SaveSearchButtonContainer = () => {
   const { userSearches } = useUserFavorites();
   const saveSearchMutation = useAddUserSearch();
   const deleteSearchMutation = useDeleteUserSearch();
-  const userId = getUserIdFromLocalStorage();
+  const { userId, accessToken } = useAuth();
   const currentUrl = useCurrentUrl();
   const search = currentUrl?.search.toString() ?? "";
 
@@ -27,8 +27,11 @@ const SaveSearchButtonContainer = () => {
   }, [userSearches, search, optimisticSaved]);
 
   const handleSaveSearch = () => {
-    if (!userId) {
+    if (!accessToken) {
       toast.error("Please sign in to save search");
+      return;
+    }
+    if (!userId) {
       return;
     }
 

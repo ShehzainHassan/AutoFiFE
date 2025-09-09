@@ -18,6 +18,7 @@ import { useAutoBid } from "@/hooks/useAutoBid";
 import { AutoBidProps } from "./autobid.types";
 import { ErrorBoundary } from "@sentry/nextjs";
 import { trackRender } from "@/utilities/performance-tracking";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function AutoBid({
   auctionId,
@@ -32,7 +33,6 @@ export default function AutoBid({
     maxBidsPerMinute,
     totalBids,
     isActive,
-    authData,
     isAutoBidSet,
     isLoading,
     isDisabled,
@@ -55,6 +55,7 @@ export default function AutoBid({
     }));
   }, [bidDelaySeconds]);
 
+  const { accessToken } = useAuth();
   if (isLoading) return <Loading />;
 
   return (
@@ -176,7 +177,7 @@ export default function AutoBid({
             </div>
           )}
 
-          {!authData ? (
+          {!accessToken ? (
             <p>Please sign in to place bid</p>
           ) : (
             <div className={inputClass.buttonContainer}>

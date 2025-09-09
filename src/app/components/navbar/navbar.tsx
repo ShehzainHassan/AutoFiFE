@@ -1,5 +1,7 @@
 "use client";
 
+import ExpandIcon from "@/assets/images/icons/expand.png";
+import Logo from "@/assets/images/logos/logo.png";
 import {
   DEFAULT_MAKE,
   DEFAULT_MODEL,
@@ -7,20 +9,19 @@ import {
   MIN_YEAR,
   PAGE_SIZE,
 } from "@/constants";
+import { useAuth } from "@/contexts/auth-context";
 import { useSearch } from "@/contexts/car-search-context/car-search-context";
-import { trackError } from "@/utilities/error-tracking";
-import { convertArrayToString } from "@/utilities/utilities";
-import { useRouter } from "next/navigation";
-import { useEffect, useState, useCallback } from "react";
-import { NavbarContainerProps } from "./navbar.types";
-import ButtonPrimary from "../buttons/button-primary";
-import Image from "next/image";
 import useTranslation from "@/i18n";
 import headings from "@/styles/typography.module.css";
+import { convertArrayToString } from "@/utilities/utilities";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
+import ButtonPrimary from "../buttons/button-primary";
 import classes from "./navbar.module.css";
-import Logo from "@/assets/images/logos/logo.png";
-import ExpandIcon from "@/assets/images/icons/expand.png";
-
+import { NavbarContainerProps } from "./navbar.types";
+import { limitedAxios } from "@/api/rateLimitedAxios";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 export default function Navbar({
   backgroundColor = "transparent",
 }: NavbarContainerProps) {
@@ -30,7 +31,7 @@ export default function Navbar({
   const router = useRouter();
   const { mainSearch, setMainSearch, setStagedSearch, setSearchParams } =
     useSearch();
-
+  const { userName } = useAuth();
   const resetFilters = useCallback(() => {
     setMainSearch({
       make: DEFAULT_MAKE,
@@ -82,23 +83,8 @@ export default function Navbar({
     }, 2000);
   }, [router, resetFilters]);
 
-  const [userName, setUserName] = useState<string | null>(null);
-  useEffect(() => {
-    const authData = localStorage.getItem("authData") ?? "";
-    if (authData) {
-      try {
-        const parsed = JSON.parse(authData);
-        setUserName(parsed?.userName ?? null);
-      } catch (err) {
-        console.error("Error parsing authData:", err);
-        trackError(err as Error, {
-          source: "authData useEffect",
-        });
-      }
-    }
-  }, []);
-
   const [showLogout, setShowLogout] = useState(false);
+  const { clearAuth } = useAuth();
   const handleSignInClick = useCallback(() => {
     if (userName) {
       setShowLogout((prev) => !prev);
@@ -107,8 +93,13 @@ export default function Navbar({
     }
   }, [userName, router]);
 
-  const handleLogout = useCallback(() => {
-    localStorage.removeItem("authData");
+  const handleLogout = useCallback(async () => {
+    await limitedAxios.post(
+      `${API_BASE_URL}/user/logout`,
+      {},
+      { withCredentials: true }
+    );
+    clearAuth();
     setShowLogout(false);
     setMainSearch({
       ...mainSearch,
@@ -118,7 +109,7 @@ export default function Navbar({
       mileage: null,
     });
     window.location.reload();
-  }, [mainSearch, setMainSearch]);
+  }, [mainSearch, setMainSearch, clearAuth]);
 
   const [menuOpen, setMenuOpen] = useState(false);
 

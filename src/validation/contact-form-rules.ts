@@ -7,7 +7,8 @@ import {
 
 export const contactFormRules = {
   fname: (value: string) => validateName(value, "First name"),
-  lname: (value: string) => validateName(value, "Last name"),
+  lname: (value: string) =>
+    value.trim() === "" ? "" : validateName(value, "Last name"),
   email: validateEmail,
   phone: validatePhoneNumber,
   postCode: validatePostCode,

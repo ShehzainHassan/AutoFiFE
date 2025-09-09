@@ -1,16 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useAuth } from "@/contexts/auth-context";
 import useHighestBidderId from "@/hooks/useGetHighestBidderId";
 import usePlaceBid from "@/hooks/usePlaceBid";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 
 export function useManualBid() {
   const [bid, setBid] = useState("");
-  const authData = localStorage.getItem("authData") ?? "";
-  const userId = getUserIdFromLocalStorage() ?? -1;
-
+  const { userId } = useAuth();
   const params = useParams();
   const auctionId = params.id ? Number(params.id) : -1;
 
@@ -26,7 +24,7 @@ export function useManualBid() {
 
   const handlePlaceBid = () => {
     placeBid(
-      { auctionId, amount: Number(bid), userId },
+      { auctionId, amount: Number(bid), userId: userId ?? -1 },
       { onSuccess: () => setBid("") }
     );
   };
@@ -39,7 +37,6 @@ export function useManualBid() {
   return {
     bid,
     setBid,
-    authData,
     highestId,
     userId,
     isPending,

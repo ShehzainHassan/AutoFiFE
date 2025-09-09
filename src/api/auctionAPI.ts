@@ -8,7 +8,7 @@ import {
   Watchlist,
 } from "@/interfaces/auction";
 import buildAuctionQuery from "@/utilities/utilities";
-import rateLimitedClient from "./apiClient";
+import { rateLimitedClient } from "./apiClient";
 import { limitedAxios } from "./rateLimitedAxios";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;

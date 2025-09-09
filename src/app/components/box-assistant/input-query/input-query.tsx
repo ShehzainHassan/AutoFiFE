@@ -4,22 +4,22 @@ import SendIcon from "@/assets/images/icons/send.png";
 import ThinkIcon from "@/assets/images/icons/think.png";
 import useAIResponse from "@/hooks/useAIResponse";
 import { AIResponseModel, ChatMessage } from "@/interfaces/aiAssistant";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import Image from "next/image";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import Input from "../../input-field";
 import classes from "./input-query.module.css";
 
-import useContextualSuggestions from "@/hooks/useContextualSuggestions";
-import { InputQueryProps } from "./input-query.types";
-import usePopularQueries from "@/hooks/usePopularQueries";
+import { useAuth } from "@/contexts/auth-context";
 import { useSession } from "@/contexts/session-context";
+import useContextualSuggestions from "@/hooks/useContextualSuggestions";
+import usePopularQueries from "@/hooks/usePopularQueries";
+import { InputQueryProps } from "./input-query.types";
 
 export default function InputQuery({ messageCount }: InputQueryProps) {
   const [input, setInput] = useState("");
 
-  const userId = getUserIdFromLocalStorage() ?? -1;
-  const { data: suggestions } = useContextualSuggestions(userId);
+  const { userId } = useAuth();
+  const { data: suggestions } = useContextualSuggestions(userId ?? -1);
   const { data: popularQueries } = usePopularQueries();
   const { selectedSessionId, setSelectedSessionId, setMessages } = useSession();
   const { mutate: askAI } = useAIResponse({
@@ -74,7 +74,7 @@ export default function InputQuery({ messageCount }: InputQueryProps) {
     handleNewMessage(botPlaceholder);
 
     askAI({
-      userId,
+      userId: userId ?? -1,
       question: finalInput,
       session_id: selectedSessionId,
     });

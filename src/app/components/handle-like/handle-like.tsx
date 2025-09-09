@@ -1,8 +1,8 @@
+import { useAuth } from "@/contexts/auth-context";
 import { useUserFavorites } from "@/contexts/user-favorites-context/user-favorites-context";
 import useAddUserLike from "@/hooks/useAddUserLike";
 import useDeleteUserLike from "@/hooks/useDeleteUserLike";
 import useTracking from "@/hooks/useTracking";
-import { getUserIdFromLocalStorage } from "@/utilities/utilities";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { toast } from "react-toastify";
@@ -13,15 +13,15 @@ export default function HandleLikeContainer({
   vehicle,
 }: HandleLikeContainerProps) {
   const { userLikes } = useUserFavorites();
-  const userId = getUserIdFromLocalStorage() ?? -1;
-  const authData = localStorage.getItem("authData") ?? "";
+  const { userId } = useAuth();
+  const { accessToken } = useAuth();
   const addLikeMutation = useAddUserLike();
   const deleteLikeMutation = useDeleteUserLike();
   const addInteraction = useTracking();
   const isLiked = userLikes?.includes(vehicle.vin);
 
   const handleLike = () => {
-    if (!authData) {
+    if (!accessToken) {
       toast.error("Please sign in to like a vehicle");
 
       return;
@@ -29,7 +29,7 @@ export default function HandleLikeContainer({
 
     if (!isLiked) {
       addLikeMutation.mutate(
-        { userId, vin: vehicle.vin },
+        { userId: userId ?? -1, vin: vehicle.vin },
         {
           onSuccess: () => {
             addInteraction.mutate({
@@ -41,7 +41,7 @@ export default function HandleLikeContainer({
       );
     } else {
       deleteLikeMutation.mutate(
-        { userId, vin: vehicle.vin },
+        { userId: userId ?? -1, vin: vehicle.vin },
         {
           onSuccess: () => {
             addInteraction.mutate({

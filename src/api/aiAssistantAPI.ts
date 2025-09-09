@@ -4,7 +4,7 @@ import {
   ChatSessionSummary,
   PopularQuery,
 } from "@/interfaces/aiAssistant";
-import rateLimitedClient from "./apiClient";
+import { rateLimitedClient } from "./apiClient";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const aiAssistantAPI = {
