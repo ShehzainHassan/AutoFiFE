@@ -1,9 +1,11 @@
 import axios from "axios";
 import rateLimit from "axios-rate-limit";
 import { getAccessToken, setAccessToken } from "@/store/tokenStore";
+import { trackError } from "@/utilities/error-tracking";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 const baseClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  baseURL: API_BASE_URL,
   withCredentials: true,
 });
 
@@ -40,11 +42,26 @@ baseClient.interceptors.response.use(
         setAccessToken(newToken);
 
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        return axios(originalRequest);
-      } catch {
+        return baseClient(originalRequest);
+      } catch (refreshError) {
+        trackError(refreshError as Error, {
+          source: "axios-interceptor",
+          reason: "refresh_failed",
+          url: originalRequest.url,
+        });
+
         setAccessToken(null);
-        window.location.href = "/login";
+        if (window.location.pathname !== "/sign-in") {
+          alert("Session expired. Please sign in again.");
+          window.location.href = "/sign-in";
+        }
       }
+    } else {
+      trackError(error as Error, {
+        source: "axios-interceptor",
+        url: originalRequest?.url,
+        status: error.response?.status,
+      });
     }
 
     return Promise.reject(error);

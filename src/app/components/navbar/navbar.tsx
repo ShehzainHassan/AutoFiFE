@@ -201,7 +201,7 @@ export default function Navbar({
           );
         })}
 
-        <li role="none">
+        <li role="none" style={{ listStyleType: "none" }}>
           <ButtonPrimary btnText={t("navbar.submitBtn")} />
         </li>
       </ul>

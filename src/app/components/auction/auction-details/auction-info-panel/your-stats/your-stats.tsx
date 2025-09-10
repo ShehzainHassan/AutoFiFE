@@ -7,23 +7,23 @@ import ErrorMessage from "@/app/components/error-message";
 import { ErrorBoundary } from "@sentry/nextjs";
 import { Profiler } from "react";
 import { trackRender } from "@/utilities/performance-tracking";
+import { getAccessToken } from "@/store/tokenStore";
 
 export default function YourStats() {
-  const authData = localStorage.getItem("authData") ?? "";
-
+  const accessToken = getAccessToken();
   const {
     data: watchList,
     isLoading: watchLoading,
     isError: watchError,
     error: watchErr,
-  } = useUserWatchList(!!authData);
+  } = useUserWatchList(!!accessToken);
 
   const {
     data: bids,
     isLoading: bidsLoading,
     isError: bidsError,
     error: bidsErr,
-  } = useUserBids(!!authData);
+  } = useUserBids(!!accessToken);
 
   if (watchLoading || bidsLoading) return <Loading />;
 
@@ -34,7 +34,6 @@ export default function YourStats() {
   }
 
   if (!watchList || !bids) return null;
-  if (!authData) return null;
   return (
     <ErrorBoundary fallback={<div>Failed to Load Your Stats</div>}>
       <Profiler id="YourStats" onRender={trackRender}>

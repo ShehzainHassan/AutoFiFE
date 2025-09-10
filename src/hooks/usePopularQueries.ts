@@ -2,10 +2,11 @@
 import aiAssistantAPI from "@/api/aiAssistantAPI";
 import { useQuery } from "@tanstack/react-query";
 
-const usePopularQueries = () => {
+const usePopularQueries = (userId: number | null) => {
   return useQuery({
-    queryKey: ["popularQueries"],
+    queryKey: ["popularQueries", userId],
     queryFn: () => aiAssistantAPI.getPopularQueries(),
+    enabled: !!userId,
   });
 };
 

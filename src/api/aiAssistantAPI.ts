@@ -50,7 +50,7 @@ const aiAssistantAPI = {
     );
     return response.data;
   },
-  getContextualSuggestion: async (userId: number) => {
+  getContextualSuggestion: async (userId: number | null) => {
     const response = await rateLimitedClient.get<string[]>(
       `${API_BASE_URL}/api/AIAssistant/contextual-suggestions/${userId}`
     );

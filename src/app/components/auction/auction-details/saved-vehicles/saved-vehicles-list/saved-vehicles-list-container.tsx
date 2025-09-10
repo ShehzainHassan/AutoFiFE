@@ -10,18 +10,18 @@ import { usePanel } from "@/contexts/panel-context/panel-context";
 import useUserWatchList from "@/hooks/useUserWatchList";
 import { Auction } from "@/interfaces/auction";
 import SavedVehiclesView from "./saved-vehicles-list-view";
+import { getAccessToken } from "@/store/tokenStore";
 
 export default function SavedVehiclesContainer() {
   const { togglePanel } = usePanel();
   const router = useRouter();
-  const authData = localStorage.getItem("authData") ?? "";
-
+  const accessToken = getAccessToken();
   const {
     data: watchlist,
     isLoading: watchLoading,
     isError: watchError,
     error: watchErr,
-  } = useUserWatchList(!!authData);
+  } = useUserWatchList(!!accessToken);
 
   const auctionIds = useMemo(
     () => watchlist?.map((w) => w.auctionId) ?? [],

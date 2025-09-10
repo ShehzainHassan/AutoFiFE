@@ -1,16 +1,17 @@
 "use client";
-import React, { useCallback, useMemo, Profiler } from "react";
-import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
-import { ErrorBoundary } from "@sentry/nextjs";
-import { trackRender } from "@/utilities/performance-tracking";
 import { usePanel } from "@/contexts/panel-context/panel-context";
 import useGetUnreadCount from "@/hooks/useGetUnreadCount";
+import { trackRender } from "@/utilities/performance-tracking";
+import { ErrorBoundary } from "@sentry/nextjs";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { Profiler, useCallback } from "react";
 import classes from "./auction-details-header.module.css";
 
 import AuctionIcon from "@/assets/images/icons/auction.png";
 import NotificationBell from "@/assets/images/icons/notification.png";
 import ProfilePic from "@/assets/images/icons/profile-pic.png";
+import { getAccessToken } from "@/store/tokenStore";
 
 const AuctionSearchField = dynamic(
   () => import("@/app/components/auction/auction-search-field")
@@ -24,16 +25,8 @@ const ThemeProvider = dynamic(() =>
 export default function AuctionDetailsHeader() {
   const { panel, togglePanel } = usePanel();
   const router = useRouter();
-
-  const authData = useMemo(() => {
-    try {
-      return JSON.parse(localStorage.getItem("authData") || "{}");
-    } catch {
-      return {};
-    }
-  }, []);
-
-  const { data: notificationCount, isLoading } = useGetUnreadCount(!!authData);
+  const accessToken = getAccessToken()
+  const { data: notificationCount, isLoading } = useGetUnreadCount(!!accessToken);
 
   const handleRedirectToAuction = useCallback(() => {
     router.push("/auction");

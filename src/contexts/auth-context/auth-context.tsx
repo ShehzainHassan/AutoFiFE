@@ -3,7 +3,10 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { limitedAxios } from "@/api/rateLimitedAxios";
 import { AuthContextType } from "./auth-context.types";
-import { setAccessToken as setTokenInStore } from "@/store/tokenStore";
+import {
+  getAccessToken,
+  setAccessToken as setTokenInStore,
+} from "@/store/tokenStore";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -11,9 +14,16 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [userId, setUserId] = useState<number | null>(null);
-  const [userName, setUserName] = useState<string | null>(null);
-  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [userId, setUserId] = useState<number | null>(() => {
+    const cookie = Cookies.get("userId");
+    return cookie ? Number(cookie) : null;
+  });
+  const [userName, setUserName] = useState<string | null>(() => {
+    return Cookies.get("userName") || null;
+  });
+  const [userEmail, setUserEmail] = useState<string | null>(() => {
+    return Cookies.get("userEmail") || null;
+  });
 
   const setAuthData = (data: {
     accessToken: string;
@@ -26,7 +36,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUserEmail(data.userEmail);
 
     setTokenInStore(data.accessToken);
-
     Cookies.set("userId", data.userId.toString());
     Cookies.set("userName", data.userName);
     Cookies.set("userEmail", data.userEmail);
@@ -58,10 +67,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const initAuth = async () => {
-      try {
-        await refreshToken();
-      } catch {
-        clearAuth();
+      const accessToken = getAccessToken();
+      if (!accessToken) {
+        try {
+          await refreshToken();
+        } catch {
+          clearAuth();
+        }
       }
     };
     initAuth();

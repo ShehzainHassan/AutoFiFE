@@ -1,6 +1,7 @@
 "use client";
 
 import auctionAPI from "@/api/auctionAPI";
+import { getAccessToken } from "@/store/tokenStore";
 import * as signalR from "@microsoft/signalr";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
@@ -17,14 +18,12 @@ export function SignalRProvider({ children }: { children: React.ReactNode }) {
   const auctionId = match ? parseInt(match[1]) : null;
 
   useEffect(() => {
-    const authData = localStorage.getItem("authData");
-    if (!authData) return;
-
-    const { token } = JSON.parse(authData);
+    const accessToken = getAccessToken();
+    if (!accessToken) return;
 
     const connection = new signalR.HubConnectionBuilder()
       .withUrl(`${API_BASE_URL}/hubs/auction`, {
-        accessTokenFactory: () => token,
+        accessTokenFactory: () => accessToken,
       })
       .withAutomaticReconnect()
       .build();

@@ -1,26 +1,60 @@
 "use client";
 import { FEATURED_MODELS } from "@/constants";
+import { useSearch } from "@/contexts/car-search-context/car-search-context";
 import useTranslation from "@/i18n";
 import { WHITE_THEME } from "@/styles/tab-styles";
 import { ThemeProvider } from "@/theme/themeContext";
+import { getMakeByModel } from "@/utilities/utilities";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import FeaturedIcon from "../featured-icons/featured-icons";
 import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
+import { Navbar } from "../navbar";
 import { SearchForm, useSearchForm } from "../search-form";
 import classes from "./hero.module.css";
-import { HeroProps } from "./hero.types";
-import { Navbar } from "../navbar";
 
-export default function Hero({
-  tabs,
-  selectedTab,
-  setSelectedTab,
-  handleCarModelClick,
-}: HeroProps) {
+export default function Hero() {
+  const router = useRouter();
+  const tabs = ["All", "New", "Used"];
+  const [selectedTab, setSelectedTab] = useState(tabs[0]);
   const { t } = useTranslation();
   const { makeProps, modelProps, priceProps, handleSearchClick } =
     useSearchForm({
       statusTab: selectedTab,
     });
+
+  const {
+    mainSearch,
+    stagedSearch,
+    setMainSearch,
+    setStagedSearch,
+    searchParams,
+    setSearchParams,
+  } = useSearch();
+  const handleCarModelClick = (model: string) => {
+    const make = getMakeByModel(model);
+    setMainSearch({
+      ...mainSearch,
+      make,
+      model,
+      startPrice: null,
+      endPrice: null,
+    });
+    setStagedSearch({
+      ...stagedSearch,
+      stagedMake: make,
+      stagedModel: model,
+      stagedStartPrice: null,
+      stagedEndPrice: null,
+    });
+    setSearchParams({
+      ...searchParams,
+      make,
+      model,
+    });
+    router.push(`/search?make=${make}&model=${model}`);
+  };
+
   return (
     <div className={classes.hero}>
       <Navbar />

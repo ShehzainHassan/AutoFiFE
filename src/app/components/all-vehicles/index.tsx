@@ -1,1 +1,1 @@
-export * from "./all-vehicles.container";
+export { default as AllVehicles } from "./all-vehicles";

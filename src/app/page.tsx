@@ -1,11 +1,9 @@
 "use client";
 
-import { LazyComponent } from "@/app/components";
+import { Hero, LazyComponent, AllVehicles } from "@/app/components";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import AllVehicles from "./components/all-vehicles/all-vehicles.container";
 import NeedHelp from "./components/box-assistant/need-help/need-help";
-import HeroContainer from "./components/hero/hero-container";
 import PremiumBrands from "./components/premium-brands/premium-brands";
 import classes from "./page.module.css";
 
@@ -41,7 +39,7 @@ const Footer = dynamic(() => import("./components/footer/footer"), {
 export default function Home() {
   return (
     <div className={classes.container}>
-      <HeroContainer />
+      <Hero />
       <PremiumBrands />
 
       <Suspense fallback={<div>Loading...</div>}>

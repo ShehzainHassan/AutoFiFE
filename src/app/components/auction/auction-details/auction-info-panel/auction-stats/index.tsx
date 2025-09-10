@@ -1,1 +1,1 @@
-export { default } from "./auction-stats";
+export { default as AuctionStats } from "./auction-stats";

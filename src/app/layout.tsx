@@ -3,7 +3,6 @@ import { CarSearchProvider } from "@/contexts/car-search-context/car-search-cont
 import { NonceProvider } from "@/contexts/nonce-context/nonce-context";
 import { PanelProvider } from "@/contexts/panel-context/panel-context";
 import { QuestionnaireProvider } from "@/contexts/questionnaire-context";
-import { SessionProvider } from "@/contexts/session-context";
 import { SignalRProvider } from "@/contexts/signalR-context";
 import { UserFavoritesProvider } from "@/contexts/user-favorites-context/user-favorites-context";
 import ReactQueryProvider from "@/providers/react-query-provider";
@@ -61,12 +60,10 @@ export default async function RootLayout({
                       <QuestionnaireProvider>
                         <PanelProvider>
                           <SignalRProvider>
-                            <SessionProvider>
-                              <body
-                                className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
-                                {children}
-                              </body>
-                            </SessionProvider>
+                            <body
+                              className={`${dmSans.className} ${roboto.className} ${inter.className}`}>
+                              {children}
+                            </body>
                           </SignalRProvider>
                         </PanelProvider>
                       </QuestionnaireProvider>

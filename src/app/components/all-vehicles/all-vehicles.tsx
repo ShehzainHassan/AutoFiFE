@@ -4,7 +4,10 @@ import { useSearch } from "@/contexts/car-search-context";
 import { convertArrayToString, parseStatus } from "@/utilities/utilities";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import AllVehiclesView from "./all-vehicles-view";
+import AllVehiclesSwiper from "../all-vehicle-swiper";
+import HorizontalTabs from "../horizontal-tabs/horizontal-tabs";
+import SectionTitle from "../section-title/section-title";
+import classes from "./all-vehicles.module.css";
 
 export default function AllVehicles() {
   const TABS = ["In Stock", "New Cars", "Used Cars"];
@@ -54,11 +57,31 @@ export default function AllVehicles() {
   };
 
   return (
-    <AllVehiclesView
-      tabs={TABS}
-      selectedTab={selectedTab}
-      onTabChange={setSelectedTab}
-      onViewAll={handleViewAll}
-    />
+    <div className={classes.container}>
+      <SectionTitle
+        title="Explore All Vehicles"
+        buttonText="View All"
+        onClick={handleViewAll}
+        backgroundColor="var(--color-white100)"
+      />
+      <div className={classes.space}>
+        <HorizontalTabs
+          tabs={TABS}
+          selectedTab={selectedTab}
+          onTabChange={setSelectedTab}
+        />
+      </div>
+      <div className={classes.vehicleSwiperContainer}>
+        <AllVehiclesSwiper
+          vehicleStatus={
+            selectedTab === "In Stock"
+              ? null
+              : selectedTab === "New Cars"
+              ? "NEW"
+              : "USED"
+          }
+        />
+      </div>
+    </div>
   );
 }

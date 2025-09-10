@@ -1,17 +1,14 @@
 "use client";
 
-import Image from "next/image";
-import classes from "./need-help.module.css";
 import BoxAssistantLogo from "@/assets/images/logos/box-assistant.png";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useSession } from "@/contexts/session-context";
+import classes from "./need-help.module.css";
 
 export default function NeedHelp() {
   const router = useRouter();
-  const { setSelectedSessionId } = useSession();
 
   const redirectToBoxAssistantPage = () => {
-    setSelectedSessionId(null);
     router.push("/box-assistant");
   };
 

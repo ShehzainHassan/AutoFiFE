@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "@/contexts/session-context";
+import { SessionProvider, useSession } from "@/contexts/session-context";
 import { ChatMessages, Footer, Navbar } from "../components";
 import About from "../components/box-assistant/about/about";
 import InputQuery from "../components/box-assistant/input-query/input-query";
@@ -8,14 +8,16 @@ import Sidebar from "../components/box-assistant/sidebar/sidebar";
 import classes from "./page.module.css";
 import { useEffect, useRef } from "react";
 
-export default function BoxAssistantPage() {
+function BoxAssistantContent() {
   const { messages, sessionTitles, isSessionLoading } = useSession();
   const chatRef = useRef<{ scrollToBottom: () => void }>(null);
+
   useEffect(() => {
     if (messages.length > 0 && chatRef.current) {
       chatRef.current.scrollToBottom();
     }
   }, [messages]);
+
   return (
     <div>
       <Navbar backgroundColor="var(--color-gray600)" />
@@ -37,5 +39,13 @@ export default function BoxAssistantPage() {
       </div>
       <Footer />
     </div>
+  );
+}
+
+export default function BoxAssistantPage() {
+  return (
+    <SessionProvider>
+      <BoxAssistantContent />
+    </SessionProvider>
   );
 }

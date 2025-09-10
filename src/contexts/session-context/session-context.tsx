@@ -19,11 +19,10 @@ export const SessionProvider = ({
     null
   );
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-
-  const { data: sessionTitles, isLoading: isSessionLoading } =
-    useGetUserSessionTitles();
-  const { data: sessionMessages } = useChatMessages(selectedSessionId ?? "");
   const { userId } = useAuth();
+  const { data: sessionTitles, isLoading: isSessionLoading } =
+    useGetUserSessionTitles(userId);
+  const { data: sessionMessages } = useChatMessages(selectedSessionId ?? "");
 
   const { mutate: askAI } = useAIResponse({
     onSuccess: (res: AIResponseModel) => {
@@ -41,11 +40,10 @@ export const SessionProvider = ({
 
   useEffect(() => {
     if (sessionMessages) {
+      setSelectedSessionId(sessionMessages.id);
       setMessages(sessionMessages.messages);
-    } else {
-      setMessages([]);
     }
-  }, [sessionMessages, selectedSessionId]);
+  }, [sessionMessages]);
 
   const handleNewMessage = (msg: ChatMessage, replaceLast = false) => {
     setMessages((prev) =>
@@ -93,7 +91,7 @@ export const SessionProvider = ({
         setMessages,
         handleNewMessage,
         handleNewChat,
-        handleSend, // 🔥 now available everywhere
+        handleSend,
       }}>
       {children}
     </SessionContext.Provider>

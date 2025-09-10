@@ -33,7 +33,7 @@ export default function ManualBid({
   } = useManualBid();
 
   const accessToken = getAccessToken();
-
+  console.log("Access Token = ", accessToken);
   if (isLoading) return <Loading />;
 
   return (

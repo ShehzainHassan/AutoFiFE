@@ -26,8 +26,8 @@ export default function InputQuery({ messageCount, chatRef }: InputQueryProps) {
   const recognitionRef = useRef<CustomSpeechRecognition | null>(null);
 
   const { userId } = useAuth();
-  const { data: suggestions } = useContextualSuggestions(userId ?? -1);
-  const { data: popularQueries } = usePopularQueries();
+  const { data: suggestions } = useContextualSuggestions(userId);
+  const { data: popularQueries } = usePopularQueries(userId);
   const { selectedSessionId, handleSend } = useSession();
 
   const mergedSuggestions = useMemo(() => {
