@@ -1,16 +1,18 @@
-import { useCallback, useMemo, useState } from "react";
-import useDeleteSessionById from "@/hooks/useDeleteSessionById";
+import { useAuth } from "@/contexts/auth-context";
+import { useSession } from "@/contexts/session-context";
 import useDeleteAllSessions from "@/hooks/useDeleteAllSessions";
+import useDeleteSessionById from "@/hooks/useDeleteSessionById";
 import useEditSessionTitle from "@/hooks/useEditSessionTitle";
 import { ChatSessionSummary } from "@/interfaces/aiAssistant";
-import { useSession } from "@/contexts/session-context";
+import { useCallback, useMemo, useState } from "react";
 
 export type ModalType = "edit" | "delete" | "clearAll" | null;
 
 export default function useSidebarLogic(
   sessionTitles?: ChatSessionSummary[] | null
 ) {
-  const { selectedSessionId, setSelectedSessionId } = useSession();
+  const { selectedSessionId, setMessages, setSelectedSessionId } = useSession();
+  const { userId } = useAuth();
   const [modalType, setModalType] = useState<ModalType>(null);
   const [currentTitle, setCurrentTitle] = useState("");
   const [sessionToDelete, setSessionToDelete] = useState<string | null>(null);
@@ -93,11 +95,29 @@ export default function useSidebarLogic(
 
   const handleDeleteSession = useCallback(() => {
     if (!sessionToDelete) return;
-    deleteSessionMutation.mutate(sessionToDelete);
-    setModalType(null);
-    setSessionToDelete(null);
-    setSelectedSessionId(null);
-  }, [sessionToDelete, deleteSessionMutation, setSelectedSessionId]);
+
+    deleteSessionMutation.mutate(
+      { sessionId: sessionToDelete, userId },
+      {
+        onSuccess: () => {
+          setModalType(null);
+          setSessionToDelete(null);
+
+          if (selectedSessionId === sessionToDelete) {
+            setSelectedSessionId(null);
+            setMessages([]);
+          }
+        },
+      }
+    );
+  }, [
+    userId,
+    sessionToDelete,
+    deleteSessionMutation,
+    selectedSessionId,
+    setSelectedSessionId,
+    setMessages,
+  ]);
 
   const handleDeleteAll = useCallback(() => {
     deleteAllSessionsMutation.mutate();

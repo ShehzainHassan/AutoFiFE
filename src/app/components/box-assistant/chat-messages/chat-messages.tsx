@@ -1,19 +1,20 @@
 "use client";
+import { useSession } from "@/contexts/session-context";
+import { useChatMessagesContainer } from "@/hooks/useChatMessageContainer";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import React, {
   forwardRef,
   memo,
-  useRef,
-  useImperativeHandle,
   useEffect,
+  useImperativeHandle,
+  useRef,
   useState,
 } from "react";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { ChartRenderer } from "./chart-renderer/chart-renderer";
 import classes from "./chat-messages.module.css";
 import { ChatMessagesProps, ChatMessagesRef } from "./chat-messages.types";
-import { useChatMessagesContainer } from "@/hooks/useChatMessageContainer";
-import { useSession } from "@/contexts/session-context";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 const ChatMessages = forwardRef<ChatMessagesRef, ChatMessagesProps>(
   ({ messages }, ref) => {
@@ -41,15 +42,43 @@ const ChatMessages = forwardRef<ChatMessagesRef, ChatMessagesProps>(
       latestUserIndex >= 0 ? parsedMessages.length - 1 - latestUserIndex : -1;
 
     const renderMessageContent = (msg: (typeof parsedMessages)[number]) => {
+      if (msg.uiType === "CHART") {
+        const chartDivMatch = msg.message?.match(
+          /<div class="chart-block" data-chart-type="([^"]+)" data-chart="([^"]+)"><\/div>/
+        );
+
+        if (chartDivMatch) {
+          const chartType = chartDivMatch[1];
+          let chartData: unknown[] = [];
+
+          try {
+            chartData = JSON.parse(chartDivMatch[2].replace(/&quot;/g, '"'));
+          } catch (err) {
+            console.error("Failed to parse chart data:", err);
+            return <p>Failed to load chart</p>;
+          }
+
+          const answerText = msg.message.split(chartDivMatch[0])[0];
+
+          return (
+            <div className={classes.uiBlock}>
+              {answerText && (
+                <div dangerouslySetInnerHTML={{ __html: answerText }} />
+              )}
+              <ChartRenderer
+                chartType={chartType as "bar" | "line" | "pie"}
+                chartData={chartData as Record<string, unknown>[]}
+              />
+            </div>
+          );
+        }
+      }
+
       return (
-        <div>
-          {msg.message && (
-            <div
-              className={classes.uiBlock}
-              dangerouslySetInnerHTML={{ __html: msg.message }}
-            />
-          )}
-        </div>
+        <div
+          className={classes.uiBlock}
+          dangerouslySetInnerHTML={{ __html: msg.message || "" }}
+        />
       );
     };
 
@@ -73,6 +102,7 @@ const ChatMessages = forwardRef<ChatMessagesRef, ChatMessagesProps>(
       container.addEventListener("scroll", handleScroll);
       return () => container.removeEventListener("scroll", handleScroll);
     }, []);
+
     return (
       <div
         ref={containerRef}

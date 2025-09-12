@@ -16,7 +16,7 @@ import headings from "@/styles/typography.module.css";
 import { convertArrayToString } from "@/utilities/utilities";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ButtonPrimary from "../buttons/button-primary";
 import classes from "./navbar.module.css";
 import { NavbarContainerProps } from "./navbar.types";
@@ -112,6 +112,10 @@ export default function Navbar({
   }, [mainSearch, setMainSearch, clearAuth]);
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   return (
     <nav
@@ -160,15 +164,17 @@ export default function Navbar({
 
           return (
             <li key={key} role="none" className={classes.navContainer}>
-              <button
-                role="menuitem"
-                className={`${headings.navElement} ${classes.white}`}
-                onClick={() => {
-                  if (isSignIn) handleSignInClick();
-                }}
-                aria-label={isSignIn && userName ? "User menu" : label}>
-                {isSignIn && userName ? userName : label}
-              </button>
+              {hasMounted && (
+                <button
+                  role="menuitem"
+                  className={`${headings.navElement} ${classes.white}`}
+                  onClick={() => {
+                    if (isSignIn) handleSignInClick();
+                  }}
+                  aria-label={isSignIn && userName ? "User menu" : label}>
+                  {isSignIn && userName ? userName : label}
+                </button>
+              )}
 
               {showExpandIcon && (
                 <Image

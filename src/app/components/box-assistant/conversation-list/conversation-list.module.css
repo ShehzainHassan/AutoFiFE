@@ -4,6 +4,4 @@
   justify-content: space-between;
   gap: 10px;
   padding: 30px;
-  max-height: 200px;
-  overflow: auto;
 }

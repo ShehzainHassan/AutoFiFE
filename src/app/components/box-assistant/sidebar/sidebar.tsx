@@ -11,13 +11,14 @@ import useSidebarLogic from "@/hooks/useSidebarLogic";
 import { ChatSessionSummary } from "@/interfaces/aiAssistant";
 import { ThemeProvider } from "@/theme/themeContext";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import ButtonPrimary from "../../buttons/button-primary";
 import ClearAllModal from "../../modals/clear-all-modal/clear-all-modal";
 import DeleteSessionModal from "../../modals/delete-modal/delete-modal";
 import EditSessionModal from "../../modals/edit-modal/edit-modal";
 import ConversationList from "../conversation-list/conversation-list";
 import classes from "./sidebar.module.css";
+import { useAuth } from "@/contexts/auth-context";
 
 export interface SidebarProps {
   sessionTitles?: ChatSessionSummary[] | null;
@@ -47,6 +48,14 @@ function BoxAssistantSidebar({
   } = useSidebarLogic(sessionTitles);
 
   const { selectedSessionId, setMessages, setSelectedSessionId } = useSession();
+  const { userName } = useAuth();
+  const [mounted, setMounted] = React.useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) {
+    return <aside className={classes.container} aria-label="Chat sidebar" />;
+  }
+
   return (
     <aside className={classes.container} aria-label="Chat sidebar">
       <div>
@@ -113,13 +122,18 @@ function BoxAssistantSidebar({
                     Clear All
                   </p>
                 </div>
-                <ConversationList
-                  sessions={recentSessions}
-                  selectedId={selectedSessionId}
-                  onSelect={setSelectedSessionId}
-                  onDelete={openDeleteModal}
-                  onEdit={openEditModal}
-                />
+                <div
+                  className={
+                    olderSessions.length > 0 ? classes.reduced : classes.full
+                  }>
+                  <ConversationList
+                    sessions={recentSessions}
+                    selectedId={selectedSessionId}
+                    onSelect={setSelectedSessionId}
+                    onDelete={openDeleteModal}
+                    onEdit={openEditModal}
+                  />
+                </div>
               </>
             )}
 
@@ -128,13 +142,15 @@ function BoxAssistantSidebar({
                 <div className={classes.yourConversations}>
                   <p className={classes.text}>Last 7 Days</p>
                 </div>
-                <ConversationList
-                  sessions={olderSessions}
-                  selectedId={selectedSessionId}
-                  onSelect={setSelectedSessionId}
-                  onDelete={openDeleteModal}
-                  onEdit={openEditModal}
-                />
+                <div className={classes.reduced}>
+                  <ConversationList
+                    sessions={olderSessions}
+                    selectedId={selectedSessionId}
+                    onSelect={setSelectedSessionId}
+                    onDelete={openDeleteModal}
+                    onEdit={openEditModal}
+                  />
+                </div>
               </>
             )}
           </>
@@ -154,7 +170,7 @@ function BoxAssistantSidebar({
             <div className={classes.settings}>
               <Image src={User} alt="user" width={34} height={34} />
             </div>
-            <p>Andrew Neilson</p>
+            <p>{userName}</p>
           </div>
           <div className={classes.logout}>
             <Image src={Logout} alt="logout" width={13} height={13} />

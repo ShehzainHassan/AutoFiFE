@@ -6,16 +6,21 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
+interface DeleteSessionVars {
+  sessionId: string;
+  userId: number | null;
+}
+
 const useDeleteSessionById = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
-    mutationFn: async (sessionId: string) => {
+    mutationFn: async ({ sessionId }: DeleteSessionVars) => {
       return await aiAssistantAPI.deleteSessionById(sessionId);
     },
-    onMutate: async (sessionId) => {
-      const queryKey = ["userSessions"];
+    onMutate: async ({ sessionId, userId }: DeleteSessionVars) => {
+      const queryKey = ["userSessions", userId];
       await queryClient.cancelQueries({ queryKey });
 
       const previousTitles =
@@ -24,19 +29,23 @@ const useDeleteSessionById = () => {
       queryClient.setQueryData<ChatSessionSummary[]>(queryKey, (old = []) =>
         old.filter((chat) => chat.id !== sessionId)
       );
-      return { previousTitles };
+
+      return { previousTitles, userId };
     },
-    onError: (error, sessionId, context) => {
-      if (context?.previousTitles) {
-        queryClient.setQueryData(["userSessions"], context.previousTitles);
+    onError: (error, _variables, context) => {
+      if (context?.previousTitles && context?.userId !== null) {
+        queryClient.setQueryData(
+          ["userSessions", context.userId],
+          context.previousTitles
+        );
       }
       handleApiError(error, router);
     },
-    onSuccess: () => {
-      toast.success("Session deleted successfully!");
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["userSessions"] });
+    onSuccess: (_data, { userId }: DeleteSessionVars) => {
+      if (userId !== null) {
+        toast.success("Session deleted successfully!");
+        queryClient.invalidateQueries({ queryKey: ["userSessions", userId] });
+      }
     },
   });
 };

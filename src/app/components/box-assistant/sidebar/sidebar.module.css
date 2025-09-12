@@ -28,6 +28,13 @@
   gap: 10px;
   padding: 0 30px;
 }
+.reduced {
+  max-height: 200px;
+  overflow: auto;
+}
+.full {
+  height: fit-content;
+}
 .searchBtn {
   display: flex;
   align-items: center;
