@@ -8,6 +8,12 @@ import { rateLimitedClient } from "./apiClient";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const aiAssistantAPI = {
+  checkUserQuota: async () => {
+    const response = await rateLimitedClient.get<number>(
+      `${API_BASE_URL}/api/AIAssistant/quota`
+    );
+    return response.data;
+  },
   getAIResponse: async (
     userId: number,
     question: string,

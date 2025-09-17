@@ -7,9 +7,15 @@ import InputQuery from "../components/box-assistant/input-query/input-query";
 import Sidebar from "../components/box-assistant/sidebar/sidebar";
 import classes from "./page.module.css";
 import { useEffect, useRef } from "react";
+import useUserQuota from "@/hooks/useUserQuota";
+import { useAuth } from "@/contexts/auth-context";
 
 function BoxAssistantContent() {
   const { messages, sessionTitles, isSessionLoading } = useSession();
+  const { userId } = useAuth();
+
+  const { data: quota } = useUserQuota(userId ?? -1);
+
   const chatRef = useRef<{ scrollToBottom: () => void }>(null);
 
   useEffect(() => {
@@ -17,7 +23,6 @@ function BoxAssistantContent() {
       chatRef.current.scrollToBottom();
     }
   }, [messages]);
-
   return (
     <div>
       <Navbar backgroundColor="var(--color-gray600)" />
@@ -26,14 +31,12 @@ function BoxAssistantContent() {
         <div className={classes.chatContainer}>
           <About />
           <div className={classes.messageContainer}>
-            <>
-              <ChatMessages
-                ref={chatRef}
-                messages={messages}
-                isPending={false}
-              />
-              <InputQuery messageCount={messages.length} chatRef={chatRef} />
-            </>
+            <ChatMessages ref={chatRef} messages={messages} isPending={false} />
+            <InputQuery
+              messageCount={messages.length}
+              userQuota={quota}
+              chatRef={chatRef}
+            />
           </div>
         </div>
       </div>

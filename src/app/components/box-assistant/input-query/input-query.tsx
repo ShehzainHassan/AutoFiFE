@@ -19,7 +19,11 @@ import {
 
 import MicIcon from "@mui/icons-material/Mic";
 
-export default function InputQuery({ messageCount, chatRef }: InputQueryProps) {
+export default function InputQuery({
+  messageCount,
+  userQuota,
+  chatRef,
+}: InputQueryProps) {
   const [input, setInput] = useState("");
   const [isListening, setIsListening] = useState(false);
 
@@ -104,6 +108,25 @@ export default function InputQuery({ messageCount, chatRef }: InputQueryProps) {
       setIsListening(true);
     }
   };
+  if (userQuota === 0) {
+    const resetDate = new Date();
+    resetDate.setHours(24, 0, 0, 0);
+
+    return (
+      <div className={classes.limitBanner}>
+        <p className={classes.limitText}>Daily limit exceeded</p>
+        <p className={classes.limitSubText}>
+          Your limit will reset on{" "}
+          {resetDate.toLocaleString([], {
+            weekday: "short",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          })}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -127,6 +150,7 @@ export default function InputQuery({ messageCount, chatRef }: InputQueryProps) {
           <Image src={ThinkIcon} alt="brain" width={23} height={23} />
           <Input width="100%">
             <Input.Field
+              isDisabled={userQuota === 0}
               className={classes.input}
               type="text"
               placeholder="What's on your mind"

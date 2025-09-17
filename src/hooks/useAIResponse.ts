@@ -26,7 +26,9 @@ const useAIResponse = (options?: {
       queryClient.invalidateQueries({
         queryKey: ["userSessions"],
       });
-
+      queryClient.invalidateQueries({
+        queryKey: ["userQuota", variables.userId],
+      });
       options?.onSuccess?.(res);
     },
     onError: (error: unknown) => {

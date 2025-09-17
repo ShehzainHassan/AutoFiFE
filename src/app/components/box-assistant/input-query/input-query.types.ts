@@ -1,6 +1,6 @@
 export interface InputQueryProps {
   messageCount: number;
-
+  userQuota: number | undefined;
   chatRef: React.RefObject<{ scrollToBottom: () => void } | null>;
 }
 
