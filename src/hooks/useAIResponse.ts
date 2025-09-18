@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const useAIResponse = (options?: {
   onSuccess?: (res: AIResponseModel) => void;
-  onError?: () => void;
+  onError?: (statusCode?: number) => void;
 }) => {
   const queryClient = useQueryClient();
 
@@ -32,16 +32,29 @@ const useAIResponse = (options?: {
       options?.onSuccess?.(res);
     },
     onError: (error: unknown) => {
-      options?.onError?.();
-
+      let statusCode: number | undefined;
       let errorMessage = "An unexpected error occurred.";
+
       if (axios.isAxiosError(error)) {
-        errorMessage = error.response?.data?.message || error.message;
+        statusCode = error.response?.status;
+
+        if (statusCode === 429) {
+          errorMessage =
+            "⚠️ The AI service is currently handling high traffic. Please wait a moment and try again.";
+        } else {
+          errorMessage =
+            error.response?.data?.error ||
+            error.response?.data?.message ||
+            error.message;
+        }
       } else if (typeof error === "string") {
         errorMessage = error;
       }
 
       toast.error(errorMessage);
+
+      // Pass statusCode to caller
+      options?.onError?.(statusCode);
     },
   });
 };

@@ -114,7 +114,7 @@ export default function InputQuery({
 
     return (
       <div className={classes.limitBanner}>
-        <p className={classes.limitText}>Daily limit exceeded</p>
+        <p className={classes.limitText}>Daily limit reached</p>
         <p className={classes.limitSubText}>
           Your limit will reset on{" "}
           {resetDate.toLocaleString([], {

@@ -7,6 +7,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { SessionContextType } from "./session-context.types";
 import { useAuth } from "@/contexts/auth-context";
 import useAIResponse from "@/hooks/useAIResponse";
+import { AxiosError } from "axios";
 
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
 
@@ -68,11 +69,40 @@ export const SessionProvider = ({
     };
     handleNewMessage(botPlaceholder);
 
-    askAI({
-      userId: userId ?? -1,
-      question: text,
-      session_id: selectedSessionId,
-    });
+    askAI(
+      {
+        userId: userId ?? -1,
+        question: text,
+        session_id: selectedSessionId,
+      },
+      {
+        onSuccess: (res) => {
+          if (res.session_id) {
+            setSelectedSessionId(res.session_id);
+          }
+          const aiMessage: ChatMessage = {
+            sender: "AI",
+            message: res.answer,
+            timestamp: new Date().toISOString(),
+          };
+          handleNewMessage(aiMessage, true);
+        },
+        onError: (error: unknown) => {
+          const axiosError = error as AxiosError;
+          if (axiosError.response?.status === 429) {
+            setMessages((prev) => prev.slice(0, -1));
+            return;
+          }
+
+          const errorMessage: ChatMessage = {
+            sender: "AI",
+            message: "Sorry, something went wrong.",
+            timestamp: new Date().toISOString(),
+          };
+          handleNewMessage(errorMessage, true);
+        },
+      }
+    );
   };
 
   const handleNewChat = () => {
