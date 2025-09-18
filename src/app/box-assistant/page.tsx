@@ -9,9 +9,13 @@ import classes from "./page.module.css";
 import { useEffect, useRef } from "react";
 import useUserQuota from "@/hooks/useUserQuota";
 import { useAuth } from "@/contexts/auth-context";
+import { useRouter } from "next/navigation";
+import { useFeatureFlags } from "@/hooks/useFeatureFlags";
 
 function BoxAssistantContent() {
   const { messages, sessionTitles, isSessionLoading } = useSession();
+  const router = useRouter();
+  const { isAIEnabled } = useFeatureFlags();
   const { userId } = useAuth();
 
   const { data: quota } = useUserQuota(userId ?? -1);
@@ -23,6 +27,13 @@ function BoxAssistantContent() {
       chatRef.current.scrollToBottom();
     }
   }, [messages]);
+
+  if (!isAIEnabled) {
+    if (typeof window !== "undefined") {
+      router.replace("/");
+    }
+    return null;
+  }
   return (
     <div>
       <Navbar backgroundColor="var(--color-gray600)" />

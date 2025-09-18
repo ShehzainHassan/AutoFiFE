@@ -4,14 +4,15 @@ import BoxAssistantLogo from "@/assets/images/logos/box-assistant.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import classes from "./need-help.module.css";
+import { useFeatureFlags } from "@/hooks/useFeatureFlags";
 
 export default function NeedHelp() {
   const router = useRouter();
-
+  const { isAIEnabled } = useFeatureFlags();
   const redirectToBoxAssistantPage = () => {
     router.push("/box-assistant");
   };
-
+  if (!isAIEnabled) return;
   return (
     <button
       type="button"
