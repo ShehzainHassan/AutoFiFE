@@ -2,7 +2,7 @@
 import aiAssistantAPI from "@/api/aiAssistantAPI";
 import { useQuery } from "@tanstack/react-query";
 
-const useUserQuota = (userId: number) => {
+const useUserQuota = (userId: number | null) => {
   return useQuery({
     queryKey: ["userQuota", userId],
     queryFn: () => aiAssistantAPI.checkUserQuota(),

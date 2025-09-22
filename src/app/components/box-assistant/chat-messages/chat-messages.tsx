@@ -15,10 +15,14 @@ import React, {
 import { ChartRenderer } from "./chart-renderer/chart-renderer";
 import classes from "./chat-messages.module.css";
 import { ChatMessagesProps, ChatMessagesRef } from "./chat-messages.types";
+import useUserQuota from "@/hooks/useUserQuota";
+import { useAuth } from "@/contexts/auth-context";
 
 const ChatMessages = forwardRef<ChatMessagesRef, ChatMessagesProps>(
   ({ messages }, ref) => {
+    const { userId } = useAuth();
     const { handleSend } = useSession();
+    const { data: userQuota } = useUserQuota(userId);
     const { parsedMessages, handleVote, getVoteForIndex } =
       useChatMessagesContainer(messages);
 
@@ -166,7 +170,7 @@ const ChatMessages = forwardRef<ChatMessagesRef, ChatMessagesProps>(
                 )}
               </div>
 
-              {showSuggestedActions && (
+              {showSuggestedActions && (userQuota ?? 0) > 0 && (
                 <div className={classes.suggestedActionsBox}>
                   {msg.suggestedActions?.map((action, i) => (
                     <button

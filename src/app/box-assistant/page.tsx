@@ -18,7 +18,7 @@ function BoxAssistantContent() {
   const { isAIEnabled } = useFeatureFlags();
   const { userId } = useAuth();
 
-  const { data: quota } = useUserQuota(userId ?? -1);
+  const { data: quota } = useUserQuota(userId);
 
   const chatRef = useRef<{ scrollToBottom: () => void }>(null);
 

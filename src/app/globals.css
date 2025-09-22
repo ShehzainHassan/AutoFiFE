@@ -58,11 +58,44 @@ input[type="number"] {
   border: none;
 }
 
+.ai-answer {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-black100);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.ai-answer p {
+  margin: 0 0 12px 0;
+}
+
+.ai-answer strong,
+.ai-answer b {
+  font-weight: 600;
+  color: var(--color-black100);
+}
+
+.ai-answer em,
+.ai-answer i {
+  font-style: italic;
+  color: var(--color-gray580);
+}
+
+.ai-answer a {
+  color: var(--color-blue300);
+  text-decoration: none;
+}
+.ai-answer a:hover {
+  text-decoration: underline;
+}
 .ai-table {
+  font-size: 14px;
+  line-height: 1.2;
+
   width: 100%;
   border-collapse: collapse;
   margin-top: 8px;
-  font-size: 14px;
   table-layout: auto;
 }
 
@@ -82,6 +115,8 @@ input[type="number"] {
   gap: 12px;
   margin-top: 10px;
   width: 100%;
+  font-size: 16px;
+  line-height: 1.6;
 }
 .card-grid .card {
   width: 100%;
@@ -89,7 +124,6 @@ input[type="number"] {
   border-radius: 8px;
   padding: 12px;
   background: var(--color-gray100);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 .chart-block {
   overflow-x: auto;
@@ -98,7 +132,7 @@ input[type="number"] {
   border-radius: 6px;
   padding: 10px;
   margin-top: 8px;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 .table-wrapper {
