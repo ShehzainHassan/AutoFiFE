@@ -6,6 +6,5 @@ export interface AnalyticsTableProps<T> {
     cellClass?: string;
   }[];
   data: T[];
-  maxHeight?: string;
   onScrollEnd?: () => void;
 }

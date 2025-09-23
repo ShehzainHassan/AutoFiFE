@@ -111,12 +111,18 @@ const analyticsAPI = {
     );
     return response.data;
   },
-  getErrorLogs: async (page = 1, pageSize = 10) => {
+  getErrorLogs: async (
+    startDate: string,
+    endDate: string,
+    page: number = 1,
+    pageSize: number = 10
+  ) => {
     const response = await limitedAxios.get<ErrorLogs>(
-      `${API_BASE_URL}/api/analytics/error-logs?page=${page}&pageSize=${pageSize}`
+      `${API_BASE_URL}/api/analytics/error-logs?startDate=${startDate}&endDate=${endDate}&page=${page}&pageSize=${pageSize}`
     );
     return response.data;
   },
+
   getOldestAPILog: async () => {
     const response = await limitedAxios.get(
       `${API_BASE_URL}/api/analytics/oldest-api-log`

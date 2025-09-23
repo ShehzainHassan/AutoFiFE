@@ -5,11 +5,16 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 const PAGE_SIZE = 5;
 
-const useErrorLogs = () => {
+const useErrorLogs = (startDate: string, endDate: string) => {
   return useInfiniteQuery({
-    queryKey: ["errorLogs"],
+    queryKey: ["errorLogs", startDate, endDate],
     queryFn: async ({ pageParam = 1 }) => {
-      return await analyticsAPI.getErrorLogs(pageParam, PAGE_SIZE);
+      return await analyticsAPI.getErrorLogs(
+        startDate,
+        endDate,
+        pageParam,
+        PAGE_SIZE
+      );
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
@@ -17,6 +22,7 @@ const useErrorLogs = () => {
       const nextPage = pages.length + 1;
       return nextPage <= totalPages ? nextPage : undefined;
     },
+    enabled: Boolean(startDate && endDate),
   });
 };
 

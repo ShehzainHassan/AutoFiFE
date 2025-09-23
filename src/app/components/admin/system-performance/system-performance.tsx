@@ -45,7 +45,10 @@ export default function SystemPerformance() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useErrorLogs();
+  } = useErrorLogs(
+    start.toLocaleDateString("en-CA"),
+    end.toLocaleDateString("en-CA")
+  );
 
   const transformedErrorLogs =
     errorLogs?.pages.flatMap((page) =>
@@ -83,7 +86,6 @@ export default function SystemPerformance() {
       )}
     </div>
   );
-
   return (
     <AnalyticsLayout
       title="System Performance"

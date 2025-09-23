@@ -30,7 +30,6 @@ export default function AnalyticsTable<T extends object>({
   columns,
   data,
   onScrollEnd,
-  maxHeight,
 }: AnalyticsTableProps<T>) {
   const { mutate, isPending } = useExportReport();
 
@@ -97,7 +96,6 @@ export default function AnalyticsTable<T extends object>({
     [mutate]
   );
 
-  // default right-aligned columns
   const defaultRightAligned = new Set([
     "views",
     "bidders",
@@ -133,7 +131,6 @@ export default function AnalyticsTable<T extends object>({
       else cls.push(classes.badgeErrorOther);
     }
 
-    // emphasized columns
     if (emphasizedColumns.has(colKey)) {
       cls.push(classes.emphasized);
     }
@@ -148,7 +145,6 @@ export default function AnalyticsTable<T extends object>({
       className={classes.container}
       role="table"
       aria-label="Analytics report table">
-      {/* HEADER */}
       <div
         className={classes.headerRow}
         style={{ gridTemplateColumns: gridTemplate }}
@@ -169,12 +165,7 @@ export default function AnalyticsTable<T extends object>({
         ))}
       </div>
 
-      {/* BODY */}
-      <div
-        className={classes.body}
-        onScroll={handleScroll}
-        style={{ maxHeight }}
-        role="rowgroup">
+      <div className={classes.body} onScroll={handleScroll} role="rowgroup">
         {data.map((row, rowIndex) => (
           <div
             key={rowIndex}

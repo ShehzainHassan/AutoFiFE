@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import useUserAnalytics from "@/hooks/useGetUserAnalytics";
 import useUserAnalyticsTable from "@/hooks/useUserAnalyticsTable";
 import useUserGraphAnalytics from "@/hooks/useUserGraphAnalytics";
@@ -36,12 +36,38 @@ export default function UserAnalytics() {
     Boolean(dates.startDate && dates.endDate)
   );
 
-  const transformedData = userGraph
-    ? Object.entries(userGraph.data).map(([label, value]) => ({
-        label,
-        value: Number(value),
-      }))
-    : [];
+  const transformedData = useMemo(() => {
+    if (!userGraph) return [];
+
+    const data = Object.entries(userGraph.data).map(([label, value]) => ({
+      label,
+      value: Number(value),
+    }));
+
+    if (data.length === 0) {
+      const today = new Date();
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+
+      return [
+        { label: yesterday.toISOString().split("T")[0], value: 0 },
+        { label: today.toISOString().split("T")[0], value: 0 },
+      ];
+    }
+
+    if (data.length === 1) {
+      const onlyPointDate = new Date(data[0].label);
+      const prevDate = new Date(onlyPointDate);
+      prevDate.setDate(prevDate.getDate() - 1);
+
+      return [
+        { label: prevDate.toISOString().split("T")[0], value: 0 },
+        ...data,
+      ];
+    }
+
+    return data;
+  }, [userGraph]);
 
   const { data, isLoading } = useUserAnalytics(
     start.toLocaleDateString("en-CA"),

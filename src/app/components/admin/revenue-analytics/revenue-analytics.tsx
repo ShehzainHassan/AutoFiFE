@@ -43,12 +43,36 @@ export default function RevenueAnalytics() {
     );
 
   const transformedData = useMemo(() => {
-    return revenueGraph
-      ? Object.entries(revenueGraph.data).map(([label, value]) => ({
-          label,
-          value: Number(value),
-        }))
-      : [];
+    if (!revenueGraph) return [];
+
+    const data = Object.entries(revenueGraph.data).map(([label, value]) => ({
+      label,
+      value: Number(value),
+    }));
+
+    if (data.length === 0) {
+      const today = new Date();
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+
+      return [
+        { label: yesterday.toISOString().split("T")[0], value: 0 },
+        { label: today.toISOString().split("T")[0], value: 0 },
+      ];
+    }
+
+    if (data.length === 1) {
+      const onlyPointDate = new Date(data[0].label);
+      const prevDate = new Date(onlyPointDate);
+      prevDate.setDate(prevDate.getDate() - 1);
+
+      return [
+        { label: prevDate.toISOString().split("T")[0], value: 0 },
+        ...data,
+      ];
+    }
+
+    return data;
   }, [revenueGraph]);
 
   const totalValue = useMemo(

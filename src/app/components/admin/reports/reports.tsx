@@ -80,7 +80,6 @@ export default function Reports({ selected }: ReportProps) {
         reportType: getReportName(Number(item.reportType)),
       }))
     ) ?? [];
-
   return (
     <div className={classes.container}>
       <TitleContainer
