@@ -11,18 +11,22 @@ import AuctionReport from "@/assets/images/general/auction-report.png";
 import DashboardSummary from "@/assets/images/general/dashboard-summary.png";
 import RevenueReport from "@/assets/images/general/revenue-report.png";
 import UserReport from "@/assets/images/general/user-report.png";
-
 export const auctionTableColumns: {
   key: keyof AuctionTableData;
   label: string;
+  width?: string;
 }[] = [
-  { key: "auctionId", label: "Auction ID" },
-  { key: "vehicleName", label: "Vehicle" },
-  { key: "views", label: "Views" },
-  { key: "bidders", label: "Bidders" },
-  { key: "bids", label: "Bids" },
-  { key: "finalPrice", label: "Final Price" },
-  { key: "status", label: "Status" },
+  { key: "auctionId", label: "Auction ID", width: "4fr" },
+  { key: "vehicleName", label: "Vehicle", width: "10fr" },
+  { key: "views", label: "Views", width: "4fr" },
+  { key: "bidders", label: "Bidders", width: "4fr" },
+  { key: "bids", label: "Bids", width: "4fr" },
+  { key: "finalPrice", label: "Final Price", width: "6fr" },
+  {
+    key: "status",
+    label: "Status",
+    width: "6fr",
+  },
 ];
 export const periodOptions = [
   { label: "All Time", value: "AllTime" },
@@ -47,13 +51,14 @@ export const apiPeriodOptions = [
 export const revenueTableColumns: {
   key: keyof RevenueTableData;
   label: string;
+  width: string;
 }[] = [
-  { key: "scheduledStartTime", label: "Date" },
-  { key: "auctionId", label: "Auction ID" },
-  { key: "vehicle", label: "Vehicle" },
-  { key: "buyer", label: "Buyer" },
-  { key: "revenue", label: "Revenue" },
-  { key: "commission", label: "Commission" },
+  { key: "scheduledStartTime", label: "Date", width: "1fr" },
+  { key: "auctionId", label: "Auction ID", width: "1fr" },
+  { key: "vehicle", label: "Vehicle", width: "1fr" },
+  { key: "buyer", label: "Buyer", width: "2fr" },
+  { key: "revenue", label: "Revenue", width: "1fr" },
+  { key: "commission", label: "Commission", width: "1fr" },
 ];
 
 export const recentDownloadsTableColumns: {
@@ -69,21 +74,22 @@ export const recentDownloadsTableColumns: {
 export const userTableColumns: {
   key: keyof UserTableData;
   label: string;
+  width: string;
 }[] = [
-  { key: "userName", label: "User Name" },
-  { key: "registrationDate", label: "Registration Date" },
-  { key: "lastActive", label: "Last Active" },
-  { key: "totalBids", label: "Total Bids" },
-  { key: "totalWins", label: "Total Wins" },
+  { key: "userName", label: "User", width: "2fr" },
+  { key: "registrationDate", label: "Registration Date", width: "2fr" },
+  { key: "lastActive", label: "Last Active", width: "1fr" },
+  { key: "totalBids", label: "Total Bids", width: "1fr" },
+  { key: "totalWins", label: "Total Wins", width: "3fr" },
 ];
 export const errorLogsTableColumns: {
   key: keyof ErrorLogItem;
   label: string;
+  width: string;
 }[] = [
-  { key: "timestamp", label: "Timestamp" },
-
-  { key: "errorCode", label: "Error Code" },
-  { key: "message", label: "Message" },
+  { key: "timestamp", label: "Timestamp", width: "2fr" },
+  { key: "errorCode", label: "Error Code", width: "1fr" },
+  { key: "message", label: "Message", width: "8fr" },
 ];
 
 export const reportTypeData = [

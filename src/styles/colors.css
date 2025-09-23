@@ -38,6 +38,7 @@
   --color-black480: #0d1d1c;
   --color-black500: #0d1722;
   --color-black600: #111111;
+  --color-black610: #111827;
   --color-black1000: #000000;
 
   --color-pink100: #ffe9f3;
@@ -64,7 +65,9 @@
   --color-blue800: #1565c0;
   --color-blue900: #6054ff;
 
+  --color-green100: #d1fae5;
   --color-green600: #3d923a;
+  --color-green650: #065f46;
   --color-green700: #005128;
 
   --color-purple100: #eef1fb;

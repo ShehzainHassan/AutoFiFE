@@ -80,12 +80,13 @@ export default function AuctionAnalytics({
 
       {isTableLoading ? (
         <Loading />
-      ) : (
+      ) : tableData && tableData.length > 0 && (
         <AnalyticsTable<AuctionTableData>
           columns={auctionTableColumns}
-          data={tableData ?? []}
+          data={tableData}
         />
       )}
+
       {isTableLoading ? (
         <Loading />
       ) : (
