@@ -27,7 +27,7 @@ export default function AuctionDetails() {
   const params = useParams();
 
   const id = useMemo(() => (params.id ? Number(params.id) : -1), [params.id]);
-
+  const { togglePanel } = usePanel();
   const { data: auction, isLoading, isError, error } = useAuctionById(id);
   const { mutate: trackAuctionView } = useTrackAuctionView();
   const hasTrackedRef = useRef(false);
@@ -37,6 +37,7 @@ export default function AuctionDetails() {
       trackAuctionView(id);
       hasTrackedRef.current = true;
     }
+    togglePanel("none");
   }, [id, trackAuctionView]);
 
   const redirectToLiveAuctions = useCallback(() => {

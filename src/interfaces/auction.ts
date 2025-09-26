@@ -33,6 +33,7 @@ export interface Watchlist {
   watchlistId: number;
   userId: number;
   auctionId: number;
+  vehicleId: number;
   createdUtc: string;
 }
 

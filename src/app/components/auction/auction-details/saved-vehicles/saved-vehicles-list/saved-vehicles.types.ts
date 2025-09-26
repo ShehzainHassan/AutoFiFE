@@ -9,4 +9,9 @@ export type SavedVehiclesViewProps = {
     };
   }[];
   onAuctionClick: (auctionId: number) => void;
+  viewType: "Grid" | "List";
+};
+
+export type SavedVehicleContainerProps = {
+  viewType: "Grid" | "List";
 };

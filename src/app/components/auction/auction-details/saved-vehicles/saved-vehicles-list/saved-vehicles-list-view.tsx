@@ -9,16 +9,24 @@ import { SavedVehiclesViewProps } from "./saved-vehicles.types";
 export default function SavedVehiclesView({
   auctions,
   onAuctionClick,
+  viewType,
 }: SavedVehiclesViewProps) {
   return (
     <>
-      <div className={classes.vehicles}>
+      <div
+        className={
+          viewType === "Grid" ? classes.vehiclesGrid : classes.vehiclesList
+        }>
         {auctions.map(({ auctionId, currentPrice, vehicle }) => {
           const title = `${vehicle.year} ${vehicle.make} ${vehicle.model}`;
           return (
             <div
               key={auctionId}
-              className={classes.vehicleContainer}
+              className={
+                viewType === "Grid"
+                  ? classes.vehicleContainer
+                  : classes.vehicleContainerList
+              }
               onClick={() => onAuctionClick(auctionId)}>
               <div className={classes.imgWrapper}>
                 <CarImage src="/images/glc_2023.png" />

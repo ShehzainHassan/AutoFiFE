@@ -11,8 +11,11 @@ import useUserWatchList from "@/hooks/useUserWatchList";
 import { Auction } from "@/interfaces/auction";
 import SavedVehiclesView from "./saved-vehicles-list-view";
 import { getAccessToken } from "@/store/tokenStore";
+import { SavedVehicleContainerProps } from "./saved-vehicles.types";
 
-export default function SavedVehiclesContainer() {
+export default function SavedVehiclesContainer({
+  viewType,
+}: SavedVehicleContainerProps) {
   const { togglePanel } = usePanel();
   const router = useRouter();
   const accessToken = getAccessToken();
@@ -54,6 +57,10 @@ export default function SavedVehiclesContainer() {
     .filter((data): data is Auction => data !== undefined);
 
   return (
-    <SavedVehiclesView auctions={auctionData} onAuctionClick={handleRedirect} />
+    <SavedVehiclesView
+      auctions={auctionData}
+      onAuctionClick={handleRedirect}
+      viewType={viewType}
+    />
   );
 }

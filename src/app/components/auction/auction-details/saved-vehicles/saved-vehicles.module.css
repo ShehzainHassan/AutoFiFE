@@ -34,11 +34,17 @@
   color: var(--color-black100);
   background-color: var(--color-white100);
 }
-.vehicles {
+.vehiclesGrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 12px;
   margin-top: 16px;
+}
+.vehiclesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  cursor: pointer;
 }
 .vehicleContainer {
   display: flex;
@@ -47,10 +53,28 @@
   cursor: pointer;
 }
 
+.vehicleContainerList {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  border: 1px solid var(--color-black100);
+  border-radius: 8px;
+  padding: 12px;
+}
+
 .imgWrapper {
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
+}
+
+.vehicleContainerList .imgWrapper {
+  width: 200px;
+  flex-shrink: 0;
+  aspect-ratio: unset;
+  height: 120px;
 }

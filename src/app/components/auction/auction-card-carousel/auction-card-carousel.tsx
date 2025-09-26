@@ -12,34 +12,38 @@ import { AuctionCardCarouselProps } from "./auction-card-carousel.types";
 const AuctionCardCarousel = ({ auctionId }: AuctionCardCarouselProps) => {
   const { data: auctions, isLoading, isError, error } = useGetAllAuctions();
 
-  const slides = useMemo(() => {
-    return auctions
-      ?.filter(
+  const activeAuctions = useMemo(
+    () =>
+      auctions?.filter(
         (auction) =>
           auction.auctionId !== auctionId && auction.status === "Active"
-      )
-      .map((auction) => {
-        const vehicleDetails = `${auction.vehicle.year} ${auction.vehicle.make} ${auction.vehicle.model}`;
+      ) ?? [],
+    [auctions, auctionId]
+  );
 
-        return (
-          <SwiperSlide key={auction.auctionId} className={classes.auctionSlide}>
-            <AuctionCard
-              auction={auction}
-              vehicleDetails={vehicleDetails}
-              tag={auction.status}
-            />
-          </SwiperSlide>
-        );
-      });
-  }, [auctions]);
+  const slides = useMemo(() => {
+    return activeAuctions.map((auction) => {
+      const vehicleDetails = `${auction.vehicle.year} ${auction.vehicle.make} ${auction.vehicle.model}`;
+
+      return (
+        <SwiperSlide key={auction.auctionId} className={classes.auctionSlide}>
+          <AuctionCard
+            auction={auction}
+            vehicleDetails={vehicleDetails}
+            tag={auction.status}
+          />
+        </SwiperSlide>
+      );
+    });
+  }, [activeAuctions]);
 
   if (isLoading) return <Loading />;
   if (isError) return <ErrorMessage message={error.message} />;
-  if (!auctions || auctions.length === 0) return null;
+  if (activeAuctions.length === 0) return null;
 
   return (
     <ErrorBoundary fallback={<div>Failed to load swiper</div>}>
-      <h2>For You</h2>
+      <h2>Live Auctions For You</h2>
       <Profiler id="AuctionCardCarousel" onRender={trackRender}>
         <div className={classes.swiperWrapper}>
           <Swiper

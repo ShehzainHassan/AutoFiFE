@@ -28,7 +28,7 @@ export default function SavedVehicles() {
           </p>
         </div>
 
-        <SavedVehiclesContainer />
+        <SavedVehiclesContainer viewType={selected} />
       </div>
     </div>
   );
