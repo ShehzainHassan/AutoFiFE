@@ -110,8 +110,7 @@ export default function AuctionDetails() {
                 </div>
 
                 <div className={classes.auctionCarousel}>
-                  <h2>For You</h2>
-                  <AuctionCardCarousel />
+                  <AuctionCardCarousel auctionId={id} />
                 </div>
               </>
             )}

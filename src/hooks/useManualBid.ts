@@ -6,11 +6,12 @@ import usePlaceBid from "@/hooks/usePlaceBid";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
-export function useManualBid() {
+export function useManualBid(passedAuctionId?: number) {
   const [bid, setBid] = useState("");
   const { userId } = useAuth();
+
   const params = useParams();
-  const auctionId = params.id ? Number(params.id) : -1;
+  const auctionId = passedAuctionId ?? (params.id ? Number(params.id) : -1);
 
   const { mutate: placeBid, isPending } = usePlaceBid();
   const { data: highestId, isLoading } = useHighestBidderId(auctionId);

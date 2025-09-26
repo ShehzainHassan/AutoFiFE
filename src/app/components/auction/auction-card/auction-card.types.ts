@@ -1,7 +1,7 @@
+import { Auction } from "@/interfaces/auction";
+
 export type AuctionCardProps = {
-  auctionId: number;
+  auction: Auction;
   vehicleDetails: string;
-  price: number;
-  endUTC: string;
   tag?: string;
 };

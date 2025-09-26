@@ -19,6 +19,8 @@ import { ManualBidProps } from "./manual-bid.types";
 export default function ManualBid({
   startingPrice,
   currentBid,
+  showBidButton = true,
+  auctionId,
 }: ManualBidProps) {
   const {
     bid,
@@ -30,7 +32,7 @@ export default function ManualBid({
     handleInputChange,
     handlePlaceBid,
     increaseBid,
-  } = useManualBid();
+  } = useManualBid(auctionId);
 
   const accessToken = getAccessToken();
   if (isLoading) return <Loading />;
@@ -80,7 +82,7 @@ export default function ManualBid({
           </Input>
         </div>
 
-        {accessToken && (
+        {showBidButton && accessToken && (
           <div className={classes.bidAmounts}>
             <div className={classes.bidAmountContainer}>
               <ThemeProvider value={SECONDARY_CONTAINER}>

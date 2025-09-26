@@ -7,26 +7,30 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import classes from "./auction-card-carousel.module.css";
 import { ErrorBoundary } from "@sentry/nextjs";
 import { trackRender } from "@/utilities/performance-tracking";
+import { AuctionCardCarouselProps } from "./auction-card-carousel.types";
 
-const AuctionCardCarousel = () => {
+const AuctionCardCarousel = ({ auctionId }: AuctionCardCarouselProps) => {
   const { data: auctions, isLoading, isError, error } = useGetAllAuctions();
 
   const slides = useMemo(() => {
-    return auctions?.map((auction) => {
-      const vehicleDetails = `${auction.vehicle.year} ${auction.vehicle.make} ${auction.vehicle.model}`;
+    return auctions
+      ?.filter(
+        (auction) =>
+          auction.auctionId !== auctionId && auction.status === "Active"
+      )
+      .map((auction) => {
+        const vehicleDetails = `${auction.vehicle.year} ${auction.vehicle.make} ${auction.vehicle.model}`;
 
-      return (
-        <SwiperSlide key={auction.auctionId} className={classes.auctionSlide}>
-          <AuctionCard
-            auctionId={auction.auctionId}
-            vehicleDetails={vehicleDetails}
-            price={auction.vehicle.price}
-            endUTC={auction.endUtc}
-            tag=""
-          />
-        </SwiperSlide>
-      );
-    });
+        return (
+          <SwiperSlide key={auction.auctionId} className={classes.auctionSlide}>
+            <AuctionCard
+              auction={auction}
+              vehicleDetails={vehicleDetails}
+              tag={auction.status}
+            />
+          </SwiperSlide>
+        );
+      });
   }, [auctions]);
 
   if (isLoading) return <Loading />;
@@ -35,6 +39,7 @@ const AuctionCardCarousel = () => {
 
   return (
     <ErrorBoundary fallback={<div>Failed to load swiper</div>}>
+      <h2>For You</h2>
       <Profiler id="AuctionCardCarousel" onRender={trackRender}>
         <div className={classes.swiperWrapper}>
           <Swiper

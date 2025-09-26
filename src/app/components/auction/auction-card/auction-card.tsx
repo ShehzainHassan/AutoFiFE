@@ -1,5 +1,5 @@
 "use client";
-import React, { Profiler } from "react";
+import React, { Profiler, useState } from "react";
 import dynamic from "next/dynamic";
 import { AuctionCardProps } from "./auction-card.types";
 import { useAuctionCard } from "@/hooks/useAuctionCard";
@@ -11,36 +11,37 @@ import classes from "./auction-card.module.css";
 import { ErrorBoundary } from "@sentry/nextjs";
 import { trackRender } from "@/utilities/performance-tracking";
 import CarImage from "@/assets/images/cars/2018_Honda_Civic.png";
+import QuickBidModal from "../../modals/quick-bid-modal/quick-bid-modal";
 const ButtonPrimary = dynamic(() => import("../../buttons/button-primary"));
 const Image = dynamic(() => import("next/image"));
 
 const AuctionCard = React.memo(
-  ({ auctionId, vehicleDetails, price, endUTC, tag }: AuctionCardProps) => {
+  ({ auction, vehicleDetails, tag }: AuctionCardProps) => {
     const { totalSeconds, timerText, handleRedirect } = useAuctionCard(
-      auctionId,
-      endUTC
+      auction.auctionId,
+      auction.endUtc
     );
+    const [isQuickBidOpen, setQuickBidOpen] = useState(false);
 
     return (
-      <Profiler id={`AuctionCard-${auctionId}`} onRender={trackRender}>
+      <Profiler id={`AuctionCard-${auction.auctionId}`} onRender={trackRender}>
         <ErrorBoundary fallback={<div>Failed to load auction card.</div>}>
           <article
             className={classes.container}
             tabIndex={0}
             role="group"
             aria-label={`Auction card for ${vehicleDetails}`}>
-            {tag && (
+            {tag && totalSeconds > 0 && (
               <div className={classes.tag} role="status" aria-live="polite">
                 <span className={classes.redDot} aria-hidden="true">
                   🔴
                 </span>
-                LIVE
+                {tag}
               </div>
             )}
 
             <div
               role="button"
-              onClick={handleRedirect}
               className={classes.cardButton}
               aria-label={`View details for ${vehicleDetails}`}
               onKeyDown={(e) => {
@@ -48,6 +49,7 @@ const AuctionCard = React.memo(
               }}>
               <div className={classes.imageWrapper}>
                 <Image
+                  onClick={handleRedirect}
                   src={CarImage}
                   alt={`${vehicleDetails} image`}
                   fill
@@ -64,7 +66,7 @@ const AuctionCard = React.memo(
                 <h2
                   className={`${headings.auctionVehiclePrice} ${classes.blue}`}>
                   {CURRENCY}
-                  {price.toLocaleString()}
+                  {auction.currentPrice.toLocaleString()}
                 </h2>
 
                 <div
@@ -79,15 +81,25 @@ const AuctionCard = React.memo(
                   {timerText}
                 </div>
 
-                <ThemeProvider value={WHITE_WITH_BLUE_BORDER}>
-                  <ButtonPrimary
-                    btnText="Quick Bid"
-                    aria-label={`Place quick bid on ${vehicleDetails}`}
-                  />
-                </ThemeProvider>
+                {totalSeconds > 0 && (
+                  <ThemeProvider value={WHITE_WITH_BLUE_BORDER}>
+                    <ButtonPrimary
+                      btnText="Quick Bid"
+                      aria-label={`Place quick bid on ${vehicleDetails}`}
+                      onClick={() => setQuickBidOpen(true)}
+                    />
+                  </ThemeProvider>
+                )}
               </div>
             </div>
           </article>
+          <QuickBidModal
+            isOpen={isQuickBidOpen}
+            onClose={() => setQuickBidOpen(false)}
+            startingPrice={auction.startingPrice}
+            currentBid={auction.currentPrice}
+            auctionId={auction.auctionId}
+          />
         </ErrorBoundary>
       </Profiler>
     );
