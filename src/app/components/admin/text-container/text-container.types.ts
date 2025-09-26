@@ -1,4 +1,6 @@
-export type TextContainerProps = {
+export interface TextContainerProps {
   label: string;
-  value: number | string;
-};
+  value: string | number;
+  change?: number;
+  status?: string;
+}

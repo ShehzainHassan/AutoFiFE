@@ -1,7 +1,7 @@
 import {
   APIGraphAnalyticsItem,
   AuctionAnalyticsResult,
-  AuctionTableData,
+  AuctionTableWithPercentage,
   ErrorLogs,
   RecentDownloads,
   RevenueAnalyticsResult,
@@ -49,7 +49,7 @@ const analyticsAPI = {
       url += `&category=${encodeURIComponent(category)}`;
     }
 
-    const response = await limitedAxios.get<AuctionTableData[]>(url);
+    const response = await limitedAxios.get<AuctionTableWithPercentage>(url);
     return response.data;
   },
   getUserTableAnalytics: async (startDate: string, endDate: string) => {

@@ -13,4 +13,5 @@ export type MyData = {
 export type BarGraphProps = {
   data: ChartData[];
   viewReport?: React.ReactNode;
+  percentageChange: number;
 };

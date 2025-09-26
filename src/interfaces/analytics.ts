@@ -21,8 +21,11 @@ export interface RevenueAnalyticsResult {
 
 export interface SystemAnalyticsResult {
   averageApiResponseTime: number;
+  averageApiResponseTimeChange: number;
   errorRate: number;
+  errorRateChange: number;
   activeSessions: number;
+  activeSessionsChange: number;
   systemUptime: number;
 }
 export interface AuctionTableData {
@@ -35,6 +38,11 @@ export interface AuctionTableData {
   finalPrice: number;
   status: string;
 }
+export interface AuctionTableWithPercentage {
+  currentPeriodData: AuctionTableData[];
+  percentageChange: number;
+}
+
 export interface RevenueTableData {
   auctionId: number;
   scheduledStartTime: string;

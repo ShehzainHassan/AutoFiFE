@@ -34,13 +34,14 @@ export default function AuctionAnalytics({
     start.toLocaleDateString("en-CA"),
     end.toLocaleDateString("en-CA")
   );
-  const { data: tableData, isLoading: isTableLoading } =
+  const { data: tableResponse, isLoading: isTableLoading } =
     useAuctionAnalyticsTable(
       start.toLocaleDateString("en-CA"),
       end.toLocaleDateString("en-CA"),
       category
     );
-
+  const tableData = tableResponse?.currentPeriodData ?? [];
+  const percentageChange = tableResponse?.percentageChange ?? 0;
   const chartData = tableData?.reduce<Record<string, number>>((acc, curr) => {
     const category = curr.vehicleCategory ?? "Unknown";
     acc[category] = (acc[category] || 0) + 1;
@@ -50,7 +51,6 @@ export default function AuctionAnalytics({
   const formattedChartData = Object.entries(chartData ?? {}).map(
     ([category, value]) => ({ category, value })
   );
-
   return (
     <AnalyticsLayout
       title="Auction Analytics"
@@ -95,6 +95,7 @@ export default function AuctionAnalytics({
       ) : (
         <BarGraph
           data={formattedChartData}
+          percentageChange={percentageChange}
           viewReport={
             <p onClick={onViewReport} className={classes.viewReport}>
               View Report

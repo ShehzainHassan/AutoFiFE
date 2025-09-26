@@ -11,7 +11,11 @@ import { BarGraphProps, MyData } from "./bar-graph.types";
 import classes from "./bar-graph.module.css";
 import type { TooltipProps } from "recharts";
 
-export default function BarGraph({ data, viewReport }: BarGraphProps) {
+export default function BarGraph({
+  data,
+  viewReport,
+  percentageChange,
+}: BarGraphProps) {
   const total = data.reduce((sum, item) => sum + item.value, 0);
 
   const CustomTooltip = (props: TooltipProps<number, string>) => {
@@ -32,6 +36,13 @@ export default function BarGraph({ data, viewReport }: BarGraphProps) {
     return null;
   };
 
+  const isPositive = percentageChange > 0;
+  const isNegative = percentageChange < 0;
+
+  const formattedChange = `${
+    isPositive ? "+" : isNegative ? "−" : ""
+  }${Math.abs(percentageChange).toFixed(0)}%`;
+
   return (
     <div className={classes.container}>
       <div className={classes.textContainer}>
@@ -41,7 +52,17 @@ export default function BarGraph({ data, viewReport }: BarGraphProps) {
         </div>
         <h1>{total.toLocaleString()}</h1>
         <p>
-          Total auctions this period <span>+10%</span>
+          Total auctions this period{" "}
+          <span
+            className={
+              isPositive
+                ? classes.positiveChange
+                : isNegative
+                ? classes.negativeChange
+                : classes.neutralChange
+            }>
+            {formattedChange}
+          </span>
         </p>
       </div>
 

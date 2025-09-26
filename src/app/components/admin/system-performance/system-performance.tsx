@@ -38,7 +38,6 @@ export default function SystemPerformance() {
     start.toLocaleDateString("en-CA"),
     end.toLocaleDateString("en-CA")
   );
-
   const {
     data: errorLogs,
     isLoading: isErrorLogLoading,
@@ -100,11 +99,11 @@ export default function SystemPerformance() {
           getValues={(data) => [
             {
               label: "Response Time",
-              value: `${data.averageApiResponseTime.toLocaleString()}`,
+              value: `${data.averageApiResponseTime.toLocaleString()}ms`,
             },
             {
               label: "Error Rate",
-              value: `${data.errorRate.toLocaleString()}`,
+              value: `${data.errorRate.toLocaleString()}%`,
             },
             {
               label: "Active Sessions",
@@ -113,6 +112,23 @@ export default function SystemPerformance() {
             {
               label: "System Uptime",
               value: `${data.systemUptime.toFixed(2)}%`,
+            },
+          ]}
+          getChanges={(data) => [
+            {
+              label: "Response Time",
+              change: data.averageApiResponseTimeChange,
+            },
+            { label: "Error Rate", change: data.errorRateChange },
+            { label: "Active Sessions", change: data.activeSessionsChange },
+            {
+              label: "System Uptime",
+              status:
+                data.systemUptime >= 99.9
+                  ? "Stable"
+                  : data.systemUptime >= 98
+                  ? "Minor interruptions"
+                  : "Unstable",
             },
           ]}
         />
