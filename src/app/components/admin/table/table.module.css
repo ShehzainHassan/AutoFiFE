@@ -33,18 +33,6 @@
   line-height: 20px;
 }
 
-.alignLeft {
-  text-align: left;
-}
-
-.alignCenter {
-  text-align: center;
-}
-
-.alignRight {
-  text-align: right;
-}
-
 .downloadCell {
   display: flex;
   justify-content: flex-end;
@@ -62,7 +50,6 @@
   line-height: 16px;
   padding: 2px 8px;
   border-radius: 12px;
-  margin: 0 auto;
   width: fit-content;
 }
 

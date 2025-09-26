@@ -96,27 +96,8 @@ export default function AnalyticsTable<T extends object>({
     [mutate]
   );
 
-  const defaultRightAligned = new Set([
-    "views",
-    "bidders",
-    "bids",
-    "finalPrice",
-    "commission",
-  ]);
-
-  const getAlignment = (colKey: string): "left" | "center" | "right" => {
-    if (colKey === "status") return "center";
-    if (defaultRightAligned.has(colKey)) return "right";
-    return "left";
-  };
-
   const getCellClassName = (colKey: string, value: unknown): string => {
     const cls = [classes.cell];
-
-    const align = getAlignment(colKey);
-    if (align === "left") cls.push(classes.alignLeft);
-    if (align === "center") cls.push(classes.alignCenter);
-    if (align === "right") cls.push(classes.alignRight);
 
     if (colKey === "status" && typeof value === "string") {
       cls.push(classes.badge);
@@ -152,12 +133,8 @@ export default function AnalyticsTable<T extends object>({
         {columns.map((col) => (
           <p
             key={String(col.key)}
-            className={`${classes.cell} ${
-              classes[
-                "align" +
-                  getAlignment(String(col.key)).charAt(0).toUpperCase() +
-                  getAlignment(String(col.key)).slice(1)
-              ]
+            className={`${classes.cell} 
+              
             }`}
             role="columnheader">
             {col.label}

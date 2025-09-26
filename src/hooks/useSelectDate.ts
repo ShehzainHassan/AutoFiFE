@@ -57,23 +57,42 @@ export function useSelectDate(
 
   const handlePresetClick = useCallback(
     (label: string) => {
-      const start = new Date(today);
+      let start = new Date(today);
       let end = new Date(today);
 
       switch (label) {
         case "Yesterday":
           start.setDate(today.getDate() - 1);
-          end = start;
+          end = new Date(start);
           break;
+
         case "Last week":
           start.setDate(today.getDate() - 7);
           break;
+
         case "Last month":
-          start.setDate(today.getDate() - 30);
+          start.setMonth(today.getMonth() - 1);
           break;
-        case "Last quarter":
-          start.setDate(today.getDate() - 90);
+
+        case "Last quarter": {
+          const currentMonth = today.getMonth();
+          const currentQuarter = Math.floor(currentMonth / 3) + 1;
+          let lastQuarter = currentQuarter - 1;
+          let year = today.getFullYear();
+
+          if (lastQuarter === 0) {
+            lastQuarter = 4;
+            year -= 1;
+          }
+
+          const quarterStartMonths = { 1: 0, 2: 3, 3: 6, 4: 9 };
+
+          const startMonth = quarterStartMonths[lastQuarter as 1 | 2 | 3 | 4];
+          start = new Date(year, startMonth, 1);
+          end = new Date(year, startMonth + 3, 0);
           break;
+        }
+
         case "Reset":
           start.setDate(today.getDate() - 7);
           break;
