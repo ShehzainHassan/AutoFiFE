@@ -1,6 +1,7 @@
 import { DEFAULT_MAKE, DEFAULT_MODEL } from "@/constants";
 import { Questionnaire } from "@/interfaces/questionnaire";
 import {
+  ListingNotification,
   RecommendationsResponse,
   SimilarVehicleResponse,
   Vehicle,
@@ -11,6 +12,7 @@ import {
 } from "@/interfaces/vehicle";
 import { sanitizeVehicleFilters } from "@/utilities/utilities";
 import { limitedAxios } from "./rateLimitedAxios";
+import { rateLimitedClient } from "./apiClient";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const RECOMMENDER_SYSTEM_BASE_URL = process.env.NEXT_PUBLIC_RECOMMENDER_SYSTEM;
 
@@ -167,6 +169,18 @@ const vehicleAPI = {
   getVehicleOptions: async () => {
     const response = await limitedAxios.get<VehicleOptions>(
       `${API_BASE_URL}/Vehicle/get-vehicle-options`
+    );
+    return response.data;
+  },
+  addListingNotification: async (notification: ListingNotification) => {
+    const response = await rateLimitedClient.post(
+      `${API_BASE_URL}/Vehicle/add-listing-notification`,
+      {
+        vehicleId: notification.vehicleId,
+        userId: notification.userId,
+        userName: notification.userName,
+        userEmail: notification.userEmail,
+      }
     );
     return response.data;
   },

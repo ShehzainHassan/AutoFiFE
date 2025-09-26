@@ -128,3 +128,10 @@ export interface CompareVehicle {
   model: string;
   year: string;
 }
+
+export interface ListingNotification {
+  vehicleId: number | undefined;
+  userId: number | null;
+  userName: string;
+  userEmail: string;
+}

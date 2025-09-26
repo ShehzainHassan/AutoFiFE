@@ -63,11 +63,6 @@ input[type="number"] {
   line-height: 1.6;
   color: var(--color-black100);
   border-radius: 12px;
-  margin-bottom: 16px;
-}
-
-.ai-answer p {
-  margin: 0 0 12px 0;
 }
 
 .ai-answer strong,
@@ -92,7 +87,6 @@ input[type="number"] {
 .ai-table {
   font-size: 14px;
   line-height: 1.2;
-
   width: 100%;
   border-collapse: collapse;
   margin-top: 8px;

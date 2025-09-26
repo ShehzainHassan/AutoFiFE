@@ -33,7 +33,7 @@ export default function HorizontalCarCard({
     addInteraction.mutate({ vehicleId: id, interactionType: "view" });
   };
   return (
-    <div className={classes.horizontalContainer} onClick={redirectToCarDetails}>
+    <div className={classes.horizontalContainer}>
       <div className={classes.horizontalImgWrapper}>
         <Image
           src={imgSrc}
@@ -102,7 +102,10 @@ export default function HorizontalCarCard({
               headings.priceText
             }>{`${CURRENCY}${price.toLocaleString()}`}</h2>
           <div className={classes.btnContainer}>
-            <button aria-label={btnText} className={classes.btn}>
+            <button
+              onClick={redirectToCarDetails}
+              aria-label={btnText}
+              className={classes.btn}>
               {btnText}
             </button>
             <Image

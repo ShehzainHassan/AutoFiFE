@@ -162,3 +162,15 @@ export const SEARCH_CARS: ThemeContextType = {
     border: "none",
   },
 };
+
+export const EMAIL_ME: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "transparent",
+    borderRadius: "60px",
+    textColor: "var(--color-black100)",
+    padding: "12px 17px",
+    hoverColor: "var(--color-blue300)",
+    border: "1px solid var(--color-black100)",
+    width: "275px",
+  },
+};

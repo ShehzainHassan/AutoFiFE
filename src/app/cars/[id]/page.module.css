@@ -7,6 +7,13 @@
   padding: 100px 75px;
 }
 
+.listingNotification {
+  display: flex;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 60px;
+  background-color: var(--color-blue210);
+}
 .circle {
   width: 10px;
   height: 10px;

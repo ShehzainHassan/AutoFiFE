@@ -13,6 +13,7 @@ import { lazy, Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./page.module.css";
+import ListingNotification from "@/app/components/listing-notification/listing-notification";
 
 const VehicleFeatures = lazy(
   () => import("@/app/components/vehicle-features/vehicle-features")
@@ -68,6 +69,12 @@ export default function CarDetails() {
           </ContactFormProvider>
         </div>
       </div>
+      <div className={classes.listingNotification}>
+        <Suspense fallback={<Loading />}>
+          <ListingNotification vehicleId={id} />
+        </Suspense>
+      </div>
+
       <div className={classes.vehicleRecommendations}>
         <Suspense fallback={<Loading />}>
           <SimilarVehicleRecommendationsContainer />
