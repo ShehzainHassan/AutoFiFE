@@ -10,15 +10,40 @@ import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMemo } from "react";
 import { ButtonPrimary } from "@/app/components";
-import {Dropdown} from "@/app/components/"
+import { Dropdown } from "@/app/components/";
 import { DOBProps } from "./dob-types";
 import classes from "./dob.module.css";
 import { ThemeProvider } from "@/theme/themeContext";
 import { BLUE_THEME } from "@/constants/button-primary-themes";
+
 const DOB = ({ nextStep }: DOBProps) => {
   const { formData, setFormData } = useQuestionnaire();
   const isValid = formData.dob.day && formData.dob.month && formData.dob.year;
   const selectedDay = parseInt(formData.dob.day, 10);
+
+  const isUnder18 = useMemo(() => {
+    if (!isValid) return false;
+
+    const day = parseInt(formData.dob.day, 10);
+    const month = MONTH_OPTIONS.findIndex(
+      (m) => m.value === formData.dob.month
+    );
+    const year = parseInt(formData.dob.year, 10);
+
+    if (isNaN(day) || month === -1 || isNaN(year)) return false;
+
+    const dob = new Date(year, month, day);
+    const today = new Date();
+
+    let age = today.getFullYear() - dob.getFullYear();
+    const hasHadBirthday =
+      today.getMonth() > dob.getMonth() ||
+      (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
+
+    if (!hasHadBirthday) age--;
+
+    return age < 18;
+  }, [formData.dob, isValid]);
 
   const filteredYearOptions = useMemo(() => {
     const allYears = YEAR_OPTIONS;
@@ -159,11 +184,15 @@ const DOB = ({ nextStep }: DOBProps) => {
         </Dropdown>
       </div>
 
+      {isUnder18 && (
+        <p className={classes.error}>⚠️ You must be at least 18 years old.</p>
+      )}
+
       <ThemeProvider value={BLUE_THEME}>
         <ButtonPrimary
           btnText="Continue"
           onClick={nextStep}
-          isDisabled={!isValid}
+          isDisabled={!isValid || isUnder18}
           className={classes.button}
           imgSrc="/images/arrow-right.png"
         />

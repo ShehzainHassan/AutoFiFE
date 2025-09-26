@@ -8,6 +8,7 @@ export const BLUE_THEME: ThemeContextType = {
     padding: "12px 30px",
     hoverColor: "var(--color-blue600)",
     border: "none",
+    width: "100%",
   },
 };
 export const WHITE_THEME: ThemeContextType = {
