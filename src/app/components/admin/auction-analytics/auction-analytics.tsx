@@ -70,7 +70,7 @@ export default function AuctionAnalytics({
       <AnalyticsStats<AuctionAnalyticsResult>
         isLoading={isLoading}
         data={data}
-        getValues={(data) => [
+        getItems={(data) => [
           { label: "Total Auctions", value: data.totalAuctions },
           { label: "Success Rate", value: `${data.successRate.toFixed(2)}%` },
           { label: "Avg. Views", value: data.averageViews.toFixed(2) },

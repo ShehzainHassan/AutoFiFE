@@ -14,9 +14,13 @@ export interface UserAnalyticsResult {
 }
 export interface RevenueAnalyticsResult {
   totalRevenue: number;
+  totalRevenueChange: number;
   commissionEarned: number;
+  commissionEarnedChange: number;
   averageSalePrice: number;
+  averageSalePriceChange: number;
   successfulPaymentsPercentage: number;
+  successfulPaymentsPercentageChange: number;
 }
 
 export interface SystemAnalyticsResult {

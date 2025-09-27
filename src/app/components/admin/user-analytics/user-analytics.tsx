@@ -114,7 +114,7 @@ export default function UserAnalytics() {
       <AnalyticsStats<UserAnalyticsResult>
         isLoading={isLoading}
         data={data}
-        getValues={(data) => [
+        getItems={(data) => [
           { label: "Total Users", value: data.totalUsers },
           { label: "New Registrations", value: data.newRegistrations },
           { label: "Active Users", value: data.activeUsers },

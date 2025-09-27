@@ -9,3 +9,30 @@
   min-width: 330px;
   margin-top: 28px;
 }
+
+.changeWrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+.positiveChange {
+  color: var(--color-green600);
+}
+
+.negativeChange {
+  color: var(--color-red500);
+}
+
+.neutralChange {
+  color: var(--color-gray600);
+}
+
+.icon {
+  display: inline-flex;
+}
+
+.negativeIcon {
+  font-size: 18px;
+}

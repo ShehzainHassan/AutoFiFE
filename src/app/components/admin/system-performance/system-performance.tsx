@@ -96,33 +96,25 @@ export default function SystemPerformance() {
         <AnalyticsStats<SystemAnalyticsResult>
           isLoading={isLoading}
           data={data}
-          getValues={(data) => [
+          getItems={(data) => [
             {
               label: "Response Time",
               value: `${data.averageApiResponseTime.toLocaleString()}ms`,
+              change: data.averageApiResponseTimeChange,
             },
             {
               label: "Error Rate",
               value: `${data.errorRate.toLocaleString()}%`,
+              change: data.errorRateChange,
             },
             {
               label: "Active Sessions",
-              value: `${data.activeSessions.toLocaleString()}`,
+              value: data.activeSessions.toLocaleString(),
+              change: data.activeSessionsChange,
             },
             {
               label: "System Uptime",
               value: `${data.systemUptime.toFixed(2)}%`,
-            },
-          ]}
-          getChanges={(data) => [
-            {
-              label: "Response Time",
-              change: data.averageApiResponseTimeChange,
-            },
-            { label: "Error Rate", change: data.errorRateChange },
-            { label: "Active Sessions", change: data.activeSessionsChange },
-            {
-              label: "System Uptime",
               status:
                 data.systemUptime >= 99.9
                   ? "Stable"

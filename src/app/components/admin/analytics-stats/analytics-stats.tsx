@@ -8,18 +8,9 @@ import { AnalyticsStatsProps } from "./analytics-stats.types";
 export default function AnalyticsStats<T>({
   isLoading,
   data,
-  getValues,
-  getChanges,
+  getItems,
 }: AnalyticsStatsProps<T>) {
-  const displayItems = useMemo(() => {
-    if (!data) return [];
-    return getValues(data);
-  }, [data, getValues]);
-
-  const changeItems = useMemo(() => {
-    if (!data || !getChanges) return [];
-    return getChanges(data);
-  }, [data, getChanges]);
+  const items = useMemo(() => (data ? getItems(data) : []), [data, getItems]);
 
   if (isLoading) {
     return (
@@ -41,19 +32,16 @@ export default function AnalyticsStats<T>({
     <section
       className={classes.analyticsContainer}
       aria-label="Analytics Summary">
-      {displayItems.map(({ label, value }) => {
-        const changeItem = changeItems.find((c) => c.label === label);
-        return (
-          <TextContainer
-            key={label}
-            label={label}
-            value={value}
-            change={changeItem?.change}
-            status={changeItem?.status}
-            aria-label={`Analytics metric ${label} with value ${value}`}
-          />
-        );
-      })}
+      {items.map(({ label, value, change, status }) => (
+        <TextContainer
+          key={label}
+          label={label}
+          value={value}
+          change={change}
+          status={status}
+          aria-label={`Analytics metric ${label} with value ${value}`}
+        />
+      ))}
     </section>
   );
 }

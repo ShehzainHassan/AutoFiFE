@@ -137,22 +137,26 @@ export default function RevenueAnalytics() {
       <AnalyticsStats<RevenueAnalyticsResult>
         isLoading={isLoading}
         data={data}
-        getValues={(data) => [
+        getItems={(data) => [
           {
             label: "Total Revenue",
             value: `${CURRENCY}${data.totalRevenue.toLocaleString()}`,
+            change: data.totalRevenueChange,
           },
           {
             label: "Commission Earned",
             value: `${CURRENCY}${data.commissionEarned.toLocaleString()}`,
+            change: data.commissionEarnedChange,
           },
           {
             label: "Avg Sale Price",
             value: `${CURRENCY}${data.averageSalePrice.toLocaleString()}`,
+            change: data.averageSalePriceChange,
           },
           {
             label: "Payment Success",
             value: `${data.successfulPaymentsPercentage.toFixed(2)}%`,
+            change: data.successfulPaymentsPercentageChange,
           },
         ]}
       />
