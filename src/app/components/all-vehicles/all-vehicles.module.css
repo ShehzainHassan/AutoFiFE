@@ -11,7 +11,9 @@
   flex-direction: column;
   gap: 50px;
 }
-
+.vehicleSwiperContainer {
+  padding: 20px;
+}
 @media (max-width: 768px) {
   .container {
     padding: 30px 20px;

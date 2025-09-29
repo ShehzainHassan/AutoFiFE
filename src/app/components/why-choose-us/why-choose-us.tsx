@@ -34,7 +34,9 @@ export default function WhyChooseUs() {
     <section
       aria-labelledby="why-choose-us-title"
       className={classes.container}>
-      <SectionTitle title="Why Choose Us" showButton={false} />
+      <div className={classes.title}>
+        <SectionTitle title="Why Choose Us" showButton={false} />
+      </div>
       <div className={classes.items} role="list">
         {FEATURES.map((feature, index) => (
           <div key={index} role="listitem" className={classes.itemWrapper}>

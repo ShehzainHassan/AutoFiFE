@@ -1,7 +1,27 @@
 .tabContainer {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
-  height: 43px;
+  height: auto;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--color-gray300);
+  padding: 8px 0;
+}
+
+@media (max-width: 1023px) {
+  .tabContainer {
+    gap: 16px;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 639px) {
+  .tabContainer {
+    gap: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .tab {
@@ -11,4 +31,13 @@
   cursor: pointer;
   border-bottom: 2px solid transparent;
   transition: all 0.2s ease;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+@media (max-width: 639px) {
+  .tab {
+    font-size: 15px;
+    padding-bottom: 6px;
+  }
 }

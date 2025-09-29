@@ -38,4 +38,10 @@
     gap: 20px;
     justify-content: center;
   }
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
 }
