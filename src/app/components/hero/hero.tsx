@@ -64,12 +64,14 @@ export default function Hero() {
           <p className={classes.title}>{t("hero.title")}</p>
           <div className={classes.searchContainer}>
             <ThemeProvider value={WHITE_THEME}>
-              <HorizontalTabs
-                tabs={tabs}
-                selectedTab={selectedTab}
-                onTabChange={(tab) => setSelectedTab(tab)}
-                borderColor="transparent"
-              />
+              <div>
+                <HorizontalTabs
+                  tabs={tabs}
+                  selectedTab={selectedTab}
+                  onTabChange={(tab) => setSelectedTab(tab)}
+                  borderColor="transparent"
+                />
+              </div>
             </ThemeProvider>
 
             <SearchForm
