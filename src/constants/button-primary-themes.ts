@@ -175,3 +175,15 @@ export const EMAIL_ME: ThemeContextType = {
     width: "275px",
   },
 };
+
+export const SIGN_UP: ThemeContextType = {
+  buttonPrimary: {
+    backgroundColor: "var(--color-blue500)",
+    borderRadius: "60px",
+    textColor: "var(--color-white100)",
+    padding: "12px 30px",
+    hoverColor: "var(--color-blue600)",
+    border: "none",
+    width: "fit-content",
+  },
+};

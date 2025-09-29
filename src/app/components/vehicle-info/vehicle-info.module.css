@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 16px;
+}
+
+.tabWrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 24px;
+}
+
+.contentWrapper {
+  width: 100%;
+}
+
+@media (max-width: 1023px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  .tabWrapper {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 639px) {
+  .container {
+    padding: 0 8px;
+  }
+
+  .tabWrapper {
+    margin-bottom: 16px;
+  }
+}

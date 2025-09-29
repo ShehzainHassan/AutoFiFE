@@ -3,7 +3,6 @@ import headings from "@/styles/typography.module.css";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classes from "../car-video.module.css";
-
 import { ButtonPrimary } from "@/app/components";
 import { BUY_CARD } from "@/constants/button-primary-themes";
 import { ThemeProvider } from "@/theme/themeContext";

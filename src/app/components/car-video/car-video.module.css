@@ -1,14 +1,21 @@
-.imageWrapper {
-  position: relative;
-  width: 100%;
-  height: auto;
-}
-
 .container {
   display: flex;
   max-width: 1700px;
   width: 100%;
   margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 50%;
+  min-height: 400px;
+}
+
+.thumbnail {
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
 }
 
 .playButton {
@@ -25,15 +32,18 @@
   justify-content: center;
   cursor: pointer;
 }
+
 .details {
   display: flex;
   flex-direction: column;
   gap: 19px;
-  padding: 125px 135px;
+  padding: 80px;
   background-color: var(--color-purple100);
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
+  flex: 1;
 }
+
 .tickContainer {
   width: 25px;
   height: 25px;
@@ -44,17 +54,65 @@
   padding: 2.5px;
   justify-content: center;
 }
+
 .tick {
   height: 12px;
 }
+
 .contentContainer {
   display: flex;
   gap: 10px;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
 }
+
 .benefits {
   display: flex;
   flex-direction: column;
   padding-bottom: 25px;
   gap: 14px;
+}
+
+@media (max-width: 1280px) {
+  .details {
+    padding: 70px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+  }
+  .imageWrapper {
+    width: 100%;
+    min-height: 300px;
+  }
+  .details {
+    padding: 60px;
+    border-radius: 0 0 16px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .details {
+    padding: 40px 20px;
+  }
+  .playButton {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .details {
+    padding: 20px;
+    gap: 15px;
+  }
+  .playButton {
+    width: 60px;
+    height: 60px;
+  }
+  .contentContainer {
+    max-width: 100%;
+  }
 }

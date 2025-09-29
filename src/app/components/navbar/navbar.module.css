@@ -1,9 +1,10 @@
 .navbar {
   display: flex;
-  z-index: 2;
+  z-index: 10;
   align-items: center;
   justify-content: space-between;
   padding: 28px 60px;
+  position: relative;
 }
 .navContainer {
   display: flex;
@@ -126,6 +127,7 @@
     z-index: -1;
     display: flex;
     opacity: 0;
+    overflow-y: auto;
   }
 
   .navListMobileShow {

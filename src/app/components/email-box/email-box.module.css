@@ -1,14 +1,47 @@
 .inputContainer {
   display: flex;
-  gap: 250px;
-  padding: 10px;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
   background-color: var(--color-white100_opaque_13);
   border-radius: 60px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
+
 .input {
   background: none;
   outline: none;
   border: none !important;
-  padding-left: 30px;
+  padding-left: 20px;
   color: var(--color-white100);
+  font-size: 16px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .inputContainer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 14px 24px;
+  }
+  .input {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .inputContainer {
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 10px 30px;
+  }
+
+  .input {
+    font-size: 18px;
+  }
 }

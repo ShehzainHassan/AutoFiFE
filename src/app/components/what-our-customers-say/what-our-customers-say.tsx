@@ -51,12 +51,12 @@ export default function Customers() {
         backgroundColor="var(--color-white300)"
         ratingsText="Rated 4.7 / 5 based on 28,370 reviews Showing our 4 & 5 star reviews"
       />
-
       <div className={classes.reviewContainer}>
         <ButtonNavigate
           type="prev"
           onClick={handlePrev}
           ariaLabel="Previous review"
+          className={classes.nav}
         />
         <div className={classes.subContainer}>
           <Image
@@ -66,6 +66,7 @@ export default function Customers() {
             height={470}
             loading="lazy"
             placeholder="blur"
+            className={classes.image}
           />
           <div className={classes.review}>
             <div className={classes.rating}>
@@ -78,19 +79,31 @@ export default function Customers() {
                 <p>{currentReview.rating.toFixed(1)}</p>
               </div>
             </div>
-
             <div className={classes.customer}>
               <p className={headings.brandText}>{currentReview.name}</p>
               <p className={headings.criteriaText}>{currentReview.role}</p>
             </div>
             <p className={headings.review}>{currentReview.text}</p>
           </div>
+          <ButtonNavigate
+            type="next"
+            onClick={handleNext}
+            ariaLabel="Next review"
+            className={classes.nav}
+          />
         </div>
-        <ButtonNavigate
-          type="next"
-          onClick={handleNext}
-          ariaLabel="Next review"
-        />
+        <div className={classes.navButtonsMobile}>
+          <ButtonNavigate
+            type="prev"
+            onClick={handlePrev}
+            ariaLabel="Previous review"
+          />
+          <ButtonNavigate
+            type="next"
+            onClick={handleNext}
+            ariaLabel="Next review"
+          />
+        </div>
       </div>
     </section>
   );

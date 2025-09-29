@@ -10,3 +10,13 @@
   gap: 14px;
   width: 320px;
 }
+
+@media (max-width: 768px) {
+  .item {
+    align-items: center;
+  }
+  .textContainer {
+    align-items: center;
+    text-align: center;
+  }
+}

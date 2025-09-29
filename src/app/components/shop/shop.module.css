@@ -1,5 +1,11 @@
 .container {
-  padding: 115px 260px;
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 115px;
+  padding: 0 20px;
 }
 
 .shopHeader {
@@ -10,7 +16,9 @@
 
 .list {
   display: flex;
-  gap: 180px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 120px;
   padding-top: 35px;
 }
 
@@ -19,6 +27,7 @@
   flex-direction: column;
   list-style-type: none;
   gap: 10px;
+  min-width: 180px;
 }
 
 .text:hover {
@@ -31,13 +40,41 @@
   outline-offset: 2px;
 }
 
+@media (max-width: 1280px) {
+  .list {
+    gap: 80px;
+  }
+}
+
 @media (max-width: 1024px) {
   .container {
     padding: 60px 30px;
+    margin-bottom: 80px;
   }
 
   .list {
-    flex-direction: column;
-    gap: 40px;
+    gap: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .shopHeader {
+    gap: 24px;
+  }
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 40px 16px;
+    margin-bottom: 60px;
+  }
+  .list {
+    justify-content: center;
+    align-items: center;
   }
 }

@@ -11,6 +11,27 @@
   background-color: var(--color-purple200);
   cursor: pointer;
   z-index: 1;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1023px) {
+  .container {
+    width: 130px;
+    height: 130px;
+    border-radius: 100px;
+    bottom: 24px;
+    right: 24px;
+  }
+}
+
+@media (max-width: 639px) {
+  .container {
+    width: 110px;
+    height: 110px;
+    border-radius: 90px;
+    bottom: 20px;
+    right: 20px;
+  }
 }
 
 .subContainer {
@@ -18,6 +39,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .text {
   display: flex;
   align-items: center;
@@ -29,4 +51,12 @@
   font-family: Inter, sans-serif;
   max-width: 100px;
   width: 100%;
+}
+
+@media (max-width: 639px) {
+  .text {
+    font-size: 16px;
+    line-height: 20px;
+    max-width: 80px;
+  }
 }

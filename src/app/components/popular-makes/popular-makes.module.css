@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   background-color: var(--color-black100);
-  padding: 115px 0;
 }
 
 .popularMakesHeader {

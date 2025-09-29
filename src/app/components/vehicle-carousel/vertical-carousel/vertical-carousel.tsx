@@ -11,15 +11,14 @@ export default function VerticalCarousel({
   onReachEnd,
 }: VehicleCarouselProps) {
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
+
   return (
     <Swiper
-      spaceBetween={30}
-      slidesPerView={4.6}
       onReachEnd={onReachEnd}
       onSwiper={setSwiperInstance}
       className={classes.swiperContainer}>
       {vehicleListResult.vehicles.map((vehicle) => (
-        <SwiperSlide key={vehicle.id}>
+        <SwiperSlide key={vehicle.id} className={classes.swiperSlide}>
           <VerticalCard
             id={vehicle.id}
             imgSrc="/images/ford_2021.png"

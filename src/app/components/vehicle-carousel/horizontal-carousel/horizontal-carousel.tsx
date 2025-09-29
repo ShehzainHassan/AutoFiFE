@@ -14,8 +14,6 @@ export default function HorizontalCarousel({
   return (
     <Swiper
       className={classes.swiper}
-      spaceBetween={30}
-      slidesPerView={2.1}
       onReachEnd={onReachEnd}
       onSwiper={setSwiperInstance}>
       {vehicleListResult.vehicles.map((vehicle) => (

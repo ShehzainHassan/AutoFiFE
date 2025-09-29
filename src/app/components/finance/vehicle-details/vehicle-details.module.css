@@ -5,12 +5,35 @@
   padding: 17px;
   border: 1px solid var(--color-gray450);
   border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
 }
+
 .vehicleHeader {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
 }
+
+@media (max-width: 639px) {
+  .vehicleHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 15px;
+  }
+}
+
 .vehicleFeatures {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
+}
+
+@media (max-width: 639px) {
+  .vehicleFeatures {
+    gap: 6px;
+  }
 }

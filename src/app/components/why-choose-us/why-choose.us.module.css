@@ -5,7 +5,8 @@
   width: 100%;
   margin: 0 auto;
   gap: 40px;
-  padding: 115px 0;
+  margin-bottom: 115px;
+  padding: 0 20px;
 }
 
 .items {
@@ -13,4 +14,28 @@
   flex-wrap: wrap;
   gap: 45px;
   justify-content: space-between;
+}
+
+.itemWrapper {
+  flex: 1 1 calc(25% - 45px);
+  min-width: 250px;
+}
+
+@media (max-width: 1024px) {
+  .itemWrapper {
+    flex: 1 1 calc(50% - 30px);
+  }
+  .items {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  .itemWrapper {
+    flex: 1 1 100%;
+  }
+  .items {
+    gap: 20px;
+    justify-content: center;
+  }
 }

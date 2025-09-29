@@ -24,15 +24,17 @@ export default function BlogCard({
           {tag}
         </span>
       )}
-      <Image
-        src={imgSrc}
-        className={classes.image}
-        alt="Blog cover image"
-        width={447}
-        height={298}
-        loading="lazy"
-        aria-hidden="false"
-      />
+      <div className={classes.imageWrapper}>
+        <Image
+          src={imgSrc}
+          className={classes.image}
+          alt="Blog cover image"
+          fill
+          loading="lazy"
+          aria-hidden="false"
+          sizes="(max-width: 639px) 100vw, (max-width: 1023px) 80vw, 447px"
+        />
+      </div>
       <section className={classes.descriptionContainer}>
         <header className={classes.textContainer}>
           <p

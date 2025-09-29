@@ -3,6 +3,7 @@ import PlayIcon from "@/assets/images/icons/play.png";
 import Image from "next/image";
 import classes from "./car-video.module.css";
 import VideoDescription from "./video-description/video-description";
+
 export default function CarVideo() {
   const benefits = [
     "We are the UK's largest provider, with more patrols in more places",
@@ -23,6 +24,7 @@ export default function CarVideo() {
           placeholder="blur"
           alt="thumbnail"
           fill
+          className={classes.thumbnail}
         />
         <div className={classes.playButton}>
           <Image

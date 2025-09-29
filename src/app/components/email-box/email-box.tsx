@@ -1,12 +1,12 @@
 "use client";
 import { ButtonPrimary } from "@/app/components";
-import { BLUE_THEME } from "@/constants/button-primary-themes";
+import { SIGN_UP } from "@/constants/button-primary-themes";
 import useNewsLetter from "@/hooks/useNewsLetter";
 import { ThemeProvider } from "@/theme/themeContext";
 import { validateEmail } from "@/utilities/utilities";
 import { useState } from "react";
-import classes from "./email-box.module.css";
 import Input from "../input-field";
+import classes from "./email-box.module.css";
 
 export default function EmailBox() {
   const { mutate: submitEmail, isPending } = useNewsLetter(() => {
@@ -43,7 +43,7 @@ export default function EmailBox() {
             onChange={handleInputChange}
           />
         </Input>
-        <ThemeProvider value={BLUE_THEME}>
+        <ThemeProvider value={SIGN_UP}>
           <ButtonPrimary
             btnText="Sign up"
             onClick={handleEmailSubmit}

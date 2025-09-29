@@ -37,7 +37,7 @@ export default function WhyChooseUs() {
       <SectionTitle title="Why Choose Us" showButton={false} />
       <div className={classes.items} role="list">
         {FEATURES.map((feature, index) => (
-          <div key={index} role="listitem">
+          <div key={index} role="listitem" className={classes.itemWrapper}>
             <Item {...feature} />
           </div>
         ))}

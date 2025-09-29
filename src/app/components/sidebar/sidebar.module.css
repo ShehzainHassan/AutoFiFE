@@ -16,3 +16,9 @@
   padding-top: 28px;
   padding-bottom: 24px;
 }
+@media (max-width: 768px) {
+  .filterContainer {
+    margin: 0 auto;
+    max-width: fit-content;
+  }
+}

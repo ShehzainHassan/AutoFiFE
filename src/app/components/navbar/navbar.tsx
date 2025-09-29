@@ -115,7 +115,13 @@ export default function Navbar({
   const [hasMounted, setHasMounted] = useState(false);
   useEffect(() => {
     setHasMounted(true);
-  }, []);
+
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [menuOpen]);
 
   return (
     <nav

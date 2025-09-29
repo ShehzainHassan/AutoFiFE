@@ -4,6 +4,7 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
+  margin-bottom: 115px;
 }
 .navigate {
   display: flex;

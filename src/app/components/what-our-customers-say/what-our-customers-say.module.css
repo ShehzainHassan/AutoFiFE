@@ -3,23 +3,31 @@
   flex-direction: column;
   gap: 60px;
   background-color: var(--color-white300);
-  padding: 115px 0;
+  padding: 40px 20px;
 }
 
 .reviewContainer {
   display: flex;
-  gap: 60px;
   align-items: center;
   justify-content: center;
   max-width: 1660px;
   width: 100%;
   margin: 0 auto;
+  margin-bottom: 115px;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .subContainer {
   display: flex;
   gap: 150px;
   align-items: center;
+  justify-content: center;
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
 }
 
 .review {
@@ -51,6 +59,7 @@
 .rating {
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
 .ratingContainer {
@@ -58,4 +67,61 @@
   padding: 1px 10px;
   background-color: var(--color-yellow500);
   border-radius: 28px;
+}
+.navButtonsMobile {
+  display: none;
+}
+@media (min-width: 1025px) {
+  .reviewContainer {
+    flex-direction: row;
+    gap: 60px;
+  }
+
+  .navButtons {
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .subContainer {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .nav {
+    display: none;
+  }
+  .review {
+    gap: 20px;
+    text-align: center;
+  }
+
+  .customer {
+    align-items: center;
+  }
+
+  .navButtonsMobile {
+    display: flex;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px 12px;
+    gap: 30px;
+  }
+
+  .reviewContainer {
+    margin-bottom: 60px;
+  }
+
+  .subContainer {
+    gap: 20px;
+  }
+
+  .star::before {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
 }

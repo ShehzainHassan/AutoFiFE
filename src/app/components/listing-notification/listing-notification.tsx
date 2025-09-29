@@ -52,7 +52,7 @@ export default function ListingNotification({
     <div className={classes.container}>
       <h3 className={classes.title}>Notify me of new listings like this one</h3>
       <div className={classes.inputContainer}>
-        <Input width="575px">
+        <Input width="100%">
           <Input.Field
             type="text"
             placeholder="Email address"

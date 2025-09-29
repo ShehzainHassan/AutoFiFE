@@ -2,9 +2,31 @@
   position: relative;
   left: -20px;
   padding: 25px 20px;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
 }
+
+.swiperSlide {
+  flex: 0 0 calc((100% - 90px) / 4.6);
+  margin-right: 30px;
+}
+
 .navigate {
   margin-top: 50px;
   display: flex;
   gap: 25px;
+}
+
+@media (max-width: 639px) {
+  .navigate {
+    display: none;
+  }
+  .swiperContainer {
+    display: flex;
+    justify-content: space-between;
+    max-width: 640px;
+    padding: 0;
+    margin: 0;
+  }
 }

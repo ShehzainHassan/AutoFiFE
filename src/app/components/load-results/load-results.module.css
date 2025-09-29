@@ -1,5 +1,22 @@
 .resultCards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+@media (max-width: 1023px) {
+  .resultCards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 639px) {
+  .resultCards {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 10px;
+  }
 }

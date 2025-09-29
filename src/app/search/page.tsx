@@ -3,7 +3,6 @@
 import NeedHelp from "../components/box-assistant/need-help/need-help";
 import Footer from "../components/footer/footer";
 import LoadResults from "../components/load-results/load-results";
-import VirtualizedList from "../components/load-virtualized-results/load-virutalized-results";
 import Navbar from "../components/navbar/navbar";
 import Pagination from "../components/pagination/pagination";
 import ResultHeaderBottom from "../components/result-header-bottom/result-header-bottom";
@@ -39,7 +38,6 @@ export default function Search() {
             </div>
             <Pagination totalCount={vehicleCount ?? 0} />
           </div>
-          <VirtualizedList />
         </div>
         <VehicleInfoTabs submittedParams={submittedParams} />
       </div>

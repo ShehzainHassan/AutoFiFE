@@ -5,26 +5,61 @@
   width: 100%;
   margin: 0 auto;
   padding: 20px;
+  box-sizing: border-box;
 }
-.auctionContainer {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
+
 .titleContainer {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
+
 .blue {
   color: var(--color-blue250);
 }
+
 .filterContainer {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   margin: 16px 0;
 }
+
+.auctionContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 1023px) {
+  .auctionContainer {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .fixedHeight {
+    height: 180px !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .auctionContainer {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .fixedHeight {
+    height: auto !important;
+    aspect-ratio: 16 / 9 !important;
+  }
+
+  .filterContainer {
+    display: flex;
+    gap: 12px;
+  }
+}
+
 .cardWrapper {
   display: flex;
   flex-direction: column;
@@ -32,8 +67,4 @@
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-}
-.fixedHeight {
-  height: 200px !important;
-  aspect-ratio: auto !important;
 }

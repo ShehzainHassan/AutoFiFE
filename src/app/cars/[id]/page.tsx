@@ -48,7 +48,7 @@ export default function CarDetails() {
     <>
       <Navbar backgroundColor="var(--color-gray600)" />
       <div className={classes.container}>
-        <div>
+        <div className={classes.leftCol}>
           <Suspense fallback={<Loading />}>
             <VehicleImageGallery vehicle={vehicle} />
           </Suspense>
@@ -60,7 +60,7 @@ export default function CarDetails() {
           </Suspense>
         </div>
 
-        <div>
+        <div className={classes.rightCol}>
           <Suspense fallback={<Loading />}>
             <VehicleHighlightInfo vehicle={vehicle} />
           </Suspense>
@@ -69,6 +69,7 @@ export default function CarDetails() {
           </ContactFormProvider>
         </div>
       </div>
+
       <div className={classes.listingNotification}>
         <Suspense fallback={<Loading />}>
           <ListingNotification vehicleId={id} />
