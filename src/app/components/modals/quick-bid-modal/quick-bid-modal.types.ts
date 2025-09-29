@@ -1,7 +1,7 @@
-import { ManualBidProps } from "../../auction/auction-details/auction-info-panel/manual-bid-container/manual-bid.types";
+import { Auction } from "@/interfaces/auction";
 
-export interface QuickBidModalProps extends ManualBidProps {
+export interface QuickBidModalProps {
   isOpen: boolean;
   onClose: () => void;
-  auctionId: number;
+  auction: Auction;
 }

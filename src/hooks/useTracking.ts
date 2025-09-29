@@ -12,11 +12,12 @@ const useTracking = () => {
       interactionType: string;
     }) => {
       const userId = Cookies.get("userId");
-      return await userAPI.addUserInteraction(
-        vehicleId,
-        interactionType,
-        Number(userId)
-      );
+      if (userId)
+        return await userAPI.addUserInteraction(
+          vehicleId,
+          interactionType,
+          Number(userId)
+        );
     },
     onError: (error) => console.error("Tracking failed ", error),
   });

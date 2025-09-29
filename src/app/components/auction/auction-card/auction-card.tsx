@@ -1,17 +1,17 @@
 "use client";
-import React, { Profiler, useState } from "react";
-import dynamic from "next/dynamic";
-import { AuctionCardProps } from "./auction-card.types";
-import { useAuctionCard } from "@/hooks/useAuctionCard";
-import { ThemeProvider } from "@/theme/themeContext";
+import CarImage from "@/assets/images/cars/2018_Honda_Civic.png";
 import { CURRENCY } from "@/constants";
 import { WHITE_WITH_BLUE_BORDER } from "@/constants/button-primary-themes";
+import { useAuctionCard } from "@/hooks/useAuctionCard";
 import headings from "@/styles/typography.module.css";
-import classes from "./auction-card.module.css";
-import { ErrorBoundary } from "@sentry/nextjs";
+import { ThemeProvider } from "@/theme/themeContext";
 import { trackRender } from "@/utilities/performance-tracking";
-import CarImage from "@/assets/images/cars/2018_Honda_Civic.png";
+import { ErrorBoundary } from "@sentry/nextjs";
+import dynamic from "next/dynamic";
+import React, { Profiler, useState } from "react";
 import QuickBidModal from "../../modals/quick-bid-modal/quick-bid-modal";
+import classes from "./auction-card.module.css";
+import { AuctionCardProps } from "./auction-card.types";
 const ButtonPrimary = dynamic(() => import("../../buttons/button-primary"));
 const Image = dynamic(() => import("next/image"));
 
@@ -94,11 +94,9 @@ const AuctionCard = React.memo(
             </div>
           </article>
           <QuickBidModal
+            auction={auction}
             isOpen={isQuickBidOpen}
             onClose={() => setQuickBidOpen(false)}
-            startingPrice={auction.startingPrice}
-            currentBid={auction.currentPrice}
-            auctionId={auction.auctionId}
           />
         </ErrorBoundary>
       </Profiler>

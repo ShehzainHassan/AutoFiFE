@@ -16,7 +16,7 @@
   background-color: var(--color-white100);
   padding: 24px 32px;
   border-radius: 12px;
-  width: 350px;
+  width: 400px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -26,7 +26,6 @@
 .modalContent {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 16px;
   width: 100%;
 }

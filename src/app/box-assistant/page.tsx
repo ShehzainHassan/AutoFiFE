@@ -11,12 +11,14 @@ import useUserQuota from "@/hooks/useUserQuota";
 import { useAuth } from "@/contexts/auth-context";
 import { useRouter } from "next/navigation";
 import { useFeatureFlags } from "@/hooks/useFeatureFlags";
+import { getAccessToken } from "@/store/tokenStore";
 
 function BoxAssistantContent() {
   const { messages, sessionTitles, isSessionLoading } = useSession();
   const router = useRouter();
   const { isAIEnabled } = useFeatureFlags();
   const { userId } = useAuth();
+  const accessToken = getAccessToken();
 
   const { data: quota } = useUserQuota(userId);
 
@@ -28,10 +30,12 @@ function BoxAssistantContent() {
     }
   }, [messages]);
 
-  if (!isAIEnabled) {
-    if (typeof window !== "undefined") {
+  useEffect(() => {
+    if (!isAIEnabled || !accessToken) {
       router.replace("/");
     }
+  }, [isAIEnabled, accessToken, router]);
+  if (!isAIEnabled || !accessToken) {
     return null;
   }
   return (

@@ -2,17 +2,17 @@
 
 import CloseIcon from "@mui/icons-material/Close";
 import Modal from "react-modal";
-import { ManualBid } from "../../auction/auction-details/auction-info-panel/manual-bid-container";
 import classes from "./quick-bid-modal.module.css";
 import { QuickBidModalProps } from "./quick-bid-modal.types";
+import { BidSection } from "../../auction/auction-details/auction-info-panel/bid-section";
 
 export default function QuickBidModal({
   isOpen,
   onClose,
-  startingPrice,
-  currentBid,
-  auctionId,
+  auction,
 }: QuickBidModalProps) {
+  const hasLocallyEnded = new Date(auction.endUtc) < new Date();
+
   return (
     <Modal
       isOpen={isOpen}
@@ -29,11 +29,12 @@ export default function QuickBidModal({
       </button>
 
       <div className={classes.modalContent}>
-        <ManualBid
-          startingPrice={startingPrice}
-          currentBid={currentBid}
-          showBidButton={false}
-          auctionId={auctionId}
+        <BidSection
+          auctionId={auction.auctionId}
+          currentBid={auction.currentPrice}
+          startingPrice={auction.startingPrice}
+          status={auction.status}
+          hasLocallyEnded={hasLocallyEnded}
         />
       </div>
     </Modal>

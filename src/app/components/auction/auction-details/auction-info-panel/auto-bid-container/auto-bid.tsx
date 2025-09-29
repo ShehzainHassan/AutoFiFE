@@ -57,6 +57,7 @@ export default function AutoBid({
 
   const accessToken = getAccessToken();
   if (isLoading) return <Loading />;
+  if (!accessToken) return <p>Please sign in to set up auto bids</p>;
 
   return (
     <ErrorBoundary fallback={<div>Failed to load AutoBid</div>}>
@@ -177,20 +178,16 @@ export default function AutoBid({
             </div>
           )}
 
-          {!accessToken ? (
-            <p>Please sign in to place bid</p>
-          ) : (
-            <div className={inputClass.buttonContainer}>
-              <ThemeProvider value={BLUE_WITH_BORDER}>
-                <ButtonPrimary
-                  btnText={isAutoBidSet ? "Update auto bid" : "Place auto bid"}
-                  onClick={handleSubmit}
-                  className={inputClass.button}
-                  isDisabled={isDisabled}
-                />
-              </ThemeProvider>
-            </div>
-          )}
+          <div className={inputClass.buttonContainer}>
+            <ThemeProvider value={BLUE_WITH_BORDER}>
+              <ButtonPrimary
+                btnText={isAutoBidSet ? "Update auto bid" : "Place auto bid"}
+                onClick={handleSubmit}
+                className={inputClass.button}
+                isDisabled={isDisabled}
+              />
+            </ThemeProvider>
+          </div>
         </div>
       </Profiler>
     </ErrorBoundary>

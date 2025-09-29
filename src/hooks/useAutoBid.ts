@@ -31,7 +31,7 @@ export function useAutoBid(
   const { mutate: updateAutoBid, isPending: updating } = useUpdateAutoBid();
 
   const { data: isAutoBidSet = false, isLoading: isAutoBidLoading } =
-    useIsAutoBidSet(auctionId);
+    useIsAutoBidSet(auctionId, userId);
   const { data: userAutoBid = null, isLoading: userAutoBidLoading } =
     useUserAutoBid(auctionId, isAutoBidSet);
 

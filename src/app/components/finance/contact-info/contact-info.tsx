@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import InputEmail from "../input-email";
 import DOMPurify from "isomorphic-dompurify";
 import { ThemeProvider } from "@/theme/themeContext";
+import { BLUE_THEME } from "@/constants/button-primary-themes";
 const ContactInfo = ({ id }: ContactInfoProps) => {
   const [isAgreed, setIsAgreed] = useState(false);
   const { formData, setFormData } = useQuestionnaire();
@@ -84,7 +85,7 @@ const ContactInfo = ({ id }: ContactInfoProps) => {
         />
       </div>
       <ErrorSummary errors={errors} />
-      <ThemeProvider>
+      <ThemeProvider value={BLUE_THEME}>
         <ButtonPrimary
           btnText="Get my quote"
           onClick={handleSubmit}

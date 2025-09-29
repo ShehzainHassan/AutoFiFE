@@ -20,10 +20,12 @@ import AuctionInfoPanel from "./auction-info-panel/auction-info-panel";
 import SavedVehicles from "./saved-vehicles/saved-vehicles";
 import { ErrorBoundary } from "@sentry/nextjs";
 import { trackRender } from "@/utilities/performance-tracking";
+import { getAccessToken } from "@/store/tokenStore";
 
 export default function AuctionDetails() {
   const router = useRouter();
   const { panel } = usePanel();
+  const accessToken = getAccessToken();
   const params = useParams();
 
   const id = useMemo(() => (params.id ? Number(params.id) : -1), [params.id]);
@@ -33,7 +35,7 @@ export default function AuctionDetails() {
   const hasTrackedRef = useRef(false);
 
   useEffect(() => {
-    if (!hasTrackedRef.current && id !== -1) {
+    if (!hasTrackedRef.current && accessToken && id !== -1) {
       trackAuctionView(id);
       hasTrackedRef.current = true;
     }

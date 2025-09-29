@@ -15,12 +15,10 @@ import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import classes from "./auction-info-panel.module.css";
 import { AuctionInfoPanelProps } from "./auction-info-panel.types";
-import AutoBid from "./auto-bid-container";
-import { ManualBid } from "./manual-bid-container";
+import { BidSection } from "./bid-section";
 export default function AuctionInfoPanel({
   vehiclePrice,
 }: AuctionInfoPanelProps) {
-  const [bidType, setBidType] = useState<"Manual" | "Auto">("Manual");
   const [hasLocallyEnded, setHasLocallyEnded] = useState(false);
 
   const queryClient = useQueryClient();
@@ -79,37 +77,13 @@ export default function AuctionInfoPanel({
     if (hasLocallyEnded || auction.status !== "Active") return null;
 
     return (
-      <>
-        <div className={classes.bidTypeContainer}>
-          <div
-            onClick={() => setBidType("Manual")}
-            className={`${classes.bidType} ${
-              bidType === "Manual" ? classes.selected : ""
-            }`}>
-            Manual Bid
-          </div>
-          <div
-            onClick={() => setBidType("Auto")}
-            className={`${classes.bidType} ${
-              bidType === "Auto" ? classes.selected : ""
-            }`}>
-            Auto Bid
-          </div>
-        </div>
-
-        {bidType === "Manual" ? (
-          <ManualBid
-            currentBid={auction.currentPrice}
-            startingPrice={auction.startingPrice}
-          />
-        ) : (
-          <AutoBid
-            auctionId={id}
-            currentBid={auction.currentPrice}
-            startingPrice={auction.startingPrice}
-          />
-        )}
-      </>
+      <BidSection
+        auctionId={id}
+        currentBid={auction.currentPrice}
+        startingPrice={auction.startingPrice}
+        status={auction.status}
+        hasLocallyEnded={hasLocallyEnded}
+      />
     );
   };
 

@@ -19,7 +19,6 @@ import { ManualBidProps } from "./manual-bid.types";
 export default function ManualBid({
   startingPrice,
   currentBid,
-  showBidButton = true,
   auctionId,
 }: ManualBidProps) {
   const {
@@ -36,6 +35,7 @@ export default function ManualBid({
 
   const accessToken = getAccessToken();
   if (isLoading) return <Loading />;
+  if (!accessToken) return <p>Please sign in to place bids</p>;
 
   return (
     <ErrorBoundary fallback={<div>Failed to load Manual Bid</div>}>
@@ -82,7 +82,7 @@ export default function ManualBid({
           </Input>
         </div>
 
-        {showBidButton && accessToken && (
+        {accessToken && (
           <div className={classes.bidAmounts}>
             <div className={classes.bidAmountContainer}>
               <ThemeProvider value={SECONDARY_CONTAINER}>
@@ -115,33 +115,29 @@ export default function ManualBid({
           </div>
         )}
 
-        {!accessToken ? (
-          <p>Please sign in to place bid</p>
-        ) : (
-          <div className={classes.buttonContainer}>
-            {!isPending ? (
-              <ThemeProvider value={BLUE_WITH_BORDER}>
-                <ButtonPrimary
-                  type="button"
-                  btnText="Place Manual Bid"
-                  className={classes.button}
-                  isDisabled={
-                    !bid ||
-                    isPending ||
-                    highestId === userId ||
-                    Number(bid) < startingPrice ||
-                    Number(bid) <= currentBid
-                  }
-                  onClick={handlePlaceBid}
-                />
-              </ThemeProvider>
-            ) : (
-              <div className={classes.loadingButtonWrapper}>
-                <Loading />
-              </div>
-            )}
-          </div>
-        )}
+        <div className={classes.buttonContainer}>
+          {!isPending ? (
+            <ThemeProvider value={BLUE_WITH_BORDER}>
+              <ButtonPrimary
+                type="button"
+                btnText="Place Manual Bid"
+                className={classes.button}
+                isDisabled={
+                  !bid ||
+                  isPending ||
+                  highestId === userId ||
+                  Number(bid) < startingPrice ||
+                  Number(bid) <= currentBid
+                }
+                onClick={handlePlaceBid}
+              />
+            </ThemeProvider>
+          ) : (
+            <div className={classes.loadingButtonWrapper}>
+              <Loading />
+            </div>
+          )}
+        </div>
       </Profiler>
     </ErrorBoundary>
   );

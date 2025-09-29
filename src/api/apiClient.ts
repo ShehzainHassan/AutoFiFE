@@ -2,6 +2,8 @@ import axios from "axios";
 import rateLimit from "axios-rate-limit";
 import { getAccessToken, setAccessToken } from "@/store/tokenStore";
 import { trackError } from "@/utilities/error-tracking";
+import { toast } from "react-toastify";
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const baseClient = axios.create({
@@ -27,8 +29,13 @@ baseClient.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
+    const currentToken = getAccessToken();
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      currentToken
+    ) {
       originalRequest._retry = true;
 
       try {
@@ -52,7 +59,7 @@ baseClient.interceptors.response.use(
 
         setAccessToken(null);
         if (window.location.pathname !== "/sign-in") {
-          alert("Session expired. Please sign in again.");
+          toast.error("Session expired. Please sign in again.");
           window.location.href = "/sign-in";
         }
       }

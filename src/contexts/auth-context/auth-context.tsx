@@ -68,7 +68,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const initAuth = async () => {
       const accessToken = getAccessToken();
-      if (!accessToken) {
+      const hasUserInfo = !!Cookies.get("userId") && !!Cookies.get("userEmail");
+
+      if (!accessToken && hasUserInfo) {
         try {
           await refreshToken();
         } catch {

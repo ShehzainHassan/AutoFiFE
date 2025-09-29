@@ -1,18 +1,20 @@
 "use client";
 
 import BoxAssistantLogo from "@/assets/images/logos/box-assistant.png";
+import { useFeatureFlags } from "@/hooks/useFeatureFlags";
+import { getAccessToken } from "@/store/tokenStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import classes from "./need-help.module.css";
-import { useFeatureFlags } from "@/hooks/useFeatureFlags";
 
 export default function NeedHelp() {
   const router = useRouter();
+  const accessToken = getAccessToken();
   const { isAIEnabled } = useFeatureFlags();
   const redirectToBoxAssistantPage = () => {
     router.push("/box-assistant");
   };
-  if (!isAIEnabled) return;
+  if (!isAIEnabled || !accessToken) return;
   return (
     <button
       type="button"
