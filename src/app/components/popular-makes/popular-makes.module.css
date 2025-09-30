@@ -20,13 +20,13 @@
 
 @media (max-width: 1024px) {
   .container {
-    padding: 80px 40px;
+    padding: 20px;
   }
 }
 
 @media (max-width: 480px) {
   .container {
-    padding: 60px 20px;
+    padding: 10px;
   }
 
   .popularMakesHeader {

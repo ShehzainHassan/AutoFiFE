@@ -45,12 +45,14 @@ export default function Customers() {
     <section
       className={classes.container}
       aria-labelledby="customer-reviews-title">
-      <SectionTitle
-        title="What our customers say"
-        showButton={false}
-        backgroundColor="var(--color-white300)"
-        ratingsText="Rated 4.7 / 5 based on 28,370 reviews Showing our 4 & 5 star reviews"
-      />
+      <div className={classes.title}>
+        <SectionTitle
+          title="What our customers say"
+          showButton={false}
+          backgroundColor="var(--color-white300)"
+          ratingsText="Rated 4.7 / 5 based on 28,370 reviews Showing our 4 & 5 star reviews"
+        />
+      </div>
       <div className={classes.reviewContainer}>
         <ButtonNavigate
           type="prev"
@@ -59,15 +61,16 @@ export default function Customers() {
           className={classes.nav}
         />
         <div className={classes.subContainer}>
-          <Image
-            src={Customer}
-            alt={`Photo of ${currentReview.name}`}
-            width={448}
-            height={470}
-            loading="lazy"
-            placeholder="blur"
-            className={classes.image}
-          />
+          <div className={classes.imageWrapper}>
+            <Image
+              src={Customer}
+              alt={`Photo of ${currentReview.name}`}
+              fill
+              priority={false}
+              className={classes.image}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 448px"
+            />
+          </div>
           <div className={classes.review}>
             <div className={classes.rating}>
               <div className={classes.stars}>

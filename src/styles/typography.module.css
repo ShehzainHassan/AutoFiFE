@@ -18,18 +18,13 @@
   font-size: 16px;
   line-height: 28px;
 }
+
 /**************          DM Sans Font          *****************/
 .sectionTitle {
   font-family: DM Sans, sans-serif;
   font-weight: 700;
   font-size: 40px;
   line-height: 40px;
-}
-@media (max-width: 768px) {
-  .sectionTitle {
-    font-size: 25px;
-    line-height: 25px;
-  }
 }
 .spacedTitle {
   font-family: DM Sans, sans-serif;
@@ -270,4 +265,226 @@
   font-weight: 600;
   font-size: 12.91px;
   line-height: 18px;
+}
+
+@media (max-width: 1024px) {
+  .authTitle {
+    font-size: 32px;
+    line-height: 38px;
+  }
+  .authHeading {
+    font-size: 20px;
+    line-height: 36px;
+  }
+  .authDescription {
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .priceText {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .footerTitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .brandText {
+    font-size: 16px;
+    line-height: 19px;
+  }
+  .navElement {
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .modelText {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .mediumSpaced {
+    font-size: 14px;
+    line-height: 32px;
+  }
+  .criteriaText {
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .priceCut {
+    font-size: 13px;
+    line-height: 18px;
+  }
+  .carDescription {
+    font-size: 13px;
+    line-height: 13px;
+  }
+  .tinyText {
+    font-size: 11px;
+    line-height: 11px;
+  }
+  .auctionVehiclePrice {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .vehicleTitle {
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .auctionEndText {
+    font-size: 13px;
+    line-height: 18px;
+  }
+  .auctionVehicleTitle {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .userName {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .carTitle {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .filterText {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .mileage {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .auctionCardTimer {
+    font-size: 13px;
+    line-height: 20px;
+  }
+  .bidDetails {
+    font-size: 13px;
+    line-height: 18px;
+  }
+  .smallText {
+    font-size: 10px;
+    line-height: 14px;
+  }
+  .resultCardPrice {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .noRatings {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .contact {
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .authTitle {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  .authHeading {
+    font-size: 18px;
+    line-height: 30px;
+  }
+  .authDescription {
+    font-size: 13px;
+    line-height: 22px;
+  }
+  .priceText {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .footerTitle {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .brandText {
+    font-size: 15px;
+    line-height: 18px;
+  }
+  .navElement {
+    font-size: 13px;
+    line-height: 22px;
+  }
+  .modelText {
+    font-size: 13px;
+    line-height: 15px;
+  }
+  .mediumSpaced {
+    font-size: 13px;
+    line-height: 28px;
+  }
+  .criteriaText {
+    font-size: 13px;
+    line-height: 22px;
+  }
+  .priceCut {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .carDescription {
+    font-size: 12px;
+    line-height: 12px;
+  }
+  .tinyText {
+    font-size: 10px;
+    line-height: 10px;
+  }
+  .auctionVehiclePrice {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .vehicleTitle {
+    font-size: 15px;
+    line-height: 22px;
+  }
+  .auctionEndText {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .auctionVehicleTitle {
+    font-size: 15px;
+    line-height: 22px;
+  }
+  .userName {
+    font-size: 13px;
+    line-height: 20px;
+  }
+  .carTitle {
+    font-size: 13px;
+    line-height: 20px;
+  }
+  .filterText {
+    font-size: 13px;
+    line-height: 16px;
+  }
+  .mileage {
+    font-size: 13px;
+    line-height: 18px;
+  }
+  .auctionCardTimer {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .bidDetails {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .smallText {
+    font-size: 9px;
+    line-height: 12px;
+  }
+  .resultCardPrice {
+    font-size: 16px;
+    line-height: 22px;
+  }
+  .noRatings {
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .contact {
+    font-size: 10px;
+    line-height: 14px;
+  }
 }

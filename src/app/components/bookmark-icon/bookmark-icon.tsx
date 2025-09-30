@@ -12,8 +12,8 @@ export default function BookmarkIcon() {
         alt=""
         width={14}
         height={14}
-        loading="lazy"
-        placeholder="blur"
+        className={classes.icon}
+        priority={false}
         aria-hidden="true"
       />
     </span>

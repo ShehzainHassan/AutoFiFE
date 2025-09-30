@@ -15,9 +15,11 @@ export default function HorizontalCarousel({
     <Swiper
       className={classes.swiper}
       onReachEnd={onReachEnd}
-      onSwiper={setSwiperInstance}>
+      onSwiper={setSwiperInstance}
+      spaceBetween={20}
+      slidesPerView={2}>
       {vehicleListResult.vehicles.map((vehicle) => (
-        <SwiperSlide key={vehicle.id}>
+        <SwiperSlide key={vehicle.id} className={classes.slide}>
           <HorizontalCarCard
             id={vehicle.id}
             imgSrc="/images/ford_2021.png"

@@ -32,7 +32,7 @@ export default function BlogCard({
           fill
           loading="lazy"
           aria-hidden="false"
-          sizes="(max-width: 639px) 100vw, (max-width: 1023px) 80vw, 447px"
+          sizes="(max-width: 639px) 100vw, (max-width: 1023px) 80vw, 33vw"
         />
       </div>
       <section className={classes.descriptionContainer}>

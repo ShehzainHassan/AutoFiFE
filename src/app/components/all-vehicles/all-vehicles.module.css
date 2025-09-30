@@ -14,8 +14,23 @@
 .vehicleSwiperContainer {
   padding: 20px;
 }
+@media (max-width: 1024px) {
+  .container {
+    padding: 20px;
+    gap: 32px;
+  }
+
+  .space {
+    gap: 40px;
+    padding: 0;
+  }
+
+  .vehicleSwiperContainer {
+    padding: 16px;
+  }
+}
 @media (max-width: 768px) {
   .container {
-    padding: 30px 20px;
+    padding: 10px;
   }
 }

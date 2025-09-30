@@ -12,6 +12,7 @@ import SpeedometerIcon from "@/assets/images/icons/speedometer-white.png";
 import FuelIcon from "@/assets/images/icons/fuel-white.png";
 import GearboxIcon from "@/assets/images/icons/gear-white.png";
 import ArrowWhiteIcon from "@/assets/images/icons/arrow-white.png";
+
 export default function HorizontalCarCard({
   id,
   imgSrc,
@@ -28,10 +29,12 @@ export default function HorizontalCarCard({
 }: HorizontalCardProps) {
   const router = useRouter();
   const addInteraction = useTracking();
+
   const redirectToCarDetails = () => {
     router.push(`/cars/${id}`);
     addInteraction.mutate({ vehicleId: id, interactionType: "view" });
   };
+
   return (
     <div className={classes.horizontalContainer}>
       <div className={classes.horizontalImgWrapper}>
@@ -39,10 +42,9 @@ export default function HorizontalCarCard({
           src={imgSrc}
           alt="car-name"
           className={classes.horizontalCarImg}
-          width={318}
-          height={0}
-          loading="lazy"
-          style={{ height: "100%" }}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          priority={false}
         />
         {tag && <TagLabel text={tag} color={tagColor} />}
         <BookmarkIcon />
@@ -62,31 +64,15 @@ export default function HorizontalCarCard({
                 alt="speedometer"
                 width={18}
                 height={18}
-                loading="lazy"
-                placeholder="blur"
               />
               <p className={headings.carDescription}>{miles}</p>
             </div>
             <div className={classes.horizontalImgContainer}>
-              <Image
-                src={FuelIcon}
-                alt="diesel"
-                width={18}
-                height={18}
-                loading="lazy"
-                placeholder="blur"
-              />
+              <Image src={FuelIcon} alt="fuel" width={18} height={18} />
               <p className={headings.carDescription}>{fuelType}</p>
             </div>
             <div className={classes.horizontalImgContainer}>
-              <Image
-                src={GearboxIcon}
-                alt="gearType"
-                width={18}
-                height={18}
-                loading="lazy"
-                placeholder="blur"
-              />
+              <Image src={GearboxIcon} alt="gearType" width={18} height={18} />
               <p className={headings.carDescription}>{gearType}</p>
             </div>
           </div>
@@ -97,10 +83,9 @@ export default function HorizontalCarCard({
           </h2>
         )}
         <div className={classes.priceContainer}>
-          <h2
-            className={
-              headings.priceText
-            }>{`${CURRENCY}${price.toLocaleString()}`}</h2>
+          <h2 className={headings.priceText}>
+            {`${CURRENCY}${price.toLocaleString()}`}
+          </h2>
           <div className={classes.btnContainer}>
             <button
               onClick={redirectToCarDetails}
@@ -108,14 +93,7 @@ export default function HorizontalCarCard({
               className={classes.btn}>
               {btnText}
             </button>
-            <Image
-              src={ArrowWhiteIcon}
-              alt="arrow"
-              width={14}
-              height={14}
-              loading="lazy"
-              placeholder="blur"
-            />
+            <Image src={ArrowWhiteIcon} alt="arrow" width={14} height={14} />
           </div>
         </div>
       </div>
