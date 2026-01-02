@@ -1,1 +1,2 @@
-export * from "./handle-like-view";
+export { default } from "./handle-like";
+export * from "./handle-like.types";
