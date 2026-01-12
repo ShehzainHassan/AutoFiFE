@@ -1,4 +1,10 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Backend Services
+.NET Core Backend
+https://github.com/ShehzainHassan/AutoFiCore
+
+FastAPI / Machine Learning Service
+https://github.com/ShehzainHassan/AutoFi-AI-and-ML-Engine
 
 ## Getting Started
 
